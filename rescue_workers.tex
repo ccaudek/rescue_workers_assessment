@@ -1,0 +1,419 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+]{apa7}
+
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\makeatletter
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[many]{tcolorbox}}
+\makeatother
+\makeatletter
+\@ifundefined{shadecolor}{\definecolor{shadecolor}{rgb}{.97, .97, .97}}
+\makeatother
+\makeatletter
+\makeatother
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Exploring the Role of Self-Compassion in Promoting Resilience and Well-Being Among Rescue Workers},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Exploring the Role of Self-Compassion in Promoting Resilience and
+Well-Being Among Rescue Workers}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[interior hidden, enhanced, breakable, borderline west={3pt}{0pt}{shadecolor}, sharp corners, boxrule=0pt, frame hidden]}{\end{tcolorbox}}\fi
+
+prova uno due tre (Mao et al., 2022)
+
+\hypertarget{instruments}{%
+\subsection{Instruments}\label{instruments}}
+
+Beside the specific questions for RWs, we administered the following
+scales to both groups.
+
+\textbf{Self-Compassion Scale.} The Self-Compassion Scale {[}SCS; Neff
+(2003); Italian version by Veneziani et al. (2017){]} is a 26 items
+self-report questionnaire, was used to evaluate self-compassion. High
+levels of self-compassion reflect an ability to be kind and
+understanding toward oneself, even in difficult times. Three sub-sets of
+items are considered indicators of compassionate self-responding (CS):
+SK, CH, and MI. The remaining three sub-sets of items are considered
+indicators of uncompassionate self-responding (UCS): SJ, IS, and OI. The
+SCS total score (SCS-TS) is computed by averaging the mean scores of the
+positive subscales and of the reversely-scored negative subscales. In
+the present sample, total reliability was \(\alpha\) = .89, \(\omega\) =
+.92. Reliability was adequate for the subscales. SK: \(\alpha\) = .84,
+\(\omega\) = .90; CH: \(\alpha\) = .72, \(\omega\) = .78; MI: \(\alpha\)
+= .75, \(\omega\) = .78; SJ: \(\alpha\) = .84, \(\omega\) = .85; IS:
+\(\alpha\) = .86, \(\omega\) = .89; OI: \(\alpha\) = .83, \(\omega\) =
+.86. Further psychometric properties of the SCS are presented in the
+Results section.
+
+\textbf{Post-Traumatic Growth Inventory.} The Post-Traumatic Growth
+Inventory {[}PTGI; Tedeschi \& Calhoun (1996){]} is a 21 item
+self-report measure. PTGI evaluates the growth following one or more
+stressful or traumatic events in one's life. The PTGI comprises five
+sub-scales (Relating to others, New possibilities, Personal strength,
+Appreciation of life, and Spiritual change) and has good internal
+consistency, construct-convergent validity, and discriminant validity
+(Tedeschi \& Calhoun, 1996). Also the Italian version has good internal
+consistency and validity (Prati \& Pietrantoni, 2014). In the present
+sample, total reliability was \(\alpha\) = .95, \(\omega\) = .95.
+Reliability was adequate for the subscales. Relating to others:
+\(\alpha\) = .91, \(\omega\) = .92; New possibilities: \(\alpha\) = .86,
+\(\omega\) = .89; Personal strength: \(\alpha\) = .82, \(\omega\) = .83;
+Appreciation of life: \(\alpha\) = .79, \(\omega\) = .81; Spiritual
+changes: \(\alpha\) = .74, \(\omega\) = .74.
+
+\textbf{Impact of Event Scale - Revised.} The Impact of Event Scale -
+Revised {[}IES-R; Weiss (2007){]} is a 22-item self-report measure
+assessing subjective distress caused by traumatic events and it is based
+on the views of the core phenomena of traumatic-stress reactions:
+intrusion (B criteria in the DSM-IV PTSD diagnosis), avoidance (C
+criteria), and persistent hyper-arousal. Correspondingly, the IES-R
+comprises the sub-scales of Intrusion, Avoidance, and Hyperarousal. The
+IES-R is widely used to assess the symptomatology of the PTSD in rescue
+workers. The IES-R show good internal consistency and test--retest
+stability. The Italian translation show good psychometric properties,
+good concurrent and discriminant validity, and good test--retest
+reliability (Craparo et al., 2013). In the present sample, total
+reliability was \(\alpha\) = .93, \(\omega\) = .94. Reliability was also
+high for the subscales. Intrusion: \(\alpha\) = .90, \(\omega\) = .91;
+Avoidance: \(\alpha\) = .78, \(\omega\) = .82; Hyperarousal: \(\alpha\)
+= .85, \(\omega\) = .87.
+
+\textbf{Coping Orientation to Problems Experienced} The Coping
+Orientation to Problems Experienced test (COPE; Carver et al. (1989){]}
+is a self-report questionnaire used to evaluate the skills and
+strategies adopted to face stressful and difficult events. The COPE
+comprises five dimensions (social support, avoidance strategies,
+positive attitude, problem-solving, and transcendent orientation) and
+has adequate internal consistency, and convergent and discriminant
+validity (Carver et al., 1989). Factor analyses on the Italian version
+of the COPE (Sica et al., 1997, 2008, 2021) have demonstrated that the
+scales can be grouped into the following dimensions: Problem-focused,
+Social Support, Avoidance-oriented, Positive-oriented, and
+Transcendent-oriented. In the present study, we were interested in the
+adaptive coping strategies that can be considered on par with
+self-compassion. Therefore, we only administered the Positive-oriented
+and Problem-focused subscales. In fact, it is generally acknowledged
+that positive-oriented coping (e.g., positive reinterpretation and
+growth, acceptance) is beneficial for managing difficult situations
+(e.g., Sica et al., 2021). Moreover, problem-focused coping is an
+adaptive and active coping approach (e.g., accepting social support,
+solving problem, seeking advice or information, and analyzing situation
+logically) that has been shown to be effective in mediating the
+development of PTG from self-compassion (Munroe et al., 2022). In the
+present sample, total reliability was \(\alpha\) = .86, \(\omega\) =
+.87. Reliability was also adequate for the subscales. Positive-oriented:
+\(\alpha\) = .75, \(\omega\) = .77; Problem-focused: \(\alpha\) = .84,
+\(\omega\) = .85.
+
+\textbf{NEO-Five Factor Inventory.} The NEO-Five Factor Inventory
+(NEO-FFI-60; Costa \& McCrae (1992)) is a 60 items self-report
+questionnaire, was used to assess five broad domains of personality:
+Neuroticism (N), Extraversion (E), Openness to experience (O),
+Agreeableness (A), and Conscientiousness (C). The internal consistency
+of the five sub-scales of the NEO-FFI-60 is adequate (Murray et al.,
+2003). Items from the Neuroticism and Extraversion domains served as an
+indicator of latent variables in the structural model; scores for the
+other three domains were employed for group comparisons in descriptive
+analyses. In the present sample, we used the Italian version by Caprara
+et al. (2001). The Neuroticism (\(\alpha\) = .88, \(\omega\) = .89),
+Extraversion (\(\alpha\) = .74, \(\omega\) = .77) and Conscientiousness
+(\(\alpha\) = .78, \(\omega\) = .82) subscales showed adequate internal
+consistency, whereas reliability was low for the Agreableness
+(\(\alpha\) = .59, \(\omega\) = .64) and Openness (\(\alpha\) = .59,
+\(\omega\) = .60) subscales.
+
+\hypertarget{statistical-analyses}{%
+\subsection{Statistical analyses}\label{statistical-analyses}}
+
+Latent Profile Analysis (LPA) is a finite mixture modeling technique
+that partitions individuals into discrete classes based on their
+responses to observed variables. This technique is particularly useful
+for identifying subgroups of individuals that can be meaningfully
+compared (Lanza \& Rhoades, 2013). The primary objectives of LVA are
+twofold. Firstly, to ensure homogeneity within each identified profile
+so that individuals grouped together are as similar as possible.
+Secondly, to maximize heterogeneity between profiles so that each
+profile accurately represents a distinct grouping of individuals. The
+classes generated by LVA are considered latent since they are not
+directly observable but are inferred based on similarities in the data.
+LPA accounts for measurement errors related to the uncertainty in
+profile membership and provides fit statistics to determine the number
+of profiles that best represent the data.
+
+The purpose of the LPA was to detect distinct subgroups of RWs who have
+different profiles on personality dimensions, protective factors, and
+outcome variables. Standardized scores for five personality measures
+(neuroticism, extraversion, openness, agreeableness, conscientiousness),
+three dimensions of coping (COPE-active coping, COPE-avoidance coping,
+COPE-social emotional coping), perceived social support (MSPSS), and
+post-traumatic stress (measured using the IES-R) from the RWs were used
+as observed indicators for the LPA.
+
+We fitted a series of LPA models, ranging from 1 to 10 profiles, using
+1000 sets of starting values. To determine the optimal number of
+profiles, we used information criteria, including Bayesian information
+criterion (BIC), Akaike information criterion (AIC), and adjusted BIC.
+We selected the model with the lowest value of these criteria,
+indicating a better fit. Additionally, we evaluated the accuracy of the
+classification of individuals into the appropriate profile using
+entropy, with values closer to 1 indicating higher separation among
+classes (\textgreater{} 0.80 represents high separation). We also
+employed the Lo-Mendell-Rubin likelihood ratio test (LMR-LRT), a test
+statistic to compare the fit of a model with a lower versus higher
+number of profiles. We used MPLUS 8.6 and the \texttt{R} software for
+all statistical analyses.
+
+\hypertarget{references}{%
+\subsection*{References}\label{references}}
+\addcontentsline{toc}{subsection}{References}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-caprara2001brand}{}}%
+Caprara, G. V., Barbaranelli, C., \& Guido, G. (2001). Brand
+personality: How to make the metaphor fit? \emph{Journal of Economic
+Psychology}, \emph{22}(3), 377--395.
+
+\leavevmode\vadjust pre{\hypertarget{ref-carver1989assessing}{}}%
+Carver, C. S., Scheier, M. F., \& Weintraub, J. K. (1989). Assessing
+coping strategies: A theoretically based approach. \emph{Journal of
+Personality and Social Psychology}, \emph{56}(2), 267--283.
+
+\leavevmode\vadjust pre{\hypertarget{ref-costa1992normal}{}}%
+Costa, P. T., \& McCrae, R. R. (1992). Normal personality assessment in
+clinical practice: The NEO personality inventory. \emph{Psychological
+Assessment}, \emph{4}(1), 5--13.
+
+\leavevmode\vadjust pre{\hypertarget{ref-craparo2013impact}{}}%
+Craparo, G., Faraci, P., Rotondo, G., \& Gori, A. (2013). The impact of
+event scale--revised: Psychometric properties of the italian version in
+a sample of flood victims. \emph{Neuropsychiatric Disease and
+Treatment}, \emph{9}, 1427--1432.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lanza2013latent}{}}%
+Lanza, S. T., \& Rhoades, B. L. (2013). Latent class analysis: An
+alternative perspective on subgroup analysis in prevention and
+treatment. \emph{Prevention Science}, \emph{14}(2), 157--168.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mao2022concept}{}}%
+Mao, X., Hu, X., \& Loke, A. Y. (2022). A concept analysis on disaster
+resilience in rescue workers: The psychological perspective.
+\emph{Disaster Medicine and Public Health Preparedness}, \emph{16}(4),
+1682--1691.
+
+\leavevmode\vadjust pre{\hypertarget{ref-munroe2022using}{}}%
+Munroe, M., Al-Refae, M., Chan, H. W., \& Ferrari, M. (2022). Using
+self-compassion to grow in the face of trauma: The role of positive
+reframing and problem-focused coping strategies. \emph{Psychological
+Trauma: Theory, Research, Practice, and Policy}, \emph{14}(S1), S157.
+
+\leavevmode\vadjust pre{\hypertarget{ref-murray2003neo}{}}%
+Murray, G., Rawlings, D., Allen, N. B., \& Trinder, J. (2003). NEO
+five-factor inventory scores: Psychometric properties in a community
+sample. \emph{Measurement and Evaluation in Counseling and Development},
+\emph{36}(3), 140--149.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2003self}{}}%
+Neff, K. D. (2003). Self-compassion: An alternative conceptualization of
+a healthy attitude toward oneself. \emph{Self and Identity},
+\emph{2}(2), 85--101.
+
+\leavevmode\vadjust pre{\hypertarget{ref-prati2014italian}{}}%
+Prati, G., \& Pietrantoni, L. (2014). Italian adaptation and
+confirmatory factor analysis of the full and the short form of the
+posttraumatic growth inventory. \emph{Journal of Loss and Trauma},
+\emph{19}(1), 12--22.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica2021facing}{}}%
+Sica, C., Latzman, R. D., Caudek, C., Cerea, S., Colpizzi, I., Caruso,
+M., Giulini, P., \& Bottesi, G. (2021). Facing distress in coronavirus
+era: The role of maladaptive personality traits and coping strategies.
+\emph{Personality and Individual Differences}, \emph{177}, 110833.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica2008coping}{}}%
+Sica, C., Magni, C., Ghisi, M., Altoè, G., Sighinolfi, C., Chiri, L. R.,
+\& Franceschini, S. (2008). Coping orientation to problems
+experienced-nuova versione italiana (COPE-NVI): Uno strumento per la
+misura degli stili di coping. \emph{Psicoterapia Cognitiva e
+Comportamentale}, \emph{14}(1), 27.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica1997coping}{}}%
+Sica, C., Novara, C., Dorz, S., \& Sanavio, E. (1997). Coping
+strategies: Evidence for cross-cultural differences? A preliminary study
+with the italian version of coping orientations to problems experienced
+(COPE). \emph{Personality and Individual Differences}, \emph{23}(6),
+1025--1029.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tedeschi1996posttraumatic}{}}%
+Tedeschi, R. G., \& Calhoun, L. G. (1996). The posttraumatic growth
+inventory: Measuring the positive legacy of trauma. \emph{Journal of
+Traumatic Stress}, \emph{9}(3), 455--471.
+
+\leavevmode\vadjust pre{\hypertarget{ref-veneziani2017self}{}}%
+Veneziani, C. A., Fuochi, G., \& Voci, A. (2017). Self-compassion as a
+healthy attitude toward the self: Factorial and construct validity in an
+italian sample. \emph{Personality and Individual Differences},
+\emph{119}, 60--68.
+
+\leavevmode\vadjust pre{\hypertarget{ref-weiss2007impact}{}}%
+Weiss, D. S. (2007). The impact of event scale: revised. In
+\emph{Cross-cultural assessment of psychological trauma and PTSD} (pp.
+219--238). Springer.
+
+\end{CSLReferences}
+
+
+
+\end{document}
