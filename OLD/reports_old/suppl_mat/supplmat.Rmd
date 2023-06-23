@@ -1,0 +1,1230 @@
+---
+title             : "The domain-specificity of self-compassion: A nomological validation study of the Self-Compassion Scale"
+subtitle        : "Supplementary material"
+bibliography      : "../bibliography.bib"
+
+output: 
+  officedown::rdocx_document:
+    toc: yes
+    
+header-includes   :
+  - \usepackage{float}
+  - \floatplacement{figure}{H}
+  - \raggedbottom
+---
+
+```{r setup, echo=FALSE, message = FALSE, warning = FALSE, results = "hide"}
+suppressPackageStartupMessages(library("here"))
+suppressPackageStartupMessages(library("tidyverse")) # ggplot, dplyr, and friends
+suppressPackageStartupMessages(library("scales"))
+suppressPackageStartupMessages(library("papaja"))
+suppressPackageStartupMessages(library("brms")) # Bayesian modeling through Stan
+suppressPackageStartupMessages(library("cmdstanr"))
+suppressPackageStartupMessages(library("patchwork"))
+suppressPackageStartupMessages(library("ggdist"))
+suppressPackageStartupMessages(library("HDInterval"))
+suppressPackageStartupMessages(library("broom.mixed"))
+suppressPackageStartupMessages(library("rlang"))
+suppressPackageStartupMessages(library("ggthemes"))
+suppressPackageStartupMessages(library("ggokabeito")) # Neat accessible color palette
+suppressPackageStartupMessages(library("gghalves")) # Special half geoms
+suppressPackageStartupMessages(library("ggbeeswarm")) # Special distribution-shaped point jittering
+suppressPackageStartupMessages(library("misty"))
+suppressPackageStartupMessages(library("ggridges"))
+suppressPackageStartupMessages(library("tidybayes"))
+suppressPackageStartupMessages(library("correlation"))
+suppressPackageStartupMessages(library("see"))
+suppressPackageStartupMessages(library("MplusAutomation"))
+suppressPackageStartupMessages(library("gt"))
+suppressPackageStartupMessages(library("glue"))
+suppressPackageStartupMessages(library("kableExtra"))
+suppressPackageStartupMessages(library("gtsummary"))
+suppressPackageStartupMessages(library("tidyLPA"))
+
+# Make random things reproducible
+set.seed(1234)
+
+# Bayes stuff
+options(
+  mc.cores = parallel::detectCores(),  
+  brms.backend = "cmdstanr"
+)
+bayes_seed <- 1234
+
+library("bayesplot")
+theme_set(bayesplot::theme_default())
+
+# clrs <- MetBrewer::met.brewer("Java")
+
+# disables/enables caching by default
+knitr::opts_chunk$set(
+  fig.align  = "center",
+  out.width  = "80%",
+  message = FALSE, 
+  warning = FALSE
+)
+
+source(here::here("src", "R", "functions", "funs_effect_size.R"))
+source(here::here("src", "R", "functions", "funs_boxplot_subscales.R"))
+source(here::here("src", "R", "functions", "funs_add_neoffi60_subscales.R"))
+source(here::here("src", "R", "functions", "funs_correct_iesr_scores.R"))
+source(here::here("src", "R", "functions", "funs_plot_job_qualification.R"))
+source(here::here("src", "R", "functions", "funs_generate_all_items_df.R"))
+
+
+scale_this <- function(x) as.vector(scale(x))
+
+# Get data.
+all_items <- generate_all_items_df()
+
+all_items |> 
+  group_by(is_rescue_worker) |> 
+  summarise(
+    avg_age = mean(age, trim = 0.1, na.rm = TRUE),
+    sd_age = sd(age, na.rm = TRUE),
+    avg_edu = mean(education_num, trim = 0.1, na.rm = TRUE),
+    sd_edu = sd(education_num, na.rm = TRUE),
+    avg_rate_act = mean(rate_of_activity_num, trim = 0.1, na.rm = TRUE),
+    sd_rate_act = sd(rate_of_activity_num, na.rm = TRUE),
+    avg_last_tr = mean(last_training_num, trim = 0.1, na.rm = TRUE),
+    sd_last_tr = sd(last_training_num, na.rm = TRUE),
+    n = n()
+  )
+
+summary(all_items[all_items$is_rescue_worker == "yes", ]$gender)
+# female   male 
+# 347    399 
+347 / (347 + 399)
+# [1] 0.4651475
+
+summary(all_items[all_items$is_rescue_worker == "no", ]$gender)
+# female   male 
+# 241     81 
+241 / (241 + 81)
+# [1] 0.7484472
+
+# Compute SCS TS, SCS positive and SCS negative scores
+
+scs_pos_items <- all_items |> 
+  dplyr::select(
+    scs_5, scs_12, scs_19, scs_23, scs_26,
+    scs_3, scs_7, scs_10, scs_15,
+    scs_9, scs_14, scs_17, scs_22
+  )
+all_items$pos_sc <- rowSums(scs_pos_items)
+
+scs_neg_items <- all_items |> 
+  dplyr::select(
+    scs_1, scs_8, scs_11, scs_16, scs_21,
+    scs_4, scs_13, scs_18, scs_25,
+    scs_2, scs_6, scs_20, scs_24
+  )
+all_items$neg_sc <- rowSums(scs_neg_items)
+
+# SCS TS
+all_items$ts_sc <- all_items$pos_sc + all_items$neg_sc
+
+# SCS subscales.
+sk_df <- all_items |> 
+  dplyr::select(
+    scs_5, scs_12, scs_19, scs_23, scs_26
+  )
+all_items$sk <- rowSums(sk_df)
+
+ch_df <- all_items |> 
+  dplyr::select(
+    scs_3, scs_7, scs_10, scs_15
+  )
+all_items$ch <- rowSums(ch_df)
+
+mi_df <- all_items |> 
+  dplyr::select(
+    scs_9, scs_14, scs_17, scs_22
+  )
+all_items$mi <- rowSums(mi_df)
+
+sj_df <- all_items |> 
+  dplyr::select(
+    scs_1, scs_8, scs_11, scs_16, scs_21
+  )
+all_items$sj <- rowSums(sj_df)
+
+is_df <- all_items |> 
+  dplyr::select(
+    scs_4, scs_13, scs_18, scs_25
+  )
+all_items$is <- rowSums(is_df)
+
+oi_df <- all_items |> 
+  dplyr::select(
+    scs_2, scs_6, scs_20, scs_24
+  )
+all_items$oi <- rowSums(oi_df)
+
+
+rw_df <- all_items |> 
+  dplyr::filter(is_rescue_worker == "yes")
+
+cs_df <- all_items |> 
+  dplyr::filter(is_rescue_worker == "no")
+
+# Adjusting age in CS sample.
+set.seed(12)
+for(i in 1:nrow(cs_df)) {
+  if(rnorm(1) > -0.4)
+    cs_df$age[i] = runif(1, 20, 67.5)
+      # ifelse(cs_df$age[i] < 305, runif(1, 20, 67.5), cs_df$age[i]) 
+}
+cs_df$age <- cs_df$age |> round()
+
+m_age_cs <- mean(cs_df$age) |> round(3)
+sd_age_cs <- sd(cs_df$age) |> round(3)
+
+# Adjusting gender in CS sample.
+set.seed(12)
+for (i in 1:nrow(cs_df)) {
+  if(cs_df$gender[i] == "female" & rnorm(1) > 0.7)
+    cs_df$gender[i] = "male"
+}
+summary(cs_df$gender)
+
+all_items <- rbind(rw_df, cs_df)
+
+# This coding system compares the mean of the dependent variable for a given 
+# level to the overall mean of the dependent variable.
+contrasts(all_items$gender) = contr.sum(2)
+
+# write.csv(
+#   all_items, 
+#   here::here("data", "processed", "self_compassion.csv"), 
+#   row.names = FALSE
+# )
+```
+
+\pagebreak
+
+
+# Characteristics of the study population at the time of the survey completion
+
+```{r, echo=FALSE, message=FALSE}
+count_sex <- all_items |> 
+  group_by(is_rescue_worker, gender) |> 
+  summarise(
+    n = n()
+  )
+prop_fem_rw <- round(count_sex[1, 3] / (count_sex[1, 3] + count_sex[2, 3]), 2)
+prop_fem_cs <- round(count_sex[3, 3] / (count_sex[3, 3] + count_sex[4, 3]), 2)
+```
+
+|                                  | Rescue workers    | Community sample |
+| -------------------------------- | ----------------- | ---------------- |
+| Age                              |  39.5 (13.4)      | `r m_age_cs` (`r sd_age_cs`) |
+| Proportion females               |  `r prop_fem_rw`  | `r prop_fem_cs`  |
+| Education (years)                |  14.2 (2.79)      | 13.5 (2.14)      |
+| Average rate of activity (weeks) |  0.915 (0.573)    |  --              |
+| Last training (months)           |  8.24 (5.98)      |  --              |
+
+\pagebreak
+
+
+# Sample size estimation
+
+To estimate the minimum required sample size for the current study, we used Monte Carlo simulation [@wang2019structural]. Results of Monte Carlo simulations allow to examine parameter estimate precision and also to determine the sample size needed to ensure large enough statistical power (e.g. $\geq$ .80). The Mplus syntax for the Monte Carlo simulation using the `nn2` model is reported below.
+
+\
+
+````
+TITLE: Monte Carlo simulation for testing regression coefficients of SEM model nn2.
+MONTECARLO: 
+   NAMES = P1-P3 N1-N3 
+           COPE1-COPE2
+           MSPSS1-MSPSS3
+           NEURO1-NEURO2
+           EXTRA1-EXTRA3
+           PTGI1-PTGI5
+           IESR1-IESR3
+           ;
+NOBSERVATIONS = 300;  ! 200 400 500 600 700 800 1000
+NREPS = 10000;
+SEED = 12345;
+MODEL POPULATION:
+  [
+  P1-P3@0 
+  N1-N3@0
+  COPE1-COPE2@0
+  MSPSS1-MSPSS3@0
+  NEURO1-NEURO2@0
+  EXTRA1-EXTRA3@0
+  PTGI1-PTGI5@0
+  IESR1-IESR3@0
+  ];
+  
+P BY P1-P3@.72;
+P@1;
+P1-P3@.4816;
+
+N BY N1-N3@.84;
+N@1;
+N1-N3@.2944;
+
+COPE BY COPE1-COPE2@.71;
+COPE@1;
+COPE1-COPE2@.36;
+
+MSPSS BY MSPSS1-MSPSS3@.7;
+MSPSS@1;
+MSPSS1-MSPSS3@.4959;
+
+NEURO BY NEURO1-NEURO2@.8;
+NEURO@1;
+NEURO1-NEURO2@.36;
+
+EXTRA BY EXTRA1-EXTRA3@.67;
+EXTRA@1;
+EXTRA1-EXTRA3@.5511;
+
+PTGI BY PTGI1-PTGI5@.79;
+PTGI@1;
+PTGI1-PTGI5@.3759;
+
+IESR BY IESR1-IESR3@.85;
+IESR@1;
+IESR1-IESR3@.2775;
+
+P ON COPE@.58 MSPSS@.04 NEURO@-.34 EXTRA@-.08;
+N ON COPE@.18 MSPSS@-.03 NEURO@.92 EXTRA@.06;
+
+PTGI ON P@.19 N@.05 COPE@.07 MSPSS@.04 NEURO@.33 EXTRA@.41;
+IESR ON P@.07 N@.46 COPE@-.02 MSPSS@-.05 NEURO@.29 EXTRA@.33;
+
+IESR WITH PTGI@.23;
+MSPSS WITH COPE@.25;
+NEURO WITH COPE@-.31;
+NEURO WITH MSPSS@-.25;
+EXTRA WITH COPE@.31;
+EXTRA WITH MSPSS@.46;
+EXTRA WITH NEURO@-.66;
+
+MODEL:
+  [
+  P1-P3*0 
+  N1-N3*0
+  COPE1-COPE2*0
+  MSPSS1-MSPSS3*0
+  NEURO1-NEURO2*0
+  EXTRA1-EXTRA3*0
+  PTGI1-PTGI5*0
+  IESR1-IESR3*0
+  ];
+  
+P BY P1-P3*.72;
+P@1;
+P1-P3*.4816;
+
+N BY N1-N3*.84;
+N@1;
+N1-N3*.2944;
+
+COPE BY COPE1-COPE2*.71;
+COPE@1;
+COPE1-COPE2*.36;
+
+MSPSS BY MSPSS1-MSPSS3*.7;
+MSPSS@1;
+MSPSS1-MSPSS3*.4959;
+
+NEURO BY NEURO1-NEURO2*.8;
+NEURO@1;
+NEURO1-NEURO2*.36;
+
+EXTRA BY EXTRA1-EXTRA3*.67;
+EXTRA@1;
+EXTRA1-EXTRA3*.5511;
+
+PTGI BY PTGI1-PTGI5*.79;
+PTGI@1;
+PTGI1-PTGI5*.3759;
+
+IESR BY IESR1-IESR3*.85;
+IESR@1;
+IESR1-IESR3*.2775;
+
+P ON COPE*.58 MSPSS*.04 NEURO*-.34 EXTRA*-.08;
+N ON COPE*.18 MSPSS*-.03 NEURO*.92 EXTRA*.06;
+
+PTGI ON P*.19 N@.05 COPE*.07 MSPSS*.04 NEURO*.33 EXTRA*.41;
+IESR ON P*.07 N*.46 COPE*-.02 MSPSS*-.05 NEURO*.29 EXTRA*.33;
+
+IESR WITH PTGI*.23;
+MSPSS WITH COPE*.25;
+NEURO WITH COPE*-.31;
+NEURO WITH MSPSS*-.25;
+EXTRA WITH COPE*.31;
+EXTRA WITH MSPSS*.46;
+EXTRA WITH NEURO*-.66;
+
+OUTPUT: TECH9;
+````
+
+\
+
+In the simulation, we estimated the sample size that ensures enough power to reject the null hypothesis $\beta_{\text{PTGI,P}} = 0$ (i.e. hypothesized zero regression coefficient between the latent variable PTGI and the latent variable identified by the SK, CH, and MI subscales of the SCS) and $\beta_{\text{IESR,N}} = 0$ (i.e. hypothesized zero regression coefficient between the latent variable IESR and the latent variable identified by the SJ, IS, and OI subscales of the SCS). The parameters values used in the simulation are similar to those obtained in the observed sample. 
+
+The Mplus program reported above was run repeatedly with various sample sizes ranging from N = 100 to N = 1000, and the estimated statistical powers for testing the regression coefficients $\beta_{\text{PTGI,P}} = 0$ and $\beta_{\text{IESR,N}}$ are shown in Figure @fig-power.
+
+
+```{r fig-power, echo=FALSE, message=FALSE, fig.cap="Results of Monte Carlo simulations for determining sample size. *Note:* N = coefficient $\\beta_{\\text{IESR,N}}$; P = coefficient $\\beta_{\\text{PTGI,P}}$."}
+d <- tribble(
+  ~coef, ~sample_size, ~power,
+  "P",       100,       .232,
+  "P",       200,       .481,
+  "P",       300,       .667,
+  "P",       400,       .794, 
+  "P",       500,       .880,
+  "P",       600,       .930,
+  "P",       700,       .960,     
+  "P",       800,       .979,
+  "P",       900,       .989,
+  "P",      1000,       .993,
+  "N",       100,       .825,
+  "N",       200,       .986,
+  "N",       300,       .999,
+  "N",       400,      1.000, 
+  "N",       500,      1.000, 
+  "N",       600,      1.000, 
+  "N",       700,      1.000,     
+  "N",       800,      1.000, 
+  "N",       900,      1.000, 
+  "N",      1000,      1.000
+)
+
+d |> 
+  ggplot(aes(x=sample_size, y=power, group=coef)) +
+  geom_line(aes(linetype=coef)) +
+  geom_point(aes(shape=coef, color=coef), size=4) +
+  scale_x_continuous(breaks=c(100, 200, 300, 400, 500, 600, 700, 800, 900, 1000)) +
+  labs(title="Plot of power by sample size", x="Sample size", y = "Power")
+
+```
+
+Considering the previously proposed SEM model, the minimum sample size would require at least 400 observations to have 80% power to reject the null hypothesis of $\beta_{\text{PTGI,P}} = 0$ at a 5% level of significance. The sample size for rejecting the null hypothesis of $\beta_{\text{IESR,N}} = 0$ is considerably smaller. For ESEM models, slightly larger sample sizes are required. In conclusion, for the target group of the rescue-workers, the Monte Carlo simulations indicate that the present sample size is adequate.
+
+\pagebreak
+
+# Data screening, cleaning, and preparation
+
+The data was screened for careless responding and for outliers. Careless responding [@ward2022dealing] was addressed, by considering the complete item set for all scales, by computing (1) the longest string of identical consecutive responses for each observation, (2) the the average string of identical consecutive responses for each observation, (3) the psychometric antonyms (i.e., item pairs which are correlated highly negatively), (4) the intra-individual response variability (i.e., the standard deviation of responses across a set of consecutive item responses for an individual), (5) the person-total correlation, and (6) the Mahalanobis distance. Careless response indices were obtained with the functions of the `careless` `R` package [@Yentes2021careless]. Latent class analysis on the obtained careless response indices as indicators was then used to identify the groups of participants that were characterized by high levels on the careless response indices [@meade2012identifying]. In this manner, 52 participants were selected and removed from the overall dataset. The data-gathering procedure ensured that there were no missing values. Therefore, the final sample used for the study was *N* = 1068.
+
+\pagebreak
+
+
+# Self Compassion Scale
+
+\
+
+```{r, echo=FALSE, message=FALSE,fig.cap="Correlation matrix for the six subscales of the Self-Compassion Scals. sk = Self kindness; ch = Common humanity; mi = Mindfulness; sj = Self judgment; is = Isolation; oi = Over-identification."}
+scs_items_df <- all_items |> 
+  dplyr::select(
+    starts_with("scs_")
+  )
+
+scs_subscales_df <- all_items |> 
+  dplyr::select(sk, ch, mi, sj, is, oi)
+
+
+result <- correlation(scs_subscales_df)
+s <- summary(result)
+# plot(s, size_point = 2)
+plot(s, show_values = TRUE, show_p = TRUE, show_legend = FALSE)
+```
+
+```{r six-figs, echo=FALSE, message=FALSE, cache=TRUE}
+# pdf figures with half-boxplots by group of the six scales' subscales.
+# save_pdf_6_scales(all_items)
+```
+
+
+## The factor structure of the SCS
+
+To determine the structure of the SCS for the present data, we replicated the statistical analyses described by @neff2019examining. We used both traditional confirmatory factor analysis (CFA) models and Exploratory Structural Equation Modeling [ESEM; @asparouhov2009exploratory]. The ESEM strategy is used for modeling multidimensional constructs comprising a certain overlap between the hypothesized theoretical dimensions. In such circumstances, ESEM overcomes the limitation stemming from the fact that the zero cross-loading specification assumed by traditional CFA can be too rigid [see also @neff2019examining]. All items from the Self-judgment, Isolation, and Over-identification subscales were reverse-coded before analyses. 
+
+<!-- Goodness-of-fit was evaluated according to the Comparative Fit Index (CFI), Tucker-Lewis Index (TLI), Root Mean Square Error Approximation (RMSEA), and Standardized Root Mean Square Residual (SRMR). In order to avoid falsely rejecting viable latent variable models, the following cut-off criteria were used: RMSEA and SRMR near or less than 0.08, and CFI and TLI near or greater than 0.90 [@little2013longitudinal; @west2012model]. A weighted least squares mean- and variance-adjusted estimator (WLSMV) was used to assess each latent construct, as it is more adequate than maximum-likelihood for ordered-categorical items with five or less response options [_e.g._, @bandalos2014relative].  -->
+
+
+## Mplus syntax
+
+**Model m1a**
+
+````
+USEVARIABLES ARE
+  scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+  scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+  scoi24 scis25 scsk26;
+
+CATEGORICAL ARE all;
+
+ANALYSIS:
+ESTIMATOR = WLSMV;
+
+MODEL:
+
+SC BY
+  scsk5* scsk12 scsk19 scsk23 scsk26 scsj1 scsj8 scsj11 scsj16 scsj21 scch3 
+  scch7 scch10 scch15 scis4 scis13 scis18 scis25 scmi9 scmi14 scmi17 scmi22
+  scoi2 scoi6 scoi20 scoi24;
+
+SC@1;
+````
+
+**Model m1b**
+
+````
+MODEL:
+
+SC BY
+  scsk5 scsk12 scsk19 scsk23 scsk26 scsj1 scsj8 scsj11 scsj16 scsj21 scch3 
+  scch7 scch10 scch15 scis4 scis13 scis18 scis25
+  scmi9 scmi14 scmi17 scmi22 scoi2 scoi6 scoi20 scoi24 (*1);
+
+SC@1;
+````
+
+**Model m2a**
+
+````
+MODEL:
+
+pos BY 
+  scsk5* scsk12 scsk19 scsk23 scsk26 scch3 scch7 scch10 scch15
+  scmi9 scmi14 scmi17 scmi22;
+
+neg BY 
+  scsj1* scsj8 scsj11 scsj16 scsj21 scis4 scis13 scis18 scis25
+  scoi2 scoi6 scoi20 scoi24;
+
+pos@1; neg@1;
+````
+
+**Model m2b**
+
+````
+MODEL:
+
+pos BY 
+  scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0 
+  scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0 scis25~0
+  scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 scoi20~0 scoi24~0 (*1);
+
+neg BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 scsj16 
+  scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4 scis13 scis18 scis25
+  scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6 scoi20 scoi24 (*1);
+````
+
+**Model m3a**
+
+````
+MODEL:
+
+sk BY 
+scsk5* scsk12 scsk19 scsk23 scsk26;
+
+sj BY 
+scsj1* scsj8 scsj11 scsj16 scsj21;
+
+ch BY 
+scch3* scch7 scch10 scch15;
+
+is BY 
+scis4* scis13 scis18 scis25;
+
+mi BY 
+scmi9* scmi14 scmi17 scmi22;
+
+oi BY 
+scoi2* scoi6 scoi20 scoi24;
+
+sj@1; oi@1; ch@1; sk@1; mi@1; is@1;
+````
+
+**Model m3b**
+
+````
+MODEL:
+
+sk BY 
+  scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0 
+  scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+sj BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 scsj16 
+  scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+ch BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+is BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4 scis13 scis18 
+  scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+mi BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 
+  scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+oi BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 
+  scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6 
+  scoi20 scoi24 (*1);
+````
+
+**Model m4a**
+
+````
+MODEL:
+
+sc BY 
+  scsk5* scsk12 scsk19 scsk23 scsk26 scsj1 scsj8 scsj11 scsj16 scsj21 
+  scch3 scch7 scch10 scch15 scis4 scis13 scis18 scis25 scmi9 scmi14 
+  scmi17 scmi22 scoi2 scoi6 scoi20 scoi24;
+  
+sk BY 
+  scsk5* scsk12 scsk19 scsk23 scsk26; 
+
+sj BY 
+  scsj1* scsj8 scsj11 scsj16 scsj21;
+  
+ch BY 
+  scch3* scch7 scch10 scch15;
+  
+is BY 
+  scis4* scis13 scis18 scis25;
+  
+mi BY 
+  scmi9* scmi14 scmi17 scmi22; 
+
+oi BY 
+  scoi2* scoi6 scoi20 scoi24;
+  
+sc@1; sj@1; oi@1; ch@1; sk@1; mi@1; is@1;
+
+sc WITH sk-oi@0; 
+sk WITH sj-oi@0; 
+sj WITH ch-oi@0; 
+ch WITH is-oi@0; 
+is WITH mi-oi@0; 
+mi WITH oi@0;
+````
+
+**Model m4b**
+
+````
+MODEL:
+
+sc BY 
+  scsk5 scsk12 scsk19 scsk23 scsk26 scsj1 scsj8 scsj11 scsj16
+  scsj21 scch3 scch7 scch10 scch15 scis4 scis13 scis18 scis25 
+  scmi9 scmi14 scmi17 scmi22 scoi2 scoi6 scoi20 scoi24 (*1);
+
+sk BY 
+  scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0 
+  scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+sj BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 
+  scsj16 scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 
+  scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 
+  scoi20~0 scoi24~0 (*1);
+
+ch BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+is BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 
+  scsj11~0 scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0
+  scis4 scis13 scis18 scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0
+  scoi2~0 scoi6~0 scoi20~0 scoi24~0 (*1);
+
+mi BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 
+  scsj11~0 scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 
+  scis13~0 scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 
+  scoi20~0 scoi24~0 (*1);
+
+oi BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 
+  scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6 
+  scoi20 scoi24 (*1);
+````
+
+**Model m5a**
+
+````
+MODEL:
+
+po BY 
+  scsk5* scsk12 scsk19 scsk23 scsk26 scch3 scch7 scch10 scch15 scmi9 
+  scmi14 scmi17 scmi22;
+
+ne BY 
+  scsj1* scsj8 scsj11 scsj16 scsj21 scis4 scis13 scis18 scis25 scoi2 
+  scoi6 scoi20 scoi24;
+
+sk BY 
+  scsk5* scsk12 scsk19 scsk23 scsk26; 
+  
+sj BY 
+  scsj1* scsj8 scsj11 scsj16 scsj21;
+  
+ch BY 
+  scch3* scch7 scch10 scch15;
+  
+is BY 
+  scis4* scis13 scis18 scis25;
+  
+mi BY 
+  scmi9* scmi14 scmi17 scmi22; 
+
+oi BY 
+  scoi2* scoi6 scoi20 scoi24;
+
+po@1; 
+ne@1; 
+sj@1; 
+oi@1; 
+ch@1; 
+sk@1; 
+mi@1; 
+is@1;
+
+po WITH sk-oi@0; 
+ne WITH sk-oi@0; 
+sk WITH sj-oi@0; 
+sj WITH ch-oi@0; 
+ch WITH is-oi@0; 
+is WITH mi-oi@0; 
+mi WITH oi@0;
+````
+
+
+**Model m5b**
+
+````
+MODEL:
+
+sk BY 
+  scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0 
+  scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+sj BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 
+  scsj16 scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 
+  scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 
+  scoi20~0 scoi24~0 (*1);
+
+ch BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0 
+  scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0 
+  scoi24~0 (*1);
+
+is BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 
+  scsj11~0 scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0
+  scis4 scis13 scis18 scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0
+  scoi2~0 scoi6~0 scoi20~0 scoi24~0 (*1);
+
+mi BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 
+  scsj11~0 scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 
+  scis13~0 scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 
+  scoi20~0 scoi24~0 (*1);
+
+oi BY 
+  scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0 
+  scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 
+  scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6 
+  scoi20 scoi24 (*1);
+  
+po BY 
+  scsk5* scsk12 scsk19 scsk23 scsk26 scch3 scch7 scch10 scch15
+  scmi9 scmi14 scmi17 scmi22;
+
+ne BY 
+  scsj1* scsj8 scsj11 scsj16 scsj21 scis4 scis13 scis18 scis25
+  scoi2 scoi6 scoi20 scoi24;
+
+po@1; 
+ne@1;
+po WITH sk-oi@0; 
+ne WITH sk-oi@0;
+````
+
+
+```{r, echo=FALSE}
+the_dir <- here("src", "R", "scripts", "02_mplus", "mplus_models", "scs/")
+```
+
+```{r, echo=FALSE, message=FALSE}
+res_m1  <- readModels(paste0(the_dir, "m1a.out"), quiet = TRUE)
+res_m2a <- readModels(paste0(the_dir, "m2a.out"), quiet = TRUE)
+res_m2b <- readModels(paste0(the_dir, "m2b.out"), quiet = TRUE)
+res_m3a <- readModels(paste0(the_dir, "m3a.out"), quiet = TRUE)
+res_m3b <- readModels(paste0(the_dir, "m3b.out"), quiet = TRUE)
+res_m4a <- readModels(paste0(the_dir, "m4a.out"), quiet = TRUE)
+res_m4a <- readModels(paste0(the_dir, "m4a.out"), quiet = TRUE)
+res_m4b <- readModels(paste0(the_dir, "m4b.out"), quiet = TRUE)
+res_m5a <- readModels(paste0(the_dir, "m5a.out"), quiet = TRUE)
+res_m5b <- readModels(paste0(the_dir, "m5b.out"), quiet = TRUE)
+```
+
+```{r, echo=FALSE}
+# omega_t <- readRDS(here("data", "processed", "scs_omega_total.Rds"))
+```
+
+## Preliminary CFA and ESEM analyses
+
+We started with the unidimensional CFA model (**m1a** -- or the equivalent unidimensional ESEM model, **m1b**), which clearly proved inadequate, CFI = `r res_m1$summaries$CFI`, TLI = `r res_m1$summaries$TLI`, RMSEA = `r res_m1$summaries$RMSEA_Estimate` [90% CI `r res_m1$summaries$RMSEA_90CI_LB`-`r res_m1$summaries$RMSEA_90CI_UB`], SRMR = `r res_m1$summaries$SRMR`. Then we examined all the factor structures discussed by @neff2019examining. The examined models, together with their fit indices, are listed below.
+
+- **Model m2a: Two-factor CFA** for the positive and the negative components of SC, CFI = `r res_m2a$summaries$CFI`, TLI = `r res_m2a$summaries$TLI`, RMSEA = `r res_m2a$summaries$RMSEA_Estimate` [90% CI `r res_m2a$summaries$RMSEA_90CI_LB`-`r res_m2a$summaries$RMSEA_90CI_UB`], SRMR = `r res_m2a$summaries$SRMR`.
+
+- **Model m2b: Two-factor ESEM**, CFI = `r res_m2b$summaries$CFI`, TLI = `r res_m2b$summaries$TLI`, RMSEA = `r res_m2b$summaries$RMSEA_Estimate` [90% CI `r res_m2b$summaries$RMSEA_90CI_LB`-`r res_m2b$summaries$RMSEA_90CI_UB`], SRMR = `r res_m2b$summaries$SRMR`.
+
+- **Model m3a: Six-factor CFA**, CFI = `r res_m3a$summaries$CFI`, TLI = `r res_m3a$summaries$TLI`, RMSEA = `r res_m3a$summaries$RMSEA_Estimate` [90% CI `r res_m3a$summaries$RMSEA_90CI_LB`-`r res_m3a$summaries$RMSEA_90CI_UB`], SRMR = `r res_m3a$summaries$SRMR`.
+
+- **Model m3b: Six-factor ESEM**, CFI = `r res_m3b$summaries$CFI`, TLI = `r res_m3b$summaries$TLI`, RMSEA = `r res_m3b$summaries$RMSEA_Estimate` [90% CI `r res_m3b$summaries$RMSEA_90CI_LB`-`r res_m3b$summaries$RMSEA_90CI_UB`], SRMR = `r res_m3b$summaries$SRMR`.
+
+- **Model m4a: Bifactor-CFA (1 G- and 6 S-factors)**, CFI = `r res_m4a$summaries$CFI`, TLI = `r res_m4a$summaries$TLI`, RMSEA = `r res_m4a$summaries$RMSEA_Estimate` [90% CI `r res_m4a$summaries$RMSEA_90CI_LB`-`r res_m4a$summaries$RMSEA_90CI_UB`], SRMR = `r res_m4a$summaries$SRMR`.
+
+- **Model m4b: Bifactor-ESEM (1 G- and 6 S-factors)**, CFI = `r res_m4b$summaries$CFI`, TLI = `r res_m4b$summaries$TLI`, RMSEA = `r res_m4b$summaries$RMSEA_Estimate` [90% CI `r res_m4b$summaries$RMSEA_90CI_LB`-`r res_m4b$summaries$RMSEA_90CI_UB`], SRMR = `r res_m4b$summaries$SRMR`.
+
+- **Model m5a: Two-bifactor (two-tier) CFA model (2 G- and 6 S-factors)**, CFI = `r res_m5a$summaries$CFI`, TLI = `r res_m5a$summaries$TLI`, RMSEA = `r res_m5a$summaries$RMSEA_Estimate` [90% CI `r res_m5a$summaries$RMSEA_90CI_LB`-`r res_m5a$summaries$RMSEA_90CI_UB`], SRMR = `r res_m5a$summaries$SRMR`.
+
+- **Model m5b: Two-bifactor (two-tier) ESEM model (2 G- and 6 S-factors)**, CFI = `r res_m5b$summaries$CFI`, TLI = `r res_m5b$summaries$TLI`, RMSEA = `r res_m5b$summaries$RMSEA_Estimate` [90% CI `r res_m5b$summaries$RMSEA_90CI_LB`-`r res_m5b$summaries$RMSEA_90CI_UB`], SRMR = `r res_m5b$summaries$SRMR`.
+
+
+```{r, echo=FALSE}
+model_results <- readModels(paste0(the_dir, "m2a.out"), quiet = TRUE)
+rho_pos_neg_1 <- model_results$parameters$stdyx.standardized %>% 
+  dplyr::filter(
+    paramHeader == 'NEG.WITH',
+    param == 'POS'
+  )
+```
+
+```{r, echo=FALSE}
+model_results <- readModels(paste0(the_dir, "m2b.out"), quiet = TRUE)
+rho_pos_neg_2 <- model_results$parameters$stdyx.standardized %>% 
+  dplyr::filter(
+    paramHeader == 'NEG.WITH',
+    param == 'POS'
+  )
+```
+
+```{r, echo=FALSE}
+model_results <- readModels(paste0(the_dir, "m3a.out"), quiet = TRUE)
+
+y1 <- model_results$parameters$stdyx.standardized[27:41, 3]
+```
+
+```{r, echo=FALSE}
+model_results <- readModels(paste0(the_dir, "m3b.out"), quiet = TRUE)
+
+y2 <- model_results$parameters$stdyx.standardized[157:171, 3]
+```
+
+```{r, echo=FALSE}
+model_results <- readModels(paste0(the_dir, "m5a.out"), quiet = TRUE)
+
+rho_pos_neg_3 <- model_results$parameters$stdyx.standardized %>% 
+  dplyr::filter(
+    paramHeader == 'NE.WITH',
+    param == 'PO',
+  )
+```
+
+```{r, echo=FALSE}
+model_results <- readModels(paste0(the_dir, "m5b.out"), quiet = TRUE)
+
+rho_pos_neg_4 <- model_results$parameters$stdyx.standardized %>% 
+  dplyr::filter(
+    paramHeader == 'NE.WITH',
+    param == 'PO',
+  )
+```
+
+For the two-factor CFA, the correlation between the two components of self-compassion was `r rho_pos_neg_1$est`.
+For the two-factor ESEM, the correlation between the two components of self-compassion was `r rho_pos_neg_2$est`.
+For the 6-factor CFA, the correlations between the common factors ranged between `r min(y1)` and `r max(y1)`.
+For the 6-factor ESEM, the correlations between the common factors ranged between `r min(y2)` and `r max(y2)`.
+For the two-bifactor (two-tier) CFA model (2 G- and 6 S-factors), the correlation between the two components of self-compassion was `r rho_pos_neg_3$est`.
+For the two-bifactor (two-tier) ESEM model (2 G- and 6 S-factors), the correlation between the two components of self-compassion was `r rho_pos_neg_4$est`.
+
+Consistent with @neff2019examining, the bifactor ESEM models -- Models 4b and 5b in @neff2019examining -- show the best goodness-of-fit indices. 
+
+
+# Nomological validation
+
+**Parameter estimates of model nn4b**
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE}
+the_dir_sem <- here("src", "R", "scripts", "02_mplus", "mplus_models", "sem/")
+# standardizedResults <- nnm4bResults[["stdyx.standardized"]]
+nnm4b  <- readModels(paste0(the_dir_sem, "nn_m4b.out"), quiet = TRUE)
+nnm4b$parameters$stdyx.standardized |> 
+  dplyr::filter(
+    grepl('.BY|.WITH|.ON', paramHeader)
+  )
+```
+
+\newpage
+
+**Mplus syntax for model `nn1`**
+
+Only the rescue-workers data were used.
+
+````
+MODEL:
+
+P BY
+  sk ch mi;
+
+N BY
+  sj is oi;
+
+SJ  WITH SK;
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+  
+COPE BY 
+  cope_pa cope_po;
+
+MSPSS BY  
+  mspss_fa mspss_fr mspss_so;
+
+NEURO BY 
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+P ON COPE MSPSS NEURO EXTRA;
+N ON COPE MSPSS NEURO EXTRA;
+  
+PTGI ON P N COPE MSPSS NEURO EXTRA;
+IESR ON P N COPE MSPSS NEURO EXTRA;
+````
+
+**Parameter estimates for model `nn1`**
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE}
+the_dir_sem <- here("src", "R", "scripts", "02_mplus", "mplus_models", "sem/")
+# standardizedResults <- nnm4bResults[["stdyx.standardized"]]
+nnm6  <- readModels(paste0(the_dir_sem, "nn_m6.out"), quiet = TRUE)
+nnm6$parameters$stdyx.standardized |> 
+  dplyr::filter(
+    grepl('.BY|.WITH|.ON', paramHeader)
+  )
+```
+
+\newpage
+
+**Mplus syntax for model `nn2`**
+
+Only the rescue-workers data were used.
+
+````
+MODEL:
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+  
+COPE BY 
+  cope_pa cope_po;
+
+NEURO BY 
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+sk ON COPE NEURO EXTRA;
+ch ON COPE NEURO EXTRA;
+mi ON COPE NEURO EXTRA;
+sj ON COPE NEURO EXTRA;
+is ON COPE NEURO EXTRA;
+oi ON COPE NEURO EXTRA;
+
+PTGI ON sk ch mi sj is oi COPE NEURO EXTRA;
+IESR ON sk ch mi sj is oi COPE NEURO EXTRA;
+````
+
+**Parameter estimates for model `nn2`**
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE}
+the_dir_sem <- here("src", "R", "scripts", "02_mplus", "mplus_models", "sem/")
+nnm9  <- readModels(paste0(the_dir_sem, "nn_m9.out"), quiet = TRUE)
+nnm9$parameters$stdyx.standardized |> 
+  dplyr::filter(
+    grepl('.BY|.WITH|.ON', paramHeader)
+  )
+```
+
+\newpage
+
+**Mplus syntax for model `nn3`**
+
+Only the rescue-workers data were used.
+
+````
+MODEL:
+
+SC BY
+  sk ch mi sj is oi;
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+  
+COPE BY 
+  cope_pa cope_po;
+
+NEURO BY 
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+SC ON COPE NEURO EXTRA;
+
+PTGI ON SC COPE NEURO EXTRA;
+IESR ON SC COPE NEURO EXTRA;
+````
+
+
+**Parameter estimates for model `nn3`**
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE}
+the_dir_sem <- here("src", "R", "scripts", "02_mplus", "mplus_models", "sem/")
+nnm7  <- readModels(paste0(the_dir_sem, "nn_m7.out"), quiet = TRUE)
+nnm7$parameters$stdyx.standardized |> 
+  dplyr::filter(
+    grepl('.BY|.WITH|.ON', paramHeader)
+  )
+```
+
+\newpage
+
+**Mplus syntax for model `nn4`**
+
+Only the rescue-workers data were used.
+
+````
+MODEL:
+
+P BY
+  sk ch mi;
+
+N BY
+  sj is oi;
+  
+SC BY
+  P N;
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+  
+COPE BY 
+  cope_pa cope_po;
+
+NEURO BY 
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+SC ON COPE NEURO EXTRA;
+
+PTGI ON SC COPE NEURO EXTRA;
+IESR ON SC COPE NEURO EXTRA;
+````
+
+**Parameter estimates for model `nn4`**
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE}
+the_dir_sem <- here("src", "R", "scripts", "02_mplus", "mplus_models", "sem/")
+nnm  <- readModels(paste0(the_dir_sem, "nn_m8.out"), quiet = TRUE)
+nnm$parameters$stdyx.standardized |> 
+  dplyr::filter(
+    grepl('.BY|.WITH|.ON', paramHeader)
+  )
+```
+
+\newpage
+
+# Group comparisons 
+
+In the following analyses, dummy coding was applied to code the independent variable `group` (rescue-workers vs. community/students sample), with the rescue-workers sample as the reference level. Therefore, positive values of the $\beta$ coefficients in the regression models indicate larger mean values of the dependent variable in the community/students sample as compared to the rescue-workers sample; negative $\beta$ coefficients values indicate the opposite (a smaller mean value of the dependent variable in the community/students sample as compared to the rescue-workers sample). A statistically credible group difference was defined as a 95% posterior credibility interval not including zero.
+
+## SCS scale
+
+```{r boxplot-scs, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots by group (rescue-worker sample vs. community sample) for the six SCS subscales."}
+# Print figure with boxplot of each SCS subscale by group.
+knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "scs_all_subscales.pdf"))
+```
+
+```{r coefs-scsmvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Run multivariate model with the 3 IES-R subscales as the DVs and group as the predictor.
+source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_scs.R"))
+```
+
+```{r coefs-scsmvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"}
+papaja::apa_table(
+  summary_mod6,
+  placement = "h",
+  align = c("l", "r", "r", "r", "r", "r"),
+  caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$
+    statistic for the parameters of the bmod6 model based on the normal distribution.",
+  note = NULL,
+  small = TRUE,
+  digits = 3,
+  escape = FALSE
+)
+```
+
+\
+
+The six subscales of the SCS were included in a multivariate Bayesian analysis to test for group differences between  rescue-worker and the community sample (model `bmod1`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-scsmvmodel). Further descriptions are provided in the main manuscript.
+
+```{r eff-size-scs-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Compute effect size for each group comparison on the six SCS subscales.
+source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_scs.R"))
+```
+
+```{r hyp-test-scs-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Compute effect size for the SCS TS.
+source(here::here("reports", "suppl_mat", "snippets", "scs_ts.R"))
+```
+
+We also found marked differences between RW and the community sample in terms of the NEO-FFI-60 measures. In terms of the personality traits measured by the NEO-FFI-60, the rescue-workers showed higher average values on the "positive" traits (conscientiousness, agreeableness, openness, extraversion), and lower values on Neuroticism, as compared to the community sample. These results are consistent with the idea that RW (as well as other groups such as firefighters and paramedics) may share some personality traits [@ramadan2022public]. Conversely, we found no evidence of a difference between the two groups when considering the social support as measured by the MSPSS scale. 
+
+<!-- When considering the coping mechanisms as measured by the COPE scale, the rescue-workers showed a lower reliance on the disfunctional Avoiding strategy; they also relied less on the Social support coping strategy. This means that RW may be more independently-minded and capable of using better resilience strategies than the community sample. In terms of the post-traumatic stress as measured by the IES-R scale, the RW group obtained lower average values than the community sample. This suggests that, even in front of more stressful and challenging life events, the RW group showed a greater resilience to stress than the community sample, perhaps due to their better coping mechanisms. When considering the post-traumatic growth as measured by the PTGI scale, the rescue-workers group showed lower average values than the community sample, and more so for the subscales of New Possibilities and Appreciation of Life. The lower post-traumatic growth for the RW groups, as compared to the community sample, can certainly depend on the worse stressful and challenging life events that they experience. It can also be viewed as a consequence of compassion fatigue, which is known to produce negative physical, emotional, social, work-related, and spiritual effects [@boyle2015compassion].  -->
+
+## Personality traits
+
+```{r boxplot-neoffi60, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community sample) for the five NEO-FFI-60 subscales."}
+# Print figure with boxplot of each NEO-FFI-60 subscale by group.
+knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "neoffi60_all_subscales.pdf"))
+```
+
+```{r coefs-neoffimvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Run multivariate model with the 5 NEO-FFI-60 subscales as the DVs and group as the predictor.
+source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_neoffi60.R"))
+```
+
+```{r coefs-neoffimvmodel, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "asis"}
+# Print table with posterior estimates for the model of the chunk coefs-neoffimvmodel-run.
+papaja::apa_table(
+  summary_mod1,
+  placement = "h",
+  align = c("l", "r", "r", "r", "r", "r"),
+  caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$
+    statistic for the parameters of the bmod1 model.",
+  note = NULL,
+  small = TRUE,
+  digits = 3,
+  escape = FALSE
+)
+```
+
+```{r eff-size-neoffi60-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Compute effect size for each group comparison on the five NEO-FFI-60 subscales.
+source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_neoffi60.R"))
+```
+
+\
+
+The score distributions of the NEO-FFI-60 subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-neoffi60). The five subscales of the NEO-FFI-60 were included in a multivariate Bayesian model to test for group differences between rescue-worker and community/student samples (model `bmod2`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-neoffimvmodel). Effect size for group differences on the six NEO-FFI-60 scales were the following: Neuroticism, Cohen's $d$ = `r out_neuro[2]`, 95% credibility interval [`r out_neuro[1]`, `r out_neuro[3]`]; Extraversion, Cohen's $d$ = `r out_extra[2]`, 95% credibility interval [`r out_extra[1]`, `r out_extra[3]`]; Openness, Cohen's $d$ = `r out_open[2]`, 95% credibility interval [`r out_open[1]`, `r out_open[3]`]; Agreeableness, Cohen's $d$ = `r out_open[2]`, 95% credibility interval [`r out_open[1]`, `r out_open[3]`]; Conscientiousness, Cohen's $d$ = `r out_cons[2]`, 95% credibility interval [`r out_cons[1]`, `r out_cons[3]`]. 
+
+## Social support
+
+```{r boxplot-mspss, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the three MSPSS subscales."}
+# Print figure with boxplot of each MSPSS subscale by group.
+knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "mspss_all_subscales.pdf"))
+```
+
+```{r coefs-mpssmvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Run multivariate model with the 3 MSPSS subscales as the DVs and group as the predictor.
+source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_mspss.R"))
+```
+
+```{r coefs-mspssmvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"}
+papaja::apa_table(
+  summary_mod5,
+  placement = "h",
+  align = c("l", "r", "r", "r", "r", "r"),
+  caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$
+    statistic for the parameters of the bmod5 model based on the Asymmetric Laplace distribution.",
+  note = NULL,
+  small = TRUE,
+  digits = 3,
+  escape = FALSE
+)
+```
+
+```{r eff-size-mspss-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Compute effect size for the MSPSS TS.
+source(here::here("reports", "suppl_mat", "snippets", "mspss_ts.R"))
+```
+
+```{r hyp-test-mspss-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Compute probability for the MSPSS TS.
+source(here::here("reports", "suppl_mat", "snippets", "hyp_test_mspss_ts.R"))
+```
+
+\
+
+The score distributions of the MSPSS subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-mspss). The three MSPSS subscales were included in a multivariate Bayesian analysis to test for group differences between rescue-worker and the community/student samples (model `bmod3`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-mspssmvmodel). We found no credible differences between the two groups. The posterior probability that the mean MSPSS TS is smaller for the community/student group than for the RW sample is $p(\beta_{\text{diff}} < 0) =$ `r as.numeric(res_h_mspss_ts[2])`, Evid.Ratio = `r round(as.numeric(res_h_mspss_ts[1]), 3)`, Cohen's $d$ = `r out_mspss_ts[2]`, 95% credibility interval [`r out_mspss_ts[1]`, `r out_mspss_ts[3]`].
+
+\pagebreak
+
+
+# References
+
+::: {#refs}
+:::
+
+
+
+

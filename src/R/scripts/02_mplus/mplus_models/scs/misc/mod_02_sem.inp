@@ -1,0 +1,29 @@
+TITLE: 1 Bifactor SCS with subscales indicators.
+
+DATA:
+  FILE IS sem_mplus.dat;
+  LISTWISE=ON;
+
+VARIABLE:
+  NAMES ARE sj is oi sk co mi ptg_la ptg_np ptg_ps 
+    ptg_sc ptg_ir pts_av pts_in pts_hy; 
+  MISSING ARE ALL(-9);
+  USEVARIABLES ARE sj is oi sk co mi ptg_la ptg_np 
+    ptg_ps ptg_sc ptg_ir pts_av pts_in pts_hy; 
+
+ANALYSIS:
+  ESTIMATOR = ML;
+  ROTATION = TARGET;
+
+MODEL:
+  f BY sj is oi sk co mi;
+
+  pts BY pts_av pts_in pts_hy;
+  ptg BY ptg_la ptg_np ptg_ps ptg_sc ptg_ir;
+  
+  f ON pts ptg;
+
+! Requesting standardized parameter estimates
+OUTPUT: standardized;
+
+

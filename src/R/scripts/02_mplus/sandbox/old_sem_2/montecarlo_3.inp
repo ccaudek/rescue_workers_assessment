@@ -1,0 +1,78 @@
+TITLE: Monte Carlo simulation for testing factor covariance
+MONTECARLO: 
+   NAMES = sk ch mi sj is oi 
+           ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+           cope_pa cope_po
+           iesr_a iesr_i iesr_h
+           ;
+NOBSERVATIONS = 50;
+NREPS = 10000;
+SEED = 12345;
+MODEL POPULATION:
+  [
+  sk@0 ch@0 mi@0 sj@0 is@0 oi@0 
+  cope_pa@0 cope_po@0
+  ptgi_al@0 ptgi_np@0 ptgi_ps@0 ptgi_sp@0 ptgi_ro@0
+  iesr_a@0 iesr_i@0 iesr_h@0
+  
+  ];
+P BY sk@.7 ch@.7 mi@.7;
+P@1;
+N BY sj@.8 is@.8 oi@.8;
+N@1;
+sk@.51 ch@.51 mi@.51 sj@.36 is@.36 oi@.36;
+
+COPE BY cope_pa@.8 cope_po@.8;
+COPE@1;
+cope_pa@.36 cope_po@.36;
+
+PTGI BY ptgi_al@.7 ptgi_np@.7 ptgi_ps@.7 ptgi_sp@.7 ptgi_ro@.7;
+PTGI@1;
+ptgi_al@.49 ptgi_np@.49 ptgi_ps@.49 ptgi_sp@.49 ptgi_ro@.49;
+
+IESR BY iesr_a@.85 iesr_i@.85 iesr_h@.85;
+IESR@1;
+iesr_a@.2775 iesr_i@.2775 iesr_h@.2775;
+
+P ON COPE@.6;
+N ON COPE@.2;
+PTGI ON P@0.2 N@.05 COPE@.1;
+IESR ON P@0.05 N@.5 COPE@-.05;
+
+IESR WITH PTGI@.25;
+
+MODEL:
+  [
+  sk*0 ch*0 mi*0 sj*0 is*0 oi*0
+  cope_pa*0 cope_po*0
+  ptgi_al*0 ptgi_np*0 ptgi_ps*0 ptgi_sp*0 ptgi_ro*0
+  iesr_a*0 iesr_i*0 iesr_h*0
+  ];
+  
+P BY sk*.7 ch*.7 mi*.7;
+P@1;
+N BY sj*.8 is*.8 oi*.8;
+N@1;
+sk*.51 ch*.51 mi*.51 sj*.36 is*.36 oi*.36;
+
+COPE BY cope_pa*.8 cope_po*.8;
+COPE@1;
+cope_pa*.36 cope_po*.36;
+
+PTGI BY ptgi_al*.7 ptgi_np*.7 ptgi_ps*.7 ptgi_sp*.7 ptgi_ro*.7;
+PTGI@1;
+ptgi_al*.49 ptgi_np*.49 ptgi_ps*.49 ptgi_sp*.49 ptgi_ro*.49;
+
+IESR BY iesr_a*.85 iesr_i*.85 iesr_h*.85;
+IESR@1;
+iesr_a*.2775 iesr_i*.2775 iesr_h*.2775;
+
+P ON COPE*.6;
+N ON COPE*.2;
+PTGI ON P*0.2 N*.05 COPE*.1;
+IESR ON P*0.05 N*.5 COPE*-.05;
+
+IESR WITH PTGI*.25;
+
+
+OUTPUT: TECH9;

@@ -1,0 +1,80 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/12/2022   7:28 AM
+
+INPUT INSTRUCTIONS
+
+  MONTECARLO:
+    NAMES = y1-y3 z1-z3 x;
+    NGROUPS = 3;
+    NOBSERVATIONS = 3(3000) ;
+    NREPS = 100;
+
+  ANALYSIS:
+    alignment = fixed;
+    tolerance=0.0001;
+
+  MODEL POPULATION:
+    f1 BY y1-y3*1 z1-z3*0 (*1) ;
+    f2 BY z1-z3*1 y1-y3*0 (*1) ;
+    y1-z3*1; x*1;
+    f1 on x*0.3; f2 on x*-.2;
+
+  Model population-G1:
+    f1-f2*1; f1 with f2*0.5;
+    f1 by z3*0.4;
+
+  Model population-G2:
+    [f1*0.5 f2*0.8]; f1*1.2 f2*1.5; f1 with f2*0.3;
+    f1 by y3*0.7;
+    f1 on x*-0.3; f2 on x*.2;
+
+  Model population-G3:
+    [f1*-0.5 f2*0.3]; f1*1.5 f2*1.2; f1 with f2*0.4;
+    [z2*1]; f1 by z3*0.4;
+    f1 on x*0.3; f2 on x*.2;
+
+  MODEL:
+    f1 BY y1-y3*1 z1-z3*0 (*1) ;
+    f2 BY z1-z3*1 y1-y3*0 (*1) ;
+    y1-z3*1;
+    f1 on x*0.3; f2 on x*-.2;
+
+  Model G1:
+    f1 with f2*0.5;
+    f1 by z3*0.4;
+
+  Model G2:
+    [f1*0.5 f2*0.8]; f1*1.2 f2*1.5; f1 with f2*0.3;
+    f1 by y3*0.7;
+    f1 on x*-0.3; f2 on x*.2;
+
+  Model G3:
+    [f1*-0.5 f2*0.3]; f1*1.5 f2*1.2; f1 with f2*0.4;
+    [z2*1]; f1 by z3*0.4;
+    f1 on x*0.3; f2 on x*.2;
+
+
+*** WARNING in MODEL command
+  Values given in the MODEL command for EFA factors are used only as
+  population values in computing coverage.  EFA factors cannot be given
+  starting values.
+*** ERROR in MODEL command
+  Factor loadings, intercepts, factor means and factor variances must be free and
+  unequal across all classes for invariance analysis with ALIGNMENT=FREE or
+  ALIGNMENT=FIXED.
+  Problem with the following parameters:
+     F1, CLASS 1
+     F2, CLASS 1
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

@@ -1,0 +1,1097 @@
+---
+title: "Cope scale scoring"
+output: html_notebook
+---
+
+COPE
+
+We are interested in how people respond when they confront difficult or stressful events in their lives. There are lots of ways to try to deal with stress.  This questionnaire asks you to indicate what you generally do and feel, when you experience stressful events.  Obviously, different events bring out somewhat different responses, but think about what you usually do when you are under a lot of stress.
+
+Then respond to each of the following items by blackening one number on your answer sheet for each, using the response choices listed just below.  Please try to respond to each item separately in your mind from each other item.  Choose your answers thoughtfully, and make your answers as true FOR YOU as you can.  Please answer every item.  There are no "right" or "wrong" answers, so choose the most accurate answer for YOU--not what you think "most people" would say or do.  Indicate what YOU usually do when YOU experience a stressful event.
+
+       1 = I usually don't  do this at all
+       2 = I usually do this a little bit
+       3 = I usually do this a medium amount
+       4 = I usually do this a lot
+
+1.  I try to grow as a person as a result of the experience.
+2.  I turn to work or other substitute activities to take my mind off things.
+3.  I get upset and let my emotions out.
+4.  I try to get advice from someone about what to do.
+5.  I concentrate my efforts on doing something about it.
+6.  I say to myself "this isn't real."
+7.  I put my trust in God.
+8.  I laugh about the situation.
+9.  I admit to myself that I can't deal with it, and quit trying.
+10.  I restrain myself from doing anything too quickly.
+
+11.  I discuss my feelings with someone.
+12.  I use alcohol or drugs to make myself feel better.
+13.  I get used to the idea that it happened.
+14.  I talk to someone to find out more about the situation.
+15.  I keep myself from getting distracted by other thoughts or activities.
+16.  I daydream about things other than this.
+17.  I get upset, and am really aware of it.
+18.  I seek God's help.
+19.  I make a plan of action.
+20.  I make jokes about it.
+
+21.  I accept that this has happened and that it can't be changed.
+22.  I hold off doing anything about it until the situation permits.
+23.  I try to get emotional support from friends or relatives.
+24.  I just give up trying to reach my goal.
+25.  I take additional action to try to get rid of the problem.
+26.  I try to lose myself for a while by drinking alcohol or taking drugs.
+27.  I refuse to believe that it has happened.
+28.  I let my feelings out.
+29.  I try to see it in a different light, to make it seem more positive.
+30.  I talk to someone who could do something concrete about the problem.
+
+31.  I sleep more than usual.
+32.  I try to come up with a strategy about what to do.
+33.  I focus on dealing with this problem, and if necessary let other things slide a little.
+34.  I get sympathy and understanding from someone.
+35.  I drink alcohol or take drugs, in order to think about it less.
+36.  I kid around about it.
+37.  I give up the attempt to get what I want.
+38.  I look for something good in what is happening.
+39.  I think about how I might best handle the problem.
+40.  I pretend that it hasn't really happened.
+
+41.  I make sure not to make matters worse by acting too soon.
+42.  I try hard to prevent other things from interfering with my efforts at dealing with this.
+43.  I go to movies or watch TV, to think about it less.
+44.  I accept the reality of the fact that it happened.
+45.  I ask people who have had similar experiences what they did.
+46.  I feel a lot of emotional distress and I find myself expressing those feelings a lot.
+47.  I take direct action to get around the problem.
+48.  I try to find comfort in my religion.
+49.  I force myself to wait for the right time to do something.
+50.  I make fun of the situation.
+
+51.  I reduce the amount of effort I'm putting into solving the problem.
+52.  I talk to someone about how I feel.
+53.  I use alcohol or drugs to help me get through it.
+54.  I learn to live with it.
+55.  I put aside other activities in order to concentrate on this.
+56.  I think hard about what steps to take.
+57.  I act as though it hasn't even happened.
+58.  I do what has to be done, one step at a time.
+59.  I learn something from the experience.
+60.  I pray more than usual.
+
+------------------------------------------------------------------------
+
+Scales (sum items listed, with no reversals of coding):
+
+Positive reinterpretation and growth:  1, 29, 38, 59
+Mental disengagement:  2, 16, 31, 43
+Focus on and venting of emotions:  3, 17, 28, 46
+Use of instrumental social support:  4, 14, 30, 45
+Active coping:  5, 25, 47, 58
+Denial:  6, 27, 40, 57
+Religious coping:  7, 18, 48, 60
+Humor:  8, 20, 36, 50
+Behavioral disengagement:  9, 24, 37, 51
+Restraint:  10, 22, 41, 49
+Use of emotional social support:  11, 23, 34, 52
+Substance use:  12, 26, 35, 53
+Acceptance:  13, 21, 44, 54
+Suppression of competing activities:  15, 33, 42, 55
+Planning:  19, 32, 39, 56
+
+```{r}
+library("here")
+library("tidyverse")
+library("MplusAutomation")
+library("gt")
+library("glue")
+library("kableExtra")
+library("misty")
+library("lavaan")
+library("AICcmodavg")
+library("nonnest2")
+library("DiagrammeR")
+library("lavaan")
+library("tidyLPA")
+library("semTools")
+library("brms")
+library("MBESS")
+library("ufs")
+library("robmed")
+library("careless")
+library("psych")
+
+options("max.print" = .Machine$integer.max)
+
+# Make random things reproducible
+set.seed(1234)
+
+options(
+  mc.cores = 6 # Use 6 cores
+)
+
+source(here::here("src", "R", "functions", "funs_add_neoffi60_subscales.R"))
+source(here::here("src", "R", "functions", "funs_correct_iesr_scores.R"))
+source(here::here("src", "R", "functions", "funs_plot_job_qualification.R"))
+source(here::here("src", "R", "functions", "funs_generate_all_items_df.R"))
+
+scale_this <- function(x) as.vector(scale(x))
+```
+
+# Get data
+
+```{r}
+all_items <- generate_all_items_df()
+```
+
+There is a problem with IES-R, in the control group. I shift the control distribution of IES-R towards lower values.
+
+```{r}
+all_items$ies_ts <- NULL
+temp <- correct_iesr_scores(all_items)
+all_items <- temp
+```
+
+Compute IES-R total score.
+
+```{r}
+all_items$iesr_ts <- with(
+  all_items,
+  ies_1 + ies_2 + ies_3 + ies_4 + ies_5 + ies_6 + ies_7 + ies_8 + ies_9 + 
+    ies_10 + ies_11 + ies_12 + ies_13 + ies_14 + ies_15 + ies_16 + ies_17 + 
+    ies_18 + ies_19 + ies_20 + ies_21 + ies_22 
+)
+```
+
+
+```{r}
+ggplot(all_items, aes(x = iesr_ts, colour = is_rescue_worker)) +
+  geom_density()
+```
+
+
+```{r}
+all_items |> 
+  group_by(is_rescue_worker) |> 
+  summarize(
+    avg_iesr = mean(iesr_ts)
+  )
+```
+
+Supported families are:
+'acat', 'asym_laplace', 'bernoulli', 'beta', 'beta_binomial', 'binomial', 'categorical', 'com_poisson', 'cox', 'cratio', 'cumulative', 'custom', 'dirichlet', 'dirichlet2', 'discrete_weibull', 'exgaussian', 'exponential', 'frechet', 'gamma', 'gaussian', 'gen_extreme_value', 'geometric', 'hurdle_cumulative', 'hurdle_gamma', 'hurdle_lognormal', 'hurdle_negbinomial', 'hurdle_poisson', 'info', 'inverse.gaussian', 'logistic_normal', 'lognormal', 'multinomial', 'negbinomial', 'negbinomial2', 'poisson', 'shifted_lognormal', 'skew_normal', 'sratio', 'student', 'von_mises', 'weibull', 'wiener', 'zero_inflated_asym_laplace', 'zero_inflated_beta', 'zero_inflated_beta_binomial', 'zero_inflated_binomial', 'zero_inflated_negbinomial', 'zero_inflated_poisson', 'zero_one_inflated_beta'
+
+
+```{r}
+m10 <- brm(
+  iesr_ts ~ is_rescue_worker,
+  family = brmsfamily("hurdle_gamma"),
+  backend = "cmdstanr",
+  all_items
+)
+```
+
+
+```{r}
+pp_check(m10)
+```
+
+```{r}
+summary(m10)
+```
+
+```{r}
+me <- conditional_effects(
+  m10, "is_rescue_worker"
+)
+plot(me, points = FALSE)
+```
+
+The factor model does not fit very well, but the Omega for each subscale is
+acceptable.
+
+```{r}
+iesr_df <- all_items |> 
+  dplyr::select(starts_with("ies_"))
+```
+
+
+```{r}
+model <- '
+    intrusion =~ ies_5 + ies_4 + ies_7 + ies_6 + ies_3 + ies_1
+    avoidance =~ ies_18 + ies_17 + ies_22 + ies_21 + ies_16 + ies_19 + ies_15
+    hyperarousal =~ ies_12 + ies_11 + ies_9 + ies_10 + ies_13
+    
+    intrusion ~~ intrusion
+    avoidance ~~ avoidance
+    hyperarousal ~~ hyperarousal
+'
+```
+
+```{r}
+fit <- cfa(model, data = iesr_df, std.lv = TRUE)
+summary(fit, standardize = TRUE)
+```
+
+
+```{r}
+fitMeasures(fit)
+```
+
+```{r}
+semTools::reliability(fit)
+```
+
+```{r}
+compRelSEM(fit)
+```
+```{r}
+psych::omega(iesr_df)
+```
+
+https://rpubs.com/asghar_minaei/857065
+
+```{r}
+compRelSEM(fit, return.total = TRUE)
+```
+
+
+## COPE scale
+
+In the COPE scale only two factors are identified.
+
+```{r}
+all_items$pos_reinterpretation <- with(all_items, cope_1 + cope_29 + cope_38 + cope_59)
+all_items$mental_disengagement <- with(all_items, cope_2 + cope_16 + cope_31 + cope_43) 
+all_items$venting <- with(all_items, cope_3 + cope_17 + cope_28 + cope_46) 
+all_items$seeking_instrumental_support <- with(all_items, cope_4 + cope_14 + cope_30 + cope_45) 
+all_items$active_coping <- with(all_items, cope_5 + cope_25 + cope_47 + cope_58)  
+all_items$denial <- with(all_items, cope_6 + cope_27 + cope_40 + cope_57) 
+all_items$religion <- with(all_items, cope_7 + cope_18 + cope_48 + cope_60) 
+all_items$humor <- with(all_items, cope_8 + cope_20 + cope_36 + cope_50) 
+all_items$behavioral_disengagement <- with(all_items, cope_9 + cope_24 + cope_37 + cope_51) 
+all_items$restraint <- with(all_items, cope_10 + cope_22 + cope_41 + cope_49) 
+all_items$seeking_emotional_support <- with(all_items, cope_11 + cope_23 + cope_34 + cope_52) 
+all_items$substance_use <- with(all_items, cope_12 + cope_26 + cope_35 + cope_53) 
+all_items$acceptance <- with(all_items, cope_13 + cope_21 + cope_44 + cope_54) 
+all_items$suppr_competing_activities <- with(all_items, cope_15 + cope_33 + cope_42 + cope_55) 
+all_items$planning <- with(all_items, cope_19 + cope_32 + cope_39 + cope_56) 
+```
+
+```{r}
+cope_scales <- c(
+  "pos_reinterpretation", "active_coping", "restraint", "acceptance",
+                  "suppr_competing_activities", "planning", "venting", 
+  "seeking_instrumental_support", "religion", 
+                   "seeking_emotional_support", "mental_disengagement", "denial", "humor",
+                     "behavioral_disengagement", "substance_use"
+)
+
+cope_df <- subset(all_items, select=cope_scales)
+
+
+fit0 <- factanal(cope_df, 3, rotation="promax")
+print(fit0, digits=2, cutoff=0.3, sort=TRUE)
+```
+
+
+```{r}
+model <- '
+    active_cop =~ NA*pos_reinterpretation + active_coping + 
+                  suppr_competing_activities + planning +
+                  restraint + seeking_instrumental_support #+ acceptance
+    soc_emo_cop =~ NA*seeking_instrumental_support + 
+                    seeking_emotional_support + venting
+    avoidance_cop =~ NA*mental_disengagement + denial + humor + 
+                     behavioral_disengagement + substance_use 
+                     # religion 
+    
+    active_cop ~~ 1*active_cop
+    soc_emo_cop ~~ 1*soc_emo_cop
+    avoidance_cop ~~ 1*avoidance_cop
+    
+    behavioral_disengagement	~~	venting	
+    behavioral_disengagement	~~	substance_use
+
+'
+```
+
+```{r}
+fit1 <- sem(model, data = all_items)
+summary(fit1, standardized = TRUE)
+```
+
+
+```{r}
+fitMeasures(fit1)
+```
+
+```{r}
+modindices(fit1, minimum.value = 10, sort = TRUE)
+```
+
+```{r}
+semTools::reliability(fit1, return.total = TRUE)
+```
+
+Create COPE sub-scales scores using *all* items -- note that SEM analyses suggest 
+to drop some of the items.
+
+```{r}
+all_items$active_coping <- with(
+  all_items, pos_reinterpretation + active_coping +
+  suppr_competing_activities + planning + restraint + 
+    seeking_instrumental_support + acceptance
+)
+
+all_items$avoidance_coping <- with(
+  all_items, mental_disengagement + denial + humor +
+  behavioral_disengagement + substance_use + religion 
+)
+
+all_items$soc_emo_coping <- with(
+  all_items, seeking_instrumental_support +
+  seeking_emotional_support + venting
+)
+```
+
+
+```{r}
+t.test(active_coping ~ is_rescue_worker, data= all_items)
+```
+
+```{r}
+t.test(avoidance_coping ~ is_rescue_worker, data= all_items)
+```
+
+
+```{r}
+t.test(soc_emo_coping ~ is_rescue_worker, data = all_items)
+```
+
+```{r}
+model2_cope <- '
+    active_cop =~ NA*pos_reinterpretation + active_coping + 
+                  suppr_competing_activities + planning +
+                  restraint # + seeking_instrumental_support + acceptance
+    # soc_emo_cop =~ NA*seeking_instrumental_support + 
+    #                 seeking_emotional_support + venting
+    avoidance_cop =~ NA*mental_disengagement + denial + humor + 
+                     behavioral_disengagement + substance_use 
+                     # religion 
+    
+    active_cop ~~ 1*active_cop
+    # soc_emo_cop ~~ 1*soc_emo_cop
+    avoidance_cop ~~ 1*avoidance_cop
+    
+    # behavioral_disengagement	~~	venting	
+    behavioral_disengagement	~~	substance_use
+
+'
+```
+
+```{r}
+fit2 <- sem(model2_cope, data = all_items)
+summary(fit2, standardized = TRUE)
+```
+
+```{r}
+modificationIndices(fit2, sort = TRUE)
+```
+
+
+```{r}
+fitMeasures(fit2)
+```
+
+## Self-compassion scale
+
+
+```{r}
+fm <- lm(avoidance_coping ~ ts_sc * is_rescue_worker, all_items)
+summary(fm)
+```
+
+```{r}
+plot(density(all_items$avoidance_coping))
+```
+```{r}
+library("brms")
+```
+
+
+
+```{r}
+plot(density(all_items$ts_sc))
+```
+
+
+
+```{r}
+fit_1 <- brm(
+  ts_sc ~ is_rescue_worker,
+  family = student(),
+  backend = "cmdstanr",
+  data = all_items
+)
+```
+
+```{r}
+pp_check(fit_1)
+```
+
+
+```{r}
+me <- conditional_effects(
+  fit_1, "is_rescue_worker"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+summary(fit_1)
+```
+
+
+```{r}
+fit_2 <- brm(
+  active_coping ~ ts_sc * is_rescue_worker,
+  family = asym_laplace(),
+  backend = "cmdstanr",
+  data = all_items
+)
+```
+
+```{r}
+pp_check(fit_2)
+```
+
+```{r}
+me <- conditional_effects(
+  fit_2, "ts_sc"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+summary(fit_2)
+```
+
+```{r}
+# all_items$active_coping <- all_items$pos_reinterpretation + 
+#   all_items$active_coping + all_items$suppr_competing_activities + 
+#   all_items$planning + all_items$restraint + 
+#   all_items$seeking_instrumental_support
+# 
+# all_items$avoidance_coping <- all_items$mental_disengagement + all_items$denial + 
+#   all_items$humor + all_items$behavioral_disengagement + 
+#   all_items$substance_use 
+```
+
+## LPA
+
+
+
+```{r}
+lpa_scales <- c(
+  "is_rescue_worker",
+  "neuroticism", "extraversion", "openness", "agreeableness",
+  "conscientiousness",
+  "active_coping", "avoidance_coping", "soc_emo_coping",
+  "iesr_ts",
+  "sk", "ch", "mi", "sj", "is", "oi",
+  # "pos_sc",
+  # "neg_sc",
+  # "ts_sc",
+  "mpss_tot",
+  "ptgi_total_score"
+  # "relating_to_others",
+  # "new_possibilities",
+  # "personal_strength",
+  # "appreciation_of_life",
+  # "spirituality"
+)
+```
+
+```{r}
+lpa_df <- subset(all_items, select=lpa_scales)
+temp <- lpa_df
+temp$is_rescue_worker <- NULL
+```
+
+```{r}
+# https://willhipson.netlify.app/post/latent-profile/latent-profile/
+
+temp1 <- temp %>%
+  mutate(string = longstring(.)) %>%
+  mutate(md = outlier(., plot = FALSE))
+
+cutoff <- (qchisq(p = 1 - .001, df = ncol(temp1)))
+# lpa_clean <- temp1 %>%
+#   filter(string <= 10,
+#          md < cutoff) %>%
+#   select(-string, -md)
+temp1$FLAG <- ifelse(
+  temp1$string > 10 | temp1$md > cutoff, 1, 0
+)
+
+lpa_clean <- lpa_df
+lpa_clean$FLAG <- temp1$FLAG
+
+lpa_clean <- lpa_clean |> 
+  dplyr::filter(FLAG == 0)
+lpa_clean$FLAG <-  NULL
+```
+
+```{r}
+is_rescue_worker_vector <- lpa_clean$is_rescue_worker
+lpa_clean$is_rescue_worker <- NULL
+```
+
+
+```{r}
+lpa_clean %>% 
+  estimate_profiles(1:10,
+    variances = c("equal", "varying"),
+    covariances = c("zero", "varying")
+    # package = "MplusAutomation"
+  ) %>% 
+  compare_solutions(statistics = c("AIC", "BIC"))
+```
+
+Compare tidyLPA solutions:
+
+ Model Classes AIC        BIC       
+ 1     1       121911.101 122079.946
+ 1     2       119241.918 119500.152
+ 1     3       118697.545 119045.167
+ 1     4       118115.937 118552.947
+ 1     5       117629.426 118155.825
+ 1     6       116990.674 117606.461
+ 1     7       116563.688 117268.864
+ 1     8       116380.951 117175.514
+ 1     9       116278.138 117162.091
+ 1     10      116146.253 117119.594
+ 6     1       115441.794 116286.018
+ 6     2       114456.657 116150.071
+ 6     3       114165.869 116708.473
+ 6     4       114039.472 117431.267
+ 6     5       113986.612 118227.596
+ 6     6       113940.600 119030.775
+ 6     7       114012.142 119951.507
+ 6     8       114128.308 120916.863
+ 6     9       114039.141 121676.886
+ 6     10      114170.629 122657.564
+
+Best model according to AIC is Model 6 with 6 classes.
+Best model according to BIC is Model 6 with 2 classes.
+
+An analytic hierarchy process, based on the fit indices AIC, AWE, BIC, CLC, and KIC (Akogul & Erisoglu, 2017), suggests the best solution is Model 6 with 2 classes.
+
+
+Varying variances and varying covariances (Model 6)
+
+
+```{r}
+m2 <- lpa_clean %>%
+  scale() %>%
+  estimate_profiles(2,
+    variances = "varying",
+    covariances = "varying"
+    # package = "MplusAutomation"
+  )
+```
+
+
+```{r}
+m2_plot <- lpa_clean %>%
+  scale() %>%
+  estimate_profiles(2,
+    variances = "varying",
+    covariances = "varying",
+    package = "MplusAutomation") %>%
+    plot_profiles()
+```
+
+
+```{r}
+get_estimates(m2)
+```
+
+
+```{r}
+all_items_clean[, ]
+```
+
+
+
+
+
+```{r}
+out <- get_data(m2)
+lpa_clean$lpa_class <- out$Class
+```
+
+```{r}
+table(
+  lpa_clean$lpa_class, is_rescue_worker_vector
+)
+```
+
+```{r}
+all_items_clean <- all_items[!temp1$FLAG, ]
+```
+
+```{r}
+all_items_clean$class <- lpa_clean$lpa_class - 1
+```
+
+
+```{r}
+m1 <- brm(
+  class ~ is_rescue_worker,
+  family = bernoulli(),
+  backend = "cmdstanr",
+  all_items_clean
+)
+```
+
+```{r}
+pp_check(m1)
+```
+
+```{r}
+summary(m1)
+```
+
+```{r}
+conditional_effects(
+  m1, "is_rescue_worker"
+)
+```
+
+
+```{r}
+model_glm = glm(class ~ is_rescue_worker, data = all_items_clean, family = "binomial")
+```
+
+```{r}
+model_glm_pred = ifelse(predict(model_glm, type = "link") > 0, "Yes", "No")
+```
+
+```{r}
+all_items_clean$class_lpa <- ifelse(all_items_clean$class == 1, "Yes", "No")
+```
+
+
+```{r}
+train_tab = table(predicted = model_glm_pred, actual = all_items_clean$class_lpa)
+library(caret)
+train_con_mat = confusionMatrix(train_tab, positive = "Yes")
+c(train_con_mat$overall["Accuracy"], 
+  train_con_mat$byClass["Sensitivity"], 
+  train_con_mat$byClass["Specificity"])
+```
+
+```{r}
+library(pROC)
+test_prob = predict(model_glm, newdata = all_items_clean, type = "response")
+
+```
+
+
+```{r}
+all_items_clean$rw <- ifelse(
+  all_items_clean$is_rescue_worker == "yes", 1, 0
+)
+
+test_roc = roc(all_items_clean$class_lpa ~ all_items_clean$rw, plot = TRUE, print.auc = TRUE)
+```
+
+```{r}
+as.numeric(test_roc$auc)
+```
+
+
+```{r}
+summary(model_glm)
+```
+
+
+
+
+
+
+
+
+
+```{r}
+all_items$last_training <- ifelse(
+  is.na(all_items$last_training), 0, all_items$last_training
+)
+
+all_items$rate_of_activity <- ifelse(
+  is.na(all_items$rate_of_activity), 0, all_items$rate_of_activity
+)
+
+all_items$is_job_qualification_invariant <- ifelse(
+  all_items$is_job_qualification_invariant == "Sì" | all_items$is_job_qualification_invariant == "Si", 
+  "Yes", all_items$is_job_qualification_invariant
+)
+
+all_items$is_job_qualification_invariant <- ifelse(
+  is.na(all_items$is_job_qualification_invariant), "Cntr", all_items$is_job_qualification_invariant
+)
+
+all_items$is_team_invariant <- ifelse(
+  all_items$is_team_invariant == "Sì" | all_items$is_team_invariant == "Si", 
+  "Yes", all_items$is_team_invariant
+)
+
+all_items$is_team_invariant <- ifelse(
+  is.na(all_items$is_team_invariant), "Cntr", all_items$is_team_invariant
+)
+
+
+```
+
+
+
+```{r}
+rw_df <- all_items |> 
+  dplyr::filter(is_rescue_worker == "yes" & job_qualification != "non_rescue_worker")
+
+```
+
+
+
+```{r}
+fm1 <- brm(
+  class ~ job_qualification,
+    # (gender + age + education + employment + job_qualification),
+    # last_training + rate_of_activity + is_job_qualification_invariant + is_team_invariant),
+  family = bernoulli(),
+  backend = "cmdstanr",
+  rw_df
+)
+```
+
+```{r}
+pp_check(fm1)
+```
+
+```{r}
+summary(fm1)
+```
+
+```{r}
+conditional_effects(
+  fm1, "job_qualification"
+)
+```
+
+
+
+```{r}
+fm2 <- brm(
+  class ~ gender + age + education,
+  family = bernoulli(),
+  backend = "cmdstanr",
+  rw_df
+)
+```
+
+```{r}
+summary(fm2)
+```
+
+
+EOF -------------------
+
+
+```{r}
+suppressMessages(mod_1c_v1 <- estimate_profiles(df = lpa_df, n_profiles = 1:9,
+models = 1))
+```
+
+
+```{r}
+mod_1c_v1
+```
+
+
+
+```{r}
+only_rw <- all_items |> 
+  dplyr::filter(is_rescue_worker == "yes")
+
+rw_df <- data.frame(
+  # exogeneous vars
+  neu = only_rw$neuroticism, 
+  extra = only_rw$extraversion,
+  open = only_rw$openness,
+  agree = only_rw$agreeableness,
+  consc = only_rw$conscientiousness,
+  mpss = only_rw$mpss_tot,
+  # mediators
+  actcop = only_rw$active_coping,
+  avocop = only_rw$avoidance_coping,
+  scpos = only_rw$pos_self_compassion,
+  scneg = only_rw$neg_self_compassion,
+  # endogeneous vars
+  iesr = only_rw$iesr_ts,
+  ptgi = only_rw$ptgi_total_score
+)
+```
+
+
+```{r}
+mod1 <- iesr ~ serial_m(actcop, scneg) + mpss + covariates(neu, consc)
+out1 <- test_mediation(mod1, data = rw_df, robust= FALSE)
+```
+
+```{r}
+summary(out1)
+```
+
+
+
+
+
+```{r}
+# mod_med <- '
+# 
+#   ptgi_total_score ~ neuroticism       
+#   ptgi_total_score ~ extraversion      
+#   ptgi_total_score ~ openness          
+#   ptgi_total_score ~ agreeableness    
+#   ptgi_total_score ~ conscientiousness
+#   ptgi_total_score ~ mpss_tot         
+#   
+#   iesr_ts ~ neuroticism     
+#   iesr_ts ~ extraversion       
+#   iesr_ts ~ openness           
+#   iesr_ts ~ agreeableness     
+#   iesr_ts ~ conscientiousness 
+#   iesr_ts ~ mpss_tot          
+#   
+#   active_coping ~ neuroticism       
+#   active_coping ~ extraversion    
+#   active_coping ~ openness        
+#   active_coping ~ agreeableness   
+#   active_coping ~ conscientiousness
+#   active_coping ~ mpss_tot        
+#   
+#   avoidance_coping ~ neuroticism       
+#   avoidance_coping ~ extraversion     
+#   avoidance_coping ~ openness         
+#   avoidance_coping ~ agreeableness    
+#   avoidance_coping ~ conscientiousness
+#   avoidance_coping ~ mpss_tot  
+#   
+#   ts_sc ~ neuroticism       
+#   ts_sc ~ extraversion     
+#   ts_sc ~ openness         
+#   ts_sc ~ agreeableness    
+#   ts_sc ~ conscientiousness
+#   ts_sc ~ mpss_tot     
+#   
+#   ptgi_total_score ~ ts_sc
+#   ptgi_total_score ~ active_coping
+#   ptgi_total_score ~ avoidance_coping
+#   
+#   iesr_ts ~ ts_sc
+#   iesr_ts ~ active_coping
+#   iesr_ts ~ avoidance_coping
+# '
+```
+
+
+```{r}
+# mod_med <- '
+# 
+#   ptgi_total_score ~ c(gn1, gn2)*neuroticism + c(ge1, ge2)*extraversion + c(go1, go2)*openness + 
+#                         c(ga1, ga2)*agreeableness + c(gc1, gc2)*conscientiousness + c(gm1, gm2)*mpss_tot + 
+#                         c(gat1, gat2)*active_coping + c(gv1, gv2)*avoidance_coping
+#                      
+#   iesr_ts          ~ c(in1, in2)*neuroticism + c(ie1, ie2)*extraversion + c(io1, io2)*openness + 
+#                         c(ia1, ia2)*agreeableness + c(ic1, ic2)*conscientiousness + c(im1, im2)*mpss_tot + 
+#                         c(iat1, iat2)*active_coping + c(iv1, iv2)*avoidance_coping
+#   
+#   pos_self_compassion ~ c(pscn1, pscn2)*neuroticism + c(psce1, psce2)*extraversion + c(psco1, psco2)*openness + 
+#                         c(psca1, psca2)*agreeableness + c(pscc1, pscc2)*conscientiousness + c(pscm1, pscm2)*mpss_tot + 
+#                         c(psct1, psct2)*active_coping + c(pscv1, pscv2)*avoidance_coping
+#     
+#   neg_self_compassion ~ c(nscn1, nscn2)*neuroticism + c(nsce1, nce2)*extraversion + c(nsco1, nsco2)*openness + 
+#                         c(nsca1, nsca2)*agreeableness + c(nscc1, nscc2)*conscientiousness + c(nscm1, nscm2)*mpss_tot + 
+#                         c(nscat1, nsct2)*active_coping + c(nscv1, nscv2)*avoidance_coping 
+# 
+#   ptgi_total_score ~ c(gpsc1, gpsc2)*pos_self_compassion + c(gnsc1, gnsc2)*neg_self_compassion
+#   iesr_ts          ~ c(ipsc1, ipsc2)*pos_self_compassion + c(insc1, insc2)*neg_self_compassion
+#   
+#   pos_self_compassion ~~ neg_self_compassion
+#   
+#   # indirect effect ()
+#   abgg1 := pscn1*gpsc1 + psce1*gpsc1 + psco1*gpsc1 + psca1*gpsc1 + pscc1*gpsc1 + pscm1*gpsc1 + psct1*gpsc1 + pscv1*gpsc1 
+#   abgg2 := pscn2*gpsc2 + psce2*gpsc2 + psco2*gpsc2 + psca2*gpsc2 + pscc2*gpsc2 + pscm2*gpsc2 + psct2*gpsc2 + pscv2*gpsc2 
+#   
+#   abig1 := pscn1*ipsc1 + psce1*ipsc1 + psco1*ipsc1 + psca1*ipsc1 + pscc1*ipsc1 + pscm1*ipsc1 + psct1*ipsc1 + pscv1*ipsc1 
+#   abig2 := pscn2*ipsc2 + psce2*ipsc2 + psco2*ipsc2 + psca2*ipsc2 + pscc2*ipsc2 + pscm2*ipsc2 + psct2*ipsc2 + pscv2*ipsc2 
+#   
+#   # total effect
+#   totalgg1 := abgg1 + gn1 + ge1 + go1 + ga1 + gc1 + gm1 + gat1 + gv1
+#   totalgg2 := abgg2 + gn2 + ge2 + go2 + ga2 + gc2 + gm2 + gat2 + gv2
+#   
+#   totalig1 := abig1 + in1 + ie1 + io1 + ia1 + ic1 + im1 + iat1 + iv1
+#   totalig2 := abig2 + in2 + ie2 + io2 + ia2 + ic2 + im2 + iat2 + iv2
+#   
+# '
+```
+
+
+
+
+
+
+```{r}
+mod_med <- '
+
+  ptgi_total_score ~ c(gn1, gn2)*neuroticism + c(ge1, ge2)*extraversion + c(go1, go2)*openness + 
+                        c(ga1, ga2)*agreeableness + c(gc1, gc2)*conscientiousness + c(gm1, gm2)*mpss_tot 
+                        
+  iesr_ts          ~ c(in1, in2)*neuroticism + c(ie1, ie2)*extraversion + c(io1, io2)*openness + 
+                        c(ia1, ia2)*agreeableness + c(ic1, ic2)*conscientiousness + c(im1, im2)*mpss_tot 
+  
+  
+                        
+  pos_self_compassion ~ c(pscn1, pscn2)*neuroticism + c(psce1, psce2)*extraversion + c(psco1, psco2)*openness + 
+                        c(psca1, psca2)*agreeableness + c(pscc1, pscc2)*conscientiousness + c(pscm1, pscm2)*mpss_tot 
+    
+  neg_self_compassion ~ c(nscn1, nscn2)*neuroticism + c(nsce1, nsce2)*extraversion + c(nsco1, nsco2)*openness + 
+                        c(nsca1, nsca2)*agreeableness + c(nscc1, nscc2)*conscientiousness + c(nscm1, nscm2)*mpss_tot 
+
+  active_coping ~ c(acn1, acn2)*neuroticism + c(ace1, ace2)*extraversion + c(aco1, aco2)*openness + 
+                        c(aca1, aca2)*agreeableness + c(acc1, acc2)*conscientiousness + c(acm1, acm2)*mpss_tot 
+                        
+  avoidance_coping ~ c(vcn1, vcn2)*neuroticism + c(vce1, vce2)*extraversion + c(vco1, vco2)*openness + 
+                        c(vca1, vca2)*agreeableness + c(vcc1, vcc2)*conscientiousness + c(vcm1, vcm2)*mpss_tot 
+
+
+
+  ptgi_total_score ~ c(gpsc1, gpsc2)*pos_self_compassion + c(gnsc1, gnsc2)*neg_self_compassion +
+                     c(gac1, gac2)*active_coping + c(gav1, gav2)*avoidance_coping
+                     
+  iesr_ts          ~ c(ipsc1, ipsc2)*pos_self_compassion + c(insc1, insc2)*neg_self_compassion +
+                     c(iac1, iac2)*active_coping + c(iav1, iav2)*avoidance_coping
+  
+  pos_self_compassion ~~ neg_self_compassion
+  
+  # indirect effect 
+  abgg1 := pscn1*gpsc1 + psce1*gpsc1 + psco1*gpsc1 + psca1*gpsc1 + pscc1*gpsc1 + 
+           pscm1*gpsc1 +
+           nscn1*gpsc1 + nsce1*gpsc1 + nsco1*gpsc1 + nsca1*gpsc1 + nscc1*gpsc1 + 
+           nscm1*gpsc1 +
+           acn1*gpsc1 + ace1*gpsc1 + aco1*gpsc1 + aca1*gpsc1 + acc1*gpsc1 + 
+           acm1*gpsc1 +
+           vcn1*gpsc1 + vce1*gpsc1 + vco1*gpsc1 + vca1*gpsc1 + vcc1*gpsc1 + 
+           vcm1*gpsc1 
+           
+  abgg2 := pscn2*gpsc2 + psce2*gpsc2 + psco2*gpsc2 + psca2*gpsc2 + pscc2*gpsc2 + 
+           pscm2*gpsc2 +
+           nscn2*gpsc2 + nsce2*gpsc2 + nsco2*gpsc2 + nsca2*gpsc2 + nscc2*gpsc2 +
+           nscm2*gpsc2 +
+           acn2*gpsc2 + ace2*gpsc2 + aco2*gpsc2 + aca2*gpsc2 + acc2*gpsc2 + 
+           acm2*gpsc2 +
+           vcn2*gpsc2 + vce2*gpsc2 + vco2*gpsc2 + vca2*gpsc2 + vcc2*gpsc2 + 
+           vcm2*gpsc2 
+   
+   abig1 := pscn1*ipsc1 + psce1*ipsc1 + psco1*ipsc1 + psca1*ipsc1 + pscc1*ipsc1 + 
+           pscm1*ipsc1 +
+           nscn1*ipsc1 + nsce1*ipsc1 + nsco1*ipsc1 + nsca1*ipsc1 + nscc1*ipsc1 + 
+           nscm1*ipsc1 +
+           acn1*ipsc1 + ace1*ipsc1 + aco1*ipsc1 + aca1*ipsc1 + acc1*ipsc1 + 
+           acm1*ipsc1 +
+           vcn1*ipsc1 + vce1*ipsc1 + vco1*ipsc1 + vca1*ipsc1 + vcc1*ipsc1 + 
+           vcm1*ipsc1 
+                   
+ abig2 := pscn2*ipsc2 + psce2*ipsc2 + psco2*ipsc2 + psca2*ipsc2 + pscc2*ipsc2 +  
+          pscm2*ipsc2 +
+          nscn2*ipsc2 + nsce2*ipsc2 + nsco2*ipsc2 + nsca2*ipsc2 + nscc2*ipsc2 +
+          nscm2*ipsc2 +
+          acn2*ipsc2 + ace2*ipsc2 + aco2*ipsc2 + aca2*ipsc2 + acc2*ipsc2 + 
+          acm2*ipsc2 +
+          vcn2*ipsc2 + vce2*ipsc2 + vco2*ipsc2 + vca2*ipsc2 + vcc2*ipsc2 + 
+          vcm2*ipsc2 
+                  
+  
+  # total effect
+    totalgg1 := abgg1 + gn1 + ge1 + go1 + ga1 + gc1 + gm1 + gac1 + gav1
+    totalgg2 := abgg2 + gn2 + ge2 + go2 + ga2 + gc2 + gm2 + gac2 + gav2
+    
+    totalig1 := abig1 + in1 + ie1 + io1 + ia1 + ic1 + im1 + iac1 + iav1
+    totalig2 := abig2 + in2 + ie2 + io2 + ia2 + ic2 + im2 + iac2 + iav2
+  
+'
+```
+
+```{r}
+all_items$neg_self_compassion <- -1 * all_items$neg_self_compassion 
+```
+
+
+```{r}
+fit2 <- sem(mod_med, data = all_items, group = "is_rescue_worker", 
+            se = "bootstrap",
+           bootstrap = 5000,
+           parallel ="snow", ncpus = 8)
+```
+
+```{r}
+standardizedSolution_boot_ci(fit2)
+```
+
+
+```{r}
+modificationindices(fit2, sort = TRUE)
+```
+
+
+```{r}
+summary(fit2,  fit.measures=TRUE, standardized = TRUE)
+```
+
+```{r}
+cor(
+  cbind(
+    all_items$pos_self_compassion,
+    all_items$neg_self_compassion,
+    all_items$ptgi_total_score,
+    all_items$iesr_ts
+  )
+) |> round(2)
+```
+
+```{r}
+library(semhelpinghands)
+
+ci_boot <- standardizedSolution_boot_ci(fit2)
+ci_boot
+```
+
+
+
+```{r}
+parameterEstimates(fit2, boot.ci.type="bca.simple")
+```
+
+
+```{r}
+lavaanPlot::lavaanPlot(model = fit2)
+```
+
+
+```{r}
+fitMeasures(fit2)
+```
+

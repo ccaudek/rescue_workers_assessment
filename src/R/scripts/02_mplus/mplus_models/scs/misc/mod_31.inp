@@ -1,0 +1,144 @@
+!Steps followed based on Morin and Asparouhov (2018):
+!The previous ESEM model is re-expressed using CFA. No rotation is necessary.
+!The model uses the exact values of the unstandardized loadings and cross-loadings
+!estimated from the Regular ESEM model as starts values (using *).
+!First-order factor variances are freely estimated, whereas the variance of the
+!higher-order factor !is fixed to 1 for identification purposes.
+!For the first-order factors, one item per factor has all loadings and cross-loadings
+!constrained to be exactly equal to their ESEM values (using @).
+
+TITLE: ESEM within CFA.
+DATA: FILE IS scs_clean.dat;
+
+VARIABLE:
+
+NAMES ARE
+scsj1
+scoi2
+scch3
+scis4
+scsk5
+scoi6
+scch7
+scsj8
+scmi9
+scch10
+scsj11
+scsk12
+scis13
+scmi14
+scch15
+scsj16
+scmi17
+scis18
+scsk19
+scoi20
+scsj21
+scmi22
+scsk23
+scoi24
+scis25
+scsk26;
+
+USEVARIABLES ARE
+SCSK5
+SCSK12
+SCSK19
+SCSK23
+SCSK26
+SCCH3
+SCCH7
+SCCH10
+SCCH15
+SCMI9
+SCMI14
+SCMI17
+SCMI22
+SCSJ1
+SCSJ8
+SCSJ11
+SCSJ16
+SCSJ21
+SCIS4
+SCIS13
+SCIS18
+SCIS25
+SCOI2
+SCOI6
+SCOI20
+SCOI24
+;
+
+MISSING ARE ALL(-999); !Change to your missing flag
+
+ANALYSIS:
+ESTIMATOR=MLR; !Other estimators are also possible, such as MLR.
+PROCESSORS=6; !Replace 8 with the number of logical processors of your CPU and remove !
+STARTS=10; !Convergence problems? Attempt different starting values. Remove ! to enable.
+STITERATION=50000; !Use with STARTS function when your model fails to converge.
+!ROTATION=TARGET; !No rotation needed within CFA
+
+MODEL:
+
+POS BY
+SCSK5@0.000
+SCSK12*0.000
+SCSK19@0.03
+SCSK23*0.000
+SCSK26*0.000
+SCCH3*0.000
+SCCH7*0.000
+SCCH10*0.000
+SCCH15*0.000
+SCMI9*0.000
+SCMI14*0.000
+SCMI17*0.000
+SCMI22*0.000
+SCSJ1@0.000
+SCSJ8*0.000
+SCSJ11*0.000
+SCSJ16*0.000
+SCSJ21*0.000
+SCIS4*0.000
+SCIS13*0.000
+SCIS18*0.000
+SCIS25*0.000
+SCOI2*0.000
+SCOI6*0.000
+SCOI20*0.000
+SCOI24*0.000;
+
+NEG BY
+SCSJ1@0.000
+SCSJ8*0.000
+SCSJ11*0.000
+SCSJ16*0.000
+SCSJ21*0.000
+SCIS4*0.000
+SCIS13*0.000
+SCIS18*0.000
+SCIS25*0.000
+SCOI2*0.000
+SCOI6*0.000
+SCOI20*0.000
+SCOI24*0.000
+SCSK5@0.000
+SCSK12*0.000
+SCSK19*0.000
+SCSK23*0.000
+SCSK26*0.000
+SCCH3*0.000
+SCCH7*0.000
+SCCH10*0.000
+SCCH15*0.000
+SCMI9*0.000
+SCMI14*0.000
+SCMI17*0.000
+SCMI22*0.000;
+
+POS*;
+NEG*;
+
+OUTPUT:
+stdyx;
+tech4;

@@ -1,0 +1,106 @@
+TITLE: Model 6, RW.
+DATA:
+FILE = "semdatass.dat";
+
+VARIABLE:
+NAMES =
+  scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+  scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+  scoi24 scis25 scsk26
+  pos_sc neg_sc ts_sc 
+  sk ch mi sj is oi
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+  iesr_a iesr_i iesr_h
+  cope_pa cope_po
+  mspss_fa mspss_fr mspss_so
+  neuro_na neuro_sr
+  extra_pa extra_so extra_ac
+  group
+  ;
+
+Grouping = group (0=RW 1=CS);
+
+MISSING = .;
+
+USEVARIABLES ARE
+  sk ch mi sj is oi
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+  iesr_a iesr_i iesr_h
+  cope_pa cope_po
+  mspss_fa mspss_fr mspss_so
+  neuro_na neuro_sr
+  extra_pa extra_so extra_ac
+  ;
+
+ANALYSIS:
+  ESTIMATOR = MLR;
+  PROCESSORS = 6;
+
+MODEL:
+
+P BY
+  sk ch mi;
+
+N BY
+  sj is oi;
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+  
+COPE BY 
+  cope_pa cope_po;
+
+MSPSS BY  
+  mspss_fa mspss_fr mspss_so;
+
+NEURO BY 
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+P ON COPE MSPSS NEURO EXTRA;
+N ON COPE MSPSS NEURO EXTRA;
+  
+PTGI ON P N COPE MSPSS NEURO EXTRA;
+IESR ON P N COPE MSPSS NEURO EXTRA;
+
+model indirect:
+  PTGI ind COPE;
+  PTGI ind MSPSS;
+  PTGI ind NEURO;
+  PTGI ind EXTRA;
+  
+  IESR ind COPE;
+  IESR ind MSPSS;
+  IESR ind NEURO;
+  IESR ind EXTRA;
+  
+MODEL CS: 
+
+P ON COPE MSPSS NEURO EXTRA;
+N ON COPE MSPSS NEURO EXTRA;
+  
+PTGI ON P N COPE MSPSS NEURO EXTRA;
+IESR ON P N COPE MSPSS NEURO EXTRA;
+
+model indirect:
+  PTGI ind COPE;
+  PTGI ind MSPSS;
+  PTGI ind NEURO;
+  PTGI ind EXTRA;
+  
+  IESR ind COPE;
+  IESR ind MSPSS;
+  IESR ind NEURO;
+  IESR ind EXTRA;
+
+! Requesting standardized parameter estimates and modification indices
+OUTPUT:
+  stdyx;
+  ! MODINDICES (ALL);
+  
+

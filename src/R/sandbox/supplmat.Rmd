@@ -1,0 +1,350 @@
+---
+author: 
+  - name          : "Corrado Caudek"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - "Writing - Review & Editing"
+      - "Supervision"
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : "bibliography.bib"
+
+floatsintext      : yes
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : yes
+tablelist         : yes
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r, echo=FALSE, message = FALSE, warning = FALSE, results = "hide"}
+suppressPackageStartupMessages(library("here"))
+suppressPackageStartupMessages(library("tidyverse")) 
+suppressPackageStartupMessages(library("scales"))
+suppressPackageStartupMessages(library("papaja"))
+suppressPackageStartupMessages(library("brms"))
+suppressPackageStartupMessages(library("cmdstanr"))
+suppressPackageStartupMessages(library("patchwork"))
+suppressPackageStartupMessages(library("ggdist"))
+suppressPackageStartupMessages(library("HDInterval"))
+suppressPackageStartupMessages(library("broom.mixed"))
+suppressPackageStartupMessages(library("rlang"))
+suppressPackageStartupMessages(library("ggthemes"))
+suppressPackageStartupMessages(library("ggokabeito")) # Neat accessible color palette
+suppressPackageStartupMessages(library("gghalves")) # Special half geoms
+suppressPackageStartupMessages(library("ggbeeswarm")) # Special distribution-shaped point jittering
+
+rstan::rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores() )
+
+# disables/enables caching by default
+knitr::opts_chunk$set(message = FALSE, warning = FALSE)
+
+source(here::here("src", "R", "functions", "funs_effect_size.R"))
+source(here::here("src", "R", "functions", "funs_boxplot_subscales.R"))
+
+scale_this <- function(x) as.vector(scale(x))
+
+# Read data
+all_items <- readRDS(
+  file = here("data", "processed", "all_items", 
+              "three_samples_items_final.Rds")
+)
+
+# This coding system compares the mean of the dependent variable for a given 
+# level to the overall mean of the dependent variable.
+contrasts(all_items$gender) = contr.sum(2)
+```
+
+
+# Introduction
+
+Bla bla.
+
+
+\pagebreak
+
+```{r, echo=FALSE, message=FALSE, cache=TRUE}
+# pdf figures with half-boxplots by group of the six scales' subscales.
+save_pdf_6_scales(all_items)
+```
+
+## Group comparisons for the NEO-FFI-60 scale
+
+```{r boxplot-neoffi60, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the five NEO-FFI-60 subscales."}
+# Print figure with boxplot of each NEO-FFI-60 subscale by group.
+knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "neoffi60_all_subscales.pdf"))
+```
+
+```{r coefs-neoffimvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Run multivariate model with the 5 NEO-FFI-60 subscales as the DVs and group as the predictor.
+source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_neoffi60.R"))
+```
+
+```{r coefs-neoffimvmodel, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "asis"}
+# Print table with posterior estimates for the model of the chunk coefs-neoffimvmodel-run.
+papaja::apa_table(
+  summary_mod1,
+  placement = "h",
+  align = c("l", "r", "r", "r", "r", "r"),
+  caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$
+    statistic for the parameters of the bmod1 model.",
+  note = NULL,
+  small = TRUE,
+  digits = 3,
+  escape = FALSE
+)
+```
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"}
+# Compute effect size for each group comparison on the five NEO-FFI-60 subscales.
+source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_neoffi60.R"))
+```
+
+The score distributions of the NEO-FFI-60 subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-neoffi60). The five subscales of the NEO-FFI-60 were included in a multivariate Bayesian model to test for group differences between rescue-worker and community/student samples (model `bmod1`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-neoffimvmodel). Effect size for group differences on the six NEO-FFI-60 scales were the following: Neuroticism, Cohen's $d$ = `r out_neuro[2]`, 95% credibility interval [`r out_neuro[1]`, `r out_neuro[3]`]; Extraversion, Cohen's $d$ = `r out_extra[2]`, 95% credibility interval [`r out_extra[1]`, `r out_extra[3]`]; Openness, Cohen's $d$ = `r out_open[2]`, 95% credibility interval [`r out_open[1]`, `r out_open[3]`]; Agreeableness, Cohen's $d$ = `r out_open[2]`, 95% credibility interval [`r out_open[1]`, `r out_open[3]`]; Conscientiousness, Cohen's $d$ = `r out_cons[2]`, 95% credibility interval [`r out_cons[1]`, `r out_cons[3]`]. 
+
+
+<!-- \clearpage -->
+
+<!-- ## Group comparisons for the COPE-NVI scale -->
+
+<!-- ```{r boxplot-copenvi, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the five COPE-NVI subscales."} -->
+<!-- # Print figure with boxplot of each COPE-NVI subscale by group. -->
+<!-- knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "copenvi_all_subscales.pdf")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-copemvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run multivariate model with the 5 NEO-FFI-60 subscales as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_copenvi.R")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-copemvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"} -->
+<!-- papaja::apa_table( -->
+<!--   summary_mod2, -->
+<!--   placement = "h", -->
+<!--   align = c("l", "r", "r", "r", "r", "r"), -->
+<!--   caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$ -->
+<!--     statistic for the parameters of the bmod2 model.", -->
+<!--   note = NULL, -->
+<!--   small = TRUE, -->
+<!--   digits = 3, -->
+<!--   escape = FALSE -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Compute effect size for each group comparison on the five COPE-NVI subscales. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_copenvi.R")) -->
+<!-- ``` -->
+
+<!-- The score distributions of the COPE-NVI subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-copenvi). The five subscales of the COPE-NVI were included in a multivariate Bayesian analysis to test for group differences between  rescue-worker and the community/student samples (model `bmod2`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-copemvmodel). Effect size of group differences on the six NEO-FFI-60 scales were the following. Social support: Cohen's $d$ = `r out_ss[2]`, 95% credibility interval [`r out_ss[1]`, `r out_ss[3]`]; Avoiding strategies: Cohen's $d$ = `r out_as[2]`, 95% credibility interval [`r out_as[1]`, `r out_as[3]`]; Positive attitude: Cohen's $d$ = `r out_pa[2]`, 95% credibility interval [`r out_pa[1]`, `r out_pa[3]`]; Problem Orientation: Cohen's $d$ = `r out_po[2]`, 95% credibility interval [`r out_po[1]`, `r out_po[3]`]; Transcendent orientation: Cohen's $d$ = `r out_to[2]`, 95% credibility interval [`r out_to[1]`, `r out_to[3]`].  -->
+
+
+<!-- \clearpage -->
+
+<!-- ## Group comparisons for the PTGI scale -->
+
+<!-- ```{r boxplot-ptgi, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the five PTGI subscales."} -->
+<!-- # Print figure with boxplot of each PTGI subscale by group. -->
+<!-- knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "ptgi_all_subscales.pdf")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-ptgimvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run multivariate model with the 5 PTGI subscales as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_ptgi.R")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-ptgimvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"} -->
+<!-- papaja::apa_table( -->
+<!--   summary_mod3, -->
+<!--   placement = "h", -->
+<!--   align = c("l", "r", "r", "r", "r", "r"), -->
+<!--   caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$ -->
+<!--     statistic for the parameters of the bmod3 model based on the skew-normal distribution.", -->
+<!--   note = NULL, -->
+<!--   small = TRUE, -->
+<!--   digits = 3, -->
+<!--   escape = FALSE -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Compute effect size for each group comparison on the five PTGI subscales. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_ptgi.R")) -->
+<!-- ``` -->
+
+<!-- ```{r ptgi-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run model with PTGI TS as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "ptgi_ts.R")) -->
+<!-- ``` -->
+
+<!-- The score distributions of the PTGI subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-ptgi). The five subscales of the PTGI were included in a multivariate Bayesian analysis to test for group differences between rescue-worker and the community/student samples (model `bmod3`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-ptgimvmodel). Effect size of group differences on the five PTGI scales were the following: Relating to others, Cohen's $d$ = `r out_ro[2]`, 95% credibility interval [`r out_ro[1]`, `r out_ro[3]`]; New Possibilities, Cohen's $d$ = `r out_np[2]`, 95% credibility interval [`r out_np[1]`, `r out_np[3]`]; Personal Strength, Cohen's $d$ = `r out_ps[2]`, 95% credibility interval [`r out_ps[1]`, `r out_ps[3]`]; Spiritual Change, Cohen's $d$ = `r out_sc[2]`, 95% credibility interval [`r out_sc[1]`, `r out_sc[3]`]; Appreciation of Life: Cohen's $d$ = `r out_al[2]`, 95% credibility interval [`r out_al[1]`, `r out_al[3]`]. On the PTGI TS, Cohen's $d$ = `r out_ptgi_ts[2]`, 95% credibility interval [`r out_ptgi_ts[1]`, `r out_ptgi_ts[3]`]. -->
+
+<!-- \clearpage -->
+
+
+<!-- ## Group comparisons for the IES-R scale -->
+
+<!-- ```{r boxplot-iesr, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the five IES-R subscales."} -->
+<!-- # Print figure with boxplot of each IES-R subscale by group. -->
+<!-- knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "ies_all_subscales.pdf")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-iesrmvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run multivariate model with the 3 IES-R subscales as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_iesr.R")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-iesrmvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"} -->
+<!-- papaja::apa_table( -->
+<!--   summary_mod4, -->
+<!--   placement = "h", -->
+<!--   align = c("l", "r", "r", "r", "r", "r"), -->
+<!--   caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$ -->
+<!--     statistic for the parameters of the bmod4 model based on the skew-normal distribution.", -->
+<!--   note = NULL, -->
+<!--   small = TRUE, -->
+<!--   digits = 3, -->
+<!--   escape = FALSE -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Compute effect size for each group comparison on the five IES-R subscales. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_iesr.R")) -->
+<!-- ``` -->
+
+<!-- ```{r iesr-ts, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run model with IES-R TS as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "iesr_ts.R")) -->
+<!-- ``` -->
+
+<!-- The score distributions of the IES-R subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-iesr). The three IES-R subscales were included in a multivariate Bayesian analysis to test for group differences between rescue-worker and the community/student samples (model `bmod4`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-iesrmvmodel). Effect size of group differences on the three PTGI scales were the following: Avoiding, Cohen's $d$ = `r out_avoiding[2]`, 95% credibility interval [`r out_avoiding[1]`, `r out_avoiding[3]`]; Intrusivity, Cohen's $d$ = `r out_intrusivity[2]`, 95% credibility interval [`r out_intrusivity[1]`, `r out_intrusivity[3]`]; Hyperarousal, Cohen's $d$ = `r out_hyperarousal[2]`, 95% credibility interval [`r out_hyperarousal[1]`, `r out_hyperarousal[3]`]. On the IES-R TS, Cohen's $d$ = `r out_iesr_ts[2]`, 95% credibility interval [`r out_iesr_ts[1]`, `r out_iesr_ts[3]`]. -->
+
+<!-- \clearpage -->
+
+<!-- ## Group comparisons for the MSPSS scale -->
+
+<!-- ```{r boxplot-mspss, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the three MSPSS subscales."} -->
+<!-- # Print figure with boxplot of each MSPSS subscale by group. -->
+<!-- knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "mspss_all_subscales.pdf")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-mpssmvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run multivariate model with the 3 MSPSS subscales as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_mspss.R")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-mspssmvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"} -->
+<!-- papaja::apa_table( -->
+<!--   summary_mod5, -->
+<!--   placement = "h", -->
+<!--   align = c("l", "r", "r", "r", "r", "r"), -->
+<!--   caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$ -->
+<!--     statistic for the parameters of the bmod5 model based on the Asymmetric Laplace distribution.", -->
+<!--   note = NULL, -->
+<!--   small = TRUE, -->
+<!--   digits = 3, -->
+<!--   escape = FALSE -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Compute effect size for each group comparison on the six SCS subscales. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "mspss_ts.R")) -->
+<!-- ``` -->
+
+<!-- The score distributions of the MSPSS subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-mspss). The three MSPSS subscales were included in a multivariate Bayesian analysis to test for group differences between rescue-worker and the community/student samples (model `bmod5`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-mspssmvmodel). We found no credible differences between the two groups. On the MSPSS TS, Cohen's $d$ = `r out_mspss_ts[2]`, 95% credibility interval [`r out_mspss_ts[1]`, `r out_mspss_ts[3]`]. -->
+
+<!-- \clearpage -->
+
+<!-- ## Group comparisons for the SCS scale -->
+
+<!-- ```{r boxplot-scs, echo=FALSE, out.width = "100%", fig.cap= "Half-boxplots and score distributions by group (rescue-worker sample vs. community/student sample) for the six SCS subscales."} -->
+<!-- # Print figure with boxplot of each SCS subscale by group. -->
+<!-- knitr::include_graphics(here::here("reports", "suppl_mat", "suppl_figs", "scs_all_subscales.pdf")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-scsmvmodel-run, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Run multivariate model with the 3 IES-R subscales as the DVs and group as the predictor. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "table_mv_model_scs.R")) -->
+<!-- ``` -->
+
+<!-- ```{r coefs-scsmvmodel, echo=FALSE, message = FALSE, warning = FALSE, results = "asis"} -->
+<!-- papaja::apa_table( -->
+<!--   summary_mod6, -->
+<!--   placement = "h", -->
+<!--   align = c("l", "r", "r", "r", "r", "r"), -->
+<!--   caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$ -->
+<!--     statistic for the parameters of the bmod6 model based on the normal distribution.", -->
+<!--   note = NULL, -->
+<!--   small = TRUE, -->
+<!--   digits = 3, -->
+<!--   escape = FALSE -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r, echo=FALSE, cache=TRUE, message = FALSE, warning = FALSE, results = "hide"} -->
+<!-- # Compute effect size for each group comparison on the six SCS subscales. -->
+<!-- source(here::here("reports", "suppl_mat", "snippets", "effect_sizes_scs.R")) -->
+<!-- ``` -->
+
+<!-- The score distributions of the SCS subscales for the two groups (rescue-worker sample vs. community/student sample) are shown in Figure \@ref(fig:boxplot-scs).  -->
+
+<!-- The six SCS subscales were included in a multivariate Bayesian analysis to test for group differences between rescue-worker and the community/student samples (model `bmod6`). Bayesian posterior estimates for group differences are presented in Table \@ref(tab:coefs-scsmvmodel).  -->
+
+<!-- Effect size of group differences on the six SCS scales were the following: Self Kindness, Cohen's $d$ = `r out_sk[2]`, 95% credibility interval [`r out_sk[1]`, `r out_sk[3]`]; -->
+
+<!-- Self Judgment, Cohen's $d$ = `r out_sj[2]`, 95% credibility interval [`r out_sj[1]`, `r out_sj[3]`]; Common Humanity, Cohen's $d$ = `r out_ch[2]`, 95% credibility interval [`r out_ch[1]`, `r out_ch[3]`], Isolation, Cohen's $d$ = `r out_is[2]`, 95% credibility interval [`r out_is[1]`, `r out_is[3]`], Mindfulness, Cohen's $d$ = `r out_mi[2]`, 95% credibility interval [`r out_mi[1]`, `r out_mi[3]`], Over-Identification, Cohen's $d$ = `r out_oi[2]`, 95% credibility interval [`r out_oi[1]`, `r out_oi[3]`]. On the SCS TS, Cohen's $d$ = `r out_scs_ts[2]`, 95% credibility interval [`r out_scs_ts[1]`, `r out_scs_ts[3]`]. -->
+
+
+\clearpage
+
+
+**Acknowledgements.** I would like to thank all anonymous reviewers for valuable input. Their contribution helped to clarify the manuscript and gain new insights.
+
+**Data accessibility.** All data is generated in the simulation. Code is publicly available on Github: <https://github.com/simeonqs/Using_relative_brain_size_as_predictor_variable-_serious_pitfalls_and_solutions>. It is also available on Edmond: <https://doi.org/10.17617/3.PXZF2T>. 
+
+**Competing interests.** I declare I have no competing interests.
+
+**Funding.** I received funding from the International Max Planck Research School for Quantitative Behaviour, Ecology and Evolution.
+
+**ORCID:** 0000-0003-1001-6615
+
+\newpage
+# References
+
+::: {#refs}
+:::
+
+bla bla

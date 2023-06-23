@@ -1,0 +1,505 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  man]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\keywords{keywords\newline\indent Word count: X}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Exploring the Role of Self-Compassion in Promoting Resilience and Well-Being Among Rescue Workers},
+  pdfauthor={Corrado Caudek1 \& Ernst-August Doelle1,2},
+  pdflang={en-EN},
+  pdfkeywords={keywords},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Exploring the Role of Self-Compassion in Promoting Resilience and Well-Being Among Rescue Workers}
+\author{Corrado Caudek\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
+\date{}
+
+
+\shorttitle{Title}
+
+\authornote{
+
+Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+Enter author note here.
+
+The authors made the following contributions. Corrado Caudek: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; Ernst-August Doelle: Writing - Review \& Editing, Supervision.
+
+Correspondence concerning this article should be addressed to Corrado Caudek, NEUROFARBA Department, Psychology Section, University of Firenze, Italy. E-mail: \href{mailto:corrado.caudek@unifi.it}{\nolinkurl{corrado.caudek@unifi.it}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Wilhelm-Wundt-University\\\textsuperscript{2} Konstanz Business School}
+
+\abstract{%
+One or two sentences providing a \textbf{basic introduction} to the field, comprehensible to a scientist in any discipline.
+
+Two to three sentences of \textbf{more detailed background}, comprehensible to scientists in related disciplines.
+
+One sentence clearly stating the \textbf{general problem} being addressed by this particular study.
+
+One sentence summarizing the main result (with the words ``\textbf{here we show}'' or their equivalent).
+
+Two or three sentences explaining what the \textbf{main result} reveals in direct comparison to what was thought to be the case previously, or how the main result adds to previous knowledge.
+
+One or two sentences to put the results into a more \textbf{general context}.
+
+Two or three sentences to provide a \textbf{broader perspective}, readily comprehensible to a scientist in any discipline.
+}
+
+
+
+\begin{document}
+\maketitle
+
+Rescue workers (RWs) and healthcare workers frequently encounter the distress of others, which can lead to ``compassion fatigue'' (Joinson, 1992), burn-out (Chatzea, Sifaki-Pistolla, Vlachaki, Melidoniotis, \& Pistolla, 2018), and Post-Traumatic Stress Disorder {[}PTSD; Tahernejad et al. (2023){]}. Therefore, it is important to understand and promote internal and external factors that support their resilience (Mao, Hu, \& Loke, 2022).
+
+In recent years, the concept of ``self'' has become essential in understanding individual differences in coping with stress (Beck, 2016). Self-compassion, which involves specific ways of relating to oneself, has been shown to have a positive impact on mental health (MacBeth \& Gumley, 2012). A compassionate mindset towards oneself may also protect against psychopathology, such as PTSD (Wilson, Mackintosh, Power, \& Chan, 2019; Wong \& Yeung, 2017).
+
+Self-compassion is typically measured using the Self-Compassion Scale (SCS). The SCS measures six dimensions of self-compassion, three of which evaluate the active components of self-compassion. These dimensions include Self-kindness (SK), Common humanity (CH), and Mindfulness (MI), which involve being kind and understanding towards oneself, recognizing that personal failures and pain are common experiences, and maintaining awareness of one's painful thoughts and feelings. The remaining three dimensions evaluate the ``hindrances'' to self-compassion, including Self-judgment (SJ), Isolation (IS), and Overidentification (OI). These dimensions assess factors that hinder self-compassion, such as being self-critical and unsympathetic towards one's shortcomings, isolating oneself from others, and over-identifying with one's painful thoughts and emotions (Neff, 2022).
+
+The goal of this study is to investigate how self-compassion functions as a coping mechanism among RWs, and its potential impact on their mental health and well-being. Specifically, we aim to explore how self-compassion may promote resilience and reduce the risk of negative outcomes such as compassion fatigue and burn-out. To achieve these aims, we will utilize Latent Profile Analysis to identify distinct profiles of personality, protective factors, risk factors, and outcomes among RWs. We will then examine whether individuals in the adaptive profile show higher levels of positive dimensions of self-compassion and lower levels of negative dimensions of self-compassion, while individuals in the maladaptive profile exhibit the opposite pattern.
+
+By addressing these research questions, the study aims to shed light on the role of self-compassion in RWs, its potential impact on their mental health and well-being, and its implications for promoting resilience and reducing the risk of negative outcomes such as compassion fatigue and burn-out.
+
+\hypertarget{personality-traits-and-coping-strategies-as-protective-factors}{%
+\subsection{Personality traits and coping strategies as protective factors}\label{personality-traits-and-coping-strategies-as-protective-factors}}
+
+Personality traits play a crucial role in determining an individual's susceptibility to burnout. For instance, a meta-analysis conducted by Swider and Zimmerman (2010) revealed that the Five Factor Model of Personality, comprising neuroticism, extraversion, agreeableness, conscientiousness, and openness, collectively account for a significant proportion of the variance in levels of job burnout among individuals. This finding suggests that personality traits are a potent predictor of burnout levels, implying that the etiology of burnout may not solely originate from external factors but also from intrinsic personality attributes. Specifically, Bianchi (2018) found that neuroticism is the strongest correlate for burnout. Individuals with low levels of extraversion tend to focus on negative aspects of events and use predominantly emotion-focused coping strategies (Connor-Smith \& Flachsbart, 2007). Moreover, individuals with low levels of conscientiousness tend to experience higher levels of depersonalization and reduced personal accomplishment (Kokkinos, 2007). Conversely, individuals with high levels of agreeableness exhibit a greater ability to build successful interpersonal relationships at work, are gentle, and cooperative, and show lower levels of burnout (Angelini, 2023). On the other hand, the literature has not established a clear link between openness and burnout (Angelini, 2023; Răducu \& Stănculescu, 2022). Therefore, we may expect that elevated levels of neuroticism and lower levels of extraversion, agreeableness, and conscientiousness (but not openness) may provide a ``personality marker'' for rescue workers who are less able to mobilize internal resources and build resistance against stressors.
+
+Coping refers to the cognitive and behavioral efforts individuals make to manage environmental stressors, as described by Lazarus and Folkman (1984). Research has identified two types of coping strategies: adaptive (problem-solving and cognitive reappraisal) and maladaptive (suppression, rumination, and avoidance). Studies have consistently found that maladaptive coping strategies are particularly harmful to psychological well-being, as evidenced by Joormann and Stanton (2016), Liu and Thompson (2017), and Moritz et al. (2016). In contrast, the lack of adaptive coping strategies seems to be less relevant to the development of psychological disorders, as suggested by studies conducted by Aldao and Nolen-Hoeksema (2012) and Moritz et al. (2016).
+
+A considerable amount of research has also demonstrated a clear relationship between personality traits and coping strategies (Sica et al., 2021). However, Connor-Smith and Flachsbart (2007) meta-analysis comprising 124 studies emphasized the importance of distinguishing between specific strategies. Specifically, extraversion showed positive correlations with problem-focused and emotion-focused strategies. On the other hand, neuroticism was negatively related to problem-focused and positive-oriented strategies, particularly acceptance, and positively related to emotional-focused and avoidance-oriented strategies. Agreeableness and openness exhibited a weak association with coping, primarily with social support and problem-focused strategies, while conscientiousness showed a strong link to problem-focused strategies. Additionally, the use of drugs and alcohol, classified as avoidance-oriented strategies, was negatively associated with Agreeableness and Conscientiousness (Afshar-Oromieh et al., 2015; Connor-Smith \& Flachsbart, 2007).
+
+Furthermore, it has been established that having access to sufficient internal and external resources can help individuals cope with situational demands, as well as build resistance against stressors. For RWs, perceived social support is a crucial external resource that plays a significant role in mitigating burnout. Studies conducted by Setti, Lourel, and Argentero (2016) have shown that RWs who perceive support from their colleagues and superiors are less likely to experience emotional exhaustion, depersonalization, and inefficacy, which are the three dimensions of burnout. These findings are consistent with previous research that has linked social support to lower levels of burnout and posttraumatic symptoms (Armstrong-Stassen, 2004). The stress-buffering hypothesis (Cohen \& Wills, 1985), the social support deterioration model (Norris \& Kaniasty, 1996), and the conservation of resources model (Hobfoll, 1989) all suggest that perceived social support can protect against the negative effects of stress.
+
+The overall psychological distressing symptoms in RWs often linked to burnout and PTSD. The meta-analysis of Berger et al. (2012), for example, shows that RWs have a prevalence of PTSD that is much higher than that of the general population. Therefore, the identification of individual differences that signal increased risk for PTSD is important.
+
+\hypertarget{purpose-of-the-study}{%
+\subsection{Purpose of the study}\label{purpose-of-the-study}}
+
+We posit that a LPA will detect a high and a low profile of resilience among RWs. The ``low resilience'' profile should include high levels of neuroticism and maladaptive coping, low levels of extraversion, agreeableness, conscientiousness, and perceived social support, as well as high levels of reported post-traumatic symptoms. Conversely, an adaptive profile of resilience should have the opposite pattern.
+
+We expect that the ``low resilience'' profile will covary with elevated levels of ``negative'' self-compassion and with lower levels of ``positive'' self-compassion, when compared to the ``high resilience'' profile group.
+
+Specifically, the study aims to:
+
+\begin{itemize}
+\tightlist
+\item
+  Investigate whether the overall level of self-compassion varies between RWs and a control community sample.
+\item
+  Explore whether the ``high-resilience'' and ``low-resilience profiles'' described above can be used to descrive individual differences in RWs protective and risk factors.
+\item
+  Determine whether the ``high-resilience'' and ``low-resilience'' profiles can accound for individual differences of RWs to rely on self-compassion.
+\item
+  Examine the relationship between direct vs indirect involvement in alleviating the suffering of others (job qualifications) and the ability to rely on self-compassion.
+\end{itemize}
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+\hypertarget{instruments}{%
+\subsubsection{Instruments}\label{instruments}}
+
+In addition to administering specific questions targeted towards the RW group, we also administered the following scales to both participant groups.
+
+\emph{Self-Compassion}. The Self-Compassion Scale {[}SCS; Neff (2003){]} was used to measure self-compassione. The SCS is a 26-item self-report measure designed to assess self-compassion, or the ability to extend kindness and understanding to oneself during challenging times. The SCS is composed of six subscales, with three of them (Self-Kindness, SK; Common-Humanity, CH; and Mindfulness, MI) measuring compassionate self-responding, and the remaining three (Self-Judgment, SJ; Isolation, IS; and Over-Identification, OI) assessing uncompassionate self-responding. The SCS total score (SCS-TS) is obtained by inverting the scores of the subscales related to uncompassionate self-responding. The Italian version of the SCS by Veneziani, Fuochi, and Voci (2017) was used in the present study. The SCS demonstrated good internal consistency, with a total reliability of \(\omega\) = .92. The subscales also demonstrated adequate reliability: SK (\(\omega\) = .90), CH (\(\omega\) = .78), MI (\(\omega\) = .78), SJ (\(\omega\) = .85), IS (\(\omega\) = .89), and OI (\(\omega\) = .86).
+
+\emph{Personality traits}. The NEO-Five Factor Inventory (NEO-FFI-60; Costa and McCrae (1992)) was employed to examine personality traits. The NEO-FFI-60 is a widely used 60-item self-report questionnaire that assesses five broad domains of personality: Neuroticism (N), Extraversion (E), Openness to experience (O), Agreeableness (A), and Conscientiousness (C). The internal consistency of the five sub-scales of the NEO-FFI-60 has been found to be adequate (Murray, Rawlings, Allen, \& Trinder, 2003). In the current study, we used the Italian version of the NEO-FFI-60 developed by Caprara, Barbaranelli, and Guido (2001). The Neuroticism (\(\omega\) = .92), Extraversion (\(\omega\) = .83), Conscientiousness (\(\omega\) = .87), and Openness (\(\omega\) = .78) subscales showed adequate internal consistency, whereas reliability was low for Agreableness (\(\omega\) = .66) -- see also Burton, Delvecchio, Germani, and Mazzeschi (2021).
+
+\emph{Adaptive and maladaptive coping strategies}. The Coping Orientation to Problems Experienced (COPE) test was used to assess adaptive and maladaptive coping. The COPE test (Carver, Scheier, \& Weintraub, 1989) is a self-report questionnaire commonly used to assess an individual's coping skills and strategies when dealing with stressful and challenging events. In the present study, we utilized the scoring system proposed by Lyne and Roger (2000), which divides the COPE items into three subscales: Active Coping, Emotion-Focused Coping, and Avoidance Coping. Active Coping reflects a constructive and active approach to coping, in which individuals acknowledge the occurrence of a stressful situation and take action to address the problem through problem-solving, gathering information, and analyzing the situation logically. The other two subscales, Emotion-Focused Coping (expressing feelings and seeking emotional support) and Avoidance Coping (behavioural disengagement (giving up), denial, and mental disengagement), represent more passive approaches to problem-solving, suggesting a belief that the situation cannot be changed. These subscales assess maladaptive coping strategies. In our study, we utilized the Italian version of the COPE questionnaire developed by Sica, Novara, Dorz, and Sanavio (1997; Sica et al., 2021; see also Sica et al., 2008). The reliability of the total scale was satisfactory (\(\omega\) = .87); reliability coefficients for each subscale were acceptable: Active coping: \(\omega\) = .89; Emotion-focused coping: \(\omega\) = .77; Avoidance coping: \(\omega\) = 0.82.
+
+\emph{Perceived social support}. The Multidimensional Scale of Perceived Social Support {[}MSPSS; Zimet, Dahlem, Zimet, and Farley (1988){]} was used to evaluate the perceived availability of social support. The MSPSS encompasses three social support subscales, namely family, friends, and significant others, with the items encompassing expressions such as ``I can talk about my problems with my family,'' ``I can count on my friends when things go wrong,'' and ``There is a special person who is around when I am in need.'' Participants were requested to rate their responses to the 12 items on a seven-point Likert scale, with higher total scores indicating greater perceived social support, ranging from ``very strongly disagree'' to ``very strongly agree.'' Previous research has established the MSPSS's good test-retest reliability and discriminant and construct validity (Zimet et al., 1988). For this investigation, we utilized the Italian version of the scale (Prezza \& Principato, 2002). The internal consistency of the current sample was found to be good, with coefficients of \(\omega\) of 0.94 for the family subscale, 0.96 for the friends subscale, and 0.95 for the significant others subscale.
+
+\emph{Post-traumatic stress}. The Impact of Event Scale - Revised {[}IES-R; Weiss (2007){]} was used to evaluate subjective distress associated with traumatic events. The IES-R is a self-report instrument comprising 22 items, designed to capture the essential features of traumatic stress reactions, including intrusion, avoidance, and persistent hyperarousal. These features correspond to criteria B, C, and D of the DSM-IV diagnosis of posttraumatic stress disorder (PTSD). The IES-R includes sub-scales for each of these domains, and it is commonly used to assess PTSD symptomatology in rescue workers. Previous research has demonstrated that the IES-R has good internal consistency and test-retest stability. Additionally, a study by Craparo, Faraci, Rotondo, and Gori (2013) examined the psychometric properties of the Italian translation of the IES-R and found good concurrent and discriminant validity, as well as good test-retest reliability.
+In the present sample, IES-R demonstrated high levels of internal consistency, with a total reliability \(\omega\) = .94. The reliability for each of the sub-scales was also high, with \(\omega\) = .91 for intrusion, \(\omega\) = .82 for avoidance, and \(\omega\) = .87 for hyperarousal.
+
+\emph{Post-traumatic growth}. We employed the Post-Traumatic Growth Inventory {[}PTGI; Tedeschi and Calhoun (1996){]} to examine the potential positive changes following one or more traumatic or stressful events. The PTGI is a self-report inventory composed of 21 items and encompasses five subscales, namely Relating to others, New possibilities, Personal strength, Appreciation of life, and Spiritual change. Previous research has demonstrated that the PTGI has good internal consistency, construct-convergent validity, and discriminant validity (Tedeschi \& Calhoun, 1996). Moreover, the Italian version of the PTGI has been found to have good internal consistency and validity (Prati \& Pietrantoni, 2014). In the present study, the PTGI demonstrated high levels of internal consistency, with a total reliability of \(\omega\) = .95. The reliability for each of the sub-scales was also adequate, with \(\omega\) = .91 for Relating to others, \(\omega\) = .84 for New possibilities, \(\omega\) = .84 for Personal strength, \(\omega\) = .79 for Appreciation of life, and \(\omega\) = .75 for Spiritual changes.
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+\hypertarget{material}{%
+\subsection{Material}\label{material}}
+
+\hypertarget{procedure}{%
+\subsection{Procedure}\label{procedure}}
+
+\hypertarget{data-analysis}{%
+\subsection{Data analysis}\label{data-analysis}}
+
+\hypertarget{statistical-analyses}{%
+\subsection{Statistical analyses}\label{statistical-analyses}}
+
+Latent Profile Analysis (LPA) is a finite mixture modeling technique that partitions individuals into discrete classes based on their responses to observed variables. This technique is particularly useful for identifying subgroups of individuals that can be meaningfully compared (Lanza \& Rhoades, 2013). The primary objectives of LVA are twofold. Firstly, to ensure homogeneity within each identified profile so that individuals grouped together are as similar as possible. Secondly, to maximize heterogeneity between profiles so that each profile accurately represents a distinct grouping of individuals. The classes generated by LVA are considered latent since they are not directly observable but are inferred based on similarities in the data. LPA accounts for measurement errors related to the uncertainty in profile membership and provides fit statistics to determine the number of profiles that best represent the data.
+
+The purpose of the LPA was to detect distinct subgroups of RWs who have different profiles on personality dimensions, protective factors, and outcome variables. Standardized scores for five personality measures (neuroticism, extraversion, openness, agreeableness, conscientiousness), three dimensions of coping (COPE-active coping, COPE-avoidance coping, COPE-social emotional coping), perceived social support (MSPSS), and post-traumatic stress (measured using the IES-R) from the RWs were used as observed indicators for the LPA.
+
+We fitted a series of LPA models, ranging from 1 to 10 profiles, using 1000 sets of starting values. To determine the optimal number of profiles, we used information criteria, including Bayesian information criterion (BIC), Akaike information criterion (AIC), and adjusted BIC. We selected the model with the lowest value of these criteria, indicating a better fit. Additionally, we evaluated the accuracy of the classification of individuals into the appropriate profile using entropy, with values closer to 1 indicating higher separation among classes (\textgreater{} 0.80 represents high separation). We also employed the Lo-Mendell-Rubin likelihood ratio test (LMR-LRT), a test statistic to compare the fit of a model with a lower versus higher number of profiles. We used MPLUS 8.6 and the \texttt{R} software for all statistical analyses.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+The construct of self-compassion is commonly assessed using the Self-Compassion Scale (SCS) self-report questionnaire. The SCS measures six dimensions of self-compassion, three of which evaluate the active components of self-compassion. These dimensions include Self-kindness (SK), Common humanity (CH), and Mindfulness (MI), which involve being kind and understanding towards oneself, recognizing that personal failures and pain are common experiences, and maintaining awareness of one's painful thoughts and feelings. The remaining three dimensions evaluate the ``hindrances'' to self-compassion, including Self-judgment (SJ), Isolation (IS), and Overidentification (OI). These dimensions assess factors that hinder self-compassion, such as being self-critical and unsympathetic towards one's shortcomings, isolating oneself from others, and over-identifying with one's painful thoughts and emotions (Neff, 2022).
+
+Compassion fatigue often leads to a sense of helplessness and a feeling of being unable to do more to help others (Boyle, 2015). This ``learned helplessness'' may lead individuals who experience compassion fatigue to rely more on non-self-compassionate coping strategies compared to those who are less affected by compassion fatigue (Gonzalez-Mendez \& Díaz, 2021).
+
+decrease the use of self-compassionate responding (i.e., self-kindness, common humanity, mindfulness) and increase uncompassionate responding (i.e., self-judgment, isolation, overidentification) -- see also Gonzalez-Mendez and Díaz (2021).
+
+We propose that individuals who experience compassion fatigue may not experience changes in compassionate responding, as their motivation to help others remains intact. However, they may experience a strong increase in uncompassionate responding (e.g., self-blaming), especially in those who are less directly involved in alleviating the suffering of others.
+
+enabling an individual to mobilise internal resources and build up resistance against stressors
+
+individuals with a strong SOC might experience reduced job stress.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Sense of coherence (SOC) originates from Antonovsky's (1979,
+1987, 1991, 1993) theory of salutogenesis, a paradigm that focuses
+on factors that promote health and well-being and considers the
+salutary potential of stressors. SOC is a dispositional orientation that
+reflects an individual's capacity to cope with life stressors and
+comprises three components: Comprehensibility, the sense that
+19
+stimuli are predictable and structured (cognitive component);
+Manageability, the sense that available resources (both internal and
+external) are sufficient to cope with demands from the stimuli
+(instrumental/behavioural component); and Meaningfulness, the
+sense that the demands have significance and are worthy of
+investment in terms of personal ideals and standards (motivational
+component). An individual's SOC is reinforced by their ``general
+resistance resources'' (e.g., intelligence, social support, coping
+strategies, and preventative health orientation), which are shaped by
+life experiences.
+
+These results indicate the need for improving pre-employment strategies to select the most resilient individuals for rescue work, to implement continuous preventive measures for personnel.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-afshar2015diagnostic}{}}%
+Afshar-Oromieh, A., Avtzi, E., Giesel, F. L., Holland-Letz, T., Linhart, H. G., Eder, M., et al.others. (2015). The diagnostic value of PET/CT imaging with the 68 ga-labelled PSMA ligand HBED-CC in the diagnosis of recurrent prostate cancer. \emph{European Journal of Nuclear Medicine and Molecular Imaging}, \emph{42}, 197--209.
+
+\leavevmode\vadjust pre{\hypertarget{ref-aldao2012adaptive}{}}%
+Aldao, A., \& Nolen-Hoeksema, S. (2012). When are adaptive strategies most predictive of psychopathology? \emph{Journal of Abnormal Psychology}, \emph{121}(1), 276--281.
+
+\leavevmode\vadjust pre{\hypertarget{ref-angelini2023big}{}}%
+Angelini, G. (2023). Big five model personality traits and job burnout: A systematic literature review. \emph{BMC Psychology}, \emph{11}(1), 1--35.
+
+\leavevmode\vadjust pre{\hypertarget{ref-armstrong2004influence}{}}%
+Armstrong-Stassen, M. (2004). The influence of prior commitment on the reactions of layoff survivors to organizational downsizing. \emph{Journal of Occupational Health Psychology}, \emph{9}(1), 46--60.
+
+\leavevmode\vadjust pre{\hypertarget{ref-beck2016self}{}}%
+Beck, A. T. (2016). \emph{The self in understanding and treating psychological disorders}. Cambridge University Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-berger2012rescuers}{}}%
+Berger, W., Coutinho, E. S. F., Figueira, I., Marques-Portella, C., Luz, M. P., Neylan, T. C., \ldots{} Mendlowicz, M. V. (2012). Rescuers at risk: A systematic review and meta-regression analysis of the worldwide current prevalence and correlates of PTSD in rescue workers. \emph{Social Psychiatry and Psychiatric Epidemiology}, \emph{47}(6), 1001--1011.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bianchi2018burnout}{}}%
+Bianchi, R. (2018). Burnout is more strongly linked to neuroticism than to work-contextualized factors. \emph{Psychiatry Research}, \emph{270}, 901--905.
+
+\leavevmode\vadjust pre{\hypertarget{ref-boyle2015compassion}{}}%
+Boyle, D. A. (2015). Compassion fatigue: The cost of caring. \emph{Nursing2022}, \emph{45}(7), 48--51.
+
+\leavevmode\vadjust pre{\hypertarget{ref-burton2021individualism}{}}%
+Burton, L., Delvecchio, E., Germani, A., \& Mazzeschi, C. (2021). Individualism/collectivism and personality in italian and american groups. \emph{Current Psychology}, \emph{40}, 29--34.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caprara2001brand}{}}%
+Caprara, G. V., Barbaranelli, C., \& Guido, G. (2001). Brand personality: How to make the metaphor fit? \emph{Journal of Economic Psychology}, \emph{22}(3), 377--395.
+
+\leavevmode\vadjust pre{\hypertarget{ref-carver1989assessing}{}}%
+Carver, C. S., Scheier, M. F., \& Weintraub, J. K. (1989). Assessing coping strategies: A theoretically based approach. \emph{Journal of Personality and Social Psychology}, \emph{56}(2), 267--283.
+
+\leavevmode\vadjust pre{\hypertarget{ref-chatzea2018ptsd}{}}%
+Chatzea, V.-E., Sifaki-Pistolla, D., Vlachaki, S.-A., Melidoniotis, E., \& Pistolla, G. (2018). PTSD, burnout and well-being among rescue workers: Seeking to understand the impact of the european refugee crisis on rescuers. \emph{Psychiatry Research}, \emph{262}, 446--451.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cohen1985stress}{}}%
+Cohen, S., \& Wills, T. A. (1985). Stress, social support, and the buffering hypothesis. \emph{Psychological Bulletin}, \emph{98}(2), 310--357.
+
+\leavevmode\vadjust pre{\hypertarget{ref-connor2007relations}{}}%
+Connor-Smith, J. K., \& Flachsbart, C. (2007). Relations between personality and coping: A meta-analysis. \emph{Journal of Personality and Social Psychology}, \emph{93}(6), 1080--1107.
+
+\leavevmode\vadjust pre{\hypertarget{ref-costa1992normal}{}}%
+Costa, P. T., \& McCrae, R. R. (1992). Normal personality assessment in clinical practice: The NEO personality inventory. \emph{Psychological Assessment}, \emph{4}(1), 5--13.
+
+\leavevmode\vadjust pre{\hypertarget{ref-craparo2013impact}{}}%
+Craparo, G., Faraci, P., Rotondo, G., \& Gori, A. (2013). The impact of event scale--revised: Psychometric properties of the italian version in a sample of flood victims. \emph{Neuropsychiatric Disease and Treatment}, \emph{9}, 1427--1432.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gonzalez2021volunteers}{}}%
+Gonzalez-Mendez, R., \& Díaz, M. (2021). Volunteers' compassion fatigue, compassion satisfaction, and post-traumatic growth during the SARS-CoV-2 lockdown in spain: Self-compassion and self-determination as predictors. \emph{Plos One}, \emph{16}(9), e0256854.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hobfoll1989conservation}{}}%
+Hobfoll, S. E. (1989). Conservation of resources: A new attempt at conceptualizing stress. \emph{American Psychologist}, \emph{44}(3), 513--524.
+
+\leavevmode\vadjust pre{\hypertarget{ref-joinson1992coping}{}}%
+Joinson, C. (1992). Coping with compassion fatigue. \emph{Nursing}, \emph{22}(4), 116--118.
+
+\leavevmode\vadjust pre{\hypertarget{ref-joormann2016examining}{}}%
+Joormann, J., \& Stanton, C. H. (2016). Examining emotion regulation in depression: A review and future directions. \emph{Behaviour Research and Therapy}, \emph{86}, 35--49.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kokkinos2007job}{}}%
+Kokkinos, C. M. (2007). Job stressors, personality and burnout in primary school teachers. \emph{British Journal of Educational Psychology}, \emph{77}(1), 229--243.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lanza2013latent}{}}%
+Lanza, S. T., \& Rhoades, B. L. (2013). Latent class analysis: An alternative perspective on subgroup analysis in prevention and treatment. \emph{Prevention Science}, \emph{14}(2), 157--168.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lazarus1984stress}{}}%
+Lazarus, R. S., \& Folkman, S. (1984). \emph{Stress, appraisal, and coping}. Springer publishing company.
+
+\leavevmode\vadjust pre{\hypertarget{ref-liu2017selection}{}}%
+Liu, D. Y., \& Thompson, R. J. (2017). Selection and implementation of emotion regulation strategies in major depressive disorder: An integrative review. \emph{Clinical Psychology Review}, \emph{57}, 183--194.
+
+\leavevmode\vadjust pre{\hypertarget{ref-lyne2000psychometric}{}}%
+Lyne, K., \& Roger, D. (2000). A psychometric re-assessment of the COPE questionnaire. \emph{Personality and Individual Differences}, \emph{29}(2), 321--335.
+
+\leavevmode\vadjust pre{\hypertarget{ref-macbeth2012exploring}{}}%
+MacBeth, A., \& Gumley, A. (2012). Exploring compassion: A meta-analysis of the association between self-compassion and psychopathology. \emph{Clinical Psychology Review}, \emph{32}(6), 545--552.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mao2022concept}{}}%
+Mao, X., Hu, X., \& Loke, A. Y. (2022). A concept analysis on disaster resilience in rescue workers: The psychological perspective. \emph{Disaster Medicine and Public Health Preparedness}, \emph{16}(4), 1682--1691.
+
+\leavevmode\vadjust pre{\hypertarget{ref-moritz2016more}{}}%
+Moritz, S., Jahns, A. K., Schröder, J., Berger, T., Lincoln, T. M., Klein, J. P., \& Göritz, A. S. (2016). More adaptive versus less maladaptive coping: What is more predictive of symptom severity? Development of a new scale to investigate coping profiles across different psychopathological syndromes. \emph{Journal of Affective Disorders}, \emph{191}, 300--307.
+
+\leavevmode\vadjust pre{\hypertarget{ref-murray2003neo}{}}%
+Murray, G., Rawlings, D., Allen, N. B., \& Trinder, J. (2003). NEO five-factor inventory scores: Psychometric properties in a community sample. \emph{Measurement and Evaluation in Counseling and Development}, \emph{36}(3), 140--149.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2003self}{}}%
+Neff, K. D. (2003). Self-compassion: An alternative conceptualization of a healthy attitude toward oneself. \emph{Self and Identity}, \emph{2}(2), 85--101.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2022differential}{}}%
+Neff, K. D. (2022). The differential effects fallacy in the study of self-compassion: Misunderstanding the nature of bipolar continuums. \emph{Mindfulness}, \emph{13}(3), 572--576.
+
+\leavevmode\vadjust pre{\hypertarget{ref-norris1996received}{}}%
+Norris, F. H., \& Kaniasty, K. (1996). Received and perceived social support in times of stress: A test of the social support deterioration deterrence model. \emph{Journal of Personality and Social Psychology}, \emph{71}(3), 498--511.
+
+\leavevmode\vadjust pre{\hypertarget{ref-prati2014italian}{}}%
+Prati, G., \& Pietrantoni, L. (2014). Italian adaptation and confirmatory factor analysis of the full and the short form of the posttraumatic growth inventory. \emph{Journal of Loss and Trauma}, \emph{19}(1), 12--22.
+
+\leavevmode\vadjust pre{\hypertarget{ref-prezza2002rete}{}}%
+Prezza, M., \& Principato, M. C. (2002). La rete sociale e il sostegno sociale. \emph{Conoscere La Comunit{à}}, 193--233.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ruaducu2022personality}{}}%
+Răducu, C.-M., \& Stănculescu, E. (2022). Personality and socio-demographic variables in teacher burnout during the COVID-19 pandemic: A latent profile analysis. \emph{Scientific Reports}, \emph{12}(1), 14272.
+
+\leavevmode\vadjust pre{\hypertarget{ref-setti2016role}{}}%
+Setti, I., Lourel, M., \& Argentero, P. (2016). The role of affective commitment and perceived social support in protecting emergency workers against burnout and vicarious traumatization. \emph{Traumatology}, \emph{22}(4), 261--270.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica2021facing}{}}%
+Sica, C., Latzman, R. D., Caudek, C., Cerea, S., Colpizzi, I., Caruso, M., \ldots{} Bottesi, G. (2021). Facing distress in coronavirus era: The role of maladaptive personality traits and coping strategies. \emph{Personality and Individual Differences}, \emph{177}, 110833.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica2008coping}{}}%
+Sica, C., Magni, C., Ghisi, M., Altoè, G., Sighinolfi, C., Chiri, L. R., \& Franceschini, S. (2008). Coping orientation to problems experienced-nuova versione italiana (COPE-NVI): Uno strumento per la misura degli stili di coping. \emph{Psicoterapia Cognitiva e Comportamentale}, \emph{14}(1), 27.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica1997coping}{}}%
+Sica, C., Novara, C., Dorz, S., \& Sanavio, E. (1997). Coping strategies: Evidence for cross-cultural differences? A preliminary study with the italian version of coping orientations to problems experienced (COPE). \emph{Personality and Individual Differences}, \emph{23}(6), 1025--1029.
+
+\leavevmode\vadjust pre{\hypertarget{ref-swider2010born}{}}%
+Swider, B. W., \& Zimmerman, R. D. (2010). Born to burnout: A meta-analytic path model of personality, job burnout, and work outcomes. \emph{Journal of Vocational Behavior}, \emph{76}(3), 487--506.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tahernejad2023post}{}}%
+Tahernejad, S., Ghaffari, S., Ariza-Montes, A., Wesemann, U., Farahmandnia, H., \& Sahebi, A. (2023). Post-traumatic stress disorder in medical workers involved in earthquake response: A systematic review and meta-analysis. \emph{Heliyon}, e12794.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tedeschi1996posttraumatic}{}}%
+Tedeschi, R. G., \& Calhoun, L. G. (1996). The posttraumatic growth inventory: Measuring the positive legacy of trauma. \emph{Journal of Traumatic Stress}, \emph{9}(3), 455--471.
+
+\leavevmode\vadjust pre{\hypertarget{ref-veneziani2017self}{}}%
+Veneziani, C. A., Fuochi, G., \& Voci, A. (2017). Self-compassion as a healthy attitude toward the self: Factorial and construct validity in an italian sample. \emph{Personality and Individual Differences}, \emph{119}, 60--68.
+
+\leavevmode\vadjust pre{\hypertarget{ref-weiss2007impact}{}}%
+Weiss, D. S. (2007). The impact of event scale: revised. In \emph{Cross-cultural assessment of psychological trauma and PTSD} (pp. 219--238). Springer.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wilson2019effectiveness}{}}%
+Wilson, A. C., Mackintosh, K., Power, K., \& Chan, S. W. (2019). Effectiveness of self-compassion related therapies: A systematic review and meta-analysis. \emph{Mindfulness}, \emph{10}(6), 979--995.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wong2017self}{}}%
+Wong, C. C. Y., \& Yeung, N. C. (2017). Self-compassion and posttraumatic growth: Cognitive processes as mediators. \emph{Mindfulness}, \emph{8}(4), 1078--1087.
+
+\leavevmode\vadjust pre{\hypertarget{ref-zimet1988multidimensional}{}}%
+Zimet, G. D., Dahlem, N. W., Zimet, S. G., \& Farley, G. K. (1988). The multidimensional scale of perceived social support. \emph{Journal of Personality Assessment}, \emph{52}(1), 30--41.
+
+\end{CSLReferences}
+
+
+\end{document}

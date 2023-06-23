@@ -1,0 +1,17 @@
+---
+title: "Note for new submission"
+output: html_notebook
+---
+
+RW show effects of burned-out
+
+This is alleviated by several protective factors and aggravated by risk factors.
+
+One aspect of the resilience of RW is SC, which has not previously beed studied in the larger context of protective and risk factors.
+
+PURPOSE: 
+
+1. establish whether SC is compromised in RW as compared to a control group.
+2. use LPA to distinguish different profile of personality, outcome, risk and protective factors for RW; determine whether SC is differently compromised for the different profiles.
+3. establish whether these different profiles interact with the specific work of RW in determining SC.
+

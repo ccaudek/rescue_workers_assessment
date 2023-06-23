@@ -1,0 +1,80 @@
+TITLE:
+model 6 with 1 classes
+DATA:
+FILE = "data_81c78c0cb6869e75ae6a0f08ff71917f.dat";
+ 
+VARIABLE:
+NAMES = neuroticism extraversion openness agreeableness conscientiousness
+     active_coping avoidance_coping soc_emo_coping iesr_ts mpss_tot; 
+ MISSING=.;
+ CLASSES = c1(1);
+
+ANALYSIS:
+TYPE = mixture;
+
+MODEL:
+%c1#1%
+neuroticism (vneuroticism1);
+extraversion (vextraversion1);
+openness (vopenness1);
+agreeableness (vagreeableness1);
+conscientiousness (vconscientiousness1);
+active_coping (vactive_coping1);
+avoidance_coping (vavoidance_coping1);
+soc_emo_coping (vsoc_emo_coping1);
+iesr_ts (viesr_ts1);
+mpss_tot (vmpss_tot1);
+
+neuroticism WITH extraversion (neuroticismWextraversion1);
+neuroticism WITH openness (neuroticismWopenness1);
+neuroticism WITH agreeableness (neuroticismWagreeableness1);
+neuroticism WITH conscientiousness (neuroticismWconscientiousness1);
+neuroticism WITH active_coping (neuroticismWactive_coping1);
+neuroticism WITH avoidance_coping (neuroticismWavoidance_coping1);
+neuroticism WITH soc_emo_coping (neuroticismWsoc_emo_coping1);
+neuroticism WITH iesr_ts (neuroticismWiesr_ts1);
+neuroticism WITH mpss_tot (neuroticismWmpss_tot1);
+extraversion WITH openness (extraversionWopenness1);
+extraversion WITH agreeableness (extraversionWagreeableness1);
+extraversion WITH conscientiousness (extraversionWconscientiousness1);
+extraversion WITH active_coping (extraversionWactive_coping1);
+extraversion WITH avoidance_coping (extraversionWavoidance_coping1);
+extraversion WITH soc_emo_coping (extraversionWsoc_emo_coping1);
+extraversion WITH iesr_ts (extraversionWiesr_ts1);
+extraversion WITH mpss_tot (extraversionWmpss_tot1);
+openness WITH agreeableness (opennessWagreeableness1);
+openness WITH conscientiousness (opennessWconscientiousness1);
+openness WITH active_coping (opennessWactive_coping1);
+openness WITH avoidance_coping (opennessWavoidance_coping1);
+openness WITH soc_emo_coping (opennessWsoc_emo_coping1);
+openness WITH iesr_ts (opennessWiesr_ts1);
+openness WITH mpss_tot (opennessWmpss_tot1);
+agreeableness WITH conscientiousness (agreeablenessWconscientiousness1);
+agreeableness WITH active_coping (agreeablenessWactive_coping1);
+agreeableness WITH avoidance_coping (agreeablenessWavoidance_coping1);
+agreeableness WITH soc_emo_coping (agreeablenessWsoc_emo_coping1);
+agreeableness WITH iesr_ts (agreeablenessWiesr_ts1);
+agreeableness WITH mpss_tot (agreeablenessWmpss_tot1);
+conscientiousness WITH active_coping (conscientiousnessWactive_coping1);
+conscientiousness WITH avoidance_coping (conscientiousnessWavoidance_coping1);
+conscientiousness WITH soc_emo_coping (conscientiousnessWsoc_emo_coping1);
+conscientiousness WITH iesr_ts (conscientiousnessWiesr_ts1);
+conscientiousness WITH mpss_tot (conscientiousnessWmpss_tot1);
+active_coping WITH avoidance_coping (active_copingWavoidance_coping1);
+active_coping WITH soc_emo_coping (active_copingWsoc_emo_coping1);
+active_coping WITH iesr_ts (active_copingWiesr_ts1);
+active_coping WITH mpss_tot (active_copingWmpss_tot1);
+avoidance_coping WITH soc_emo_coping (avoidance_copingWsoc_emo_coping1);
+avoidance_coping WITH iesr_ts (avoidance_copingWiesr_ts1);
+avoidance_coping WITH mpss_tot (avoidance_copingWmpss_tot1);
+soc_emo_coping WITH iesr_ts (soc_emo_copingWiesr_ts1);
+soc_emo_coping WITH mpss_tot (soc_emo_copingWmpss_tot1);
+iesr_ts WITH mpss_tot (iesr_tsWmpss_tot1);
+
+
+OUTPUT:
+TECH14;
+
+SAVEDATA:
+FILE IS model_6_class_1.dat;
+SAVE = cprobabilities;

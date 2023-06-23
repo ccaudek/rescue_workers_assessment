@@ -1,0 +1,78 @@
+TITLE: Nomological network with SCS-P and SCS-N.
+DATA:
+FILE = "semdata.dat";
+
+VARIABLE:
+NAMES =
+  pos_sc neg_sc ts_scs
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+  iesr_a iesr_i iesr_h
+  cope_pa cope_po
+  mspss_fa mspss_fr mspss_so
+  neuro_na neuro_sr
+  extra_pa extra_so extra_ac
+  group
+  ;
+
+
+MISSING = .;
+
+USEVARIABLES ARE
+  ts_scs
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+  iesr_a iesr_i iesr_h
+  cope_pa cope_po
+  neuro_na neuro_sr
+  extra_pa extra_so extra_ac
+  ;
+
+ANALYSIS:
+  ESTIMATOR = MLR; 
+  PROCESSORS = 6;
+  ! ROTATION = TARGET (ORTHOGONAL);
+
+MODEL:
+
+! Measurement model
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+  
+COPE BY 
+  cope_pa cope_po;
+  
+NEURO BY 
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+! Structural model
+
+PTGI ON ts_scs COPE NEURO EXTRA;
+IESR ON ts_scs COPE NEURO EXTRA;
+
+model indirect:
+  PTGI ind ts_scs;
+  PTGI ind COPE;
+  PTGI ind NEURO;
+  PTGI ind EXTRA;
+  
+  IESR ind ts_scs;
+  IESR ind COPE;
+  IESR ind NEURO;
+  IESR ind EXTRA;
+
+
+! Requesting standardized parameter estimates and modification indices
+OUTPUT:
+stdyx;
+!MODINDICES (ALL);
+
+! savedata:
+!   file is m6b_scores.txt;
+!   save = fscores;
+

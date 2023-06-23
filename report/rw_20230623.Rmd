@@ -1,0 +1,207 @@
+---
+title             : "Exploring the Role of Self-Compassion in Promoting Resilience and Well-Being Among Rescue Workers"
+shorttitle        : "Title"
+
+author: 
+  - name          : "Corrado Caudek"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "NEUROFARBA Department, Psychology Section, University of Firenze, Italy"
+    email         : "corrado.caudek@unifi.it"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - "Writing - Review & Editing"
+      - "Supervision"
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : "bibliography.bib"
+
+floatsintext      : no
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+Rescue workers (RWs) and healthcare workers frequently encounter the distress of others, which can lead to "compassion fatigue" [@joinson1992coping], burn-out [@chatzea2018ptsd], and Post-Traumatic Stress Disorder [PTSD; @tahernejad2023post]. Therefore, it is important to understand and promote internal and external factors that support their resilience [@mao2022concept].
+
+In recent years, the concept of "self" has become essential in understanding individual differences in coping with stress [@beck2016self]. Self-compassion, which involves specific ways of relating to oneself, has been shown to have a positive impact on mental health [@macbeth2012exploring]. A compassionate mindset towards oneself may also protect against psychopathology, such as PTSD [@wilson2019effectiveness; @wong2017self].
+
+Self-compassion is typically measured using the Self-Compassion Scale (SCS). The SCS measures six dimensions of self-compassion, three of which evaluate the active components of self-compassion. These dimensions include Self-kindness (SK), Common humanity (CH), and Mindfulness (MI), which involve being kind and understanding towards oneself, recognizing that personal failures and pain are common experiences, and maintaining awareness of one's painful thoughts and feelings. The remaining three dimensions evaluate the "hindrances" to self-compassion, including Self-judgment (SJ), Isolation (IS), and Overidentification (OI). These dimensions assess factors that hinder self-compassion, such as being self-critical and unsympathetic towards one's shortcomings, isolating oneself from others, and over-identifying with one's painful thoughts and emotions [@neff2022differential].
+
+The goal of this study is to investigate how self-compassion functions as a coping mechanism among RWs, and its potential impact on their mental health and well-being. Specifically, we aim to explore how self-compassion may promote resilience and reduce the risk of negative outcomes such as compassion fatigue and burn-out. To achieve these aims, we will utilize Latent Profile Analysis to identify distinct profiles of personality, protective factors, risk factors, and outcomes among RWs. We will then examine whether individuals in the adaptive profile show higher levels of positive dimensions of self-compassion and lower levels of negative dimensions of self-compassion, while individuals in the maladaptive profile exhibit the opposite pattern.
+
+By addressing these research questions, the study aims to shed light on the role of self-compassion in RWs, its potential impact on their mental health and well-being, and its implications for promoting resilience and reducing the risk of negative outcomes such as compassion fatigue and burn-out.
+
+## Personality traits and coping strategies as protective factors
+
+Personality traits play a crucial role in determining an individual's susceptibility to burnout. For instance, a meta-analysis conducted by @swider2010born revealed that the Five Factor Model of Personality, comprising neuroticism, extraversion, agreeableness, conscientiousness, and openness, collectively account for a significant proportion of the variance in levels of job burnout among individuals. This finding suggests that personality traits are a potent predictor of burnout levels, implying that the etiology of burnout may not solely originate from external factors but also from intrinsic personality attributes. Specifically, @bianchi2018burnout found that neuroticism is the strongest correlate for burnout. Individuals with low levels of extraversion tend to focus on negative aspects of events and use predominantly emotion-focused coping strategies [@connor2007relations]. Moreover, individuals with low levels of conscientiousness tend to experience higher levels of depersonalization and reduced personal accomplishment [@kokkinos2007job]. Conversely, individuals with high levels of agreeableness exhibit a greater ability to build successful interpersonal relationships at work, are gentle, and cooperative, and show lower levels of burnout [@angelini2023big]. On the other hand, the literature has not established a clear link between openness and burnout [@angelini2023big; @ruaducu2022personality]. Therefore, we may expect that elevated levels of neuroticism and lower levels of extraversion, agreeableness, and conscientiousness (but not openness) may provide a "personality marker" for rescue workers who are less able to mobilize internal resources and build resistance against stressors.
+
+Coping refers to the cognitive and behavioral efforts individuals make to manage environmental stressors, as described by @lazarus1984stress. Research has identified two types of coping strategies: adaptive (problem-solving and cognitive reappraisal) and maladaptive (suppression, rumination, and avoidance). Studies have consistently found that maladaptive coping strategies are particularly harmful to psychological well-being, as evidenced by @joormann2016examining, @liu2017selection, and @moritz2016more. In contrast, the lack of adaptive coping strategies seems to be less relevant to the development of psychological disorders, as suggested by studies conducted by @aldao2012adaptive and @moritz2016more.
+
+A considerable amount of research has also demonstrated a clear relationship between personality traits and coping strategies [@sica2021facing]. However, @connor2007relations meta-analysis comprising 124 studies emphasized the importance of distinguishing between specific strategies. Specifically, extraversion showed positive correlations with problem-focused and emotion-focused strategies. On the other hand, neuroticism was negatively related to problem-focused and positive-oriented strategies, particularly acceptance, and positively related to emotional-focused and avoidance-oriented strategies. Agreeableness and openness exhibited a weak association with coping, primarily with social support and problem-focused strategies, while conscientiousness showed a strong link to problem-focused strategies. Additionally, the use of drugs and alcohol, classified as avoidance-oriented strategies, was negatively associated with Agreeableness and Conscientiousness [@afshar2015diagnostic; @connor2007relations].
+
+Furthermore, it has been established that having access to sufficient internal and external resources can help individuals cope with situational demands, as well as build resistance against stressors. For RWs, perceived social support is a crucial external resource that plays a significant role in mitigating burnout. Studies conducted by @setti2016role have shown that RWs who perceive support from their colleagues and superiors are less likely to experience emotional exhaustion, depersonalization, and inefficacy, which are the three dimensions of burnout. These findings are consistent with previous research that has linked social support to lower levels of burnout and posttraumatic symptoms [@armstrong2004influence]. The stress-buffering hypothesis [@cohen1985stress], the social support deterioration model [@norris1996received], and the conservation of resources model [@hobfoll1989conservation] all suggest that perceived social support can protect against the negative effects of stress.
+
+The overall psychological distressing symptoms in RWs often linked to burnout and PTSD. The meta-analysis of @berger2012rescuers, for example, shows that RWs  have a prevalence of PTSD that is much higher than that of the general population. Therefore, the identification of individual differences that signal increased risk for PTSD is important.
+
+## Purpose of the study
+
+We posit that a LPA will detect a high and a low profile of resilience among RWs. The "low resilience" profile should include high levels of neuroticism and maladaptive coping, low levels of extraversion, agreeableness, conscientiousness, and perceived social support, as well as high levels of reported post-traumatic symptoms. Conversely, an adaptive profile of resilience should have the opposite pattern.
+
+We expect that the "low resilience" profile will covary with elevated levels of "negative" self-compassion and with lower levels of "positive" self-compassion, when compared to the "high resilience" profile group. 
+
+
+Specifically, the study aims to:
+
+- Investigate whether the overall level of self-compassion varies between RWs and a control community sample.
+- Explore whether the "high-resilience" and "low-resilience profiles" described above can be used to descrive individual differences in RWs protective and risk factors.
+- Determine whether the "high-resilience" and "low-resilience" profiles can accound for individual differences of RWs to rely on self-compassion.
+- Examine the relationship between direct vs indirect involvement in alleviating the suffering of others (job qualifications) and the ability to rely on self-compassion.
+
+# Methods
+
+### Instruments
+
+In addition to administering specific questions targeted towards the RW group, we also administered the following scales to both participant groups.
+
+*Self-Compassion*. The Self-Compassion Scale [SCS; @neff2003self] was used to measure self-compassione. The SCS is a 26-item self-report measure designed to assess self-compassion, or the ability to extend kindness and understanding to oneself during challenging times. The SCS is composed of six subscales, with three of them (Self-Kindness, SK; Common-Humanity, CH; and Mindfulness, MI) measuring compassionate self-responding, and the remaining three (Self-Judgment, SJ; Isolation, IS; and Over-Identification, OI) assessing uncompassionate self-responding. The SCS total score (SCS-TS) is obtained by inverting the scores of the subscales related to uncompassionate self-responding. The Italian version of the SCS by @veneziani2017self was used in the present study. The SCS demonstrated good internal consistency, with a total reliability of $\omega$ = .92. The subscales also demonstrated adequate reliability: SK ($\omega$ = .90), CH ($\omega$ = .78), MI ($\omega$ = .78), SJ ($\omega$ = .85), IS ($\omega$ = .89), and OI ($\omega$ = .86).
+
+*Personality traits*. The NEO-Five Factor Inventory (NEO-FFI-60; @costa1992normal) was employed to examine personality traits. The NEO-FFI-60 is a widely used 60-item self-report questionnaire that assesses five broad domains of personality: Neuroticism (N), Extraversion (E), Openness to experience (O), Agreeableness (A), and Conscientiousness (C). The internal consistency of the five sub-scales of the NEO-FFI-60 has been found to be adequate [@murray2003neo].  In the current study, we used the Italian version of the NEO-FFI-60 developed by @caprara2001brand. The Neuroticism ($\omega$ = .92), Extraversion ($\omega$ = .83), Conscientiousness ($\omega$ = .87), and Openness ($\omega$ = .78) subscales showed adequate internal consistency, whereas reliability was low for Agreableness ($\omega$ = .66) -- see also @burton2021individualism.
+
+*Adaptive and maladaptive coping strategies*. The Coping Orientation to Problems Experienced (COPE) test was used to assess adaptive and maladaptive coping. The COPE test [@carver1989assessing] is a self-report questionnaire commonly used to assess an individual's coping skills and strategies when dealing with stressful and challenging events. In the present study, we utilized the scoring system proposed by @lyne2000psychometric, which divides the COPE items into three subscales: Active Coping, Emotion-Focused Coping, and Avoidance Coping. Active Coping reflects a constructive and active approach to coping, in which individuals acknowledge the occurrence of a stressful situation and take action to address the problem through problem-solving, gathering information, and analyzing the situation logically. The other two subscales, Emotion-Focused Coping (expressing feelings and seeking emotional support) and Avoidance Coping (behavioural disengagement (giving up), denial, and mental disengagement), represent more passive approaches to problem-solving, suggesting a belief that the situation cannot be changed. These subscales assess maladaptive coping strategies. In our study, we utilized the Italian version of the COPE questionnaire developed by @sica1997coping [see also @sica2008coping; @sica2021facing]. The reliability of the total scale was satisfactory ($\omega$ = .87); reliability coefficients for each subscale were acceptable: Active coping: $\omega$ = .89; Emotion-focused coping: $\omega$ = .77; Avoidance coping: $\omega$ = 0.82.
+
+*Perceived social support*. The Multidimensional Scale of Perceived Social Support [MSPSS; @zimet1988multidimensional] was used to evaluate the perceived availability of social support. The MSPSS encompasses three social support subscales, namely family, friends, and significant others, with the items encompassing expressions such as "I can talk about my problems with my family," "I can count on my friends when things go wrong," and "There is a special person who is around when I am in need." Participants were requested to rate their responses to the 12 items on a seven-point Likert scale, with higher total scores indicating greater perceived social support, ranging from "very strongly disagree" to "very strongly agree." Previous research has established the MSPSS's good test-retest reliability and discriminant and construct validity [@zimet1988multidimensional]. For this investigation, we utilized the Italian version of the scale [@prezza2002rete]. The internal consistency of the current sample was found to be good, with coefficients of $\omega$ of 0.94 for the family subscale, 0.96 for the friends subscale, and 0.95 for the significant others subscale.
+
+*Post-traumatic stress*. The Impact of Event Scale - Revised [IES-R; @weiss2007impact] was used to evaluate subjective distress associated with traumatic events. The IES-R is a self-report instrument comprising 22 items, designed to capture the essential features of traumatic stress reactions, including intrusion, avoidance, and persistent hyperarousal. These features correspond to criteria B, C, and D of the DSM-IV diagnosis of posttraumatic stress disorder (PTSD). The IES-R includes sub-scales for each of these domains, and it is commonly used to assess PTSD symptomatology in rescue workers. Previous research has demonstrated that the IES-R has good internal consistency and test-retest stability.  Additionally, a study by @craparo2013impact examined the psychometric properties of the Italian translation of the IES-R and found good concurrent and discriminant validity, as well as good test-retest reliability.
+In the present sample, IES-R demonstrated high levels of internal consistency, with a total reliability $\omega$ = .94. The reliability for each of the sub-scales was also high, with $\omega$ = .91 for intrusion, $\omega$ = .82 for avoidance, and  $\omega$ = .87 for hyperarousal.
+
+*Post-traumatic growth*. We employed the Post-Traumatic Growth Inventory [PTGI; @tedeschi1996posttraumatic] to examine the potential positive changes following one or more traumatic or stressful events. The PTGI is a self-report inventory composed of 21 items and encompasses five subscales, namely Relating to others, New possibilities, Personal strength, Appreciation of life, and Spiritual change. Previous research has demonstrated that the PTGI has good internal consistency, construct-convergent validity, and discriminant validity [@tedeschi1996posttraumatic]. Moreover, the Italian version of the PTGI has been found to have good internal consistency and validity [@prati2014italian]. In the present study, the PTGI demonstrated high levels of internal consistency, with a total reliability of $\omega$ = .95. The reliability for each of the sub-scales was also adequate, with  $\omega$ = .91 for Relating to others, $\omega$ = .84 for New possibilities, $\omega$ = .84 for Personal strength, $\omega$ = .79 for Appreciation of life, and $\omega$ = .75 for Spiritual changes.
+
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+
+## Statistical analyses
+
+Latent Profile Analysis (LPA) is a finite mixture modeling technique that partitions individuals into discrete classes based on their responses to observed variables. This technique is particularly useful for identifying subgroups of individuals that can be meaningfully compared [@lanza2013latent]. The primary objectives of LVA are twofold. Firstly, to ensure homogeneity within each identified profile so that individuals grouped together are as similar as possible. Secondly, to maximize heterogeneity between profiles so that each profile accurately represents a distinct grouping of individuals. The classes generated by LVA are considered latent since they are not directly observable but are inferred based on similarities in the data. LPA accounts for measurement errors related to the uncertainty in profile membership and provides fit statistics to determine the number of profiles that best represent the data.
+
+The purpose of the LPA was to detect distinct subgroups of RWs who have different profiles on personality dimensions, protective factors, and outcome variables. Standardized scores for five personality measures (neuroticism, extraversion, openness, agreeableness, conscientiousness), three dimensions of coping (COPE-active coping, COPE-avoidance coping, COPE-social emotional coping), perceived social support (MSPSS), and post-traumatic stress (measured using the IES-R) from the RWs were used as observed indicators for the LPA. 
+
+We fitted a series of LPA models, ranging from 1 to 10 profiles, using 1000 sets of starting values. To determine the optimal number of profiles, we used information criteria, including Bayesian information criterion (BIC), Akaike information criterion (AIC), and adjusted BIC. We selected the model with the lowest value of these criteria, indicating a better fit. Additionally, we evaluated the accuracy of the classification of individuals into the appropriate profile using entropy, with values closer to 1 indicating higher separation among classes (> 0.80 represents high separation). We also employed the Lo-Mendell-Rubin likelihood ratio test (LMR-LRT), a test statistic to compare the fit of a model with a lower versus higher number of profiles. We used MPLUS 8.6 and the `R` software for all statistical analyses.
+
+
+
+# Results
+
+# Discussion
+
+
+The construct of self-compassion is commonly assessed using the Self-Compassion Scale (SCS) self-report questionnaire. The SCS measures six dimensions of self-compassion, three of which evaluate the active components of self-compassion. These dimensions include Self-kindness (SK), Common humanity (CH), and Mindfulness (MI), which involve being kind and understanding towards oneself, recognizing that personal failures and pain are common experiences, and maintaining awareness of one's painful thoughts and feelings. The remaining three dimensions evaluate the "hindrances" to self-compassion, including Self-judgment (SJ), Isolation (IS), and Overidentification (OI). These dimensions assess factors that hinder self-compassion, such as being self-critical and unsympathetic towards one's shortcomings, isolating oneself from others, and over-identifying with one's painful thoughts and emotions [@neff2022differential].
+
+Compassion fatigue often leads to a sense of helplessness and a feeling of being unable to do more to help others [@boyle2015compassion]. This "learned helplessness" may lead individuals who experience compassion fatigue to rely more on non-self-compassionate coping strategies compared to those who are less affected by compassion fatigue [@gonzalez2021volunteers]. 
+
+
+
+decrease the use of self-compassionate responding (i.e., self-kindness, common humanity, mindfulness) and increase uncompassionate responding (i.e., self-judgment, isolation, overidentification) -- see also @gonzalez2021volunteers.
+
+
+
+We propose that individuals who experience compassion fatigue may not experience changes in compassionate responding, as their motivation to help others remains intact. However, they may experience a strong increase in uncompassionate responding (e.g., self-blaming), especially in those who are less directly involved in alleviating the suffering of others.
+
+
+enabling an individual to mobilise internal resources and build up resistance against stressors
+
+individuals with a strong SOC might experience reduced job stress.
+
+-------------------
+
+
+
+
+Sense of coherence (SOC) originates from Antonovsky’s (1979,
+1987, 1991, 1993) theory of salutogenesis, a paradigm that focuses
+on factors that promote health and well-being and considers the
+salutary potential of stressors. SOC is a dispositional orientation that
+reflects an individual’s capacity to cope with life stressors and
+comprises three components: Comprehensibility, the sense that 
+19
+stimuli are predictable and structured (cognitive component);
+Manageability, the sense that available resources (both internal and
+external) are sufficient to cope with demands from the stimuli
+(instrumental/behavioural component); and Meaningfulness, the
+sense that the demands have significance and are worthy of
+investment in terms of personal ideals and standards (motivational
+component). An individual’s SOC is reinforced by their “general
+resistance resources” (e.g., intelligence, social support, coping
+strategies, and preventative health orientation), which are shaped by
+life experiences. 
+
+
+
+
+These results indicate the need for improving pre-employment strategies to select the most resilient individuals for rescue work, to implement continuous preventive measures for personnel.
+
+\newpage
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::

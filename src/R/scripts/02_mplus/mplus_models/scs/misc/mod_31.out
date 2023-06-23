@@ -1,0 +1,1219 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/05/2022   5:50 AM
+
+INPUT INSTRUCTIONS
+
+  !Steps followed based on Morin and Asparouhov (2018):
+  !The previous ESEM model is re-expressed using CFA. No rotation is necessary.
+  !The model uses the exact values of the unstandardized loadings and cross-loadings
+  !estimated from the Regular ESEM model as starts values (using *).
+  !First-order factor variances are freely estimated, whereas the variance of the
+  !higher-order factor !is fixed to 1 for identification purposes.
+  !For the first-order factors, one item per factor has all loadings and cross-loadings
+  !constrained to be exactly equal to their ESEM values (using @).
+
+  TITLE: ESEM within CFA.
+  DATA: FILE IS scs_clean.dat;
+
+  VARIABLE:
+
+  NAMES ARE
+  scsj1
+  scoi2
+  scch3
+  scis4
+  scsk5
+  scoi6
+  scch7
+  scsj8
+  scmi9
+  scch10
+  scsj11
+  scsk12
+  scis13
+  scmi14
+  scch15
+  scsj16
+  scmi17
+  scis18
+  scsk19
+  scoi20
+  scsj21
+  scmi22
+  scsk23
+  scoi24
+  scis25
+  scsk26;
+
+  USEVARIABLES ARE
+  SCSK5
+  SCSK12
+  SCSK19
+  SCSK23
+  SCSK26
+  SCCH3
+  SCCH7
+  SCCH10
+  SCCH15
+  SCMI9
+  SCMI14
+  SCMI17
+  SCMI22
+  SCSJ1
+  SCSJ8
+  SCSJ11
+  SCSJ16
+  SCSJ21
+  SCIS4
+  SCIS13
+  SCIS18
+  SCIS25
+  SCOI2
+  SCOI6
+  SCOI20
+  SCOI24
+  ;
+
+  MISSING ARE ALL(-999); !Change to your missing flag
+
+  ANALYSIS:
+  ESTIMATOR=MLR; !Other estimators are also possible, such as MLR.
+  PROCESSORS=6; !Replace 8 with the number of logical processors of your CPU and remove !
+  STARTS=10; !Convergence problems? Attempt different starting values. Remove ! to enable.
+  STITERATION=50000; !Use with STARTS function when your model fails to converge.
+  !ROTATION=TARGET; !No rotation needed within CFA
+
+  MODEL:
+
+  POS BY
+  SCSK5@0.000
+  SCSK12*0.000
+  SCSK19@0.03
+  SCSK23*0.000
+  SCSK26*0.000
+  SCCH3*0.000
+  SCCH7*0.000
+  SCCH10*0.000
+  SCCH15*0.000
+  SCMI9*0.000
+  SCMI14*0.000
+  SCMI17*0.000
+  SCMI22*0.000
+  SCSJ1@0.000
+  SCSJ8*0.000
+  SCSJ11*0.000
+  SCSJ16*0.000
+  SCSJ21*0.000
+  SCIS4*0.000
+  SCIS13*0.000
+  SCIS18*0.000
+  SCIS25*0.000
+  SCOI2*0.000
+  SCOI6*0.000
+  SCOI20*0.000
+  SCOI24*0.000;
+
+  NEG BY
+  SCSJ1@0.000
+  SCSJ8*0.000
+  SCSJ11*0.000
+  SCSJ16*0.000
+  SCSJ21*0.000
+  SCIS4*0.000
+  SCIS13*0.000
+  SCIS18*0.000
+  SCIS25*0.000
+  SCOI2*0.000
+  SCOI6*0.000
+  SCOI20*0.000
+  SCOI24*0.000
+  SCSK5@0.000
+  SCSK12*0.000
+  SCSK19*0.000
+  SCSK23*0.000
+  SCSK26*0.000
+  SCCH3*0.000
+  SCCH7*0.000
+  SCCH10*0.000
+  SCCH15*0.000
+  SCMI9*0.000
+  SCMI14*0.000
+  SCMI17*0.000
+  SCMI22*0.000;
+
+  POS*;
+  NEG*;
+
+  OUTPUT:
+  stdyx;
+  tech4;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+ESEM within CFA.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         706
+
+Number of dependent variables                                   26
+Number of independent variables                                  0
+Number of continuous latent variables                            2
+
+Observed dependent variables
+
+  Continuous
+   SCSK5       SCSK12      SCSK19      SCSK23      SCSK26      SCCH3
+   SCCH7       SCCH10      SCCH15      SCMI9       SCMI14      SCMI17
+   SCMI22      SCSJ1       SCSJ8       SCSJ11      SCSJ16      SCSJ21
+   SCIS4       SCIS13      SCIS18      SCIS25      SCOI2       SCOI6
+   SCOI20      SCOI24
+
+Continuous latent variables
+   POS         NEG
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Random Starts Specifications
+  Number of random starts                                       10
+  Random starts scale                                    0.500D+01
+
+Input data file(s)
+  scs_clean.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCSK5         SCSK12        SCSK19        SCSK23        SCSK26
+              ________      ________      ________      ________      ________
+ SCSK5          1.000
+ SCSK12         1.000         1.000
+ SCSK19         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ SCCH3          1.000         1.000         1.000         1.000         1.000
+ SCCH7          1.000         1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSJ1          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCCH3         SCCH7         SCCH10        SCCH15        SCMI9
+              ________      ________      ________      ________      ________
+ SCCH3          1.000
+ SCCH7          1.000         1.000
+ SCCH10         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSJ1          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCMI14        SCMI17        SCMI22        SCSJ1         SCSJ8
+              ________      ________      ________      ________      ________
+ SCMI14         1.000
+ SCMI17         1.000         1.000
+ SCMI22         1.000         1.000         1.000
+ SCSJ1          1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ11        SCSJ16        SCSJ21        SCIS4         SCIS13
+              ________      ________      ________      ________      ________
+ SCSJ11         1.000
+ SCSJ16         1.000         1.000
+ SCSJ21         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCIS18        SCIS25        SCOI2         SCOI6         SCOI20
+              ________      ________      ________      ________      ________
+ SCIS18         1.000
+ SCIS25         1.000         1.000
+ SCOI2          1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCOI24
+              ________
+ SCOI24         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCSK5                 2.809       0.156       1.000   13.46%       2.000      2.000      3.000
+             706.000       1.302      -0.761       5.000    7.93%       3.000      4.000
+     SCSK12                2.684       0.240       1.000   15.44%       2.000      2.000      3.000
+             706.000       1.259      -0.734       5.000    5.95%       3.000      4.000
+     SCSK19                2.749       0.187       1.000   14.16%       2.000      2.000      3.000
+             706.000       1.245      -0.669       5.000    6.80%       3.000      4.000
+     SCSK23                2.759       0.193       1.000   13.17%       2.000      2.000      3.000
+             706.000       1.211      -0.633       5.000    6.66%       3.000      4.000
+     SCSK26                2.803       0.125       1.000   10.62%       2.000      2.000      3.000
+             706.000       1.096      -0.575       5.000    5.38%       3.000      4.000
+     SCCH3                 3.289      -0.380       1.000    6.80%       2.000      3.000      3.000
+             706.000       1.118      -0.362       5.000   11.05%       4.000      4.000
+     SCCH7                 2.564       0.319       1.000   24.93%       1.000      2.000      2.000
+             706.000       1.529      -0.913       5.000    7.51%       3.000      4.000
+     SCCH10                2.627       0.191       1.000   20.11%       1.000      2.000      3.000
+             706.000       1.333      -0.829       5.000    5.52%       3.000      4.000
+     SCCH15                3.149      -0.146       1.000    7.93%       2.000      3.000      3.000
+             706.000       1.231      -0.679       5.000   11.33%       3.000      4.000
+     SCMI9                 3.524      -0.436       1.000    3.82%       3.000      3.000      4.000
+             706.000       1.057      -0.277       5.000   17.28%       4.000      4.000
+     SCMI14                3.584      -0.414       1.000    2.83%       3.000      3.000      4.000
+             706.000       1.008      -0.290       5.000   18.84%       4.000      4.000
+     SCMI17                3.363      -0.246       1.000    3.26%       3.000      3.000      3.000
+             706.000       0.965      -0.378       5.000   11.61%       4.000      4.000
+     SCMI22                2.863       0.031       1.000   12.75%       2.000      3.000      3.000
+             706.000       1.257      -0.763       5.000    7.08%       3.000      4.000
+     SCSJ1                 3.704      -0.531       1.000    3.12%       3.000      4.000      4.000
+             706.000       1.123      -0.360       5.000   26.20%       4.000      5.000
+     SCSJ8                 2.888       0.013       1.000   18.56%       2.000      2.000      3.000
+             706.000       1.649      -1.099       5.000   11.61%       3.000      4.000
+     SCSJ11                2.746       0.194       1.000   18.56%       2.000      2.000      3.000
+             706.000       1.535      -1.001       5.000    9.21%       3.000      4.000
+     SCSJ16                2.894       0.059       1.000   16.43%       2.000      2.000      3.000
+             706.000       1.619      -1.116       5.000   11.61%       3.000      4.000
+     SCSJ21                2.789       0.117       1.000   15.58%       2.000      2.000      3.000
+             706.000       1.345      -0.796       5.000    7.79%       3.000      4.000
+     SCIS4                 2.380       0.572       1.000   33.00%       1.000      2.000      2.000
+             706.000       1.675      -0.843       5.000    8.07%       3.000      4.000
+     SCIS13                2.627       0.273       1.000   26.63%       1.000      2.000      2.000
+             706.000       1.763      -1.156       5.000    9.77%       3.000      4.000
+     SCIS18                2.840       0.053       1.000   18.84%       2.000      2.000      3.000
+             706.000       1.613      -1.094       5.000   10.34%       3.000      4.000
+     SCIS25                2.635       0.183       1.000   28.61%       1.000      2.000      3.000
+             706.000       1.779      -1.238       5.000    8.64%       3.000      4.000
+     SCOI2                 2.506       0.422       1.000   29.18%       1.000      2.000      2.000
+             706.000       1.692      -0.966       5.000    9.07%       3.000      4.000
+     SCOI6                 2.722       0.221       1.000   21.53%       1.000      2.000      3.000
+             706.000       1.659      -1.059       5.000   10.62%       3.000      4.000
+     SCOI20                2.374       0.522       1.000   28.75%       1.000      2.000      2.000
+             706.000       1.401      -0.635       5.000    5.67%       3.000      3.000
+     SCOI24                2.006       0.985       1.000   43.20%       1.000      1.000      2.000
+             706.000       1.266       0.113       5.000    3.82%       2.000      3.000
+
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST FIT FUNCTION VALUES
+
+Fit function values at local maxima and random start numbers:
+
+           2497.3772         6
+           2497.3772         2
+           2497.3772         9
+
+Unperturbed starting value run did not converge.
+
+7 starting value run(s) did not converge.
+
+     THE STANDARD ERRORS OF THE MODEL PARAMETER ESTIMATES COULD NOT BE
+     COMPUTED.  THE MODEL MAY NOT BE IDENTIFIED.  CHECK YOUR MODEL.
+     PROBLEM INVOLVING THE FOLLOWING PARAMETER:
+     Parameter 102, NEG
+
+     THE CONDITION NUMBER IS      -0.306D-09.
+
+     THE ROBUST CHI-SQUARE COULD NOT BE COMPUTED.
+
+
+
+MODEL RESULTS
+
+                    Estimate
+
+ POS      BY
+    SCSK5              0.000
+    SCSK12             0.121
+    SCSK19             0.030
+    SCSK23            -0.546
+    SCSK26             0.105
+    SCCH3              0.939
+    SCCH7              1.636
+    SCCH10             1.205
+    SCCH15             0.425
+    SCMI9              0.414
+    SCMI14            -0.342
+    SCMI17            -0.342
+    SCMI22             0.084
+    SCSJ1              0.000
+    SCSJ8              2.923
+    SCSJ11             2.781
+    SCSJ16             2.872
+    SCSJ21             2.171
+    SCIS4              3.336
+    SCIS13             3.129
+    SCIS18             3.252
+    SCIS25             3.298
+    SCOI2              3.413
+    SCOI6              3.393
+    SCOI20             2.514
+    SCOI24             2.308
+
+ NEG      BY
+    SCSJ1              0.000
+    SCSJ8              1.694
+    SCSJ11             1.608
+    SCSJ16             1.435
+    SCSJ21             1.418
+    SCIS4              1.466
+    SCIS13             1.426
+    SCIS18             1.877
+    SCIS25             1.428
+    SCOI2              1.517
+    SCOI6              1.644
+    SCOI20             1.501
+    SCOI24             1.043
+    SCSK5              0.000
+    SCSK12             3.045
+    SCSK19             3.116
+    SCSK23             2.322
+    SCSK26             2.842
+    SCCH3              2.336
+    SCCH7              3.431
+    SCCH10             3.435
+    SCCH15             3.463
+    SCMI9              2.300
+    SCMI14             1.908
+    SCMI17             2.294
+    SCMI22             3.062
+
+ NEG      WITH
+    POS               -0.063
+
+ Intercepts
+    SCSK5              2.809
+    SCSK12             2.684
+    SCSK19             2.749
+    SCSK23             2.759
+    SCSK26             2.803
+    SCCH3              3.289
+    SCCH7              2.564
+    SCCH10             2.627
+    SCCH15             3.149
+    SCMI9              3.524
+    SCMI14             3.584
+    SCMI17             3.363
+    SCMI22             2.863
+    SCSJ1              3.704
+    SCSJ8              2.888
+    SCSJ11             2.746
+    SCSJ16             2.894
+    SCSJ21             2.789
+    SCIS4              2.380
+    SCIS13             2.627
+    SCIS18             2.840
+    SCIS25             2.635
+    SCOI2              2.506
+    SCOI6              2.722
+    SCOI20             2.374
+    SCOI24             2.006
+
+ Variances
+    POS                0.139
+    NEG                0.062
+
+ Residual Variances
+    SCSK5              1.302
+    SCSK12             0.727
+    SCSK19             0.653
+    SCSK23             0.674
+    SCSK26             0.630
+    SCCH3              0.933
+    SCCH7              1.135
+    SCCH10             0.921
+    SCCH15             0.647
+    SCMI9              0.825
+    SCMI14             0.683
+    SCMI17             0.522
+    SCMI22             0.707
+    SCSJ1              1.123
+    SCSJ8              0.906
+    SCSJ11             0.862
+    SCSJ16             0.863
+    SCSJ21             0.953
+    SCIS4              0.608
+    SCIS13             0.837
+    SCIS18             0.692
+    SCIS25             0.731
+    SCOI2              0.580
+    SCOI6              0.593
+    SCOI20             0.858
+    SCOI24             0.761
+
+
+STANDARDIZED MODEL RESULTS
+
+                      StdYX
+                    Estimate
+
+ POS      BY
+    SCSK5              0.000
+    SCSK12             0.040
+    SCSK19             0.010
+    SCSK23            -0.185
+    SCSK26             0.038
+    SCCH3              0.332
+    SCCH7              0.494
+    SCCH10             0.390
+    SCCH15             0.143
+    SCMI9              0.150
+    SCMI14            -0.127
+    SCMI17            -0.130
+    SCMI22             0.028
+    SCSJ1              0.000
+    SCSJ8              0.850
+    SCSJ11             0.838
+    SCSJ16             0.843
+    SCSJ21             0.699
+    SCIS4              0.962
+    SCIS13             0.880
+    SCIS18             0.956
+    SCIS25             0.923
+    SCOI2              0.980
+    SCOI6              0.983
+    SCOI20             0.793
+    SCOI24             0.766
+
+ NEG      BY
+    SCSJ1              0.000
+    SCSJ8              0.329
+    SCSJ11             0.323
+    SCSJ16             0.281
+    SCSJ21             0.305
+    SCIS4              0.282
+    SCIS13             0.268
+    SCIS18             0.368
+    SCIS25             0.267
+    SCOI2              0.291
+    SCOI6              0.318
+    SCOI20             0.316
+    SCOI24             0.231
+    SCSK5              0.000
+    SCSK12             0.676
+    SCSK19             0.696
+    SCSK23             0.526
+    SCSK26             0.677
+    SCCH3              0.551
+    SCCH7              0.691
+    SCCH10             0.742
+    SCCH15             0.778
+    SCMI9              0.558
+    SCMI14             0.474
+    SCMI17             0.582
+    SCMI22             0.681
+
+ NEG      WITH
+    POS               -0.680
+
+ Intercepts
+    SCSK5              2.462
+    SCSK12             2.393
+    SCSK19             2.464
+    SCSK23             2.507
+    SCSK26             2.678
+    SCCH3              3.111
+    SCCH7              2.073
+    SCCH10             2.276
+    SCCH15             2.837
+    SCMI9              3.428
+    SCMI14             3.570
+    SCMI17             3.423
+    SCMI22             2.553
+    SCSJ1              3.495
+    SCSJ8              2.249
+    SCSJ11             2.217
+    SCSJ16             2.274
+    SCSJ21             2.405
+    SCIS4              1.839
+    SCIS13             1.979
+    SCIS18             2.236
+    SCIS25             1.975
+    SCOI2              1.926
+    SCOI6              2.113
+    SCOI20             2.005
+    SCOI24             1.782
+
+ Variances
+    POS                1.000
+    NEG                1.000
+
+ Residual Variances
+    SCSK5              1.000
+    SCSK12             0.578
+    SCSK19             0.525
+    SCSK23             0.557
+    SCSK26             0.575
+    SCCH3              0.835
+    SCCH7              0.742
+    SCCH10             0.691
+    SCCH15             0.526
+    SCMI9              0.780
+    SCMI14             0.678
+    SCMI17             0.541
+    SCMI22             0.562
+    SCSJ1              1.000
+    SCSJ8              0.550
+    SCSJ11             0.561
+    SCSJ16             0.533
+    SCSJ21             0.708
+    SCIS4              0.363
+    SCIS13             0.474
+    SCIS18             0.429
+    SCIS25             0.411
+    SCOI2              0.343
+    SCOI6              0.357
+    SCOI20             0.612
+    SCOI24             0.601
+
+
+MODEL COMMAND WITH FINAL ESTIMATES USED AS STARTING VALUES
+
+     pos BY scsk5@0;
+     pos BY scsk12*0.12059;
+     pos BY scsk19@0.03000;
+     pos BY scsk23*-0.54586;
+     pos BY scsk26*0.10534;
+     pos BY scch3*0.93948;
+     pos BY scch7*1.63571;
+     pos BY scch10*1.20495;
+     pos BY scch15*0.42455;
+     pos BY scmi9*0.41379;
+     pos BY scmi14*-0.34190;
+     pos BY scmi17*-0.34171;
+     pos BY scmi22*0.08447;
+     pos BY scsj1@0;
+     pos BY scsj8*2.92274;
+     pos BY scsj11*2.78089;
+     pos BY scsj16*2.87206;
+     pos BY scsj21*2.17065;
+     pos BY scis4*3.33588;
+     pos BY scis13*3.12921;
+     pos BY scis18*3.25217;
+     pos BY scis25*3.29813;
+     pos BY scoi2*3.41329;
+     pos BY scoi6*3.39266;
+     pos BY scoi20*2.51384;
+     pos BY scoi24*2.30791;
+     neg BY scsj1@0;
+     neg BY scsj8*1.69435;
+     neg BY scsj11*1.60761;
+     neg BY scsj16*1.43470;
+     neg BY scsj21*1.41822;
+     neg BY scis4*1.46615;
+     neg BY scis13*1.42635;
+     neg BY scis18*1.87659;
+     neg BY scis25*1.42755;
+     neg BY scoi2*1.51739;
+     neg BY scoi6*1.64410;
+     neg BY scoi20*1.50114;
+     neg BY scoi24*1.04350;
+     neg BY scsk5@0;
+     neg BY scsk12*3.04518;
+     neg BY scsk19*3.11560;
+     neg BY scsk23*2.32224;
+     neg BY scsk26*2.84215;
+     neg BY scch3*2.33627;
+     neg BY scch7*3.43078;
+     neg BY scch10*3.43499;
+     neg BY scch15*3.46334;
+     neg BY scmi9*2.29999;
+     neg BY scmi14*1.90777;
+     neg BY scmi17*2.29450;
+     neg BY scmi22*3.06219;
+
+     neg WITH pos*-0.06325;
+
+     [ scsk5*2.80878 ];
+     [ scsk12*2.68414 ];
+     [ scsk19*2.74929 ];
+     [ scsk23*2.75921 ];
+     [ scsk26*2.80312 ];
+     [ scch3*3.28895 ];
+     [ scch7*2.56374 ];
+     [ scch10*2.62748 ];
+     [ scch15*3.14873 ];
+     [ scmi9*3.52408 ];
+     [ scmi14*3.58357 ];
+     [ scmi17*3.36261 ];
+     [ scmi22*2.86261 ];
+     [ scsj1*3.70397 ];
+     [ scsj8*2.88810 ];
+     [ scsj11*2.74645 ];
+     [ scsj16*2.89377 ];
+     [ scsj21*2.78895 ];
+     [ scis4*2.37960 ];
+     [ scis13*2.62748 ];
+     [ scis18*2.83994 ];
+     [ scis25*2.63456 ];
+     [ scoi2*2.50567 ];
+     [ scoi6*2.72238 ];
+     [ scoi20*2.37394 ];
+     [ scoi24*2.00567 ];
+
+     scsk5*1.30196;
+     scsk12*0.72704;
+     scsk19*0.65330;
+     scsk23*0.67431;
+     scsk26*0.63040;
+     scch3*0.93323;
+     scch7*1.13505;
+     scch10*0.92120;
+     scch15*0.64727;
+     scmi9*0.82472;
+     scmi14*0.68302;
+     scmi17*0.52238;
+     scmi22*0.70664;
+     scsj1*1.12341;
+     scsj8*0.90624;
+     scsj11*0.86182;
+     scsj16*0.86252;
+     scsj21*0.95263;
+     scis4*0.60849;
+     scis13*0.83671;
+     scis18*0.69207;
+     scis25*0.73127;
+     scoi2*0.57994;
+     scoi6*0.59263;
+     scoi20*0.85770;
+     scoi24*0.76074;
+     pos*0.13940;
+     neg*0.06211;
+
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION
+
+
+           NU
+              SCSK5         SCSK12        SCSK19        SCSK23        SCSK26
+              ________      ________      ________      ________      ________
+                  1             2             3             4             5
+
+
+           NU
+              SCCH3         SCCH7         SCCH10        SCCH15        SCMI9
+              ________      ________      ________      ________      ________
+                  6             7             8             9            10
+
+
+           NU
+              SCMI14        SCMI17        SCMI22        SCSJ1         SCSJ8
+              ________      ________      ________      ________      ________
+                 11            12            13            14            15
+
+
+           NU
+              SCSJ11        SCSJ16        SCSJ21        SCIS4         SCIS13
+              ________      ________      ________      ________      ________
+                 16            17            18            19            20
+
+
+           NU
+              SCIS18        SCIS25        SCOI2         SCOI6         SCOI20
+              ________      ________      ________      ________      ________
+                 21            22            23            24            25
+
+
+           NU
+              SCOI24
+              ________
+                 26
+
+
+           LAMBDA
+              POS           NEG
+              ________      ________
+ SCSK5              0             0
+ SCSK12            27            28
+ SCSK19             0            29
+ SCSK23            30            31
+ SCSK26            32            33
+ SCCH3             34            35
+ SCCH7             36            37
+ SCCH10            38            39
+ SCCH15            40            41
+ SCMI9             42            43
+ SCMI14            44            45
+ SCMI17            46            47
+ SCMI22            48            49
+ SCSJ1              0             0
+ SCSJ8             50            51
+ SCSJ11            52            53
+ SCSJ16            54            55
+ SCSJ21            56            57
+ SCIS4             58            59
+ SCIS13            60            61
+ SCIS18            62            63
+ SCIS25            64            65
+ SCOI2             66            67
+ SCOI6             68            69
+ SCOI20            70            71
+ SCOI24            72            73
+
+
+           THETA
+              SCSK5         SCSK12        SCSK19        SCSK23        SCSK26
+              ________      ________      ________      ________      ________
+ SCSK5             74
+ SCSK12             0            75
+ SCSK19             0             0            76
+ SCSK23             0             0             0            77
+ SCSK26             0             0             0             0            78
+ SCCH3              0             0             0             0             0
+ SCCH7              0             0             0             0             0
+ SCCH10             0             0             0             0             0
+ SCCH15             0             0             0             0             0
+ SCMI9              0             0             0             0             0
+ SCMI14             0             0             0             0             0
+ SCMI17             0             0             0             0             0
+ SCMI22             0             0             0             0             0
+ SCSJ1              0             0             0             0             0
+ SCSJ8              0             0             0             0             0
+ SCSJ11             0             0             0             0             0
+ SCSJ16             0             0             0             0             0
+ SCSJ21             0             0             0             0             0
+ SCIS4              0             0             0             0             0
+ SCIS13             0             0             0             0             0
+ SCIS18             0             0             0             0             0
+ SCIS25             0             0             0             0             0
+ SCOI2              0             0             0             0             0
+ SCOI6              0             0             0             0             0
+ SCOI20             0             0             0             0             0
+ SCOI24             0             0             0             0             0
+
+
+           THETA
+              SCCH3         SCCH7         SCCH10        SCCH15        SCMI9
+              ________      ________      ________      ________      ________
+ SCCH3             79
+ SCCH7              0            80
+ SCCH10             0             0            81
+ SCCH15             0             0             0            82
+ SCMI9              0             0             0             0            83
+ SCMI14             0             0             0             0             0
+ SCMI17             0             0             0             0             0
+ SCMI22             0             0             0             0             0
+ SCSJ1              0             0             0             0             0
+ SCSJ8              0             0             0             0             0
+ SCSJ11             0             0             0             0             0
+ SCSJ16             0             0             0             0             0
+ SCSJ21             0             0             0             0             0
+ SCIS4              0             0             0             0             0
+ SCIS13             0             0             0             0             0
+ SCIS18             0             0             0             0             0
+ SCIS25             0             0             0             0             0
+ SCOI2              0             0             0             0             0
+ SCOI6              0             0             0             0             0
+ SCOI20             0             0             0             0             0
+ SCOI24             0             0             0             0             0
+
+
+           THETA
+              SCMI14        SCMI17        SCMI22        SCSJ1         SCSJ8
+              ________      ________      ________      ________      ________
+ SCMI14            84
+ SCMI17             0            85
+ SCMI22             0             0            86
+ SCSJ1              0             0             0            87
+ SCSJ8              0             0             0             0            88
+ SCSJ11             0             0             0             0             0
+ SCSJ16             0             0             0             0             0
+ SCSJ21             0             0             0             0             0
+ SCIS4              0             0             0             0             0
+ SCIS13             0             0             0             0             0
+ SCIS18             0             0             0             0             0
+ SCIS25             0             0             0             0             0
+ SCOI2              0             0             0             0             0
+ SCOI6              0             0             0             0             0
+ SCOI20             0             0             0             0             0
+ SCOI24             0             0             0             0             0
+
+
+           THETA
+              SCSJ11        SCSJ16        SCSJ21        SCIS4         SCIS13
+              ________      ________      ________      ________      ________
+ SCSJ11            89
+ SCSJ16             0            90
+ SCSJ21             0             0            91
+ SCIS4              0             0             0            92
+ SCIS13             0             0             0             0            93
+ SCIS18             0             0             0             0             0
+ SCIS25             0             0             0             0             0
+ SCOI2              0             0             0             0             0
+ SCOI6              0             0             0             0             0
+ SCOI20             0             0             0             0             0
+ SCOI24             0             0             0             0             0
+
+
+           THETA
+              SCIS18        SCIS25        SCOI2         SCOI6         SCOI20
+              ________      ________      ________      ________      ________
+ SCIS18            94
+ SCIS25             0            95
+ SCOI2              0             0            96
+ SCOI6              0             0             0            97
+ SCOI20             0             0             0             0            98
+ SCOI24             0             0             0             0             0
+
+
+           THETA
+              SCOI24
+              ________
+ SCOI24            99
+
+
+           ALPHA
+              POS           NEG
+              ________      ________
+                  0             0
+
+
+           BETA
+              POS           NEG
+              ________      ________
+ POS                0             0
+ NEG                0             0
+
+
+           PSI
+              POS           NEG
+              ________      ________
+ POS              100
+ NEG              101           102
+
+
+     STARTING VALUES
+
+
+           NU
+              SCSK5         SCSK12        SCSK19        SCSK23        SCSK26
+              ________      ________      ________      ________      ________
+                2.809         2.684         2.749         2.759         2.803
+
+
+           NU
+              SCCH3         SCCH7         SCCH10        SCCH15        SCMI9
+              ________      ________      ________      ________      ________
+                3.289         2.564         2.627         3.149         3.524
+
+
+           NU
+              SCMI14        SCMI17        SCMI22        SCSJ1         SCSJ8
+              ________      ________      ________      ________      ________
+                3.584         3.363         2.863         3.704         2.888
+
+
+           NU
+              SCSJ11        SCSJ16        SCSJ21        SCIS4         SCIS13
+              ________      ________      ________      ________      ________
+                2.746         2.894         2.789         2.380         2.627
+
+
+           NU
+              SCIS18        SCIS25        SCOI2         SCOI6         SCOI20
+              ________      ________      ________      ________      ________
+                2.840         2.635         2.506         2.722         2.374
+
+
+           NU
+              SCOI24
+              ________
+                2.006
+
+
+           LAMBDA
+              POS           NEG
+              ________      ________
+ SCSK5          0.000         0.000
+ SCSK12         0.000         0.000
+ SCSK19         0.030         0.000
+ SCSK23         0.000         0.000
+ SCSK26         0.000         0.000
+ SCCH3          0.000         0.000
+ SCCH7          0.000         0.000
+ SCCH10         0.000         0.000
+ SCCH15         0.000         0.000
+ SCMI9          0.000         0.000
+ SCMI14         0.000         0.000
+ SCMI17         0.000         0.000
+ SCMI22         0.000         0.000
+ SCSJ1          0.000         0.000
+ SCSJ8          0.000         0.000
+ SCSJ11         0.000         0.000
+ SCSJ16         0.000         0.000
+ SCSJ21         0.000         0.000
+ SCIS4          0.000         0.000
+ SCIS13         0.000         0.000
+ SCIS18         0.000         0.000
+ SCIS25         0.000         0.000
+ SCOI2          0.000         0.000
+ SCOI6          0.000         0.000
+ SCOI20         0.000         0.000
+ SCOI24         0.000         0.000
+
+
+           THETA
+              SCSK5         SCSK12        SCSK19        SCSK23        SCSK26
+              ________      ________      ________      ________      ________
+ SCSK5          0.651
+ SCSK12         0.000         0.629
+ SCSK19         0.000         0.000         0.622
+ SCSK23         0.000         0.000         0.000         0.606
+ SCSK26         0.000         0.000         0.000         0.000         0.548
+ SCCH3          0.000         0.000         0.000         0.000         0.000
+ SCCH7          0.000         0.000         0.000         0.000         0.000
+ SCCH10         0.000         0.000         0.000         0.000         0.000
+ SCCH15         0.000         0.000         0.000         0.000         0.000
+ SCMI9          0.000         0.000         0.000         0.000         0.000
+ SCMI14         0.000         0.000         0.000         0.000         0.000
+ SCMI17         0.000         0.000         0.000         0.000         0.000
+ SCMI22         0.000         0.000         0.000         0.000         0.000
+ SCSJ1          0.000         0.000         0.000         0.000         0.000
+ SCSJ8          0.000         0.000         0.000         0.000         0.000
+ SCSJ11         0.000         0.000         0.000         0.000         0.000
+ SCSJ16         0.000         0.000         0.000         0.000         0.000
+ SCSJ21         0.000         0.000         0.000         0.000         0.000
+ SCIS4          0.000         0.000         0.000         0.000         0.000
+ SCIS13         0.000         0.000         0.000         0.000         0.000
+ SCIS18         0.000         0.000         0.000         0.000         0.000
+ SCIS25         0.000         0.000         0.000         0.000         0.000
+ SCOI2          0.000         0.000         0.000         0.000         0.000
+ SCOI6          0.000         0.000         0.000         0.000         0.000
+ SCOI20         0.000         0.000         0.000         0.000         0.000
+ SCOI24         0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCCH3         SCCH7         SCCH10        SCCH15        SCMI9
+              ________      ________      ________      ________      ________
+ SCCH3          0.559
+ SCCH7          0.000         0.765
+ SCCH10         0.000         0.000         0.666
+ SCCH15         0.000         0.000         0.000         0.616
+ SCMI9          0.000         0.000         0.000         0.000         0.528
+ SCMI14         0.000         0.000         0.000         0.000         0.000
+ SCMI17         0.000         0.000         0.000         0.000         0.000
+ SCMI22         0.000         0.000         0.000         0.000         0.000
+ SCSJ1          0.000         0.000         0.000         0.000         0.000
+ SCSJ8          0.000         0.000         0.000         0.000         0.000
+ SCSJ11         0.000         0.000         0.000         0.000         0.000
+ SCSJ16         0.000         0.000         0.000         0.000         0.000
+ SCSJ21         0.000         0.000         0.000         0.000         0.000
+ SCIS4          0.000         0.000         0.000         0.000         0.000
+ SCIS13         0.000         0.000         0.000         0.000         0.000
+ SCIS18         0.000         0.000         0.000         0.000         0.000
+ SCIS25         0.000         0.000         0.000         0.000         0.000
+ SCOI2          0.000         0.000         0.000         0.000         0.000
+ SCOI6          0.000         0.000         0.000         0.000         0.000
+ SCOI20         0.000         0.000         0.000         0.000         0.000
+ SCOI24         0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCMI14        SCMI17        SCMI22        SCSJ1         SCSJ8
+              ________      ________      ________      ________      ________
+ SCMI14         0.504
+ SCMI17         0.000         0.482
+ SCMI22         0.000         0.000         0.629
+ SCSJ1          0.000         0.000         0.000         0.562
+ SCSJ8          0.000         0.000         0.000         0.000         0.824
+ SCSJ11         0.000         0.000         0.000         0.000         0.000
+ SCSJ16         0.000         0.000         0.000         0.000         0.000
+ SCSJ21         0.000         0.000         0.000         0.000         0.000
+ SCIS4          0.000         0.000         0.000         0.000         0.000
+ SCIS13         0.000         0.000         0.000         0.000         0.000
+ SCIS18         0.000         0.000         0.000         0.000         0.000
+ SCIS25         0.000         0.000         0.000         0.000         0.000
+ SCOI2          0.000         0.000         0.000         0.000         0.000
+ SCOI6          0.000         0.000         0.000         0.000         0.000
+ SCOI20         0.000         0.000         0.000         0.000         0.000
+ SCOI24         0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCSJ11        SCSJ16        SCSJ21        SCIS4         SCIS13
+              ________      ________      ________      ________      ________
+ SCSJ11         0.767
+ SCSJ16         0.000         0.810
+ SCSJ21         0.000         0.000         0.672
+ SCIS4          0.000         0.000         0.000         0.837
+ SCIS13         0.000         0.000         0.000         0.000         0.882
+ SCIS18         0.000         0.000         0.000         0.000         0.000
+ SCIS25         0.000         0.000         0.000         0.000         0.000
+ SCOI2          0.000         0.000         0.000         0.000         0.000
+ SCOI6          0.000         0.000         0.000         0.000         0.000
+ SCOI20         0.000         0.000         0.000         0.000         0.000
+ SCOI24         0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCIS18        SCIS25        SCOI2         SCOI6         SCOI20
+              ________      ________      ________      ________      ________
+ SCIS18         0.807
+ SCIS25         0.000         0.889
+ SCOI2          0.000         0.000         0.846
+ SCOI6          0.000         0.000         0.000         0.830
+ SCOI20         0.000         0.000         0.000         0.000         0.701
+ SCOI24         0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCOI24
+              ________
+ SCOI24         0.633
+
+
+           ALPHA
+              POS           NEG
+              ________      ________
+                0.000         0.000
+
+
+           BETA
+              POS           NEG
+              ________      ________
+ POS            0.000         0.000
+ NEG            0.000         0.000
+
+
+           PSI
+              POS           NEG
+              ________      ________
+ POS            0.050
+ NEG            0.000         0.050
+
+
+TECHNICAL 4 OUTPUT
+
+
+     ESTIMATES DERIVED FROM THE MODEL
+
+
+           ESTIMATED MEANS FOR THE LATENT VARIABLES
+              POS           NEG
+              ________      ________
+                0.000         0.000
+
+
+           ESTIMATED COVARIANCE MATRIX FOR THE LATENT VARIABLES
+              POS           NEG
+              ________      ________
+ POS            1.302
+ NEG            0.000         1.259
+
+
+           ESTIMATED CORRELATION MATRIX FOR THE LATENT VARIABLES
+              POS           NEG
+              ________      ________
+ POS            1.000
+ NEG            0.000         1.000
+
+
+     Beginning Time:  05:50:08
+        Ending Time:  05:50:12
+       Elapsed Time:  00:00:04
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

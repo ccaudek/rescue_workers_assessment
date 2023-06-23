@@ -1,0 +1,1906 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/08/2022   1:08 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: SEM analysis with ESEM model 5b (2 G- and 6 S-factors) for the SCS.
+  DATA:
+  FILE = "semdata.dat";
+
+  VARIABLE:
+  NAMES =
+    scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+    scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+    scoi24 scis25 scsk26
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac;
+
+  MISSING = .;
+
+  USEVARIABLES ARE
+    scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+    scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+    scoi24 scis25 scsk26
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac;
+
+  ANALYSIS:
+
+  ESTIMATOR = MLR;
+  PROCESSORS = 6;
+  ROTATION = TARGET (orthogonal);
+
+  MODEL:
+
+  sc BY
+    scsk5* scsk12 scsk19 scsk23 scsk26 scsj1 scsj8 scsj11 scsj16
+    scsj21 scch3 scch7 scch10 scch15 scis4 scis13 scis18 scis25
+    scmi9 scmi14 scmi17 scmi22 scoi2 scoi6 scoi20 scoi24;
+
+  sk BY
+    scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0
+    scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  sj BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11
+    scsj16 scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0
+    scoi20~0 scoi24~0 (*1);
+
+  ch BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  is BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0
+    scsj11~0 scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0
+    scis4 scis13 scis18 scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0
+    scoi2~0 scoi6~0 scoi20~0 scoi24~0 (*1);
+
+  mi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0
+    scsj11~0 scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0
+    scis13~0 scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0
+    scoi20~0 scoi24~0 (*1);
+
+  oi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6
+    scoi20 scoi24 (*1);
+
+  ! po BY
+  !   scsk5* scsk12 scsk19 scsk23 scsk26 scch3 scch7 scch10 scch15
+  !   scmi9 scmi14 scmi17 scmi22;
+  !
+  ! ne BY
+  !   scsj1* scsj8 scsj11 scsj16 scsj21 scis4 scis13 scis18 scis25
+  !   scoi2 scoi6 scoi20 scoi24;
+
+  ! po@1;
+  ! ne@1;
+  ! po WITH sk-oi@0;
+  ! ne WITH sk-oi@0;
+
+  sc@1;
+  sc WITH sk-oi@0;
+
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  COPE BY
+    cope_pa cope_po;
+
+  MSPSS BY
+    mspss_fa mspss_fr mspss_so;
+
+  NEURO BY
+    neuro_na neuro_sr;
+
+  EXTRA BY
+    extra_pa extra_so extra_ac;
+
+  ! Regressions
+
+  ! Direct effects on endogenous variables
+  PTGI ON COPE MSPSS NEURO EXTRA;
+  IESR ON COPE MSPSS NEURO EXTRA;
+
+  ! Direct effects on mediators
+  ! sk ON COPE MSPSS NEURO EXTRA;
+  ! sj ON COPE MSPSS NEURO EXTRA;
+  ! ch ON COPE MSPSS NEURO EXTRA;
+  ! is ON COPE MSPSS NEURO EXTRA;
+  ! mi ON COPE MSPSS NEURO EXTRA;
+  ! oi ON COPE MSPSS NEURO EXTRA;
+  ! po ON COPE MSPSS NEURO EXTRA;
+  ! ne ON COPE MSPSS NEURO EXTRA;
+  sc ON COPE MSPSS NEURO EXTRA;
+
+  ! Mediators effects on endogenous variables
+  ! PTGI ON po ne;
+  ! IESR ON po ne;
+  PTGI ON sc;
+  IESR ON sc;
+
+  ! Requesting standardized parameter estimates and modification indices
+  OUTPUT:
+  stdyx;
+  !tech4;
+  MODINDICES (ALL);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+SEM analysis with ESEM model 5b (2 G- and 6 S-factors) for the SCS.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        1068
+
+Number of dependent variables                                   44
+Number of independent variables                                  0
+Number of continuous latent variables                           13
+
+Observed dependent variables
+
+  Continuous
+   SCSJ1       SCOI2       SCCH3       SCIS4       SCSK5       SCOI6
+   SCCH7       SCSJ8       SCMI9       SCCH10      SCSJ11      SCSK12
+   SCIS13      SCMI14      SCCH15      SCSJ16      SCMI17      SCIS18
+   SCSK19      SCOI20      SCSJ21      SCMI22      SCSK23      SCOI24
+   SCIS25      SCSK26      PTGI_AL     PTGI_NP     PTGI_PS     PTGI_SP
+   PTGI_RO     IESR_A      IESR_I      IESR_H      COPE_PA     COPE_PO
+   MSPSS_FA    MSPSS_FR    MSPSS_SO    NEURO_NA    NEURO_SR    EXTRA_PA
+   EXTRA_SO    EXTRA_AC
+
+Continuous latent variables
+   SC          PTGI        IESR        COPE        MSPSS       NEURO
+   EXTRA
+
+  EFA factors
+  *1:   SK          SJ          CH          IS          MI          OI
+
+
+Estimator                                                      MLR
+Rotation                                                    TARGET
+Row standardization                                    CORRELATION
+Type of rotation                                        ORTHOGONAL
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization Specifications for the Exploratory Factor Analysis
+Rotation Algorithm
+  Number of random starts                                       30
+  Maximum number of iterations                             1000000
+  Derivative convergence criterion                       0.100D-04
+
+Input data file(s)
+  semdata.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCSJ1         SCOI2         SCCH3         SCIS4         SCSK5
+              ________      ________      ________      ________      ________
+ SCSJ1          1.000
+ SCOI2          1.000         1.000
+ SCCH3          1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000
+ SCSK5          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCCH7          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSK12         1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCOI6         SCCH7         SCSJ8         SCMI9         SCCH10
+              ________      ________      ________      ________      ________
+ SCOI6          1.000
+ SCCH7          1.000         1.000
+ SCSJ8          1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSK12         1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ11        SCSK12        SCIS13        SCMI14        SCCH15
+              ________      ________      ________      ________      ________
+ SCSJ11         1.000
+ SCSK12         1.000         1.000
+ SCIS13         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ16        SCMI17        SCIS18        SCSK19        SCOI20
+              ________      ________      ________      ________      ________
+ SCSJ16         1.000
+ SCMI17         1.000         1.000
+ SCIS18         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ21        SCMI22        SCSK23        SCOI24        SCIS25
+              ________      ________      ________      ________      ________
+ SCSJ21         1.000
+ SCMI22         1.000         1.000
+ SCSK23         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSK26        PTGI_AL       PTGI_NP       PTGI_PS       PTGI_SP
+              ________      ________      ________      ________      ________
+ SCSK26         1.000
+ PTGI_AL        1.000         1.000
+ PTGI_NP        1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PTGI_RO       IESR_A        IESR_I        IESR_H        COPE_PA
+              ________      ________      ________      ________      ________
+ PTGI_RO        1.000
+ IESR_A         1.000         1.000
+ IESR_I         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              COPE_PO       MSPSS_FA      MSPSS_FR      MSPSS_SO      NEURO_NA
+              ________      ________      ________      ________      ________
+ COPE_PO        1.000
+ MSPSS_FA       1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              NEURO_SR      EXTRA_PA      EXTRA_SO      EXTRA_AC
+              ________      ________      ________      ________
+ NEURO_SR       1.000
+ EXTRA_PA       1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCSJ1                 3.726      -0.630       1.000    4.31%       3.000      4.000      4.000
+            1068.000       1.212      -0.268       5.000   28.56%       4.000      5.000
+     SCOI2                 2.782       0.176       1.000   23.50%       1.000      2.000      3.000
+            1068.000       1.875      -1.212       5.000   14.04%       3.000      4.000
+     SCCH3                 3.333      -0.340       1.000    6.27%       2.000      3.000      3.000
+            1068.000       1.159      -0.443       5.000   13.58%       4.000      4.000
+     SCIS4                 2.584       0.363       1.000   27.34%       1.000      2.000      2.000
+            1068.000       1.773      -1.078       5.000   10.49%       3.000      4.000
+     SCSK5                 2.857       0.140       1.000   13.76%       2.000      2.000      3.000
+            1068.000       1.404      -0.855       5.000    9.93%       3.000      4.000
+     SCOI6                 2.975       0.015       1.000   17.23%       2.000      3.000      3.000
+            1068.000       1.766      -1.156       5.000   16.01%       3.000      4.000
+     SCCH7                 2.613       0.297       1.000   22.75%       1.000      2.000      3.000
+            1068.000       1.518      -0.895       5.000    8.15%       3.000      4.000
+     SCSJ8                 2.983      -0.024       1.000   15.92%       2.000      3.000      3.000
+            1068.000       1.661      -1.101       5.000   13.95%       3.000      4.000
+     SCMI9                 3.465      -0.347       1.000    3.93%       3.000      3.000      4.000
+            1068.000       1.073      -0.389       5.000   16.39%       4.000      4.000
+     SCCH10                2.617       0.225       1.000   20.32%       1.000      2.000      3.000
+            1068.000       1.349      -0.822       5.000    5.81%       3.000      4.000
+     SCSJ11                2.846       0.123       1.000   17.04%       2.000      2.000      3.000
+            1068.000       1.591      -1.042       5.000   11.42%       3.000      4.000
+     SCSK12                2.687       0.284       1.000   16.10%       2.000      2.000      3.000
+            1068.000       1.327      -0.735       5.000    7.30%       3.000      4.000
+     SCIS13                2.845       0.058       1.000   21.44%       1.000      2.000      3.000
+            1068.000       1.792      -1.226       5.000   12.36%       3.000      4.000
+     SCMI14                3.446      -0.359       1.000    4.40%       3.000      3.000      4.000
+            1068.000       1.118      -0.452       5.000   16.29%       4.000      4.000
+     SCCH15                3.137      -0.136       1.000    8.99%       2.000      3.000      3.000
+            1068.000       1.300      -0.731       5.000   12.27%       3.000      4.000
+     SCSJ16                2.978      -0.037       1.000   16.48%       2.000      3.000      3.000
+            1068.000       1.682      -1.131       5.000   13.67%       3.000      4.000
+     SCMI17                3.268      -0.217       1.000    4.59%       2.000      3.000      3.000
+            1068.000       1.035      -0.470       5.000   10.49%       4.000      4.000
+     SCIS18                3.034      -0.104       1.000   16.01%       2.000      3.000      3.000
+            1068.000       1.686      -1.111       5.000   14.51%       4.000      4.000
+     SCSK19                2.772       0.181       1.000   14.51%       2.000      2.000      3.000
+            1068.000       1.303      -0.723       5.000    7.77%       3.000      4.000
+     SCOI20                2.630       0.311       1.000   22.66%       1.000      2.000      3.000
+            1068.000       1.565      -0.909       5.000    9.18%       3.000      4.000
+     SCSJ21                2.887       0.050       1.000   13.76%       2.000      3.000      3.000
+            1068.000       1.378      -0.853       5.000    9.18%       3.000      4.000
+     SCMI22                2.896       0.049       1.000   11.99%       2.000      3.000      3.000
+            1068.000       1.279      -0.759       5.000    8.24%       3.000      4.000
+     SCSK23                2.742       0.232       1.000   14.51%       2.000      2.000      3.000
+            1068.000       1.297      -0.719       5.000    7.49%       3.000      4.000
+     SCOI24                2.244       0.712       1.000   35.58%       1.000      2.000      2.000
+            1068.000       1.501      -0.533       5.000    6.09%       2.000      3.000
+     SCIS25                2.818       0.083       1.000   23.69%       1.000      2.000      3.000
+            1068.000       1.862      -1.239       5.000   13.20%       3.000      4.000
+     SCSK26                2.766       0.159       1.000   11.70%       2.000      2.000      3.000
+            1068.000       1.131      -0.626       5.000    5.34%       3.000      4.000
+     PTGI_AL               7.226      -0.114       0.000    8.99%       3.000      6.000      8.000
+            1068.000      17.821      -0.960      15.000    3.37%       9.000     11.000
+     PTGI_NP               9.835       0.250       0.000    9.46%       3.000      8.000     10.000
+            1068.000      43.505      -0.843      25.000    1.12%      12.000     16.000
+     PTGI_PS              10.206      -0.234       0.000    5.06%       5.000      9.000     11.000
+            1068.000      27.774      -0.835      20.000    2.90%      12.000     15.000
+     PTGI_SP               1.390       1.722       0.000   58.71%       0.000      0.000      0.000
+            1068.000       4.755       2.448      10.000    0.75%       1.000      3.000
+     PTGI_RO              14.959       0.047       0.000    6.65%       5.000     12.000     15.000
+            1068.000      84.202      -1.005      35.000    0.94%      18.000     24.000
+     IESR_A                6.885       0.869       0.000   10.77%       2.000      4.000      6.000
+            1068.000      28.649       0.501      27.000    0.09%       8.000     11.000
+     IESR_I                8.916       0.750       0.000    8.15%       3.000      6.000      8.000
+            1068.000      46.911       0.016      32.000    0.19%      10.000     14.000
+     IESR_H                4.287       1.242       0.000   28.56%       0.000      2.000      3.000
+            1068.000      21.779       1.314      24.000    0.09%       4.000      8.000
+     COPE_PA              33.764      -0.218      15.000    0.09%      29.000     33.000     34.000
+            1068.000      25.530       0.157      47.000    0.37%      35.000     38.000
+     COPE_PO              33.266      -0.221      13.000    0.09%      28.000     32.000     34.000
+            1068.000      33.611      -0.037      48.000    0.09%      35.000     38.000
+     MSPSS_FA             18.506      -0.902       4.000    1.12%      14.000     18.000     20.000
+            1068.000      27.896      -0.082      24.000   22.38%      21.000     24.000
+     MSPSS_FR             18.384      -0.868       4.000    1.59%      14.000     18.000     20.000
+            1068.000      25.652       0.079      24.000   20.69%      20.000     24.000
+     MSPSS_SO             19.613      -1.197       4.000    1.12%      16.000     20.000     21.000
+            1068.000      24.580       0.765      24.000   34.83%      23.000     24.000
+     NEURO_NA             10.016       0.059       0.000    0.75%       6.000      9.000     10.000
+            1068.000      17.647      -0.358      20.000    1.12%      11.000     14.000
+     NEURO_SR             10.965       0.379       0.000    1.97%       5.000      9.000     10.000
+            1068.000      38.035      -0.511      28.000    0.28%      12.000     16.000
+     EXTRA_PA             10.177      -0.286       1.000    0.09%       8.000      9.000     10.000
+            1068.000       9.453      -0.331      16.000    3.37%      11.000     13.000
+     EXTRA_SO             10.145      -0.645       0.000    1.31%       8.000     10.000     11.000
+            1068.000      11.162       0.267      16.000    3.00%      11.000     13.000
+     EXTRA_AC             11.020      -0.560       0.000    0.09%       8.000     11.000     11.000
+            1068.000       9.737      -0.046      16.000    4.87%      12.000     14.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                      318
+
+Loglikelihood
+
+          H0 Value                      -90152.104
+          H0 Scaling Correction Factor      1.2104
+            for MLR
+          H1 Value                      -89286.252
+          H1 Scaling Correction Factor      1.1109
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                  180940.209
+          Bayesian (BIC)                182521.796
+          Sample-Size Adjusted BIC      181511.769
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                           1623.396*
+          Degrees of Freedom                   716
+          P-Value                           0.0000
+          Scaling Correction Factor         1.0667
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.034
+          90 Percent C.I.                    0.032  0.037
+          Probability RMSEA <= .05           1.000
+
+CFI/TLI
+
+          CFI                                0.956
+          TLI                                0.942
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          21792.177
+          Degrees of Freedom                   946
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.032
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SC       BY
+    SCSK5              0.418      0.096      4.368      0.000
+    SCSK12             0.378      0.113      3.352      0.001
+    SCSK19             0.306      0.115      2.660      0.008
+    SCSK23             0.234      0.106      2.211      0.027
+    SCSK26             0.285      0.091      3.126      0.002
+    SCSJ1              0.015      0.093      0.165      0.869
+    SCSJ8              0.177      0.147      1.204      0.228
+    SCSJ11             0.104      0.112      0.928      0.354
+    SCSJ16             0.123      0.117      1.053      0.292
+    SCSJ21             0.028      0.102      0.272      0.786
+    SCCH3              0.069      0.076      0.909      0.363
+    SCCH7              0.464      0.103      4.522      0.000
+    SCCH10             0.358      0.106      3.378      0.001
+    SCCH15             0.149      0.090      1.648      0.099
+    SCIS4              0.212      0.112      1.881      0.060
+    SCIS13             0.273      0.126      2.169      0.030
+    SCIS18             0.282      0.120      2.345      0.019
+    SCIS25             0.228      0.109      2.089      0.037
+    SCMI9             -0.193      0.073     -2.633      0.008
+    SCMI14            -0.335      0.080     -4.177      0.000
+    SCMI17            -0.099      0.077     -1.293      0.196
+    SCMI22             0.236      0.090      2.605      0.009
+    SCOI2              0.279      0.128      2.189      0.029
+    SCOI6              0.226      0.117      1.933      0.053
+    SCOI20             0.501      0.073      6.824      0.000
+    SCOI24             0.360      0.084      4.280      0.000
+
+ SK       BY
+    SCSK5              0.758      0.069     11.027      0.000
+    SCSK12             0.873      0.058     14.955      0.000
+    SCSK19             0.883      0.072     12.338      0.000
+    SCSK23             0.369      0.176      2.105      0.035
+    SCSK26             0.461      0.139      3.329      0.001
+    SCSJ1             -0.098      0.045     -2.188      0.029
+    SCSJ8             -0.353      0.049     -7.181      0.000
+    SCSJ11            -0.225      0.053     -4.242      0.000
+    SCSJ16            -0.244      0.051     -4.770      0.000
+    SCSJ21            -0.288      0.052     -5.545      0.000
+    SCCH3              0.209      0.067      3.133      0.002
+    SCCH7              0.162      0.062      2.627      0.009
+    SCCH10             0.202      0.062      3.249      0.001
+    SCCH15             0.393      0.120      3.264      0.001
+    SCIS4             -0.298      0.068     -4.378      0.000
+    SCIS13            -0.209      0.049     -4.224      0.000
+    SCIS18            -0.192      0.050     -3.848      0.000
+    SCIS25            -0.235      0.057     -4.144      0.000
+    SCMI9              0.377      0.085      4.455      0.000
+    SCMI14             0.491      0.096      5.122      0.000
+    SCMI17             0.444      0.096      4.625      0.000
+    SCMI22             0.520      0.105      4.973      0.000
+    SCOI2             -0.304      0.075     -4.067      0.000
+    SCOI6             -0.223      0.064     -3.463      0.001
+    SCOI20            -0.110      0.074     -1.493      0.136
+    SCOI24            -0.177      0.062     -2.845      0.004
+
+ SJ       BY
+    SCSK5             -0.137      0.054     -2.526      0.012
+    SCSK12            -0.131      0.050     -2.598      0.009
+    SCSK19            -0.241      0.051     -4.706      0.000
+    SCSK23            -0.505      0.081     -6.263      0.000
+    SCSK26            -0.386      0.067     -5.790      0.000
+    SCSJ1              0.635      0.039     16.275      0.000
+    SCSJ8              0.899      0.081     11.136      0.000
+    SCSJ11             0.784      0.050     15.529      0.000
+    SCSJ16             0.830      0.065     12.773      0.000
+    SCSJ21             0.566      0.051     11.205      0.000
+    SCCH3              0.078      0.049      1.585      0.113
+    SCCH7             -0.001      0.060     -0.025      0.980
+    SCCH10             0.034      0.052      0.658      0.510
+    SCCH15            -0.166      0.058     -2.860      0.004
+    SCIS4              0.413      0.061      6.796      0.000
+    SCIS13             0.224      0.062      3.628      0.000
+    SCIS18             0.346      0.064      5.429      0.000
+    SCIS25             0.469      0.069      6.774      0.000
+    SCMI9              0.199      0.059      3.396      0.001
+    SCMI14             0.080      0.077      1.031      0.302
+    SCMI17            -0.041      0.053     -0.789      0.430
+    SCMI22            -0.054      0.059     -0.912      0.362
+    SCOI2              0.483      0.069      6.967      0.000
+    SCOI6              0.507      0.063      8.026      0.000
+    SCOI20             0.219      0.093      2.358      0.018
+    SCOI24             0.207      0.074      2.806      0.005
+
+ CH       BY
+    SCSK5              0.205      0.044      4.701      0.000
+    SCSK12             0.197      0.042      4.678      0.000
+    SCSK19             0.129      0.039      3.285      0.001
+    SCSK23             0.102      0.085      1.209      0.227
+    SCSK26             0.185      0.066      2.813      0.005
+    SCSJ1              0.051      0.041      1.227      0.220
+    SCSJ8             -0.064      0.061     -1.063      0.288
+    SCSJ11             0.075      0.046      1.628      0.103
+    SCSJ16            -0.063      0.054     -1.162      0.245
+    SCSJ21             0.000      0.053     -0.008      0.994
+    SCCH3              0.447      0.058      7.660      0.000
+    SCCH7              0.781      0.072     10.894      0.000
+    SCCH10             0.798      0.072     11.058      0.000
+    SCCH15             0.453      0.067      6.725      0.000
+    SCIS4             -0.062      0.067     -0.937      0.349
+    SCIS13            -0.067      0.049     -1.354      0.176
+    SCIS18            -0.025      0.051     -0.487      0.626
+    SCIS25            -0.128      0.064     -2.001      0.045
+    SCMI9              0.292      0.069      4.265      0.000
+    SCMI14             0.309      0.084      3.687      0.000
+    SCMI17             0.308      0.058      5.331      0.000
+    SCMI22             0.276      0.067      4.104      0.000
+    SCOI2             -0.084      0.069     -1.218      0.223
+    SCOI6             -0.064      0.066     -0.984      0.325
+    SCOI20            -0.222      0.086     -2.584      0.010
+    SCOI24            -0.127      0.074     -1.729      0.084
+
+ IS       BY
+    SCSK5             -0.114      0.049     -2.323      0.020
+    SCSK12            -0.243      0.051     -4.817      0.000
+    SCSK19            -0.140      0.043     -3.235      0.001
+    SCSK23            -0.250      0.079     -3.156      0.002
+    SCSK26            -0.134      0.061     -2.185      0.029
+    SCSJ1              0.168      0.048      3.474      0.001
+    SCSJ8              0.223      0.071      3.132      0.002
+    SCSJ11             0.324      0.053      6.088      0.000
+    SCSJ16             0.390      0.068      5.752      0.000
+    SCSJ21             0.221      0.052      4.234      0.000
+    SCCH3              0.013      0.051      0.255      0.798
+    SCCH7             -0.023      0.068     -0.347      0.728
+    SCCH10            -0.121      0.053     -2.274      0.023
+    SCCH15            -0.119      0.055     -2.181      0.029
+    SCIS4              0.561      0.080      6.985      0.000
+    SCIS13             0.913      0.096      9.490      0.000
+    SCIS18             0.894      0.131      6.821      0.000
+    SCIS25             0.599      0.081      7.394      0.000
+    SCMI9              0.132      0.066      1.993      0.046
+    SCMI14             0.077      0.087      0.886      0.376
+    SCMI17            -0.134      0.059     -2.288      0.022
+    SCMI22            -0.298      0.055     -5.427      0.000
+    SCOI2              0.460      0.081      5.662      0.000
+    SCOI6              0.537      0.082      6.585      0.000
+    SCOI20             0.255      0.104      2.451      0.014
+    SCOI24             0.278      0.082      3.376      0.001
+
+ MI       BY
+    SCSK5              0.150      0.135      1.110      0.267
+    SCSK12             0.099      0.155      0.643      0.520
+    SCSK19             0.205      0.150      1.365      0.172
+    SCSK23             0.681      0.060     11.292      0.000
+    SCSK26             0.512      0.072      7.161      0.000
+    SCSJ1             -0.022      0.057     -0.380      0.704
+    SCSJ8              0.152      0.061      2.498      0.012
+    SCSJ11            -0.088      0.049     -1.823      0.068
+    SCSJ16            -0.076      0.064     -1.181      0.237
+    SCSJ21             0.167      0.049      3.441      0.001
+    SCCH3              0.221      0.121      1.835      0.066
+    SCCH7              0.104      0.057      1.831      0.067
+    SCCH10             0.198      0.079      2.514      0.012
+    SCCH15             0.497      0.112      4.440      0.000
+    SCIS4             -0.051      0.095     -0.532      0.595
+    SCIS13            -0.043      0.070     -0.617      0.537
+    SCIS18            -0.030      0.057     -0.537      0.591
+    SCIS25            -0.041      0.065     -0.632      0.528
+    SCMI9              0.321      0.175      1.833      0.067
+    SCMI14             0.366      0.209      1.749      0.080
+    SCMI17             0.423      0.143      2.965      0.003
+    SCMI22             0.422      0.120      3.525      0.000
+    SCOI2             -0.067      0.102     -0.662      0.508
+    SCOI6             -0.074      0.077     -0.963      0.335
+    SCOI20             0.016      0.091      0.178      0.859
+    SCOI24            -0.066      0.084     -0.789      0.430
+
+ OI       BY
+    SCSK5             -0.102      0.049     -2.100      0.036
+    SCSK12            -0.121      0.063     -1.912      0.056
+    SCSK19            -0.127      0.049     -2.613      0.009
+    SCSK23            -0.132      0.152     -0.865      0.387
+    SCSK26            -0.112      0.095     -1.175      0.240
+    SCSJ1              0.242      0.057      4.256      0.000
+    SCSJ8              0.159      0.116      1.368      0.171
+    SCSJ11             0.261      0.059      4.428      0.000
+    SCSJ16             0.152      0.125      1.214      0.225
+    SCSJ21             0.224      0.075      2.974      0.003
+    SCCH3              0.119      0.073      1.624      0.104
+    SCCH7             -0.140      0.064     -2.182      0.029
+    SCCH10            -0.151      0.058     -2.600      0.009
+    SCCH15            -0.099      0.066     -1.505      0.132
+    SCIS4              0.591      0.097      6.122      0.000
+    SCIS13             0.159      0.107      1.490      0.136
+    SCIS18             0.123      0.147      0.833      0.405
+    SCIS25             0.476      0.129      3.680      0.000
+    SCMI9             -0.023      0.117     -0.196      0.845
+    SCMI14            -0.001      0.142     -0.010      0.992
+    SCMI17            -0.112      0.066     -1.687      0.092
+    SCMI22            -0.059      0.089     -0.660      0.509
+    SCOI2              0.664      0.117      5.698      0.000
+    SCOI6              0.558      0.132      4.217      0.000
+    SCOI20             0.290      0.189      1.536      0.125
+    SCOI24             0.410      0.150      2.742      0.006
+
+ PTGI     BY
+    PTGI_AL            1.000      0.000    999.000    999.000
+    PTGI_NP            1.759      0.043     41.088      0.000
+    PTGI_PS            1.196      0.036     33.569      0.000
+    PTGI_SP            0.312      0.020     15.478      0.000
+    PTGI_RO            2.255      0.064     35.477      0.000
+
+ IESR     BY
+    IESR_A             1.000      0.000    999.000    999.000
+    IESR_I             1.392      0.048     29.300      0.000
+    IESR_H             0.970      0.036     26.745      0.000
+
+ COPE     BY
+    COPE_PA            1.000      0.000    999.000    999.000
+    COPE_PO            1.483      0.154      9.632      0.000
+
+ MSPSS    BY
+    MSPSS_FA           1.000      0.000    999.000    999.000
+    MSPSS_FR           0.997      0.061     16.340      0.000
+    MSPSS_SO           1.020      0.060     16.860      0.000
+
+ NEURO    BY
+    NEURO_NA           1.000      0.000    999.000    999.000
+    NEURO_SR           1.663      0.067     24.673      0.000
+
+ EXTRA    BY
+    EXTRA_PA           1.000      0.000    999.000    999.000
+    EXTRA_SO           1.326      0.104     12.692      0.000
+    EXTRA_AC           1.122      0.098     11.491      0.000
+
+ PTGI     ON
+    COPE               0.247      0.065      3.799      0.000
+    MSPSS              0.101      0.043      2.325      0.020
+    NEURO              0.032      0.075      0.425      0.671
+    EXTRA              0.206      0.126      1.640      0.101
+    SC                 0.997      0.143      6.952      0.000
+
+ IESR     ON
+    COPE               0.210      0.071      2.964      0.003
+    MSPSS             -0.051      0.049     -1.024      0.306
+    NEURO              0.693      0.109      6.369      0.000
+    EXTRA              0.414      0.135      3.060      0.002
+    SC                 0.837      0.209      4.008      0.000
+
+ SC       ON
+    COPE               0.006      0.037      0.162      0.871
+    MSPSS              0.083      0.016      5.251      0.000
+    NEURO              0.222      0.044      4.990      0.000
+    EXTRA              0.029      0.071      0.412      0.680
+
+ SC       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+    IS                 0.000      0.000    999.000    999.000
+    MI                 0.000      0.000    999.000    999.000
+    OI                 0.000      0.000    999.000    999.000
+
+ SJ       WITH
+    SK                 0.000      0.000    999.000    999.000
+
+ CH       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+
+ IS       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+
+ MI       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+    IS                 0.000      0.000    999.000    999.000
+
+ OI       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+    IS                 0.000      0.000    999.000    999.000
+    MI                 0.000      0.000    999.000    999.000
+
+ IESR     WITH
+    PTGI               1.964      0.441      4.450      0.000
+
+ COPE     WITH
+    SK                 0.951      0.306      3.109      0.002
+    SJ                 0.668      0.151      4.430      0.000
+    CH                 0.482      0.218      2.208      0.027
+    IS                -0.288      0.158     -1.815      0.070
+    MI                 1.080      0.356      3.034      0.002
+    OI                -0.136      0.209     -0.653      0.514
+
+ MSPSS    WITH
+    SK                 0.376      0.233      1.610      0.107
+    SJ                -0.082      0.218     -0.377      0.706
+    CH                -0.089      0.221     -0.400      0.689
+    IS                -0.346      0.232     -1.491      0.136
+    MI                -0.020      0.269     -0.074      0.941
+    OI                -0.626      0.330     -1.901      0.057
+    COPE               2.300      0.536      4.295      0.000
+
+ NEURO    WITH
+    SK                -0.847      0.274     -3.094      0.002
+    SJ                 0.583      0.212      2.759      0.006
+    CH                -0.172      0.234     -0.735      0.462
+    IS                 1.363      0.209      6.530      0.000
+    MI                -0.576      0.279     -2.063      0.039
+    OI                 1.290      0.328      3.937      0.000
+    COPE              -3.802      0.480     -7.920      0.000
+    MSPSS             -2.336      0.510     -4.578      0.000
+
+ EXTRA    WITH
+    SK                 0.361      0.136      2.644      0.008
+    SJ                -0.118      0.086     -1.369      0.171
+    CH                 0.082      0.107      0.767      0.443
+    IS                -0.615      0.099     -6.216      0.000
+    MI                 0.102      0.136      0.755      0.450
+    OI                -0.745      0.107     -6.983      0.000
+    COPE               1.978      0.272      7.276      0.000
+    MSPSS              1.899      0.345      5.512      0.000
+    NEURO             -3.222      0.342     -9.415      0.000
+
+ Intercepts
+    SCSJ1              3.726      0.034    110.587      0.000
+    SCOI2              2.782      0.042     66.398      0.000
+    SCCH3              3.333      0.033    101.206      0.000
+    SCIS4              2.584      0.041     63.429      0.000
+    SCSK5              2.857      0.036     78.801      0.000
+    SCOI6              2.975      0.041     73.149      0.000
+    SCCH7              2.613      0.038     69.315      0.000
+    SCSJ8              2.983      0.039     75.650      0.000
+    SCMI9              3.465      0.032    109.340      0.000
+    SCCH10             2.617      0.036     73.645      0.000
+    SCSJ11             2.846      0.039     73.757      0.000
+    SCSK12             2.687      0.035     76.228      0.000
+    SCIS13             2.845      0.041     69.438      0.000
+    SCMI14             3.446      0.032    106.506      0.000
+    SCCH15             3.137      0.035     89.917      0.000
+    SCSJ16             2.978      0.040     75.050      0.000
+    SCMI17             3.268      0.031    104.970      0.000
+    SCIS18             3.034      0.040     76.351      0.000
+    SCSK19             2.772      0.035     79.371      0.000
+    SCOI20             2.630      0.038     68.719      0.000
+    SCSJ21             2.887      0.036     80.376      0.000
+    SCMI22             2.896      0.035     83.703      0.000
+    SCSK23             2.742      0.035     78.686      0.000
+    SCOI24             2.244      0.037     59.865      0.000
+    SCIS25             2.818      0.042     67.496      0.000
+    SCSK26             2.766      0.033     85.010      0.000
+    PTGI_AL            7.226      0.129     55.937      0.000
+    PTGI_NP            9.835      0.202     48.731      0.000
+    PTGI_PS           10.206      0.161     63.288      0.000
+    PTGI_SP            1.390      0.067     20.839      0.000
+    PTGI_RO           14.959      0.281     53.275      0.000
+    IESR_A             6.885      0.164     42.036      0.000
+    IESR_I             8.916      0.210     42.541      0.000
+    IESR_H             4.287      0.143     30.017      0.000
+    COPE_PA           33.764      0.155    218.379      0.000
+    COPE_PO           33.266      0.177    187.519      0.000
+    MSPSS_FA          18.506      0.162    114.503      0.000
+    MSPSS_FR          18.384      0.155    118.621      0.000
+    MSPSS_SO          19.613      0.152    129.285      0.000
+    NEURO_NA          10.016      0.129     77.919      0.000
+    NEURO_SR          10.965      0.189     58.105      0.000
+    EXTRA_PA          10.177      0.094    108.174      0.000
+    EXTRA_SO          10.145      0.102     99.239      0.000
+    EXTRA_AC          11.020      0.095    115.412      0.000
+
+ Variances
+    SK                 1.000      0.000    999.000    999.000
+    SJ                 1.000      0.000    999.000    999.000
+    CH                 1.000      0.000    999.000    999.000
+    IS                 1.000      0.000    999.000    999.000
+    MI                 1.000      0.000    999.000    999.000
+    OI                 1.000      0.000    999.000    999.000
+    COPE               9.815      1.334      7.360      0.000
+    MSPSS             13.049      1.215     10.741      0.000
+    NEURO             10.377      0.768     13.508      0.000
+    EXTRA              3.142      0.394      7.966      0.000
+
+ Residual Variances
+    SCSJ1              0.703      0.039     17.888      0.000
+    SCOI2              0.563      0.049     11.423      0.000
+    SCCH3              0.844      0.048     17.635      0.000
+    SCIS4              0.621      0.050     12.421      0.000
+    SCSK5              0.632      0.047     13.376      0.000
+    SCOI6              0.611      0.042     14.561      0.000
+    SCCH7              0.629      0.073      8.555      0.000
+    SCSJ8              0.497      0.105      4.746      0.000
+    SCMI9              0.610      0.041     14.907      0.000
+    SCCH10             0.506      0.070      7.198      0.000
+    SCSJ11             0.666      0.041     16.112      0.000
+    SCSK12             0.401      0.042      9.474      0.000
+    SCIS13             0.544      0.140      3.880      0.000
+    SCMI14             0.405      0.044      9.245      0.000
+    SCCH15             0.669      0.040     16.669      0.000
+    SCSJ16             0.658      0.068      9.698      0.000
+    SCMI17             0.480      0.030     15.836      0.000
+    SCIS18             0.411      0.134      3.057      0.002
+    SCSK19             0.383      0.036     10.567      0.000
+    SCOI20             0.759      0.047     16.043      0.000
+    SCSJ21             0.835      0.045     18.540      0.000
+    SCMI22             0.685      0.039     17.507      0.000
+    SCSK23             0.406      0.070      5.819      0.000
+    SCOI24             0.810      0.046     17.706      0.000
+    SCIS25             0.745      0.047     15.967      0.000
+    SCSK26             0.458      0.039     11.785      0.000
+    PTGI_AL            5.614      0.328     17.093      0.000
+    PTGI_NP            5.742      0.574     10.000      0.000
+    PTGI_PS           10.299      0.572     18.011      0.000
+    PTGI_SP            3.570      0.213     16.774      0.000
+    PTGI_RO           22.117      1.787     12.374      0.000
+    IESR_A            10.659      0.673     15.840      0.000
+    IESR_I            12.039      1.106     10.880      0.000
+    IESR_H             4.841      0.432     11.202      0.000
+    COPE_PA           15.715      1.177     13.350      0.000
+    COPE_PO           12.012      2.104      5.709      0.000
+    MSPSS_FA          14.847      1.113     13.339      0.000
+    MSPSS_FR          12.690      1.230     10.317      0.000
+    MSPSS_SO          11.006      0.972     11.320      0.000
+    NEURO_NA           7.270      0.456     15.935      0.000
+    NEURO_SR           9.348      1.071      8.725      0.000
+    EXTRA_PA           6.311      0.357     17.699      0.000
+    EXTRA_SO           5.636      0.454     12.419      0.000
+    EXTRA_AC           5.784      0.404     14.304      0.000
+    SC                 1.000      0.000    999.000    999.000
+    PTGI               9.784      0.559     17.488      0.000
+    IESR              11.789      0.978     12.056      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.108E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SC       BY
+    SCSK5              0.429      0.092      4.687      0.000
+    SCSK12             0.399      0.112      3.556      0.000
+    SCSK19             0.326      0.117      2.789      0.005
+    SCSK23             0.250      0.108      2.320      0.020
+    SCSK26             0.326      0.099      3.300      0.001
+    SCSJ1              0.017      0.104      0.164      0.870
+    SCSJ8              0.167      0.141      1.185      0.236
+    SCSJ11             0.100      0.111      0.903      0.366
+    SCSJ16             0.115      0.112      1.028      0.304
+    SCSJ21             0.029      0.106      0.270      0.787
+    SCCH3              0.078      0.088      0.895      0.371
+    SCCH7              0.458      0.102      4.470      0.000
+    SCCH10             0.374      0.111      3.376      0.001
+    SCCH15             0.159      0.094      1.683      0.092
+    SCIS4              0.193      0.112      1.724      0.085
+    SCIS13             0.247      0.120      2.066      0.039
+    SCIS18             0.264      0.120      2.205      0.027
+    SCIS25             0.203      0.107      1.905      0.057
+    SCMI9             -0.227      0.088     -2.579      0.010
+    SCMI14            -0.385      0.096     -3.991      0.000
+    SCMI17            -0.118      0.094     -1.261      0.207
+    SCMI22             0.253      0.094      2.690      0.007
+    SCOI2              0.248      0.125      1.975      0.048
+    SCOI6              0.206      0.117      1.758      0.079
+    SCOI20             0.486      0.091      5.360      0.000
+    SCOI24             0.357      0.100      3.577      0.000
+
+ SK       BY
+    SCSK5              0.639      0.057     11.266      0.000
+    SCSK12             0.758      0.049     15.546      0.000
+    SCSK19             0.773      0.060     12.867      0.000
+    SCSK23             0.324      0.154      2.111      0.035
+    SCSK26             0.434      0.129      3.359      0.001
+    SCSJ1             -0.089      0.041     -2.189      0.029
+    SCSJ8             -0.274      0.038     -7.232      0.000
+    SCSJ11            -0.178      0.042     -4.263      0.000
+    SCSJ16            -0.188      0.039     -4.792      0.000
+    SCSJ21            -0.246      0.044     -5.603      0.000
+    SCCH3              0.194      0.062      3.141      0.002
+    SCCH7              0.131      0.050      2.631      0.009
+    SCCH10             0.174      0.053      3.266      0.001
+    SCCH15             0.345      0.105      3.272      0.001
+    SCIS4             -0.223      0.051     -4.398      0.000
+    SCIS13            -0.156      0.037     -4.235      0.000
+    SCIS18            -0.148      0.038     -3.860      0.000
+    SCIS25            -0.172      0.041     -4.159      0.000
+    SCMI9              0.364      0.081      4.503      0.000
+    SCMI14             0.465      0.090      5.161      0.000
+    SCMI17             0.437      0.094      4.662      0.000
+    SCMI22             0.460      0.092      5.018      0.000
+    SCOI2             -0.222      0.054     -4.077      0.000
+    SCOI6             -0.168      0.048     -3.479      0.001
+    SCOI20            -0.088      0.059     -1.494      0.135
+    SCOI24            -0.144      0.051     -2.844      0.004
+
+ SJ       BY
+    SCSK5             -0.116      0.046     -2.530      0.011
+    SCSK12            -0.114      0.044     -2.604      0.009
+    SCSK19            -0.211      0.045     -4.695      0.000
+    SCSK23            -0.444      0.071     -6.272      0.000
+    SCSK26            -0.363      0.063     -5.791      0.000
+    SCSJ1              0.577      0.032     18.237      0.000
+    SCSJ8              0.697      0.062     11.329      0.000
+    SCSJ11             0.622      0.038     16.289      0.000
+    SCSJ16             0.640      0.049     13.163      0.000
+    SCSJ21             0.483      0.042     11.603      0.000
+    SCCH3              0.073      0.046      1.585      0.113
+    SCCH7             -0.001      0.049     -0.025      0.980
+    SCCH10             0.029      0.045      0.659      0.510
+    SCCH15            -0.145      0.051     -2.871      0.004
+    SCIS4              0.310      0.045      6.841      0.000
+    SCIS13             0.167      0.046      3.635      0.000
+    SCIS18             0.267      0.049      5.452      0.000
+    SCIS25             0.344      0.051      6.790      0.000
+    SCMI9              0.192      0.056      3.414      0.001
+    SCMI14             0.075      0.073      1.031      0.302
+    SCMI17            -0.041      0.052     -0.789      0.430
+    SCMI22            -0.048      0.052     -0.912      0.362
+    SCOI2              0.352      0.050      7.016      0.000
+    SCOI6              0.381      0.047      8.124      0.000
+    SCOI20             0.175      0.074      2.361      0.018
+    SCOI24             0.169      0.060      2.811      0.005
+
+ CH       BY
+    SCSK5              0.173      0.037      4.728      0.000
+    SCSK12             0.171      0.037      4.687      0.000
+    SCSK19             0.113      0.034      3.303      0.001
+    SCSK23             0.090      0.074      1.210      0.226
+    SCSK26             0.174      0.062      2.823      0.005
+    SCSJ1              0.046      0.037      1.231      0.218
+    SCSJ8             -0.050      0.047     -1.063      0.288
+    SCSJ11             0.059      0.036      1.627      0.104
+    SCSJ16            -0.049      0.042     -1.162      0.245
+    SCSJ21             0.000      0.045     -0.008      0.994
+    SCCH3              0.415      0.053      7.828      0.000
+    SCCH7              0.633      0.057     11.205      0.000
+    SCCH10             0.687      0.060     11.474      0.000
+    SCCH15             0.398      0.058      6.819      0.000
+    SCIS4             -0.047      0.050     -0.937      0.349
+    SCIS13            -0.050      0.037     -1.354      0.176
+    SCIS18            -0.019      0.039     -0.487      0.626
+    SCIS25            -0.094      0.047     -2.003      0.045
+    SCMI9              0.282      0.065      4.310      0.000
+    SCMI14             0.292      0.079      3.704      0.000
+    SCMI17             0.302      0.056      5.383      0.000
+    SCMI22             0.244      0.059      4.133      0.000
+    SCOI2             -0.061      0.050     -1.218      0.223
+    SCOI6             -0.049      0.049     -0.984      0.325
+    SCOI20            -0.178      0.069     -2.590      0.010
+    SCOI24            -0.104      0.060     -1.731      0.083
+
+ IS       BY
+    SCSK5             -0.096      0.041     -2.322      0.020
+    SCSK12            -0.211      0.044     -4.839      0.000
+    SCSK19            -0.123      0.038     -3.233      0.001
+    SCSK23            -0.220      0.070     -3.160      0.002
+    SCSK26            -0.126      0.058     -2.181      0.029
+    SCSJ1              0.153      0.044      3.513      0.000
+    SCSJ8              0.173      0.055      3.139      0.002
+    SCSJ11             0.257      0.042      6.112      0.000
+    SCSJ16             0.300      0.052      5.766      0.000
+    SCSJ21             0.188      0.044      4.263      0.000
+    SCCH3              0.012      0.047      0.256      0.798
+    SCCH7             -0.019      0.055     -0.347      0.728
+    SCCH10            -0.104      0.046     -2.275      0.023
+    SCCH15            -0.105      0.048     -2.187      0.029
+    SCIS4              0.422      0.060      7.050      0.000
+    SCIS13             0.682      0.071      9.590      0.000
+    SCIS18             0.689      0.101      6.839      0.000
+    SCIS25             0.439      0.059      7.439      0.000
+    SCMI9              0.128      0.064      1.998      0.046
+    SCMI14             0.073      0.083      0.887      0.375
+    SCMI17            -0.132      0.058     -2.289      0.022
+    SCMI22            -0.263      0.048     -5.459      0.000
+    SCOI2              0.336      0.059      5.673      0.000
+    SCOI6              0.404      0.061      6.641      0.000
+    SCOI20             0.204      0.083      2.455      0.014
+    SCOI24             0.227      0.067      3.384      0.001
+
+ MI       BY
+    SCSK5              0.126      0.114      1.110      0.267
+    SCSK12             0.086      0.134      0.643      0.520
+    SCSK19             0.180      0.132      1.364      0.173
+    SCSK23             0.598      0.052     11.597      0.000
+    SCSK26             0.482      0.067      7.182      0.000
+    SCSJ1             -0.020      0.052     -0.381      0.703
+    SCSJ8              0.118      0.047      2.498      0.012
+    SCSJ11            -0.070      0.038     -1.823      0.068
+    SCSJ16            -0.059      0.050     -1.181      0.237
+    SCSJ21             0.142      0.041      3.455      0.001
+    SCCH3              0.205      0.112      1.837      0.066
+    SCCH7              0.084      0.046      1.834      0.067
+    SCCH10             0.170      0.068      2.515      0.012
+    SCCH15             0.436      0.098      4.467      0.000
+    SCIS4             -0.038      0.072     -0.532      0.595
+    SCIS13            -0.032      0.052     -0.617      0.537
+    SCIS18            -0.023      0.044     -0.537      0.592
+    SCIS25            -0.030      0.048     -0.631      0.528
+    SCMI9              0.310      0.169      1.832      0.067
+    SCMI14             0.346      0.198      1.747      0.081
+    SCMI17             0.416      0.140      2.967      0.003
+    SCMI22             0.373      0.106      3.531      0.000
+    SCOI2             -0.049      0.074     -0.662      0.508
+    SCOI6             -0.056      0.058     -0.964      0.335
+    SCOI20             0.013      0.073      0.178      0.859
+    SCOI24            -0.054      0.069     -0.789      0.430
+
+ OI       BY
+    SCSK5             -0.086      0.041     -2.103      0.036
+    SCSK12            -0.105      0.055     -1.915      0.055
+    SCSK19            -0.111      0.042     -2.616      0.009
+    SCSK23            -0.116      0.134     -0.865      0.387
+    SCSK26            -0.105      0.090     -1.174      0.240
+    SCSJ1              0.220      0.051      4.276      0.000
+    SCSJ8              0.124      0.090      1.369      0.171
+    SCSJ11             0.207      0.047      4.442      0.000
+    SCSJ16             0.117      0.097      1.214      0.225
+    SCSJ21             0.191      0.064      2.979      0.003
+    SCCH3              0.110      0.068      1.630      0.103
+    SCCH7             -0.113      0.052     -2.182      0.029
+    SCCH10            -0.130      0.050     -2.597      0.009
+    SCCH15            -0.087      0.058     -1.507      0.132
+    SCIS4              0.444      0.072      6.144      0.000
+    SCIS13             0.119      0.080      1.489      0.136
+    SCIS18             0.094      0.113      0.833      0.405
+    SCIS25             0.349      0.095      3.681      0.000
+    SCMI9             -0.022      0.113     -0.196      0.845
+    SCMI14            -0.001      0.134     -0.010      0.992
+    SCMI17            -0.110      0.065     -1.688      0.091
+    SCMI22            -0.052      0.079     -0.660      0.509
+    SCOI2              0.485      0.085      5.718      0.000
+    SCOI6              0.420      0.099      4.227      0.000
+    SCOI20             0.232      0.151      1.535      0.125
+    SCOI24             0.335      0.122      2.751      0.006
+
+ PTGI     BY
+    PTGI_AL            0.828      0.012     69.757      0.000
+    PTGI_NP            0.932      0.007    124.939      0.000
+    PTGI_PS            0.793      0.014     56.816      0.000
+    PTGI_SP            0.499      0.021     23.906      0.000
+    PTGI_RO            0.859      0.013     65.707      0.000
+
+ IESR     BY
+    IESR_A             0.792      0.016     48.765      0.000
+    IESR_I             0.862      0.014     60.726      0.000
+    IESR_H             0.882      0.012     70.563      0.000
+
+ COPE     BY
+    COPE_PA            0.620      0.036     17.112      0.000
+    COPE_PO            0.802      0.041     19.788      0.000
+
+ MSPSS    BY
+    MSPSS_FA           0.684      0.026     25.875      0.000
+    MSPSS_FR           0.711      0.031     23.215      0.000
+    MSPSS_SO           0.743      0.028     26.374      0.000
+
+ NEURO    BY
+    NEURO_NA           0.767      0.018     41.548      0.000
+    NEURO_SR           0.868      0.017     52.148      0.000
+
+ EXTRA    BY
+    EXTRA_PA           0.577      0.031     18.520      0.000
+    EXTRA_SO           0.704      0.026     26.717      0.000
+    EXTRA_AC           0.637      0.029     22.233      0.000
+
+ PTGI     ON
+    COPE               0.221      0.059      3.767      0.000
+    MSPSS              0.104      0.045      2.323      0.020
+    NEURO              0.029      0.069      0.425      0.671
+    EXTRA              0.105      0.064      1.632      0.103
+    SC                 0.347      0.046      7.475      0.000
+
+ IESR     ON
+    COPE               0.155      0.050      3.111      0.002
+    MSPSS             -0.043      0.042     -1.037      0.300
+    NEURO              0.526      0.079      6.652      0.000
+    EXTRA              0.173      0.055      3.141      0.002
+    SC                 0.240      0.064      3.755      0.000
+
+ SC       ON
+    COPE               0.015      0.094      0.163      0.871
+    MSPSS              0.246      0.049      5.052      0.000
+    NEURO              0.588      0.081      7.261      0.000
+    EXTRA              0.043      0.105      0.406      0.685
+
+ SC       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+    IS                 0.000      0.000    999.000    999.000
+    MI                 0.000      0.000    999.000    999.000
+    OI                 0.000      0.000    999.000    999.000
+
+ SJ       WITH
+    SK                 0.000      0.000    999.000    999.000
+
+ CH       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+
+ IS       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+
+ MI       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+    IS                 0.000      0.000    999.000    999.000
+
+ OI       WITH
+    SK                 0.000      0.000    999.000    999.000
+    SJ                 0.000      0.000    999.000    999.000
+    CH                 0.000      0.000    999.000    999.000
+    IS                 0.000      0.000    999.000    999.000
+    MI                 0.000      0.000    999.000    999.000
+
+ IESR     WITH
+    PTGI               0.183      0.039      4.666      0.000
+
+ COPE     WITH
+    SK                 0.304      0.092      3.305      0.001
+    SJ                 0.213      0.047      4.554      0.000
+    CH                 0.154      0.066      2.317      0.021
+    IS                -0.092      0.052     -1.773      0.076
+    MI                 0.345      0.110      3.128      0.002
+    OI                -0.043      0.067     -0.652      0.515
+
+ MSPSS    WITH
+    SK                 0.104      0.065      1.612      0.107
+    SJ                -0.023      0.060     -0.378      0.705
+    CH                -0.025      0.061     -0.401      0.689
+    IS                -0.096      0.064     -1.492      0.136
+    MI                -0.005      0.074     -0.074      0.941
+    OI                -0.173      0.091     -1.909      0.056
+    COPE               0.203      0.044      4.603      0.000
+
+ NEURO    WITH
+    SK                -0.263      0.085     -3.088      0.002
+    SJ                 0.181      0.066      2.740      0.006
+    CH                -0.053      0.072     -0.736      0.462
+    IS                 0.423      0.064      6.637      0.000
+    MI                -0.179      0.086     -2.078      0.038
+    OI                 0.400      0.100      4.003      0.000
+    COPE              -0.377      0.040     -9.370      0.000
+    MSPSS             -0.201      0.041     -4.890      0.000
+
+ EXTRA    WITH
+    SK                 0.203      0.074      2.765      0.006
+    SJ                -0.067      0.048     -1.383      0.167
+    CH                 0.046      0.060      0.768      0.442
+    IS                -0.347      0.049     -7.094      0.000
+    MI                 0.058      0.076      0.754      0.451
+    OI                -0.420      0.057     -7.396      0.000
+    COPE               0.356      0.046      7.710      0.000
+    MSPSS              0.297      0.044      6.795      0.000
+    NEURO             -0.564      0.037    -15.385      0.000
+
+ Intercepts
+    SCSJ1              3.384      0.087     38.883      0.000
+    SCOI2              2.032      0.037     55.030      0.000
+    SCCH3              3.097      0.074     42.072      0.000
+    SCIS4              1.941      0.033     58.784      0.000
+    SCSK5              2.411      0.047     51.650      0.000
+    SCOI6              2.238      0.044     51.427      0.000
+    SCCH7              2.121      0.039     54.588      0.000
+    SCSJ8              2.315      0.046     50.322      0.000
+    SCMI9              3.346      0.079     42.334      0.000
+    SCCH10             2.254      0.043     52.221      0.000
+    SCSJ11             2.257      0.043     52.899      0.000
+    SCSK12             2.333      0.044     53.153      0.000
+    SCIS13             2.125      0.040     52.484      0.000
+    SCMI14             3.259      0.077     42.503      0.000
+    SCCH15             2.751      0.059     46.260      0.000
+    SCSJ16             2.296      0.046     50.239      0.000
+    SCMI17             3.212      0.073     44.180      0.000
+    SCIS18             2.336      0.048     48.735      0.000
+    SCSK19             2.429      0.048     50.774      0.000
+    SCOI20             2.103      0.038     55.146      0.000
+    SCSJ21             2.459      0.049     49.747      0.000
+    SCMI22             2.561      0.052     49.076      0.000
+    SCSK23             2.408      0.046     51.912      0.000
+    SCOI24             1.832      0.029     62.170      0.000
+    SCIS25             2.065      0.039     52.698      0.000
+    SCSK26             2.601      0.052     49.824      0.000
+    PTGI_AL            1.712      0.043     39.981      0.000
+    PTGI_NP            1.491      0.034     43.243      0.000
+    PTGI_PS            1.937      0.049     39.665      0.000
+    PTGI_SP            0.638      0.018     35.027      0.000
+    PTGI_RO            1.630      0.039     42.321      0.000
+    IESR_A             1.286      0.029     43.906      0.000
+    IESR_I             1.302      0.029     45.389      0.000
+    IESR_H             0.919      0.023     40.179      0.000
+    COPE_PA            6.682      0.158     42.392      0.000
+    COPE_PO            5.738      0.131     43.680      0.000
+    MSPSS_FA           3.504      0.097     36.128      0.000
+    MSPSS_FR           3.630      0.101     35.769      0.000
+    MSPSS_SO           3.956      0.125     31.774      0.000
+    NEURO_NA           2.384      0.055     43.596      0.000
+    NEURO_SR           1.778      0.038     47.393      0.000
+    EXTRA_PA           3.310      0.078     42.369      0.000
+    EXTRA_SO           3.037      0.088     34.691      0.000
+    EXTRA_AC           3.532      0.092     38.320      0.000
+
+ Variances
+    SK                 1.000      0.000    999.000    999.000
+    SJ                 1.000      0.000    999.000    999.000
+    CH                 1.000      0.000    999.000    999.000
+    IS                 1.000      0.000    999.000    999.000
+    MI                 1.000      0.000    999.000    999.000
+    OI                 1.000      0.000    999.000    999.000
+    COPE               1.000      0.000    999.000    999.000
+    MSPSS              1.000      0.000    999.000    999.000
+    NEURO              1.000      0.000    999.000    999.000
+    EXTRA              1.000      0.000    999.000    999.000
+
+ Residual Variances
+    SCSJ1              0.580      0.029     19.951      0.000
+    SCOI2              0.300      0.027     11.007      0.000
+    SCCH3              0.728      0.035     20.797      0.000
+    SCIS4              0.351      0.030     11.859      0.000
+    SCSK5              0.450      0.033     13.487      0.000
+    SCOI6              0.346      0.025     13.799      0.000
+    SCCH7              0.414      0.049      8.496      0.000
+    SCSJ8              0.299      0.063      4.735      0.000
+    SCMI9              0.569      0.035     16.023      0.000
+    SCCH10             0.375      0.053      7.134      0.000
+    SCSJ11             0.419      0.027     15.515      0.000
+    SCSK12             0.302      0.033      9.204      0.000
+    SCIS13             0.303      0.079      3.862      0.000
+    SCMI14             0.362      0.038      9.537      0.000
+    SCCH15             0.515      0.030     17.105      0.000
+    SCSJ16             0.391      0.041      9.546      0.000
+    SCMI17             0.464      0.028     16.393      0.000
+    SCIS18             0.244      0.080      3.052      0.002
+    SCSK19             0.294      0.028     10.492      0.000
+    SCOI20             0.485      0.030     16.060      0.000
+    SCSJ21             0.606      0.031     19.323      0.000
+    SCMI22             0.536      0.030     18.077      0.000
+    SCSK23             0.313      0.054      5.838      0.000
+    SCOI24             0.540      0.030     18.239      0.000
+    SCIS25             0.400      0.026     15.611      0.000
+    SCSK26             0.405      0.034     11.909      0.000
+    PTGI_AL            0.315      0.020     16.040      0.000
+    PTGI_NP            0.132      0.014      9.499      0.000
+    PTGI_PS            0.371      0.022     16.743      0.000
+    PTGI_SP            0.751      0.021     36.015      0.000
+    PTGI_RO            0.263      0.022     11.703      0.000
+    IESR_A             0.372      0.026     14.448      0.000
+    IESR_I             0.257      0.024     10.482      0.000
+    IESR_H             0.222      0.022     10.084      0.000
+    COPE_PA            0.616      0.045     13.699      0.000
+    COPE_PO            0.357      0.065      5.502      0.000
+    MSPSS_FA           0.532      0.036     14.721      0.000
+    MSPSS_FR           0.495      0.044     11.364      0.000
+    MSPSS_SO           0.448      0.042     10.693      0.000
+    NEURO_NA           0.412      0.028     14.555      0.000
+    NEURO_SR           0.246      0.029      8.496      0.000
+    EXTRA_PA           0.668      0.036     18.597      0.000
+    EXTRA_SO           0.505      0.037     13.626      0.000
+    EXTRA_AC           0.594      0.037     16.266      0.000
+    SC                 0.677      0.089      7.629      0.000
+    PTGI               0.802      0.030     26.684      0.000
+    IESR               0.655      0.033     20.072      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    SCSJ1              0.420      0.029     14.437      0.000
+    SCOI2              0.700      0.027     25.665      0.000
+    SCCH3              0.272      0.035      7.758      0.000
+    SCIS4              0.649      0.030     21.975      0.000
+    SCSK5              0.550      0.033     16.478      0.000
+    SCOI6              0.654      0.025     26.060      0.000
+    SCCH7              0.586      0.049     12.017      0.000
+    SCSJ8              0.701      0.063     11.086      0.000
+    SCMI9              0.431      0.035     12.159      0.000
+    SCCH10             0.625      0.053     11.882      0.000
+    SCSJ11             0.581      0.027     21.551      0.000
+    SCSK12             0.698      0.033     21.275      0.000
+    SCIS13             0.697      0.079      8.869      0.000
+    SCMI14             0.638      0.038     16.783      0.000
+    SCCH15             0.485      0.030     16.125      0.000
+    SCSJ16             0.609      0.041     14.864      0.000
+    SCMI17             0.536      0.028     18.964      0.000
+    SCIS18             0.756      0.080      9.466      0.000
+    SCSK19             0.706      0.028     25.163      0.000
+    SCOI20             0.515      0.030     17.037      0.000
+    SCSJ21             0.394      0.031     12.561      0.000
+    SCMI22             0.464      0.030     15.670      0.000
+    SCSK23             0.687      0.054     12.825      0.000
+    SCOI24             0.460      0.030     15.551      0.000
+    SCIS25             0.600      0.026     23.423      0.000
+    SCSK26             0.595      0.034     17.503      0.000
+    PTGI_AL            0.685      0.020     34.878      0.000
+    PTGI_NP            0.868      0.014     62.470      0.000
+    PTGI_PS            0.629      0.022     28.408      0.000
+    PTGI_SP            0.249      0.021     11.953      0.000
+    PTGI_RO            0.737      0.022     32.854      0.000
+    IESR_A             0.628      0.026     24.383      0.000
+    IESR_I             0.743      0.024     30.363      0.000
+    IESR_H             0.778      0.022     35.282      0.000
+    COPE_PA            0.384      0.045      8.556      0.000
+    COPE_PO            0.643      0.065      9.894      0.000
+    MSPSS_FA           0.468      0.036     12.937      0.000
+    MSPSS_FR           0.505      0.044     11.608      0.000
+    MSPSS_SO           0.552      0.042     13.187      0.000
+    NEURO_NA           0.588      0.028     20.774      0.000
+    NEURO_SR           0.754      0.029     26.074      0.000
+    EXTRA_PA           0.332      0.036      9.260      0.000
+    EXTRA_SO           0.495      0.037     13.359      0.000
+    EXTRA_AC           0.406      0.037     11.117      0.000
+
+     Latent                                         Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    SC                 0.323      0.089      3.638      0.000
+    PTGI               0.198      0.030      6.608      0.000
+    IESR               0.345      0.033     10.557      0.000
+
+
+MODEL MODIFICATION INDICES
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+ON/BY Statements
+
+SCCH3    ON IESR     /
+IESR     BY SCCH3                 10.523     0.029      0.124        0.115
+SCIS4    ON MSPSS    /
+MSPSS    BY SCIS4                 10.908    -0.033     -0.119       -0.089
+SCSK19   ON IESR     /
+IESR     BY SCSK19                12.340    -0.025     -0.105       -0.092
+PTGI_NP  ON MSPSS    /
+MSPSS    BY PTGI_NP               18.344    -0.148     -0.536       -0.081
+PTGI_NP  ON EXTRA    /
+EXTRA    BY PTGI_NP               26.269    -0.358     -0.635       -0.096
+PTGI_PS  ON SC       /
+SC       BY PTGI_PS               63.067    -0.848     -1.031       -0.196
+PTGI_PS  ON SJ       /
+SJ       BY PTGI_PS               31.582    -0.723     -0.723       -0.137
+PTGI_PS  ON IESR     /
+IESR     BY PTGI_PS               21.331    -0.131     -0.556       -0.106
+PTGI_PS  ON COPE     /
+COPE     BY PTGI_PS               46.692     0.283      0.886        0.168
+PTGI_PS  ON NEURO    /
+NEURO    BY PTGI_PS               59.826    -0.281     -0.905       -0.172
+PTGI_PS  ON EXTRA    /
+EXTRA    BY PTGI_PS               42.628     0.469      0.832        0.158
+PTGI_RO  ON MSPSS    /
+MSPSS    BY PTGI_RO               29.059     0.295      1.066        0.116
+IESR_I   ON COPE     /
+COPE     BY IESR_I                11.432     0.171      0.535        0.078
+IESR_I   ON NEURO    /
+NEURO    BY IESR_I                22.161    -0.270     -0.870       -0.127
+IESR_I   ON EXTRA    /
+EXTRA    BY IESR_I                37.363     0.560      0.993        0.145
+IESR_H   ON SJ       /
+SJ       BY IESR_H                15.956     0.444      0.444        0.095
+IESR_H   ON COPE     /
+COPE     BY IESR_H                20.422    -0.154     -0.482       -0.103
+IESR_H   ON NEURO    /
+NEURO    BY IESR_H                24.357     0.192      0.619        0.133
+IESR_H   ON EXTRA    /
+EXTRA    BY IESR_H                32.795    -0.354     -0.628       -0.135
+COPE_PA  ON SC       /
+SC       BY COPE_PA               13.854     0.503      0.611        0.121
+COPE_PA  ON CH       /
+CH       BY COPE_PA               41.173     1.236      1.236        0.245
+COPE_PA  ON IS       /
+IS       BY COPE_PA               10.521     0.616      0.616        0.122
+COPE_PA  ON NEURO    /
+NEURO    BY COPE_PA               17.811     0.249      0.801        0.159
+COPE_PA  ON EXTRA    /
+EXTRA    BY COPE_PA               26.974    -0.602     -1.066       -0.211
+COPE_PO  ON SC       /
+SC       BY COPE_PO               13.855    -0.746     -0.907       -0.156
+COPE_PO  ON CH       /
+CH       BY COPE_PO               41.151    -1.833     -1.833       -0.316
+COPE_PO  ON IS       /
+IS       BY COPE_PO               10.521    -0.914     -0.914       -0.158
+COPE_PO  ON NEURO    /
+NEURO    BY COPE_PO               17.811    -0.369     -1.189       -0.205
+COPE_PO  ON EXTRA    /
+EXTRA    BY COPE_PO               26.976     0.892      1.582        0.273
+MSPSS_FA ON SC       /
+SC       BY MSPSS_FA              12.862    -0.478     -0.581       -0.110
+MSPSS_FA ON IESR     /
+IESR     BY MSPSS_FA              10.580    -0.116     -0.494       -0.094
+MSPSS_FA ON NEURO    /
+NEURO    BY MSPSS_FA              22.705    -0.237     -0.765       -0.145
+MSPSS_FR ON OI       /
+OI       BY MSPSS_FR              10.650     0.585      0.585        0.115
+MSPSS_SO ON SK       /
+SK       BY MSPSS_SO              11.889     0.501      0.501        0.101
+MSPSS_SO ON IESR     /
+IESR     BY MSPSS_SO              15.735     0.133      0.565        0.114
+MSPSS_SO ON NEURO    /
+NEURO    BY MSPSS_SO              32.109     0.266      0.857        0.173
+EXTRA_PA ON SK       /
+SK       BY EXTRA_PA              11.568    -0.361     -0.361       -0.117
+EXTRA_PA ON MI       /
+MI       BY EXTRA_PA              10.476     0.355      0.355        0.115
+EXTRA_PA ON MSPSS    /
+MSPSS    BY EXTRA_PA              11.638     0.106      0.384        0.125
+EXTRA_SO ON COPE     /
+COPE     BY EXTRA_SO              17.175    -0.178     -0.559       -0.167
+EXTRA_AC ON SK       /
+SK       BY EXTRA_AC              19.480     0.480      0.480        0.154
+EXTRA_AC ON COPE     /
+COPE     BY EXTRA_AC              21.295     0.179      0.560        0.179
+
+ON Statements
+
+SC       ON PTGI_PS               19.807    -0.062     -0.051       -0.267
+SK       ON PTGI_SP               10.105    -0.048     -0.048       -0.104
+SK       ON EXTRA_AC              14.306     0.057      0.057        0.177
+CH       ON COPE_PA               40.216     0.075      0.075        0.381
+CH       ON COPE_PO               40.216    -0.146     -0.146       -0.847
+OI       ON MSPSS_FR              12.617     0.049      0.049        0.250
+PTGI     ON PTGI_RO               13.474    -0.206     -0.059       -0.541
+IESR     ON SCCH3                 10.630     0.396      0.093        0.100
+IESR     ON SCOI20                10.854     0.461      0.109        0.136
+MSPSS    ON PTGI_RO               26.405     0.158      0.044        0.402
+MSPSS    ON EXTRA_PA              10.781     0.190      0.052        0.161
+NEURO    ON PTGI_PS               11.350    -0.091     -0.028       -0.150
+NEURO    ON PTGI_SP               12.259     0.161      0.050        0.109
+NEURO    ON PTGI_RO               16.913     0.076      0.024        0.218
+NEURO    ON IESR_I                10.263    -0.087     -0.027       -0.184
+NEURO    ON MSPSS_FA              19.199    -0.114     -0.035       -0.187
+NEURO    ON MSPSS_SO              17.245     0.136      0.042        0.210
+EXTRA    ON PTGI_NP               25.855    -0.147     -0.083       -0.546
+EXTRA    ON IESR_I                29.404     0.101      0.057        0.391
+SCOI2    ON SCIS25                17.539    -0.152     -0.152       -0.151
+SCCH3    ON SCCH15                17.086     0.168      0.168        0.178
+SCCH3    ON SCSK23                10.993    -0.236     -0.236       -0.250
+SCCH3    ON IESR_I                11.954     0.017      0.017        0.109
+SCIS4    ON MSPSS_FR              12.048    -0.020     -0.020       -0.076
+SCOI6    ON SCIS13                15.833    -0.189     -0.189       -0.190
+SCOI6    ON SCMI17                11.885    -0.146     -0.146       -0.112
+SCOI6    ON SCOI24                10.530    -0.106     -0.106       -0.098
+SCOI6    ON SCIS25                20.804     0.156      0.156        0.160
+SCOI6    ON MSPSS_FR              10.265     0.018      0.018        0.068
+SCCH7    ON SCCH10                12.436     0.751      0.751        0.708
+SCCH7    ON SCSJ11                10.993    -0.148     -0.148       -0.151
+SCSJ8    ON SCCH10                10.483    -0.194     -0.194       -0.175
+SCSJ8    ON SCIS13                11.416     0.186      0.186        0.193
+SCSJ8    ON SCIS18                11.011    -0.234     -0.234       -0.236
+SCMI9    ON SCCH15                15.918    -0.145     -0.145       -0.159
+SCCH10   ON SCCH7                 12.433     0.604      0.604        0.641
+SCCH10   ON SCSJ8                 10.485    -0.198     -0.198       -0.219
+SCCH10   ON SCSJ11                20.772     0.189      0.189        0.205
+SCCH10   ON SCSK23                10.585     0.239      0.239        0.234
+SCSJ11   ON SCCH7                 10.992    -0.156     -0.156       -0.153
+SCSJ11   ON SCCH10                20.771     0.249      0.249        0.229
+SCIS13   ON SCOI6                 15.833    -0.168     -0.168       -0.167
+SCIS13   ON SCSJ8                 11.415     0.204      0.204        0.196
+SCIS13   ON SCSJ16                20.984    -0.203     -0.203       -0.197
+SCMI14   ON EXTRA_AC              10.279     0.030      0.030        0.088
+SCCH15   ON SCCH3                 17.084     0.133      0.133        0.126
+SCCH15   ON SCMI9                 15.918    -0.159     -0.159       -0.144
+SCSJ16   ON SCIS13                20.981    -0.246     -0.246       -0.254
+SCSJ16   ON SCIS18                14.541     0.269      0.269        0.269
+SCMI17   ON SCOI6                 11.884    -0.114     -0.114       -0.149
+SCIS18   ON SCSJ8                 11.009    -0.194     -0.194       -0.192
+SCIS18   ON SCSJ16                14.538     0.168      0.168        0.168
+SCSK19   ON PTGI_AL               10.566    -0.020     -0.020       -0.072
+SCSK19   ON IESR_I                10.726    -0.013     -0.013       -0.075
+SCOI20   ON SCOI24                10.846     0.118      0.118        0.116
+SCSK23   ON SCCH3                 10.997    -0.114     -0.114       -0.107
+SCSK23   ON SCCH10                10.589     0.191      0.191        0.195
+SCOI24   ON SCOI6                 10.529    -0.140     -0.140       -0.152
+SCOI24   ON SCOI20                10.845     0.126      0.126        0.129
+SCOI24   ON SCIS25                10.096     0.118      0.118        0.132
+SCIS25   ON SCOI2                 17.540    -0.201     -0.201       -0.201
+SCIS25   ON SCOI6                 20.803     0.190      0.190        0.185
+SCIS25   ON SCOI24                10.095     0.109      0.109        0.098
+SCIS25   ON IESR_A                11.224    -0.020     -0.020       -0.077
+PTGI_NP  ON PTGI_PS               10.259     0.147      0.147        0.117
+PTGI_NP  ON PTGI_RO               12.217    -0.141     -0.141       -0.196
+PTGI_NP  ON MSPSS_FA              14.007    -0.075     -0.075       -0.060
+PTGI_NP  ON MSPSS_SO              10.282    -0.069     -0.069       -0.052
+PTGI_NP  ON EXTRA_SO              36.174    -0.189     -0.189       -0.096
+PTGI_NP  ON EXTRA_AC              17.146    -0.138     -0.138       -0.065
+PTGI_PS  ON SCOI2                 22.698    -0.379     -0.379       -0.098
+PTGI_PS  ON SCIS4                 14.792    -0.314     -0.314       -0.079
+PTGI_PS  ON SCOI6                 18.885    -0.355     -0.355       -0.090
+PTGI_PS  ON SCMI9                 17.534     0.437      0.437        0.086
+PTGI_PS  ON SCIS13                18.047    -0.345     -0.345       -0.088
+PTGI_PS  ON SCMI14                32.826     0.588      0.588        0.118
+PTGI_PS  ON SCMI17                27.502     0.557      0.557        0.108
+PTGI_PS  ON SCIS18                27.897    -0.443     -0.443       -0.109
+PTGI_PS  ON SCOI20                50.651    -0.625     -0.625       -0.148
+PTGI_PS  ON SCOI24                26.548    -0.458     -0.458       -0.107
+PTGI_PS  ON SCIS25                12.738    -0.284     -0.284       -0.074
+PTGI_PS  ON PTGI_NP               10.261     0.263      0.263        0.330
+PTGI_PS  ON PTGI_SP               12.357    -0.206     -0.206       -0.085
+PTGI_PS  ON IESR_H                30.960    -0.134     -0.134       -0.118
+PTGI_PS  ON COPE_PA               17.996     0.092      0.092        0.088
+PTGI_PS  ON COPE_PO               31.557     0.107      0.107        0.118
+PTGI_PS  ON NEURO_NA              38.203    -0.159     -0.159       -0.127
+PTGI_PS  ON NEURO_SR              42.066    -0.114     -0.114       -0.133
+PTGI_PS  ON EXTRA_SO              25.478     0.164      0.164        0.104
+PTGI_PS  ON EXTRA_AC              29.888     0.190      0.190        0.113
+PTGI_SP  ON PTGI_PS               12.358    -0.071     -0.071       -0.172
+PTGI_RO  ON PTGI_NP               12.218    -0.544     -0.544       -0.391
+PTGI_RO  ON MSPSS_FR              40.167     0.211      0.211        0.117
+PTGI_RO  ON MSPSS_SO              15.456     0.134      0.134        0.072
+PTGI_RO  ON EXTRA_SO              14.206     0.189      0.189        0.069
+IESR_I   ON NEURO_NA              12.565    -0.128     -0.128       -0.079
+IESR_I   ON NEURO_SR              17.122    -0.107     -0.107       -0.096
+IESR_I   ON EXTRA_SO              29.475     0.221      0.221        0.108
+IESR_I   ON EXTRA_AC              31.044     0.241      0.241        0.110
+IESR_H   ON SCMI14                10.772    -0.287     -0.287       -0.065
+IESR_H   ON SCOI20                12.715     0.278      0.278        0.075
+IESR_H   ON SCOI24                15.714     0.310      0.310        0.081
+IESR_H   ON PTGI_PS               12.083    -0.062     -0.062       -0.070
+IESR_H   ON COPE_PA               16.270    -0.072     -0.072       -0.078
+IESR_H   ON NEURO_NA              29.905     0.133      0.133        0.120
+IESR_H   ON EXTRA_SO              24.007    -0.134     -0.134       -0.096
+IESR_H   ON EXTRA_AC              30.571    -0.161     -0.161       -0.107
+COPE_PA  ON SCCH3                 19.825     0.605      0.605        0.129
+COPE_PA  ON SCOI6                 12.670     0.386      0.386        0.101
+COPE_PA  ON SCCH7                 13.016     0.426      0.426        0.104
+COPE_PA  ON SCCH10                13.035     0.468      0.468        0.108
+COPE_PA  ON SCIS13                13.654     0.406      0.406        0.108
+COPE_PA  ON SCCH15                12.522     0.488      0.488        0.110
+COPE_PA  ON SCIS18                12.969     0.406      0.406        0.104
+COPE_PA  ON SCMI22                16.964     0.577      0.577        0.129
+COPE_PA  ON SCSK23                12.652     0.480      0.480        0.108
+COPE_PA  ON SCSK26                12.634     0.508      0.508        0.107
+COPE_PA  ON NEURO_SR              24.567     0.137      0.137        0.168
+COPE_PA  ON EXTRA_SO              22.715    -0.223     -0.223       -0.147
+COPE_PA  ON EXTRA_AC              19.298    -0.214     -0.214       -0.132
+COPE_PO  ON SCCH3                 11.264    -0.528     -0.528       -0.098
+COPE_PO  ON SCCH7                 13.246    -0.575     -0.575       -0.122
+COPE_PO  ON SCIS13                10.677    -0.490     -0.490       -0.113
+COPE_PO  ON SCCH15                19.156    -0.728     -0.728       -0.143
+COPE_PO  ON SCIS18                13.259    -0.576     -0.576       -0.129
+COPE_PO  ON SCMI22                12.079    -0.580     -0.580       -0.113
+COPE_PO  ON SCSK23                12.569    -0.660     -0.660       -0.130
+COPE_PO  ON NEURO_SR              14.648    -0.150     -0.150       -0.159
+COPE_PO  ON EXTRA_AC              38.883     0.376      0.376        0.202
+MSPSS_FA ON SCSJ8                 11.694    -0.379     -0.379       -0.092
+MSPSS_FA ON SCSJ11                12.483    -0.397     -0.397       -0.095
+MSPSS_FA ON SCIS13                10.306    -0.342     -0.342       -0.087
+MSPSS_FA ON SCIS18                10.958    -0.365     -0.365       -0.090
+MSPSS_FA ON IESR_H                12.708    -0.109     -0.109       -0.096
+MSPSS_FA ON NEURO_NA              14.046    -0.129     -0.129       -0.102
+MSPSS_FA ON NEURO_SR              22.215    -0.112     -0.112       -0.131
+MSPSS_FR ON SCSK23                11.366     0.407      0.407        0.092
+MSPSS_SO ON SCOI2                 15.189     0.381      0.381        0.105
+MSPSS_SO ON SCIS13                10.122     0.316      0.316        0.085
+MSPSS_SO ON SCSJ16                10.041     0.322      0.322        0.084
+MSPSS_SO ON SCIS18                15.643     0.407      0.407        0.107
+MSPSS_SO ON SCSK23                17.294    -0.492     -0.492       -0.113
+MSPSS_SO ON IESR_I                14.379     0.074      0.074        0.102
+MSPSS_SO ON IESR_H                11.560     0.097      0.097        0.091
+MSPSS_SO ON NEURO_NA              34.686     0.189      0.189        0.160
+MSPSS_SO ON NEURO_SR              21.298     0.103      0.103        0.128
+NEURO_NA ON SCIS18                22.251    -0.505     -0.505       -0.156
+NEURO_SR ON SCIS18                19.481     0.726      0.726        0.153
+NEURO_SR ON COPE_PA               17.775     0.129      0.129        0.106
+EXTRA_PA ON SCSK5                 16.558     0.308      0.308        0.119
+EXTRA_PA ON SCSJ8                 12.740    -0.261     -0.261       -0.109
+EXTRA_PA ON SCSK12                10.114     0.256      0.256        0.096
+EXTRA_PA ON SCSK19                11.045     0.270      0.270        0.100
+EXTRA_PA ON SCSK23                10.454     0.264      0.264        0.098
+EXTRA_SO ON PTGI_NP               10.368    -0.049     -0.049       -0.097
+EXTRA_SO ON COPE_PA               17.499    -0.081     -0.081       -0.123
+EXTRA_AC ON SCSJ1                 13.084     0.298      0.298        0.105
+EXTRA_AC ON SCSJ8                 16.681     0.303      0.303        0.125
+EXTRA_AC ON COPE_PO               29.612     0.092      0.092        0.171
+
+WITH Statements
+
+SCCH3    WITH IESR                14.605     0.443      0.129        0.141
+SCCH10   WITH SCCH7               12.432     0.380      0.380        0.673
+SCCH10   WITH SCSJ8               10.485    -0.098     -0.098       -0.196
+SCSJ11   WITH SCCH7               10.992    -0.098     -0.098       -0.152
+SCSJ11   WITH SCCH10              20.771     0.126      0.126        0.217
+SCIS13   WITH SCOI6               15.833    -0.103     -0.103       -0.178
+SCIS13   WITH SCSJ8               11.416     0.101      0.101        0.195
+SCCH15   WITH SCCH3               17.085     0.112      0.112        0.150
+SCCH15   WITH SCMI9               15.918    -0.097     -0.097       -0.152
+SCSJ16   WITH SCIS13              20.983    -0.134     -0.134       -0.224
+SCMI17   WITH SCOI6               11.885    -0.070     -0.070       -0.129
+SCIS18   WITH SCSJ8               11.011    -0.096     -0.096       -0.213
+SCIS18   WITH SCSJ16              14.539     0.111      0.111        0.213
+SCSK23   WITH SCCH3               10.997    -0.096     -0.096       -0.164
+SCSK23   WITH SCCH10              10.587     0.097      0.097        0.214
+SCOI24   WITH SCOI6               10.529    -0.086     -0.086       -0.122
+SCOI24   WITH SCOI20              10.846     0.096      0.096        0.122
+SCIS25   WITH SCOI2               17.539    -0.113     -0.113       -0.174
+SCIS25   WITH SCOI6               20.804     0.116      0.116        0.172
+SCIS25   WITH SCOI24              10.095     0.088      0.088        0.113
+PTGI_NP  WITH EXTRA               22.034    -0.907     -0.512       -0.214
+PTGI_PS  WITH SC                  19.807    -0.635     -0.635       -0.198
+PTGI_PS  WITH NEURO               19.545    -1.314     -0.408       -0.127
+PTGI_PS  WITH PTGI_NP             10.259     1.512      1.512        0.197
+PTGI_SP  WITH NEURO               10.174     0.529      0.164        0.087
+PTGI_SP  WITH PTGI_PS             12.357    -0.735     -0.735       -0.121
+PTGI_RO  WITH PTGI                13.475    -4.553     -1.456       -0.310
+PTGI_RO  WITH MSPSS               28.246     3.632      1.005        0.214
+PTGI_RO  WITH NEURO               11.851     1.575      0.489        0.104
+PTGI_RO  WITH EXTRA               11.600     1.043      0.588        0.125
+PTGI_RO  WITH PTGI_NP             12.217    -3.124     -3.124       -0.277
+IESR_I   WITH EXTRA               26.160     1.292      0.729        0.210
+IESR_I   WITH PTGI_NP             22.597    -2.015     -2.015       -0.242
+IESR_H   WITH EXTRA               16.735    -0.696     -0.393       -0.178
+IESR_H   WITH PTGI_NP             32.287     1.604      1.604        0.304
+IESR_H   WITH PTGI_PS             20.603    -1.354     -1.354       -0.192
+COPE_PA  WITH CH                  40.219     1.184      1.184        0.299
+COPE_PO  WITH CH                  40.209    -1.755     -1.755       -0.507
+MSPSS_FA WITH NEURO               19.200    -1.690     -0.525       -0.136
+MSPSS_FA WITH PTGI_AL             11.791     1.203      1.203        0.132
+MSPSS_FR WITH OI                  12.615     0.627      0.627        0.176
+MSPSS_FR WITH PTGI_AL             12.970    -1.192     -1.192       -0.141
+MSPSS_FR WITH PTGI_RO             23.910     3.297      3.297        0.197
+MSPSS_SO WITH NEURO               17.245     1.502      0.466        0.141
+NEURO_NA WITH SCIS18              12.700    -0.273     -0.273       -0.158
+NEURO_NA WITH IESR_H              12.955     0.962      0.962        0.162
+NEURO_NA WITH MSPSS_SO            10.846     1.246      1.246        0.139
+NEURO_SR WITH SCIS18              15.204     0.417      0.417        0.213
+NEURO_SR WITH COPE_PA             13.904     2.180      2.180        0.180
+EXTRA_PA WITH MSPSS               10.781     1.196      0.331        0.132
+EXTRA_PA WITH COPE_PO             11.469    -1.396     -1.396       -0.160
+EXTRA_SO WITH PTGI_NP             22.358    -1.333     -1.333       -0.234
+EXTRA_SO WITH PTGI_RO             16.201     1.832      1.832        0.164
+EXTRA_AC WITH SK                  14.307     0.327      0.327        0.136
+EXTRA_AC WITH IESR_I              10.627     1.143      1.143        0.137
+EXTRA_AC WITH IESR_H              12.219    -0.817     -0.817       -0.154
+EXTRA_AC WITH COPE_PO             24.661     2.052      2.052        0.246
+EXTRA_AC WITH NEURO_NA            12.539    -0.912     -0.912       -0.141
+
+
+     Beginning Time:  13:08:47
+        Ending Time:  13:08:57
+       Elapsed Time:  00:00:10
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

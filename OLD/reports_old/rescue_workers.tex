@@ -1,0 +1,769 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  man]{apa7}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\keywords{self-compassion; rescue workers; nomological network; psychometrics; scales; factor analysis\newline\indent Word count: 6880}
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{csquotes}
+\usepackage{rotating}
+\DeclareDelayedFloatFlavor{sidewaysfigure}{figure}
+\DeclareDelayedFloatFlavor{sidewaystable}{table}
+\usepackage{pdflscape}
+\DeclareDelayedFloatFlavor{landscape}{table}
+\raggedbottom
+\usepackage{xcolor,makecell,array}
+\usepackage{graphicx}
+\setlength{\parskip}{0pt plus 0pt minus 0pt}
+\usepackage{multirow}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{caption}
+\usepackage{color, colortbl}
+\usepackage{newfloat}
+\usepackage{glossaries}
+\makeglossaries
+\DeclareFloatingEnvironment[fileext=los, listname=List of Schemes, name=Listing, placement=!htbp, within=section]{listing}
+\usepackage{placeins}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={The domain-specificity of self-compassion: A nomological validation study of the Self-Compassion Scale},
+  pdfauthor={Corrado Caudek1, Claudio Sica2, Celeste Berti1, Ilaria Colpizzi1, \& Virginia Alfei1},
+  pdflang={en-EN},
+  pdfkeywords={self-compassion; rescue workers; nomological network; psychometrics; scales; factor analysis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{The domain-specificity of self-compassion: A nomological validation study of the Self-Compassion Scale}
+\author{Corrado Caudek\textsuperscript{1}, Claudio Sica\textsuperscript{2}, Celeste Berti\textsuperscript{1}, Ilaria Colpizzi\textsuperscript{1}, \& Virginia Alfei\textsuperscript{1}}
+\date{}
+
+
+\shorttitle{The domain-specificity of the SCS}
+
+\authornote{
+
+\addORCIDlink{Corrado Caudek}{0000-0002-1404-0420}
+
+Correspondence concerning this article should be addressed to Corrado Caudek, NEUROFARBA Department, Psychology Section, University of Firenze, Italy. E-mail: \href{mailto:corrado.caudek@unifi.it}{\nolinkurl{corrado.caudek@unifi.it}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} NEUROFARBA Department, Psychology Section, University of Florence, Italy\\\textsuperscript{2} Health Sciences Department, Psychology Section, University of Florence, Italy}
+
+\abstract{%
+bla bla
+}
+
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{public-significance-statement}{%
+\section{Public Significance Statement}\label{public-significance-statement}}
+
+This article evaluates the scoring of the Self-Compassion Scale for general populations and specific groups. The findings reveal that the use of the total score is not justified for a sample of rescue-workers. These results suggest that self-compassion is domain-specific and have implications for the measurement of this construct in clinical settings, when studying its role in recovery as well as in prevention of mental illness.
+
+\pagebreak
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+The last decades have seen a growing interest directed to the concept of the ``self'' as a relevant construct for advancing our understanding of individual differences in relation to coping and stress (Beck, 2016). Specific ways of interacting with the self, which can be described with constructs from Buddhist psychology, such as self-compassion, have been shown to be beneficial for mental health (MacBeth \& Gumley, 2012). In particular, a compassionate mindset towards oneself has been proposed as a protective factor against psychopathology, including Post-Traumatic Stress Disorder {[}PTSD; Wilson et al. (2019){]}, and as a factor promoting a positive change that is sometimes experienced by individuals dealing with traumatic events, which is known as Post-Traumatic Growth {[}PTG; Wong and Yeung (2017){]}.
+
+Self-compassion is commonly assessed with the Self-Compassion Scale (SCS), a 26 item self-report scale which spans six dimensions of the construct (Neff, 2003b). Although the SCS has been extremely popular in the recent psychological literature (almost 8,000 citations on Google Scholar at the time of writing), the conceptual representation of self-compassion is still debated (Geiger et al., 2018; Kandler et al., 2017; Muris, 2016; Muris et al., 2016, 2019; Muris \& Petrocchi, 2017; Neff, 2022b, 2022a). The current study attempts to contribute to this debate by carrying out a nomological validation of the SCS. Specifically, we will focus on what has been called the ``differential effects fallacy'' (Neff, 2022a).
+
+\hypertarget{the-differential-effects-fallacy}{%
+\subsection{The Differential Effects Fallacy}\label{the-differential-effects-fallacy}}
+
+Neff (2022b) has characterized self-compassion as a bipolar continuum. In the operationalization of self-compassion, the three SCS subscaled of Self-kindness (SK; being kind and understanding toward one's fallibility), Common humanity (CH; acknowledging that personal failures and pain are something that everyone experiences), and Mindfulness (MI; having a mindful awareness of one's painful thoughts and feelings) measure the proactive components of self-compassion, whereas the three subscales of Self-judgment (SJ; being critical and not understanding toward personal shortcomings), Isolation (IS; having the tendency of isolating from others), and Over-identification (OI; over-identifying with one's painful thoughts and feelings) measure the ``hindrances'' that prevent self-compassion. Neff (2022b) proposes that the strengthening of the three proactive components of self-compassion (together, they have been called compassionate self-responding; CS) is necessarily accompanied by the parallel weakening of the hindrances to self-compassion (or uncompassionate self-responding; UCS). In this view, it does not make sense to develop CS and, at the same time, to strengthen Self-judgment that prevents Kindness, Isolation that prevents Common humanity, and Over-identification that prevents Mindfulness. This view characterizes self-compassion as a \emph{unidimensional} construct with two opposite polarities (the metaphor of temperature has been proposed, with the implied cold and warm extremes). In line with this characterization of the self-compassion construct, Neff (2022b) strongly advocates the use of the SCS total score (SCS-TS), rather than the CS and UCS separate scores (see also Neff, 2022a).
+
+\hypertarget{plan-of-the-study}{%
+\subsection{Plan of the study}\label{plan-of-the-study}}
+
+It should be stressed that the use of the total score (TS) must be justified by the psychometric properties of the scale from which the TS is computed; it cannot solely rely on the putative characteristics of the construct. Generally speaking, the TS is the sum of scores whith unit-weight for each item. In other words, the TS implies (i.e., \emph{requires}) a uni-dimensional \emph{parallel} factor model (same factor loadings, same residual variances for all items). If such factor model is adequate for the data, there will be a perfect linear association between the factor scores and the TS (i.e., a correlation of 1). McNeish and Wolf (2020) have shown that the TS is an adequate approximation of the factor scores also in the case of a congeneric model (different loadings, different residual variances), when the factor loadings are very similar to each other. However, in a number of simulations, they pointed out that, in such case, several problems may arise (in terms of the cut-off scores or in terms of the comparison between participants having the same TS value), even when the correlation between the TS and the factor scores is as high as .96. This means that the issue of the psychometric justification for using the TS must be taken very seriously.
+
+Several previous studies have examined the dimensionality of the SCS (e.g., Brenner et al., 2017; Kumlander et al., 2018; Neff, 2016; Neff et al., 2017, 2019; Neff, Tóth--Király, et al., 2018; Neff, Long, et al., 2018). In the present investigation, we will consider together the \emph{psychometric} validity (i.e., dimensionality) and the \emph{nomological} validity of the SCS, as this approach is advantageous in terms of its statistical properties (McNeish \& Wolf, 2020). We selected a specific sample (see the next section) which, a priori, might experience self-compassion in a manner that is not necessarily compatible with the hypothesis that the strenghening of CS is necessarily accompanied by a weakening of UCS, and viceversa. If we find no evidence, for such a specific group of participants, of a uni-dimensional parallel factor model (or a congeneric model with very similar loadings) for self-compassion within a larger nomological network, then we are forced to conclude that the structure of the self-compassion construct is contextual, that is, domain-dependent: In some behavioral circumstances, or for some groups of people, self-compassion might be better described as a bipolar continuum, which justifies the use of the SCS-TS (as it has been shown by the previous studies that had been mostly carried out with students/community samples); in others, the use of the SCS-TS might not be justified, and researchers should rely on the six SCS subscales, or on the CS and UCS scores. Other studies can then examine, for different kinds of populations than the one presently considered (e.g., for specific clinical samples), the psychometric validity of the uni-dimensional factor model, within a nomological network, so as to determine whether, for those populations, the use of the SCS-TS is justified.
+
+The next section examines the motivations for the sample selection criteria. The following section explains the choice of the variables included in the nomological network of self-compassion.
+
+\hypertarget{domain-specificity-of-self-compassion}{%
+\subsection{Domain specificity of self-compassion}\label{domain-specificity-of-self-compassion}}
+
+In the present study, we examined a sample of Red Cross rescue workers/first responders. Rescue workers (RWs) and healthcare workers (HCW) are constantly exposed to the suffering of others and this produces a form of ``indirect suffering''. Their proactive actions, which may successfully heal and ameliorate suffering, can promote a positive personal growth -- e.g., can increase self-compassion (Neff \& Pommier, 2013) and generate Post-Traumatic Growth {[}PTG; Zoellner and Maercker (2006){]}, which is also associated to self-compassion (Wong \& Yeung, 2017). However, the indirect suffering that stems from the repeated and prolonged exposure to the suffering of others can also generate ``compassion fatigue'' (Joinson, 1992). Compassion fatigue is a state in which the compassionate effort that has been demanded surpasses its restorative capabilities. Compassion fatigue (also called empathic distress) has been characterized as an aversive and self-oriented response to the suffering of others, accompanied by the desire to withdraw from a situation in order to protect oneself from excessive negative feelings (Singer \& Klimecki, 2014).
+
+Compassion fatigue affects self-compassion: Non-self-compassionate strategies are used more frequently by individuals who are more affected by compassion fatigue than those less affected (e.g., Gonzalez-Mendez \& Díaz, 2021). Compassion fatigue produces a feeling of impotence to do more to help (Boyle, 2015). It is reasonable to expect that the ``learned helplessness'' ensuing from compassion fatigue may be stronger for those individuals who cannot directly alleviate the suffering of others -- for example, for ambulance drivers (who only witness the suffering of others but do not act upon it) rather than for paramedics (who actively operate to alleviate such suffering). In turn, such ``learned helplessness'' may affect the balance between self-compassionate responding (self-kindness, common humanity, mindfulness) and uncompassionate responding (self-judgment, isolation, over-identification). We hypothesize that, in individual who suffer from compassion fatigue, CS may remain unaltered (as their motivation to try to help others usually does not change), whereas UCS may strongly increase (for example, in the form of self-blaming), especially for those individuals who are less directly involved in alleviating the suffering of others.
+
+If the above hypothesis were true, the use of the CSC-TS would be inappropriate for individuals who suffer from compassion fatigue: In fact, the CS/UCS unbalance described above violates the bipolar-continuum constraint proposed by Neff (2022b; see also Neff, 2022a). In other words, for such a population, the construct of self-compassion could not be understood as uni-dimensional; rather, it would be more appropriate to consider separately the six components of the SCS (self-kindness, common humanity, mindfulness, self-judgment, isolation, over-identification), or the CS and UCS dimensions. If confirmed, our hypothesis would suggest that the structure of the self-compassion construct is contextual, that is, domain-dependent: In some behavioral circumstances, or for some groups of people, self-compassion can be better described as a bipolar continuum; in others, it can be better described in terms of six separate constructs. As a consequence, the use of the SCS-TS would require psychometric justification in any specific context.
+
+\hypertarget{the-nomological-validation-of-self-compassion}{%
+\subsection{The nomological validation of self-compassion}\label{the-nomological-validation-of-self-compassion}}
+
+Reliability is a necessary, but not a sufficient, condition for construct validity.
+The psychometric literature makes it clear that the clarification of the meaning of a construct also requires the description of a nomological network, that is, the description of a conceptual map that specifies the associations between the construct of interest and other relevant constructs (Cronbach \& Meehl, 1955). Accordingly, we validated the self-compassion construct by exploring its nomological network in the population of interest.
+
+The high exposure of RWs to traumatic events often comes at a personal cost, resulting in psychological problems such as depression, anxiety, and Post-Traumatic Stress (PTS) at a much higher prevalence in RWs than in the general population (\emph{e.g.}, Palgi et al., 2009; Witteveen et al., 2007). Previous studies have shown that, for health professionals and RWs, self-compassion may emerge as a protective factor against PTS and may lead to PTG (Maheux \& Price, 2016). Furthermore, self-compassion has been shown to predicted adaptive coping strategies (Chwyl et al., 2021). Coping strategies have also been related to personality traits (Connor-Smith \& Flachsbart, 2007). In light of the above considerations, we considered a nomological network in which self-compassion acts as a mediator of the associations between the constructs of PTS and PTG, on the one side (endogenous variables), and coping and the personality traits of neuroticism {[}which has been related to UCS; Kandler et al. (2017); Geiger et al. (2018){]} and extraversion {[}which has been related to post--traumatic growth; Tedeschi and Calhoun (1996){]}, on the other (exogenous variables).
+
+\hypertarget{statistical-plan}{%
+\subsection{Statistical plan}\label{statistical-plan}}
+
+The statistical analyses were carried out in two steps. First, we replicated the validation of the SCS by examining all the measurement models described by Neff et al. (2019). Second, we used the measurement model of the SCS that achieved psychometric validity in step 1 to examine nomological validity. As pointed out by McNeish and Wolf (2020), it is advantageous to use a simultaneous approach in which the measurement model and the statistical (regression) model are directly modeled within a single structural equation model.
+
+\hypertarget{method}{%
+\section{Method}\label{method}}
+
+\hypertarget{sample}{%
+\subsection{Sample}\label{sample}}
+
+A call for the participation in the study was advertised in the Italian Red Cross websites. In Italy, volunteer emergency workers contribute, among other activities, to emergency management by implementing measures and interventions aimed at ensuring rescue and assistance to the populations affected by disasters. They contribute to the coordinated implementation of measures aimed at removing obstacles to the resumption of normal living and working conditions, to restore essential services and to reduce the residual risk in the areas affected by disasters. They all operate, on volunteer basis, within an institutionally regulated setting. Not being paramedics, therefore, rescue workers/ first responders represent one of the most extreme categories of individuals who are exposed to the suffering of others, but are not directly involved in reducing their suffering. Therefore, such population is particularly suitable to examine the hypothesized unbalance between CS and UCS.
+
+To test the domain-specificity hypothesis of self-compassion, we also examined a community sample, whose participants are not expected to be exposed to the suffering of others in the same measure as the RWs. Participants of the community sample were recruited through social network announcements using snowball sampling techniques.
+
+All participants provided informed consent, and procedures were approved by the Red Cross and by the institutional review board of the University of Firenze according to the Helsinki Accords. Participants were not offered any direct incentives for completing the study, and there were no penalties for those who declined to participate. The inclusion criteria were: (1) 18 years of age or older; (2) absence of psychiatric disorders. This resulted in a sample of \emph{N} = 782 participating RWs (\(M_{\text{age}}\) = 39.5, \(SD\) = 13.4, proportion females = .58; all Caucasian) and a community sample of \emph{N} = 338 participants (\(M_{\text{age}}\) = 37.97, \(SD\) = 15.48, proportion females = .47; 4 Asian, 2 Black, 332 Caucasian). Other demographic data are provided in the Supplemental Material.
+
+\hypertarget{instruments}{%
+\subsection{Instruments}\label{instruments}}
+
+Beside the specific questions for RWs, we administered the following scales to both groups.
+
+\emph{Self-Compassion Scale} {[}SCS; Neff (2003a); Italian version by Veneziani et al. (2017){]}, a 26 items self-report questionnaire, was used to evaluate self-compassion. High levels of self-compassion reflect an ability to be kind and understanding toward oneself, even in difficult times. Three sub-sets of items are considered indicators of compassionate self-responding (CS): SK, CH, and MI. The remaining three sub-sets of items are considered indicators of uncompassionate self-responding (UCS): SJ, IS, and OI. The SCS total score (SCS-TS) is computed by averaging the mean scores of the positive subscales and of the reversely-scored negative subscales. In the present sample, total reliability was \(\alpha\) = .89, \(\omega\) = .92. Reliability was adequate for the subscales. SK: \(\alpha\) = .84, \(\omega\) = .90; CH: \(\alpha\) = .72, \(\omega\) = .78; MI: \(\alpha\) = .75, \(\omega\) = .78; SJ: \(\alpha\) = .84, \(\omega\) = .85; IS: \(\alpha\) = .86, \(\omega\) = .89; OI: \(\alpha\) = .83, \(\omega\) = .86. Further psychometric properties of the SCS are presented in the Results section.
+
+The \emph{Post-Traumatic Growth Inventory} {[}PTGI; Tedeschi and Calhoun (1996){]} is a 21 item self-report measure. PTGI evaluates the growth following one or more stressful or traumatic events in one's life. The PTGI comprises five sub-scales (Relating to others, New possibilities, Personal strength, Appreciation of life, and Spiritual change) and has good internal consistency, construct-convergent validity, and discriminant validity (Tedeschi \& Calhoun, 1996). Also the Italian version has good internal consistency and validity (Prati \& Pietrantoni, 2014). In the present sample, total reliability was \(\alpha\) = .95, \(\omega\) = .95. Reliability was adequate for the subscales. Relating to others: \(\alpha\) = .91, \(\omega\) = .92; New possibilities: \(\alpha\) = .86, \(\omega\) = .89; Personal strength: \(\alpha\) = .82, \(\omega\) = .83; Appreciation of life: \(\alpha\) = .79, \(\omega\) = .81; Spiritual changes: \(\alpha\) = .74, \(\omega\) = .74.
+
+The \emph{Impact of Event Scale - Revised} {[}IES-R; Weiss (2007){]} is a 22-item self-report measure assessing subjective distress caused by traumatic events and it is based on the views of the core phenomena of traumatic-stress reactions: intrusion (B criteria in the DSM-IV PTSD diagnosis), avoidance (C criteria), and persistent hyper-arousal. Correspondingly, the IES-R comprises the sub-scales of Intrusion, Avoidance, and Hyperarousal. The IES-R is widely used to assess the symptomatology of the PTSD in rescue workers. The IES-R show good internal consistency and test--retest stability. The Italian translation show good psychometric properties, good concurrent and discriminant validity, and good test--retest reliability (Craparo et al., 2013). In the present sample, total reliability was \(\alpha\) = .93, \(\omega\) = .94. Reliability was also high for the subscales. Intrusion: \(\alpha\) = .90, \(\omega\) = .91; Avoidance: \(\alpha\) = .78, \(\omega\) = .82; Hyperarousal: \(\alpha\) = .85, \(\omega\) = .87.
+
+The \emph{Coping Orientation to Problems Experienced} test (COPE; Carver et al. (1989){]} is a self-report questionnaire used to evaluate the skills and strategies adopted to face stressful and difficult events. The COPE comprises five dimensions (social support, avoidance strategies, positive attitude, problem-solving, and transcendent orientation) and has adequate internal consistency, and convergent and discriminant validity (Carver et al., 1989). Factor analyses on the Italian version of the COPE (Sica et al., 1997, 2008, 2021) have demonstrated that the scales can be grouped into the following dimensions: Problem-focused, Social Support, Avoidance-oriented, Positive-oriented, and Transcendent-oriented. In the present study, we were interested in the adaptive coping strategies that can be considered on par with self-compassion. Therefore, we only administered the Positive-oriented and Problem-focused subscales. In fact, it is generally acknowledged that positive-oriented coping (e.g., positive reinterpretation and growth, acceptance) is beneficial for managing difficult situations (e.g., Sica et al., 2021). Moreover, problem-focused coping is an adaptive and active coping approach (e.g., accepting social support, solving problem, seeking advice or information, and analyzing situation logically) that has been shown to be effective in mediating the development of PTG from self-compassion (Munroe et al., 2022). In the present sample, total reliability was \(\alpha\) = .86, \(\omega\) = .87. Reliability was also adequate for the subscales. Positive-oriented: \(\alpha\) = .75, \(\omega\) = .77; Problem-focused: \(\alpha\) = .84, \(\omega\) = .85.
+
+The \emph{NEO-Five Factor Inventory} (NEO-FFI-60; Costa and McCrae (1992)), a 60 items self-report questionnaire, was used to assess five broad domains of personality: Neuroticism (N), Extraversion (E), Openness to experience (O), Agreeableness (A), and Conscientiousness (C). The internal consistency of the five sub-scales of the NEO-FFI-60 is adequate (Murray et al., 2003). Items from the Neuroticism and Extraversion domains served as an indicator of latent variables in the structural model; scores for the other three domains were employed for group comparisons in descriptive analyses. In the present sample, we used the Italian version by Caprara et al. (2001). The Neuroticism (\(\alpha\) = .88, \(\omega\) = .89), Extraversion (\(\alpha\) = .74, \(\omega\) = .77) and Conscientiousness (\(\alpha\) = .78, \(\omega\) = .82) subscales showed adequate internal consistency, whereas reliability was low for the Agreableness (\(\alpha\) = .59, \(\omega\) = .64) and Openness (\(\alpha\) = .59, \(\omega\) = .60) subscales.
+
+\hypertarget{statistical-analyses}{%
+\subsection{Statistical analyses}\label{statistical-analyses}}
+
+The items' scores of the SJ, IS, OI subscales of the SCS were reversed. This allowed us to compute the SCS-TS as sum of the items' scores. The reversed SJ, IS, OI scores indicate the \emph{absence of} (or the ability to keep at bay) self-identification, isolation, and over-identification.
+
+The statistical analyses were performed with Mplus 8.6 and the \texttt{R} software. A weighted least squares mean- and variance-adjusted estimator (WLSMV) was used to replicate the validation of the SCS described by Neff et al. (2019), as it is more adequate than maximum-likelihood for ordered-categorical items with five or less response options (e.g., Bandalos, 2014). A maximum likelihood estimation with robust standard errors was used for the SEM analyses. Goodness-of-fit was evaluated according to the Comparative Fit Index (CFI), Tucker-Lewis Index (TLI), Root Mean Square Error Approximation (RMSEA), and Standardized Root Mean Square Residual (SRMR). In order to avoid falsely rejecting viable latent variable models, the following cut-off criteria were used: RMSEA and SRMR near or less than 0.08, and CFI and TLI near or greater than 0.90 (Little, 2013; West et al., 2012).
+
+A Bayesian approach was used for group mean comparisons because it allows, by introducing appropriate distributional assumptions, to perform the statistical analyses on the raw data without transforming the variables when Normality is violated. All Bayesian models were implemented in the Stan language with weakly informative priors. A statistically credible group difference was defined as a 95\% posterior credibility interval not including zero.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{group-comparisons-for-the-scs-scale}{%
+\subsection{Group comparisons for the SCS scale}\label{group-comparisons-for-the-scs-scale}}
+
+We hypothesized a CS/UCS unbalance for the rescue-workers group. Because we reverse-coding the items for the SJ, IS, and OI subscales, the bipolar continuum hypothesis predicts that, between the two groups, all the SCS subscales scores should increase together, or all decrease in the same measure, or remain constant. Conversely, we predicted that, for the RW group (subjected to compassion fatigue), the propensity to CS should remain constant, whereas the propensity to keep at bay UCS should decrease. Our hypothesis was confirmed.
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:coefs-scsmvmodel}Posterior mean, standard error, 95\% credible interval and $\hat{R}$ statistic for the parameters of the bmod1 model based on the normal distribution. Dummy coding was applied to code the independent variable group (rescue-workers vs. community sample), with the RW group as the reference level. Therefore, positive values of the $\beta$ coefficients in the regression models indicate larger mean values of the dependent variable in the community sample as compared to the RW group; negative $\beta$ coefficients values indicate the opposite.}
+
+\small{
+
+\begin{tabular}{lrrrrr}
+\toprule
+parameter & \multicolumn{1}{c}{mean} & \multicolumn{1}{c}{SE} & \multicolumn{1}{c}{lower bound} & \multicolumn{1}{c}{upper bound} & \multicolumn{1}{c}{Rhat}\\
+\midrule
+Intercept Self Kindness & 13.730 & 0.162 & 13.412 & 14.046 & 1.004\\
+Intercept Self Judgment & 14.948 & 0.172 & 14.609 & 15.289 & 1.000\\
+Intercept Common Humanity & 11.594 & 0.123 & 11.355 & 11.832 & 1.001\\
+Intercept Isolation & 13.499 & 0.156 & 13.191 & 13.798 & 1.002\\
+Intercept Mindfulness & 13.261 & 0.114 & 13.034 & 13.483 & 1.001\\
+Intercept Overidentification & 14.354 & 0.148 & 14.069 & 14.639 & 1.001\\
+$\beta$ Self Kindness & 0.306 & 0.290 & -0.269 & 0.866 & 1.001\\
+$\beta$ Self Judgment & -1.225 & 0.312 & -1.821 & -0.622 & 1.001\\
+$\beta$ Common Humanity & 0.353 & 0.225 & -0.078 & 0.791 & 1.000\\
+$\beta$ Isolation & -2.590 & 0.289 & -3.151 & -2.022 & 1.001\\
+$\beta$ Mindfulness & -0.619 & 0.209 & -1.029 & -0.210 & 1.001\\
+$\beta$ Overidentification & -3.260 & 0.274 & -3.788 & -2.747 & 1.001\\
+$\sigma$ Self Kindness & 4.464 & 0.094 & 4.286 & 4.658 & 1.001\\
+$\sigma$ Self Judgment & 4.745 & 0.103 & 4.549 & 4.947 & 1.001\\
+$\sigma$ Common Humanity & 3.402 & 0.073 & 3.263 & 3.550 & 1.002\\
+$\sigma$ Isolation & 4.343 & 0.090 & 4.166 & 4.520 & 1.002\\
+$\sigma$ Mindfulness & 3.180 & 0.071 & 3.045 & 3.322 & 1.000\\
+$\sigma$ Overidentification & 3.929 & 0.085 & 3.765 & 4.101 & 1.000\\
+\bottomrule
+\end{tabular}
+
+}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+The score distributions of the SCS subscales for the two groups (rescue-worker sample vs.~community sample) are shown in the Supplementary Materials. The six SCS subscales were included in a multivariate Bayesian analysis to test for group differences between rescue-worker and the community samples (model \texttt{bmod1}). Bayesian posterior estimates for group differences are presented in Table \ref{tab:coefs-scsmvmodel}. Effect size of group differences on the six SCS scales were the following: Self Kindness, Cohen's \(d\) = 0.07, 95\% credibility interval {[}-0.06, 0.20{]}; Common Humanity, Cohen's \(d\) = 0.10, 95\% credibility interval {[}-0.03, 0.23{]}; Mindfulness, Cohen's \(d\) = -0.19, 95\% credibility interval {[}-0.32, -0.06{]}; Self Judgment, Cohen's \(d\) = -0.26, 95\% credibility interval {[}-0.39, -0.13{]}; Isolation, Cohen's \(d\) = -0.60, 95\% credibility interval {[}-0.74, -0.48{]}; Over-Identification, Cohen's \(d\) = -0.83, 95\% credibility interval {[}-0.97, -0.69{]}. For the SJ, IS, and OI subscales, therefore, the Cohen's \emph{d} values were in the small (\textgreater{} 0.2) or medium (\textgreater{} 0.5) range.
+
+Consistently with the above results, we found a credible group difference for UCS (Self-judgment + Isolation + Over-identification): The posterior probability that the mean UCS is smaller for the community group than for the RW group is \(p(\beta_{\text{diff}} < 0) = .000\), Evid. Ratio \textgreater{} 999, Cohen's \(d\) = -0.61, 95\% credibility interval {[}-0.73, -0.47{]}. Instead, there was no credible group difference between the community and the RWs samples on CS (Self-kindness + Common humanity + Mindfulness): \(p(\beta_{\text{diff}} < 0) = 0.49\), Evid. Ratio = 0.338.
+
+An even more stringent test of our hypothesis was performed by analyzing the SCS scores within the RW group. We divided RW participants in three subgroups, depending on their job qualification: team leaders, team members, and drivers. Of the three groups, drivers are exposed to the suffering of others as the other two groups, but their direct involvement in alleviating such suffering is minimum. Therefore, we expected a greater CS/UCS unbalance for drivers as compared to team members and team leaders.
+The six SCS subscales were analyzed with Bayesian ANOVAs to test for group differences between drivers, team members, and team leaders. Table 2 shows the posterior estimates of the mean difference between the team leader or the team member group with respect to the driver group. For the team member group, the results are consistent with our prediction: The mean values of the SJ, IS, and OI subscales were higher for the team member group than for the driver group. For the team leader group, we only found a credible difference in the expected direction for the SJ subscale. No credible difference was found for the SK, CH, and MI subscales.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2889}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2444}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3333}}@{}}
+\caption{Note. The Table shows the posterior estimates of the mean difference (\(\beta_{\text{diff}}\)) of the Team Leader (TL) or the Team Member (TM) with respect to the Driver group. The dependent variable corresponds to each of the six SCS subscales: Self Judgment (SJ), Isolation (IS), Over Identification (OI), Self Kindness (SK), Common Humanity (CH), and Mindfulness (MI). The table also shows the Cohen's \emph{d} statistics computed from the posterior distributions. The 95\% credibility intervals are provided in square brackets.}\tabularnewline
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+SCS subscale
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Qualification
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\beta_{\text{diff}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cohen's \emph{d}
+\end{minipage} \\
+\midrule()
+\endfirsthead
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+SCS subscale
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Qualification
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\beta_{\text{diff}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cohen's \emph{d}
+\end{minipage} \\
+\midrule()
+\endhead
+SJ & TL & 1.548 {[}0.646, 2.455{]} & 0.33 {[}0.14, 0.52{]} \\
+& TM & 1.625 {[}0.698, 2.55{]} & 0.34 {[}0.16, 0.55{]} \\
+IS & TL & 1.05 {[}0.231, 1.886{]} & 0.24 {[}0.05, 0.43{]} \\
+& TM & 2.271 {[}1.438, 3.118{]} & 0.53 {[}0.34, 0.73{]} \\
+OI & TL & 0.725 {[}0.047, 1.439{]} & 0.18 {[}0.02, 0.37{]} \\
+& TM & 1.671 {[}0.945, 2.382{]} & 0.42 {[}0.23, 0.61{]} \\
+SK & TL & -0.222 {[}-1.108, 0.663{]} & -0.05 {[}-0.25, 0.14{]} \\
+& TM & -0.287 {[}-1.171, 0.592{]} & -0.06 {[}-0.27, 0.12{]} \\
+CH & TL & 0.559 {[}-0.106, 1.208{]} & 0.16 {[}-0.01, 0.37{]} \\
+& TM & 0.486 {[}-0.198, 1.142{]} & 0.14 {[}-0.06, 0.33{]} \\
+MI & TL & -0.462 {[}-1.067, 1.208{]} & -0.15 {[}-0.33, 0.05{]} \\
+& TM & -0.6 {[}-1.193, 0.007{]} & -0.19 {[}-0.38, -0.01{]} \\
+\bottomrule()
+\end{longtable}
+
+\hypertarget{measurement-models-for-the-scs}{%
+\subsection{Measurement models for the SCS}\label{measurement-models-for-the-scs}}
+
+For our total sample, Table 3 shows the fit indices of the ten models discussed by Neff et al. (2019) when examining the factor structure of the SCS. Our results are consistent with this previous analysis.
+
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{Note. CFA = confirmatory factor analysis; ESEM = exploratory structural equation modeling; CFI = comparative fit index; TLI = Tucker-Lewis Index; RMSEA = root mean square error of approximation; SRMR = standardized root mean square residual; Model \texttt{m1a} = One-factor CFA; Model \texttt{m1b} = One-factor ESEM; Model \texttt{m2a} = Two-factor CFA; Model \texttt{m2b} = Two-factor ESEM; Model \texttt{m3a} = Six-factor CFA; Model \texttt{m3b} = Six-factor ESEM; Model \texttt{m4a} = Bifactor-CFA (1 G- and 6 S-factors); Model \texttt{m4b} = Bifactor-ESEM (1 G- and 6 S-factors); Model \texttt{m5a} = Two-bifactor (two-tier) CFA model (2 G- and 6 S-factors); Model \texttt{m5b} = Two-bifactor (two-tier) ESEM model (2 G- and 6 S-factors).}\tabularnewline
+\toprule()
+& CFI & TLI & RMSEA & 90\% CI & SRMR & \(\omega\) \\
+\midrule()
+\endfirsthead
+\toprule()
+& CFI & TLI & RMSEA & 90\% CI & SRMR & \(\omega\) \\
+\midrule()
+\endhead
+Model m1a & 0.649 & 0.618 & 0.180 & 0.178 0.183 & 0.149 & 0.454 \\
+Model m1b & 0.649 & 0.618 & 0.180 & 0.178 0.183 & 0.149 & 0.454 \\
+Model m2a & 0.846 & 0.832 & 0.120 & 0.117 0.123 & 0.088 & 0.962 \\
+Model m2b & 0.847 & 0.818 & 0.125 & 0.121 0.128 & 0.059 & 0.959 \\
+Model m3a & 0.903 & 0.889 & 0.098 & 0.094 0.101 & 0.067 & 0.962 \\
+Model m3b & 0.983 & 0.970 & 0.051 & 0.047 0.055 & 0.016 & 0.964 \\
+Model m4a & 0.789 & 0.749 & 0.146 & 0.143 0.149 & 0.111 & 0.779 \\
+Model m4b & 0.987 & 0.975 & 0.046 & 0.042 0.051 & 0.014 & 0.972 \\
+Model m5a & 0.917 & 0.901 & 0.092 & 0.089 0.095 & 0.070 & 0.977 \\
+Model m5b & 0.990 & 0.978 & 0.043 & 0.038 0.047 & 0.013 & 0.965 \\
+\bottomrule()
+\end{longtable}
+
+In terms of the commonly used criteria for model selection according to fit indices, models \texttt{m3b}, \texttt{m4b}, and \texttt{m5b} show from sufficient to optimal psychometric adequacy. However, only model \texttt{m4b} includes a general factor: Model \texttt{m3b} describe six latent variables, whereas model \texttt{m5b} hypothsizes six (ESEM) factors, one for each of the six dimensions of the SCS, plus two general factors, one for CS and one for UCS. Therefore, the use of the SCS-TS can only be justified by model \texttt{m4b}. However, as indicated by Table 2, the general factor of model \texttt{m4b} cannot be interpreted as ``self-compassion'' but, rather, it indicates the propensity to keep UCS at bay (the item scores of subscales SJ, IS, OI have been reversed), accompanied by the absence of CS.
+
+\hypertarget{reliability-analyses}{%
+\subsection{Reliability analyses}\label{reliability-analyses}}
+
+Worthy of note is the value of \(\omega_h\) (i.e., the ratio of the variance attributable to the general factor CS -- i.e., the squared sum of the loadings on the CS factor divided by the total variance (\(\omega_h\) was computed without reverse coding the SJ, IS, OI items, so that all loadings were positive). For model \texttt{m4b}, \(\omega_h\) = .295 in the RW sample. The reliable variance in item responding that can be attributed to the general factor is \(\omega_h / \omega\) = .304 (Rodriguez et al., 2016). As possible benchmarks for evaluating \(\omega_h\), Reise et al. (2013) suggest a minimum greater than .50, with values closer to .75 to be preferred. The value presently obtained, therefore, does not justify the use of the SCS-TS in the presence of multidimensionality in the data.
+
+\hfill\break
+
+\begin{longtable}{lrrrrrrr}
+\toprule
+Items & SC & SK & MI & CH & SJ & IS & OI \\ 
+\midrule
+\multicolumn{8}{l}{Self-kindness} \\ 
+\midrule
+SCSK05 & -0.21 & 0.69 & 0.10 & 0.24 & -0.07 & 0.02 & 0.00 \\ 
+SCSK12 & -0.34 & 0.76 & 0.09 & 0.21 & 0.03 & -0.08 & -0.08 \\ 
+SCSK19 & -0.41 & 0.75 & 0.16 & 0.12 & -0.05 & 0.04 & -0.03 \\ 
+SCSK23 & -0.64 & 0.30 & 0.10 & 0.16 & 0.00 & 0.19 & 0.42 \\ 
+SCSK26 & -0.49 & 0.44 & 0.15 & 0.25 & -0.09 & 0.17 & 0.31 \\ 
+\midrule
+\multicolumn{8}{l}{Mindfulness} \\ 
+\midrule
+SCMI09 & -0.18 & 0.13 & 0.62 & 0.16 & 0.13 & 0.06 & -0.10 \\ 
+SCMI14 & -0.40 & 0.13 & 0.71 & 0.09 & 0.07 & 0.01 & -0.10 \\ 
+SCMI17 & -0.53 & 0.21 & 0.45 & 0.20 & 0.17 & 0.02 & 0.00 \\ 
+SCMI22 & -0.39 & 0.43 & 0.21 & 0.28 & 0.20 & -0.08 & 0.17 \\ 
+\midrule
+\multicolumn{8}{l}{Common Humanity} \\ 
+\midrule
+SCCH03 & -0.02 & 0.15 & 0.36 & 0.47 & -0.08 & -0.12 & 0.10 \\ 
+SCCH07 & 0.01 & 0.28 & -0.04 & 0.74 & 0.08 & 0.12 & -0.04 \\ 
+SCCH10 & -0.13 & 0.24 & 0.05 & 0.76 & 0.18 & 0.07 & -0.06 \\ 
+SCCH15 & -0.41 & 0.25 & 0.31 & 0.44 & 0.01 & 0.04 & 0.19 \\ 
+\midrule
+\multicolumn{8}{l}{Self-judgment} \\ 
+\midrule
+SCSJ01 & 0.58 & -0.02 & 0.23 & 0.11 & 0.26 & -0.15 & 0.00 \\ 
+SCSJ08 & 0.68 & -0.10 & 0.13 & 0.11 & 0.47 & 0.00 & 0.12 \\ 
+SCSJ11 & 0.71 & -0.02 & 0.12 & 0.14 & 0.32 & 0.00 & -0.04 \\ 
+SCSJ16 & 0.71 & -0.01 & 0.09 & 0.02 & 0.40 & 0.07 & -0.06 \\ 
+SCSJ21 & 0.51 & -0.15 & 0.19 & 0.09 & 0.29 & 0.01 & 0.17 \\ 
+\midrule
+\multicolumn{8}{l}{Isolation} \\ 
+\midrule
+SCIS04 & 0.79 & 0.04 & 0.04 & 0.10 & -0.01 & 0.13 & 0.21 \\ 
+SCIS13 & 0.69 & 0.08 & 0.01 & 0.09 & -0.07 & 0.53 & 0.05 \\ 
+SCIS18 & 0.73 & 0.11 & 0.04 & 0.10 & 0.04 & 0.49 & 0.03 \\ 
+SCIS25 & 0.77 & 0.10 & 0.04 & 0.01 & 0.06 & 0.17 & 0.19 \\ 
+\midrule
+\multicolumn{8}{l}{Over-identification} \\ 
+\midrule
+SCOI02 & 0.81 & 0.07 & 0.00 & 0.10 & 0.03 & 0.03 & 0.26 \\ 
+SCOI06 & 0.81 & 0.10 & 0.08 & 0.06 & 0.03 & 0.09 & 0.17 \\ 
+SCOI20 & 0.58 & 0.30 & -0.21 & 0.00 & 0.14 & 0.16 & 0.31 \\ 
+SCOI24 & 0.63 & 0.18 & -0.16 & 0.05 & 0.03 & 0.10 & 0.28 \\ 
+\bottomrule
+\end{longtable}
+
+\hypertarget{nomological-validation}{%
+\subsection{Nomological validation}\label{nomological-validation}}
+
+Of the examined models of the SCS (see Supplementary material), Model \texttt{m4b} was used as mediators between Coping, Extraversion, and Neuroticism (exogenous variables), and PTG and PTS (endogenous variables) -- see also Pandey et al. (2021). The seven latent variables of model \texttt{m4b} were identified by the 26 indicators of the SCS; Coping was identified by twe two subscales of Positive attitude and Problem orientation; Extraversion was identified by the subscales of Positive affect, Sociability, and Activity; Neuroticism was identified by the subscales of Negative affect and Self\_reproach; PTG was identified by the subscales of Appreciation of life, New possibilities, Personal strength, Spirituality, and Relating to others; IES was identified by the subscales of Avoiding, Intrusivity, and Hyperarousal. We forced the measurement model of the latent variables to remain constant between the groups (RWs and community sample), but let the structural coefficients to vary between groups. The fit of model so defined (\texttt{nn4b}) is adequate, \(\chi^2\)(1370) = 2529.24, \(\chi^2\)/df = 1.846, CFI = 0.942, TLI = 0.931, RMSEA = .040, 90\%CI {[}.037, .042{]}, and SRMS = .041 (for details, see Supplementary material). For the Model \texttt{nn4b}, the correlation between the SCS-TS and the factor scores on the general factor of the SCS is .140, 95\% CI {[}.080, .198{]}.
+
+The total effects are summarized in Table 5.
+
+\begin{longtable}[]{@{}lll@{}}
+\caption{Total effects for the three endogeneous variables (Coping, Neuroticism, and Extraversion) on post-traumatic growth (PTGI) and post traumatic stress (IESR). The table reports the standardized effects. In parentheses are shown the \emph{p}-values.}\tabularnewline
+\toprule()
+& Rescue workers & Community sample \\
+\midrule()
+\endfirsthead
+\toprule()
+& Rescue workers & Community sample \\
+\midrule()
+\endhead
+Coping \(\rightarrow\) PTGI & .192 (.000) & .403 (.000) \\
+Neuroticism \(\rightarrow\) PTGI & .317 (.000) & .065 (.388) \\
+Extraversion \(\rightarrow\) PTGI & .411 (.000) & .172 (.046) \\
+Coping \(\rightarrow\) IESR & .103 (.040) & .213 (.004) \\
+Neuroticism \(\rightarrow\) IESR & .678 (.000) & .527 (.000) \\
+Extraversion \(\rightarrow\) IESR & .306 (.000) & .201 (.016) \\
+\bottomrule()
+\end{longtable}
+
+For the rescue-workers group,
+CS mediated the effect of Coping on PTGI, \(\beta\) = .059, \emph{p} = .006;
+CS mediated the effect of Neuroticism on PTGI, \(\beta\) = -.067, \emph{p} = .014;
+Mindfulness mediated the effect of Coping on PTGI, \(\beta\) = -.114, \emph{p} = .016;
+Mindfulness mediated the effect of Neuroticism on PTGI, \(\beta\) = .113, \emph{p} = .018;
+Mindfulness mediated the effect of Extraversion on PTGI, \(\beta\) = .123, \emph{p} = .007;
+OI mediated the effect of Neuroticism on IESR, \(\beta\) = .250, \emph{p} = .004.
+Coping had a direct effect on PTGI, \(\beta\) = .215, \emph{p} = .012; Extraversion had a direct effect on PTGI, \(\beta\) = .253, \emph{p} = .003; Extraversion had a direct effect on IESR, \(\beta\) = .237, \emph{p} = .007.
+
+For the community-sample group, we found no evidence of mediation effects of the latent variables identified by the SCS between the endogeneous (PTGI, IESR) and the exogeneous(Coping, Extraversion, Neuroticism) variables.
+Coping had a direct effect on PTGI, \(\beta\) = .396, \emph{p} = .000;
+Coping had a direct effect on IERS, \(\beta\) = .216, \emph{p} = .016;
+Neuroticism had a direct effect on IESR, \(\beta\) = .524, \emph{p} = .000;
+Extraversion had a direct effect on IESR, \(\beta\) = .213, \emph{p} = .036.
+
+In the Supplementary materials, we present four alternative versions of the mediation Model \texttt{nn4b}. In the mediation Model \texttt{nn1}, self-compassion is represented in terms of the CS and UCS latent variables, each identified by its corresponding SCS subscales (\(\chi^2_{224}\) = 730.471, \(\chi^2\)/df = 3.26, CFI = .939, TLI = .925, RMSEA = .055, 90\% CI = {[}.051, .060{]}, SRMR = .054). In the mediation Model \texttt{nn2}, self-compassion is represented by the observed values of the six SCS subscales (\(\chi^2_{155}\) = 658.311, \(\chi^2\)/df = 4.25, CFI = .934, TLI = .911, RMSEA = .066, 90\% CI = {[}.061, .071{]}, SRMR = .040). In mediation Model \texttt{nn3}, self-compassion is represented by a single factor identified by the six SCS subscales (\(\chi^2_{174}\) = 1281.57, \(\chi^2\)/df = 7.36, CFI = .855, TLI = .825, RMSEA = .092, 90\% CI = {[}.088, .097{]}, SRMR = .09). In mediation Model \texttt{nn4}, self-compassion is represented by a higher-order factor for the CS and UCS latent variables of Model \texttt{nn1} (\(\chi^2_{172}\) = 859.754, \(\chi^2\)/df = 4.940, CFI = .91, TLI = .89, RMSEA = .073, 90\% CI = {[}.068, .078{]}, SRMR = .08).
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+The main question of this study was to determine whether is always appropriate to use the SCS-TS, or whether, in specific cases, is better to rely on the six components of the SCS. We approached this question in three different manners.
+
+First, we started by considering the average values of the six SCS subscales in two groups: RWs and a community sample. According to the bipolar continuum hypothesis (Neff, 2022a), when we compare two groups and in a group we find that one of the two components (CS, UCS) increases with respect to the other group, the other component must decrease, and viceversa. But this is not what we found. When comparing a RWs group to a community sample, we found that the two group did not vary according to CS, but the RW group showed a higher UCS levels (or lower values of the \emph{absence} of UCS, with the present coding) than the community sample. This CS/UCS unbalance was stronger, within the RW group, when considering those participants who were less directly involved in relieving the suffering of others and, therefore, may have experienced a stronger ``learned helplessness'' that is associated with compassion fatigue. For the specific population that is the object of the present study, therefore, these results are incompatible with the bipolar continuum characterization of the self-compassion construct (Neff, 2022b).
+
+Second, we carried out a psychometric validation of the self-compassion construct in the present sample. Of all factor models considered by Neff et al. (2019), only model \texttt{m4b} (bifactor-ESEM with 1 general-factor and 6 specific-factors) obtained psychometric adequacy \emph{and} also contained a latent variable that could justify the use of the SCS-TS. Differently from what reported by Neff et al. (2019), however, in our sample the pattern of factor loadings on the general factor does not justify the use of the SCS-TS. Moreover, the hierarchical omega index (i.e., the ratio of the variance attributable to the general factor and the total variance), \(\omega_h\), did not reach even the minimum threshold of 0.50 (Reise et al., 2013). For the present sample, therefore, these results do not justify the use of the SCS-TS.
+
+Third, we performed a nomological validation of self-compassion. When considering personality factors and coping mechanisms as exogeneous variables, and post-traumatic stress and post-traumatic growth as endogenous variables, a model with self-compassion as a mediator variable provides an adequate fit. In the SEM analysis, we represented self-compassion in terms of the model \texttt{m4b} (described in the Results section), thus implementing the simultaneous approach favored by McNeish and Wolf (2020) -- that is, by directly modeling the measurement model and the structural model within a single SEM. For such a model, we only found a correlation of .140 between the SCS-TS and the factor scores on the general factor of the SCS. This indicates that, for the present sample, sum scoring cannot be used as an estimate of the latent variables scores (i.e., the TS does not provide an accurate quantification of the construct of self-compassion). In a different version of this mediation model, we represented self-compassion in terms of the separate CS and UCS dimensions, which were identified by the six subscales of the SCS. Also this model provided a good fit to the data. Instead, no acceptable fit was found for a single-factor model identified by the six SCS subscales, nor for a hierachical model with a higher-order factor for the CS and UCS variables. In the present sample, therefore, our nomological analyses does not justify the use of the SCS-TS.
+
+In summary, the lack of justification for SCS-TS indicates that, in the present sample, self-compassion is a multidimensional construct. However, the present results must be interpreted together with the convincing evidence provided by previous studies that the SCS-TS is appropriate for the general population -- e.g., Neff (2022a). Together, the present and the previous results thus provide strong support to the idea that self-compassion is domain-specific. It should be stressed that an accurate measurement of self-compassion is especially important in applications and in clinical settings. McNeish and Wolf (2020) shows that, when the TS do not closely correspond to the factor scores, the use of sum scoring introduces systematic distortions that can lead to different conclusions (in direction and significance) compared to those obtained when using more accurate estimates of the construct (according to the methodological literature). Such consideration is especially important when cut-off scores are applied to psychometric scales to create distinct groups.
+
+There are several populations that may show a CS/UCS unbalance, as we presently found for RWs, such as health care workers and paramedics, for example, who are known to experience compassion fatigue and ``learned helplessness'' (Boyle, 2015). Empirical support to an unbalance between CS/UCS also comes from LPA studies. This person-centered approach identifies distinct subgroups of individuals based on their common response patterns on the six SCS subscales (Phillips, 2019; Ullrich-French \& Cox, 2020) -- for ease of interpretation, in LPA the negative SCS subscales are not reversed. Profile patterns of individuals who are high on (not reverse-scored) negative self-compassion and low on positive self-compassion (Uncompassionate pattern), or low in negative self-compassion and high in positive self-compassion (Compassionate pattern), together with the ``Average'' profile (average levels of both negative and positive self-compassion), are consistent with the view of self-compassion as a bipolar continuum. As we have described before, according to this hypothesis, individuals are either compassionate or uncompassionate towards themselves (or a little of both), because the two components ``change in tandem: As CS increases, UCS decreases'' (Neff, 2022b). However, some individuals do not show such response pattern, but rather score high on both dimensions, or low on both dimensions {[}Ullrich-French and Cox (2020); Wu et al. (2021)), which highlights the same CS/UCS unbalance that we have found in the present study.
+
+In their study, Ullrich-French and Cox (2020) found that
+individuals who score relatively high across all dimensions of the SCS (with not reverse-scored items) tend to be more inflexible compared to those who score relatively low across all dimensions. They concluded that ``having high levels of the negative dimensions reflects a persistent self-critical state that overstimulates a threat-defense system (Gilbert, 2007), despite also having relatively high levels of the positive self-compassion dimensions'' {[}p.~1495{]}. Therefore, we can speculate that, beside compassion fatigue, also cognitive inflexibility may be a psychological dimension that leads to a CS/UCS unbalance. Cognitive inflexibility has been related to several psychological disorders such as, for example, obsessive-compulsive disorder (e.g., Caudek et al., 2020), eating disorder (e.g., Caudek et al., 2021), and depression (e.g., Mukherjee et al., 2020). Therefore, it could be important, especially for such categories of patients, to carefully evaluate the use of the of the SCS-TS, which may require psychometric justification. In sum, we speculate that there may be several empirical as well theoretical reasons as to why, for some particular groups of individuals, CS and UCS may vary independently of one another in a manner that is incompatible with the bipolar continuum hypothesis (Neff, 2022a). In such circumstances, rather than with the SCS-TS, it would be advisable to quantify self-compassion in terms of the six SCS subscales.
+
+\hypertarget{limitations-and-future-directions}{%
+\subsection{Limitations and future directions}\label{limitations-and-future-directions}}
+
+Limitations include the cross-sectional design, which precludes determination of the development and of the causal role of the risk and protective functions of the self-compassion dimensions. Longitudinal studies would be important to understand whether the SK, CH, MI, SJ, IS, and OI dimensions change over time, and to isolate the factors responsible for such changes.
+A strength of the study is the use of a sample of RWs. Given the direct personal relevance of the experiences of suffering and failure in rescue workers, in such a sample the study of self-compassion (i.e., of an adaptive response to stress) is facilitated. At the same time, however, the use of such an extreme and specific sample raises the question of the degree to which the present results can generalize to individuals who are engaged to a lesser extent in situations of difficulty or adversity. Therefore, an important extension of this study would be to examine the associations of the self-compassion dimensions to adaptive/disadaptive psychological functioning at different levels of context specificity.
+
+Both when it is considered as an interactive process in time, or as an episodic process, self-compassion is recruited in response to situational demands (environmental or intrapsychic), and is shaped by the individual's resources. From this perspective, an open questions concerns the understanding of how particular social contexts, demands, social factors, and individual differences in cognitive abilities shape self-compassion, and whether these factors affect the self-compassion components differently.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-bandalos2014relative}{}}%
+Bandalos, D. L. (2014). Relative performance of categorical diagonally weighted least squares and robust maximum likelihood estimation. \emph{Structural Equation Modeling: A Multidisciplinary Journal}, \emph{21}(1), 102--116.
+
+\leavevmode\vadjust pre{\hypertarget{ref-beck2016self}{}}%
+Beck, A. T. (2016). \emph{The self in understanding and treating psychological disorders}. Cambridge University Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-boyle2015compassion}{}}%
+Boyle, D. A. (2015). Compassion fatigue: The cost of caring. \emph{Nursing2022}, \emph{45}(7), 48--51.
+
+\leavevmode\vadjust pre{\hypertarget{ref-brenner2017two}{}}%
+Brenner, R. E., Heath, P. J., Vogel, D. L., \& Credé, M. (2017). Two is more valid than one: Examining the factor structure of the self-compassion scale (SCS). \emph{Journal of Counseling Psychology}, \emph{64}(6), 696--707.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caprara2001brand}{}}%
+Caprara, G. V., Barbaranelli, C., \& Guido, G. (2001). Brand personality: How to make the metaphor fit? \emph{Journal of Economic Psychology}, \emph{22}(3), 377--395.
+
+\leavevmode\vadjust pre{\hypertarget{ref-carver1989assessing}{}}%
+Carver, C. S., Scheier, M. F., \& Weintraub, J. K. (1989). Assessing coping strategies: A theoretically based approach. \emph{Journal of Personality and Social Psychology}, \emph{56}(2), 267--283.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caudek2021susceptibility}{}}%
+Caudek, C., Sica, C., Cerea, S., Colpizzi, I., \& Stendardi, D. (2021). Susceptibility to eating disorders is associated with cognitive inflexibility in female university students. \emph{Journal of Behavioral and Cognitive Therapy}, \emph{31}(4), 317--328.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caudek2020cognitive}{}}%
+Caudek, C., Sica, C., Marchetti, I., Colpizzi, I., \& Stendardi, D. (2020). Cognitive inflexibility specificity for individuals with high levels of obsessive-compulsive symptoms. \emph{Journal of Behavioral and Cognitive Therapy}, \emph{30}(2), 103--113.
+
+\leavevmode\vadjust pre{\hypertarget{ref-chwyl2021beliefs}{}}%
+Chwyl, C., Chen, P., \& Zaki, J. (2021). Beliefs about self-compassion: Implications for coping and self-improvement. \emph{Personality and Social Psychology Bulletin}, \emph{47}(9), 1327--1342.
+
+\leavevmode\vadjust pre{\hypertarget{ref-connor2007relations}{}}%
+Connor-Smith, J. K., \& Flachsbart, C. (2007). Relations between personality and coping: A meta-analysis. \emph{Journal of Personality and Social Psychology}, \emph{93}(6), 1080--1107.
+
+\leavevmode\vadjust pre{\hypertarget{ref-costa1992normal}{}}%
+Costa, P. T., \& McCrae, R. R. (1992). Normal personality assessment in clinical practice: The NEO personality inventory. \emph{Psychological Assessment}, \emph{4}(1), 5--13.
+
+\leavevmode\vadjust pre{\hypertarget{ref-craparo2013impact}{}}%
+Craparo, G., Faraci, P., Rotondo, G., \& Gori, A. (2013). The impact of event scale--revised: Psychometric properties of the italian version in a sample of flood victims. \emph{Neuropsychiatric Disease and Treatment}, \emph{9}, 1427--1432.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cronbach1955construct}{}}%
+Cronbach, L. J., \& Meehl, P. E. (1955). Construct validity in psychological tests. \emph{Psychological Bulletin}, \emph{52}(4), 281.
+
+\leavevmode\vadjust pre{\hypertarget{ref-geiger2018self}{}}%
+Geiger, M., Pfattheicher, S., Hartung, J., Weiss, S., Schindler, S., Wilhelm, O., \& Kandler, C. (2018). Self--compassion as a facet of neuroticism? A reply to the comments of {Neff, T{ó}Th--Kir{á}Ly, and Colosimo (2018)}. \emph{European Journal of Personality}, \emph{32}(4), 393--404.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gilbert2007depression}{}}%
+Gilbert, P. (2007). \emph{Psychotherapy and counselling for depression}. SAGE Publications Ltd.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gonzalez2021volunteers}{}}%
+Gonzalez-Mendez, R., \& Díaz, M. (2021). Volunteers' compassion fatigue, compassion satisfaction, and post-traumatic growth during the SARS-CoV-2 lockdown in spain: Self-compassion and self-determination as predictors. \emph{Plos One}, \emph{16}(9), e0256854.
+
+\leavevmode\vadjust pre{\hypertarget{ref-joinson1992coping}{}}%
+Joinson, C. (1992). Coping with compassion fatigue. \emph{Nursing}, \emph{22}(4), 116--118.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kandler2017old}{}}%
+Kandler, C., Pfattheicher, S., Geiger, M., Hartung, J., Weiss, S., \& Schindler, S. (2017). Old wine in new bottles? The case of self--compassion and neuroticism. \emph{European Journal of Personality}, \emph{31}(2), 160--169.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kumlander2018two}{}}%
+Kumlander, S., Lahtinen, O., Turunen, T., \& Salmivalli, C. (2018). Two is more valid than one, but is six even better? The factor structure of the self-compassion scale (SCS). \emph{PloS One}, \emph{13}(12), e0207706.
+
+\leavevmode\vadjust pre{\hypertarget{ref-little2013longitudinal}{}}%
+Little, T. D. (2013). \emph{Longitudinal structural equation modeling}. Guilford press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-macbeth2012exploring}{}}%
+MacBeth, A., \& Gumley, A. (2012). Exploring compassion: A meta-analysis of the association between self-compassion and psychopathology. \emph{Clinical Psychology Review}, \emph{32}(6), 545--552.
+
+\leavevmode\vadjust pre{\hypertarget{ref-maheux2016indirect}{}}%
+Maheux, A., \& Price, M. (2016). The indirect effect of social support on post-trauma psychopathology via self-compassion. \emph{Personality and Individual Differences}, \emph{88}, 102--107.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mcneish2020thinking}{}}%
+McNeish, D., \& Wolf, M. G. (2020). Thinking twice about sum scores. \emph{Behavior Research Methods}, \emph{52}(6), 2287--2305.
+
+\leavevmode\vadjust pre{\hypertarget{ref-mukherjee2020reward}{}}%
+Mukherjee, D., Filipowicz, A. L., Vo, K., Satterthwaite, T. D., \& Kable, J. W. (2020). Reward and punishment reversal-learning in major depressive disorder. \emph{Journal of Abnormal Psychology}, \emph{129}(8), 810--823.
+
+\leavevmode\vadjust pre{\hypertarget{ref-munroe2022using}{}}%
+Munroe, M., Al-Refae, M., Chan, H. W., \& Ferrari, M. (2022). Using self-compassion to grow in the face of trauma: The role of positive reframing and problem-focused coping strategies. \emph{Psychological Trauma: Theory, Research, Practice, and Policy}, \emph{14}(S1), S157.
+
+\leavevmode\vadjust pre{\hypertarget{ref-muris2016protective}{}}%
+Muris, P. (2016). A protective factor against mental health problems in youths? A critical note on the assessment of self-compassion. \emph{Journal of Child and Family Studies}, \emph{25}(5), 1461--1465.
+
+\leavevmode\vadjust pre{\hypertarget{ref-muris2016protection}{}}%
+Muris, P., Otgaar, H., \& Petrocchi, N. (2016). Protection as the mirror image of psychopathology: Further critical notes on the self-compassion scale. \emph{Mindfulness}, \emph{7}(3), 787--790.
+
+\leavevmode\vadjust pre{\hypertarget{ref-muris2019stripping}{}}%
+Muris, P., Otgaar, H., \& Pfattheicher, S. (2019). Stripping the forest from the rotten trees: Compassionate self-responding is a way of coping, but reduced uncompassionate self-responding mainly reflects psychopathology. \emph{Mindfulness}, \emph{10}(1), 196--199.
+
+\leavevmode\vadjust pre{\hypertarget{ref-muris2017protection}{}}%
+Muris, P., \& Petrocchi, N. (2017). Protection or vulnerability? A meta-analysis of the relations between the positive and negative components of self-compassion and psychopathology. \emph{Clinical Psychology \& Psychotherapy}, \emph{24}(2), 373--383.
+
+\leavevmode\vadjust pre{\hypertarget{ref-murray2003neo}{}}%
+Murray, G., Rawlings, D., Allen, N. B., \& Trinder, J. (2003). NEO five-factor inventory scores: Psychometric properties in a community sample. \emph{Measurement and Evaluation in Counseling and Development}, \emph{36}(3), 140--149.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2003self}{}}%
+Neff, K. D. (2003a). Self-compassion: An alternative conceptualization of a healthy attitude toward oneself. \emph{Self and Identity}, \emph{2}(2), 85--101.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2003development}{}}%
+Neff, K. D. (2003b). The development and validation of a scale to measure self-compassion. \emph{Self and Identity}, \emph{2}(3), 223--250.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2016self}{}}%
+Neff, K. D. (2016). The self-compassion scale is a valid and theoretically coherent measure of self-compassion. \emph{Mindfulness}, \emph{7}(1), 264--274.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2022self}{}}%
+Neff, K. D. (2022a). Self-compassion: Theory, method, research, and intervention. \emph{Annual Review of Psychology}, \emph{74}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2022differential}{}}%
+Neff, K. D. (2022b). The differential effects fallacy in the study of self-compassion: Misunderstanding the nature of bipolar continuums. \emph{Mindfulness}, \emph{13}(3), 572--576.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2018forest}{}}%
+Neff, K. D., Long, P., Knox, M. C., Davidson, O., Kuchar, A., Costigan, A., Williamson, Z., Rohleder, N., Tóth-Király, I., \& Breines, J. G. (2018). The forest and the trees: Examining the association of self-compassion and its positive and negative components with psychological functioning. \emph{Self and Identity}, \emph{17}(6), 627--645.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2013relationship}{}}%
+Neff, K. D., \& Pommier, E. (2013). The relationship between self-compassion and other-focused concern among college undergraduates, community adults, and practicing meditators. \emph{Self and Identity}, \emph{12}(2), 160--176.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2019examining}{}}%
+Neff, K. D., Tóth-Király, I., Yarnell, L. M., Arimitsu, K., Castilho, P., Ghorbani, N., Guo, H. X., Hirsch, J. K., Hupfeld, J., Hutz, C. S., et al. (2019). Examining the factor structure of the self-compassion scale in 20 diverse samples: Support for use of a total score and six subscale scores. \emph{Psychological Assessment}, \emph{31}(1), 27.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2018self}{}}%
+Neff, K. D., Tóth--Király, I., Colosimo, K., \& Kandler, C. (2018). Self--compassion is best measured as a global construct and is overlapping with but distinct from neuroticism: A response to pfattheicher, geiger, hartung, weiss, and schindler (2017). \emph{European Journal of Personality}, \emph{32}(4), 371--392.
+
+\leavevmode\vadjust pre{\hypertarget{ref-neff2017examining}{}}%
+Neff, K. D., Whittaker, T. A., \& Karl, A. (2017). Examining the factor structure of the self-compassion scale in four distinct populations: Is the use of a total scale score justified? \emph{Journal of Personality Assessment}, \emph{99}(6), 596--607.
+
+\leavevmode\vadjust pre{\hypertarget{ref-palgi2009effect}{}}%
+Palgi, Y., Ben-Ezra, M., Langer, S., \& Essar, N. (2009). The effect of prolonged exposure to war stress on the comorbidity of PTSD and depression among hospital personnel. \emph{Psychiatry Research}, \emph{168}(3), 262--264.
+
+\leavevmode\vadjust pre{\hypertarget{ref-pandey2021positive}{}}%
+Pandey, R., Tiwari, G. K., Parihar, P., \& Rai, P. K. (2021). Positive, not negative, self-compassion mediates the relationship between self-esteem and well-being. \emph{Psychology and Psychotherapy: Theory, Research and Practice}, \emph{94}(1), 1--15.
+
+\leavevmode\vadjust pre{\hypertarget{ref-phillips2019self}{}}%
+Phillips, W. J. (2019). Self-compassion mindsets: The components of the self-compassion scale operate as a balanced system within individuals. \emph{Current Psychology}, 1--14.
+
+\leavevmode\vadjust pre{\hypertarget{ref-prati2014italian}{}}%
+Prati, G., \& Pietrantoni, L. (2014). Italian adaptation and confirmatory factor analysis of the full and the short form of the posttraumatic growth inventory. \emph{Journal of Loss and Trauma}, \emph{19}(1), 12--22.
+
+\leavevmode\vadjust pre{\hypertarget{ref-reise2013scoring}{}}%
+Reise, S. P., Bonifay, W. E., \& Haviland, M. G. (2013). Scoring and modeling psychological measures in the presence of multidimensionality. \emph{Journal of Personality Assessment}, \emph{95}(2), 129--140.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rodriguez2016evaluating}{}}%
+Rodriguez, A., Reise, S. P., \& Haviland, M. G. (2016). Evaluating bifactor models: Calculating and interpreting statistical indices. \emph{Psychological Methods}, \emph{21}(2), 137--150.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica2021facing}{}}%
+Sica, C., Latzman, R. D., Caudek, C., Cerea, S., Colpizzi, I., Caruso, M., Giulini, P., \& Bottesi, G. (2021). Facing distress in coronavirus era: The role of maladaptive personality traits and coping strategies. \emph{Personality and Individual Differences}, \emph{177}, 110833.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica2008coping}{}}%
+Sica, C., Magni, C., Ghisi, M., Altoè, G., Sighinolfi, C., Chiri, L. R., \& Franceschini, S. (2008). Coping orientation to problems experienced-nuova versione italiana (COPE-NVI): Uno strumento per la misura degli stili di coping. \emph{Psicoterapia Cognitiva e Comportamentale}, \emph{14}(1), 27.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sica1997coping}{}}%
+Sica, C., Novara, C., Dorz, S., \& Sanavio, E. (1997). Coping strategies: Evidence for cross-cultural differences? A preliminary study with the italian version of coping orientations to problems experienced (COPE). \emph{Personality and Individual Differences}, \emph{23}(6), 1025--1029.
+
+\leavevmode\vadjust pre{\hypertarget{ref-singer2014empathy}{}}%
+Singer, T., \& Klimecki, O. M. (2014). Empathy and compassion. \emph{Current Biology}, \emph{24}(18), R875--R878.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tedeschi1996posttraumatic}{}}%
+Tedeschi, R. G., \& Calhoun, L. G. (1996). The posttraumatic growth inventory: Measuring the positive legacy of trauma. \emph{Journal of Traumatic Stress}, \emph{9}(3), 455--471.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ullrich2020use}{}}%
+Ullrich-French, S., \& Cox, A. E. (2020). The use of latent profiles to explore the multi-dimensionality of self-compassion. \emph{Mindfulness}, \emph{11}, 1483--1499.
+
+\leavevmode\vadjust pre{\hypertarget{ref-veneziani2017self}{}}%
+Veneziani, C. A., Fuochi, G., \& Voci, A. (2017). Self-compassion as a healthy attitude toward the self: Factorial and construct validity in an italian sample. \emph{Personality and Individual Differences}, \emph{119}, 60--68.
+
+\leavevmode\vadjust pre{\hypertarget{ref-weiss2007impact}{}}%
+Weiss, D. S. (2007). The impact of event scale: revised. In \emph{Cross-cultural assessment of psychological trauma and PTSD} (pp. 219--238). Springer.
+
+\leavevmode\vadjust pre{\hypertarget{ref-west2012model}{}}%
+West, S. G., Taylor, A. B., Wu, W., et al. (2012). Model fit and model selection in structural equation modeling. \emph{Handbook of Structural Equation Modeling}, \emph{1}, 209--231.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wilson2019effectiveness}{}}%
+Wilson, A. C., Mackintosh, K., Power, K., \& Chan, S. W. (2019). Effectiveness of self-compassion related therapies: A systematic review and meta-analysis. \emph{Mindfulness}, \emph{10}(6), 979--995.
+
+\leavevmode\vadjust pre{\hypertarget{ref-witteveen2007psychological}{}}%
+Witteveen, A. B., Bramsen, I., Twisk, J. W., Huizink, A. C., Slottje, P., Smid, T., \& Van Der Ploeg, H. M. (2007). Psychological distress of rescue workers eight and one-half years after professional involvement in the amsterdam air disaster. \emph{The Journal of Nervous and Mental Disease}, \emph{195}(1), 31--40.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wong2017self}{}}%
+Wong, C. C. Y., \& Yeung, N. C. (2017). Self-compassion and posttraumatic growth: Cognitive processes as mediators. \emph{Mindfulness}, \emph{8}(4), 1078--1087.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wu2021positive}{}}%
+Wu, L., Schroevers, M. J., \& Zhu, L. (2021). Positive self-compassion, self-coldness, and psychological outcomes in college students: A person-centered approach. \emph{Mindfulness}, \emph{12}(10), 2510--2518.
+
+\leavevmode\vadjust pre{\hypertarget{ref-zoellner2006posttraumatic}{}}%
+Zoellner, T., \& Maercker, A. (2006). Posttraumatic growth in clinical psychology---a critical review and introduction of a two component model. \emph{Clinical Psychology Review}, \emph{26}(5), 626--653.
+
+\end{CSLReferences}
+
+
+\end{document}

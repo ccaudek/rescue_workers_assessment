@@ -1,0 +1,48 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/26/2022   2:15 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:      cfa1.inp normal, no missing
+  MONTECARLO: NAMES ARE y1-y10;
+              NOBSERVATIONS = 150;
+              NREPS = 100;
+              SEED = 53487;
+              ! NCLASSES = 1;
+              GCLASSES = 1;
+              SAVE = cfa1.sav;
+  ANALYSIS:   TYPE = MIXTURE;
+              ESTIMATOR = ML;
+  MODEL MONTECARLO:
+              %OVERALL%
+              f1 BY y1-y5*.8;
+              f2 BY y6-y10*.8;
+              f1@1 f2@1;
+              y1-y10*.36;
+              f1 WITH f2*.25;
+  MODEL:
+              %OVERALL%
+              f1 BY y1-y5*.8;
+              f2 BY y6-y10*.8;
+              f1@1 f2@1;
+              y1-y10*.36;
+              f1 WITH f2*.25;
+  OUTPUT:
+              TECH9;
+
+*** ERROR in MONTECARLO command
+  Unknown option:
+  GCLASSES
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

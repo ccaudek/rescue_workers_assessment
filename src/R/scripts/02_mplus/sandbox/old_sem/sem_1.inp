@@ -1,0 +1,123 @@
+TITLE: SEM analysis with 2 factor bi-factor ESEM model for the SCS.
+DATA:
+FILE = "semdata.dat";
+
+VARIABLE:
+NAMES =
+  scsj_1 scoi_2 scch_3 scis_4 scsk_5 scoi_6 scch_7 scsj_8 scmi_9 scch_10
+  scsj_11 scsk_12 scis_13 scmi_14 scch_15 scsj_16 scmi_17 scis_18 scsk_19
+  scoi_20 scsj_21 scmi_22 scsk_23 scoi_24 scis_25 scsk_26
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+  iesr_a iesr_i iesr_h
+  cope_pa cope_po
+  mspss_fa mspss_fr mspss_so
+  neuro_na neuro_sr
+  extra_pa extra_so extra_ac;
+
+MISSING = .;
+
+USEVARIABLES ARE
+  scsj_1 scoi_2 scch_3 scis_4 scsk_5 scoi_6 scch_7 scsj_8 scmi_9 scch_10
+  scsj_11 scsk_12 scis_13 scmi_14 scch_15 scsj_16 scmi_17 scis_18 scsk_19
+  scoi_20 scsj_21 scmi_22 scsk_23 scoi_24 scis_25 scsk_26
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+  iesr_a iesr_i iesr_h
+  cope_pa cope_po
+  mspss_fa mspss_fr mspss_so
+  neuro_na neuro_sr
+  extra_pa extra_so extra_ac
+  ;
+
+ANALYSIS:
+
+ESTIMATOR = MLR; ! WLSMV
+PROCESSORS = 6;
+ROTATION = TARGET (orthogonal);
+
+MODEL:
+
+! (*1) indicates that an exploratory model involving your variables will be requested.
+! (~0) indicates that the non-intended cross-loadings are constrained to be as close
+! as possible to zero.
+
+! Global factor - other factors automatically uncorrelated with G by default.
+G BY
+  scsk_5 scsk_12 scsk_19 scsk_23 scsk_26
+  scsj_1 scsj_8 scsj_11 scsj_16 scsj_21
+  scch_3 scch_7 scch_10 scch_15
+  scis_4 scis_13 scis_18 scis_25
+  scmi_9 scmi_14 scmi_17 scmi_22
+  scoi_2 scoi_6 scoi_20 scoi_24 (*1);
+
+! Specific factors
+P BY
+  scsk_5 scsk_12 scsk_19 scsk_23 scsk_26
+  scsj_1~0 scsj_8~0 scsj_11~0 scsj_16~0 scsj_21~0
+  scch_3 scch_7 scch_10 scch_15
+  scis_4~0 scis_13~0 scis_18~0 scis_25~0
+  scmi_9 scmi_14 scmi_17 scmi_22
+  scoi_2~0 scoi_6~0 scoi_20~0 scoi_24~0 (*1);
+
+N BY
+  scsk_5~0 scsk_12~0 scsk_19~0 scsk_23~0 scsk_26~0
+  scsj_1 scsj_8 scsj_11 scsj_16 scsj_21
+  scch_3~0 scch_7~0 scch_10~0 scch_15~0
+  scis_4 scis_13 scis_18 scis_25
+  scmi_9~0 scmi_14~0 scmi_17~0 scmi_22~0
+  scoi_2 scoi_6 scoi_20 scoi_24 (*1);
+
+! Residual correlations
+  scch_10 WITH scch_7;
+  scis_18 WITH scis_13;
+  ! SCSK26 WITH SCSK23;
+  SCSK_12 WITH SCSK_19;
+  SCSK_5  WITH SCSK_12;
+
+PTGI BY
+  ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+IESR BY
+  iesr_a iesr_i iesr_h;
+
+COPE BY
+  cope_pa cope_po;
+
+MSPSS BY
+  mspss_fa mspss_fr mspss_so;
+
+NEURO BY
+  neuro_na neuro_sr;
+
+EXTRA BY
+  extra_pa extra_so extra_ac;
+
+! Regressions
+
+! Direct effects on endogenous variables
+COPE MSPSS NEURO EXTRA ON PTGI;
+COPE MSPSS NEURO EXTRA ON IESR;
+
+! Direct effects on mediators
+COPE MSPSS NEURO EXTRA ON G;
+COPE MSPSS NEURO EXTRA ON P;
+COPE MSPSS NEURO EXTRA ON N;
+
+! Mediators effects on endogenous variables
+G P N on PTGI;
+G P N on IESR;
+
+! Requesting standardized parameter estimates and modification indices
+OUTPUT:
+stdyx;
+!tech4;
+MODINDICES (ALL);
+
+! scch7: When I'm down and out, I remind myself that there are lots
+! of other people in the world feeling like I am.
+! scch10: When I feel inadequate in some way, I try to remind myself
+! that feelings of inadequacy are shared by most people.
+
+! scis13: When I'm feeling down, I tend to feel like most other people
+! are probably happier than I am.
+! scis18: When I'm really struggling, I tend to feel like other people
+! must be having an easier time of it.

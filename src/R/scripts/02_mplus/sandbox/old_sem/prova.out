@@ -1,0 +1,2185 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/06/2022   3:26 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: SEM analysis with 6-factors ESEM model for the SCS.
+  DATA:
+  FILE = "two_groups_data.dat";
+
+  VARIABLE:
+  NAMES =
+    scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+    scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+    scoi24 scis25 scsk26
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    group;
+
+  MISSING = .;
+
+  USEVARIABLES ARE
+    scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+    scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+    scoi24 scis25 scsk26
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    group;
+
+  grouping is group (0=cntr, 1=rw);
+
+  ANALYSIS:
+
+  ESTIMATOR = MLR;
+  PROCESSORS = 6;
+  ROTATION = TARGET (orthogonal);
+
+  MODEL:
+
+  sk BY
+    scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0
+    scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  sj BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 scsj16
+    scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  ch BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  is BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4 scis13 scis18
+    scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  mi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  oi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6
+    scoi20 scoi24 (*1);
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  PTGI ON sk sj ch is mi oi;
+  IESR ON sk sj ch is mi oi;
+
+  MODEL cntr:
+
+  sk BY
+    scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0
+    scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  sj BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 scsj16
+    scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  ch BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  is BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4 scis13 scis18
+    scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  mi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  oi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6
+    scoi20 scoi24 (*1);
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  PTGI ON sk sj ch is mi oi;
+  IESR ON sk sj ch is mi oi;
+
+
+
+
+  MODEL rw:
+
+  sk BY
+    scsk5 scsk12 scsk19 scsk23 scsk26 scsj1~0 scsj8~0 scsj11~0 scsj16~0
+    scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  sj BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1 scsj8 scsj11 scsj16
+    scsj21 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  ch BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3 scch7 scch10 scch15 scis4~0 scis13~0 scis18~0
+    scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  is BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4 scis13 scis18
+    scis25 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  mi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9 scmi14 scmi17 scmi22 scoi2~0 scoi6~0 scoi20~0
+    scoi24~0 (*1);
+
+  oi BY
+    scsk5~0 scsk12~0 scsk19~0 scsk23~0 scsk26~0 scsj1~0 scsj8~0 scsj11~0
+    scsj16~0 scsj21~0 scch3~0 scch7~0 scch10~0 scch15~0 scis4~0 scis13~0
+    scis18~0 scis25~0 scmi9~0 scmi14~0 scmi17~0 scmi22~0 scoi2 scoi6
+    scoi20 scoi24 (*1);
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  PTGI ON sk sj ch is mi oi;
+  IESR ON sk sj ch is mi oi;
+
+
+
+
+
+
+
+
+
+
+
+  ! Requesting standardized parameter estimates and modification indices
+  OUTPUT:
+  stdyx;
+  !tech4;
+  MODINDICES (ALL);
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+SEM analysis with 6-factors ESEM model for the SCS.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 2
+Number of observations
+   Group CNTR                                                  291
+   Group RW                                                    706
+   Total sample size                                           997
+
+Number of dependent variables                                   34
+Number of independent variables                                  0
+Number of continuous latent variables                            8
+
+Observed dependent variables
+
+  Continuous
+   SCSJ1       SCOI2       SCCH3       SCIS4       SCSK5       SCOI6
+   SCCH7       SCSJ8       SCMI9       SCCH10      SCSJ11      SCSK12
+   SCIS13      SCMI14      SCCH15      SCSJ16      SCMI17      SCIS18
+   SCSK19      SCOI20      SCSJ21      SCMI22      SCSK23      SCOI24
+   SCIS25      SCSK26      PTGI_AL     PTGI_NP     PTGI_PS     PTGI_SP
+   PTGI_RO     IESR_A      IESR_I      IESR_H
+
+Continuous latent variables
+   PTGI        IESR
+
+  EFA factors
+  *1:   SK          SJ          CH          IS          MI          OI
+
+Variables with special functions
+
+  Grouping variable     GROUP
+
+Estimator                                                      MLR
+Rotation                                                    TARGET
+Row standardization                                    CORRELATION
+Type of rotation                                        ORTHOGONAL
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization Specifications for the Exploratory Factor Analysis
+Rotation Algorithm
+  Number of random starts                                       30
+  Maximum number of iterations                             1000000
+  Derivative convergence criterion                       0.100D-04
+
+Input data file(s)
+  two_groups_data.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+   Group CNTR
+     Number of missing data patterns             1
+
+   Group RW
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR CNTR
+
+
+           Covariance Coverage
+              SCSJ1         SCOI2         SCCH3         SCIS4         SCSK5
+              ________      ________      ________      ________      ________
+ SCSJ1          1.000
+ SCOI2          1.000         1.000
+ SCCH3          1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000
+ SCSK5          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCCH7          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSK12         1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCOI6         SCCH7         SCSJ8         SCMI9         SCCH10
+              ________      ________      ________      ________      ________
+ SCOI6          1.000
+ SCCH7          1.000         1.000
+ SCSJ8          1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSK12         1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ11        SCSK12        SCIS13        SCMI14        SCCH15
+              ________      ________      ________      ________      ________
+ SCSJ11         1.000
+ SCSK12         1.000         1.000
+ SCIS13         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ16        SCMI17        SCIS18        SCSK19        SCOI20
+              ________      ________      ________      ________      ________
+ SCSJ16         1.000
+ SCMI17         1.000         1.000
+ SCIS18         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ21        SCMI22        SCSK23        SCOI24        SCIS25
+              ________      ________      ________      ________      ________
+ SCSJ21         1.000
+ SCMI22         1.000         1.000
+ SCSK23         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSK26        PTGI_AL       PTGI_NP       PTGI_PS       PTGI_SP
+              ________      ________      ________      ________      ________
+ SCSK26         1.000
+ PTGI_AL        1.000         1.000
+ PTGI_NP        1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PTGI_RO       IESR_A        IESR_I        IESR_H
+              ________      ________      ________      ________
+ PTGI_RO        1.000
+ IESR_A         1.000         1.000
+ IESR_I         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000
+
+
+     PROPORTION OF DATA PRESENT FOR RW
+
+
+           Covariance Coverage
+              SCSJ1         SCOI2         SCCH3         SCIS4         SCSK5
+              ________      ________      ________      ________      ________
+ SCSJ1          1.000
+ SCOI2          1.000         1.000
+ SCCH3          1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000
+ SCSK5          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCCH7          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSK12         1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCOI6         SCCH7         SCSJ8         SCMI9         SCCH10
+              ________      ________      ________      ________      ________
+ SCOI6          1.000
+ SCCH7          1.000         1.000
+ SCSJ8          1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSK12         1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ11        SCSK12        SCIS13        SCMI14        SCCH15
+              ________      ________      ________      ________      ________
+ SCSJ11         1.000
+ SCSK12         1.000         1.000
+ SCIS13         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ16        SCMI17        SCIS18        SCSK19        SCOI20
+              ________      ________      ________      ________      ________
+ SCSJ16         1.000
+ SCMI17         1.000         1.000
+ SCIS18         1.000         1.000         1.000
+ SCSK19         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ21        SCMI22        SCSK23        SCOI24        SCIS25
+              ________      ________      ________      ________      ________
+ SCSJ21         1.000
+ SCMI22         1.000         1.000
+ SCSK23         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSK26        PTGI_AL       PTGI_NP       PTGI_PS       PTGI_SP
+              ________      ________      ________      ________      ________
+ SCSK26         1.000
+ PTGI_AL        1.000         1.000
+ PTGI_NP        1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PTGI_RO       IESR_A        IESR_I        IESR_H
+              ________      ________      ________      ________
+ PTGI_RO        1.000
+ IESR_A         1.000         1.000
+ IESR_I         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS FOR CNTR
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCSJ1                 3.780      -0.790       1.000    6.53%       3.000      4.000      4.000
+             291.000       1.409      -0.212       5.000   34.36%       4.000      5.000
+     SCOI2                 3.378      -0.401       1.000   11.34%       2.000      3.000      4.000
+             291.000       1.720      -1.005       5.000   23.37%       4.000      5.000
+     SCCH3                 3.464      -0.308       1.000    4.12%       3.000      3.000      4.000
+             291.000       1.183      -0.628       5.000   18.90%       4.000      4.000
+     SCIS4                 3.048      -0.033       1.000   14.09%       2.000      3.000      3.000
+             291.000       1.695      -1.150       5.000   16.15%       4.000      4.000
+     SCSK5                 3.003       0.037       1.000   12.71%       2.000      3.000      3.000
+             291.000       1.543      -1.001       5.000   14.09%       3.000      4.000
+     SCOI6                 3.574      -0.567       1.000    8.93%       2.000      3.000      4.000
+             291.000       1.592      -0.687       5.000   29.21%       4.000      5.000
+     SCCH7                 2.756       0.191       1.000   17.18%       2.000      2.000      3.000
+             291.000       1.442      -0.865       5.000    8.93%       3.000      4.000
+     SCSJ8                 3.203      -0.113       1.000    9.97%       2.000      3.000      3.000
+             291.000       1.619      -1.110       5.000   19.24%       4.000      4.000
+     SCMI9                 3.361      -0.213       1.000    4.47%       2.000      3.000      3.000
+             291.000       1.110      -0.513       5.000   15.12%       4.000      4.000
+     SCCH10                2.643       0.274       1.000   18.90%       2.000      2.000      3.000
+             291.000       1.377      -0.807       5.000    6.87%       3.000      4.000
+     SCSJ11                3.100      -0.079       1.000   13.06%       2.000      3.000      3.000
+             291.000       1.643      -1.070       5.000   16.84%       4.000      4.000
+     SCSK12                2.739       0.315       1.000   16.49%       2.000      2.000      3.000
+             291.000       1.485      -0.826       5.000   10.65%       3.000      4.000
+     SCIS13                3.320      -0.399       1.000   11.00%       2.000      3.000      4.000
+             291.000       1.571      -0.890       5.000   18.21%       4.000      4.000
+     SCMI14                3.165      -0.129       1.000    6.87%       2.000      3.000      3.000
+             291.000       1.217      -0.741       5.000   11.34%       4.000      4.000
+     SCCH15                3.086      -0.044       1.000   10.65%       2.000      3.000      3.000
+             291.000       1.419      -0.835       5.000   14.09%       3.000      4.000
+     SCSJ16                3.175      -0.245       1.000   16.49%       2.000      3.000      3.000
+             291.000       1.842      -1.146       5.000   19.59%       4.000      4.000
+     SCMI17                3.079      -0.030       1.000    7.56%       2.000      3.000      3.000
+             291.000       1.193      -0.674       5.000   10.31%       3.000      4.000
+     SCIS18                3.464      -0.525       1.000   10.65%       2.000      3.000      4.000
+             291.000       1.665      -0.841       5.000   24.40%       4.000      5.000
+     SCSK19                2.825       0.171       1.000   14.78%       2.000      2.000      3.000
+             291.000       1.423      -0.845       5.000    9.97%       3.000      4.000
+     SCOI20                3.220      -0.158       1.000    9.62%       2.000      3.000      3.000
+             291.000       1.512      -0.954       5.000   17.87%       4.000      4.000
+     SCSJ21                3.065      -0.089       1.000   10.31%       2.000      3.000      3.000
+             291.000       1.387      -0.926       5.000   11.34%       3.000      4.000
+     SCMI22                2.969       0.084       1.000   11.68%       2.000      3.000      3.000
+             291.000       1.411      -0.837       5.000   12.37%       3.000      4.000
+     SCSK23                2.704       0.328       1.000   17.18%       2.000      2.000      3.000
+             291.000       1.487      -0.870       5.000    9.62%       3.000      4.000
+     SCOI24                2.773       0.190       1.000   20.27%       1.000      2.000      3.000
+             291.000       1.681      -1.081       5.000   11.68%       3.000      4.000
+     SCIS25                3.289      -0.252       1.000   13.06%       2.000      3.000      3.000
+             291.000       1.841      -1.153       5.000   24.74%       4.000      5.000
+     SCSK26                2.684       0.270       1.000   13.75%       2.000      2.000      3.000
+             291.000       1.192      -0.663       5.000    5.50%       3.000      4.000
+     PTGI_AL               8.646      -0.321       0.000    2.06%       5.000      8.000      9.000
+             291.000      14.937      -0.775      15.000    5.15%      10.000     12.000
+     PTGI_NP              12.677      -0.049       0.000    2.06%       7.000     11.000     13.000
+             291.000      39.600      -0.737      25.000    3.09%      15.000     18.000
+     PTGI_PS              10.381      -0.141       0.000    3.09%       5.000      9.000     11.000
+             291.000      26.580      -0.837      20.000    4.12%      12.000     15.000
+     PTGI_SP               1.691       1.283       0.000   48.11%       0.000      0.000      1.000
+             291.000       4.653       1.128      10.000    0.34%       2.000      4.000
+     PTGI_RO              17.306      -0.118       0.000    1.37%       8.000     15.000     18.000
+             291.000      75.044      -0.921      35.000    1.03%      20.000     25.000
+     IESR_A                7.935       0.751       0.000    2.75%       4.000      6.000      8.000
+             291.000      22.260       0.899      24.000    0.69%       9.000     12.000
+     IESR_I                9.969       0.594       0.000    4.12%       4.000      8.000     10.000
+             291.000      36.257       0.957      32.000    0.34%      12.000     14.000
+     IESR_H                6.595       0.801       0.000    6.87%       2.000      5.000      7.000
+             291.000      19.231       1.487      24.000    0.34%       8.000     10.000
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS FOR RW
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCSJ1                 3.704      -0.531       1.000    3.12%       3.000      4.000      4.000
+             706.000       1.123      -0.360       5.000   26.20%       4.000      5.000
+     SCOI2                 2.506       0.422       1.000   29.18%       1.000      2.000      2.000
+             706.000       1.692      -0.966       5.000    9.07%       3.000      4.000
+     SCCH3                 3.289      -0.380       1.000    6.80%       2.000      3.000      3.000
+             706.000       1.118      -0.362       5.000   11.05%       4.000      4.000
+     SCIS4                 2.380       0.572       1.000   33.00%       1.000      2.000      2.000
+             706.000       1.675      -0.843       5.000    8.07%       3.000      4.000
+     SCSK5                 2.809       0.156       1.000   13.46%       2.000      2.000      3.000
+             706.000       1.302      -0.761       5.000    7.93%       3.000      4.000
+     SCOI6                 2.722       0.221       1.000   21.53%       1.000      2.000      3.000
+             706.000       1.659      -1.059       5.000   10.62%       3.000      4.000
+     SCCH7                 2.564       0.319       1.000   24.93%       1.000      2.000      2.000
+             706.000       1.529      -0.913       5.000    7.51%       3.000      4.000
+     SCSJ8                 2.888       0.013       1.000   18.56%       2.000      2.000      3.000
+             706.000       1.649      -1.099       5.000   11.61%       3.000      4.000
+     SCMI9                 3.524      -0.436       1.000    3.82%       3.000      3.000      4.000
+             706.000       1.057      -0.277       5.000   17.28%       4.000      4.000
+     SCCH10                2.627       0.191       1.000   20.11%       1.000      2.000      3.000
+             706.000       1.333      -0.829       5.000    5.52%       3.000      4.000
+     SCSJ11                2.746       0.194       1.000   18.56%       2.000      2.000      3.000
+             706.000       1.535      -1.001       5.000    9.21%       3.000      4.000
+     SCSK12                2.684       0.240       1.000   15.44%       2.000      2.000      3.000
+             706.000       1.259      -0.734       5.000    5.95%       3.000      4.000
+     SCIS13                2.627       0.273       1.000   26.63%       1.000      2.000      2.000
+             706.000       1.763      -1.156       5.000    9.77%       3.000      4.000
+     SCMI14                3.584      -0.414       1.000    2.83%       3.000      3.000      4.000
+             706.000       1.008      -0.290       5.000   18.84%       4.000      4.000
+     SCCH15                3.149      -0.146       1.000    7.93%       2.000      3.000      3.000
+             706.000       1.231      -0.679       5.000   11.33%       3.000      4.000
+     SCSJ16                2.894       0.059       1.000   16.43%       2.000      2.000      3.000
+             706.000       1.619      -1.116       5.000   11.61%       3.000      4.000
+     SCMI17                3.363      -0.246       1.000    3.26%       3.000      3.000      3.000
+             706.000       0.965      -0.378       5.000   11.61%       4.000      4.000
+     SCIS18                2.840       0.053       1.000   18.84%       2.000      2.000      3.000
+             706.000       1.613      -1.094       5.000   10.34%       3.000      4.000
+     SCSK19                2.749       0.187       1.000   14.16%       2.000      2.000      3.000
+             706.000       1.245      -0.669       5.000    6.80%       3.000      4.000
+     SCOI20                2.374       0.522       1.000   28.75%       1.000      2.000      2.000
+             706.000       1.401      -0.635       5.000    5.67%       3.000      3.000
+     SCSJ21                2.789       0.117       1.000   15.58%       2.000      2.000      3.000
+             706.000       1.345      -0.796       5.000    7.79%       3.000      4.000
+     SCMI22                2.863       0.031       1.000   12.75%       2.000      3.000      3.000
+             706.000       1.257      -0.763       5.000    7.08%       3.000      4.000
+     SCSK23                2.759       0.193       1.000   13.17%       2.000      2.000      3.000
+             706.000       1.211      -0.633       5.000    6.66%       3.000      4.000
+     SCOI24                2.006       0.985       1.000   43.20%       1.000      1.000      2.000
+             706.000       1.266       0.113       5.000    3.82%       2.000      3.000
+     SCIS25                2.635       0.183       1.000   28.61%       1.000      2.000      3.000
+             706.000       1.779      -1.238       5.000    8.64%       3.000      4.000
+     SCSK26                2.803       0.125       1.000   10.62%       2.000      2.000      3.000
+             706.000       1.096      -0.575       5.000    5.38%       3.000      4.000
+     PTGI_AL               6.552       0.007       0.000   12.18%       2.000      5.000      7.000
+             706.000      17.834      -1.018      15.000    2.12%       8.000     10.000
+     PTGI_NP               8.458       0.417       0.000   13.31%       2.000      6.000      8.000
+             706.000      39.951      -0.722      25.000    0.42%      10.000     15.000
+     PTGI_PS              10.025      -0.269       0.000    6.09%       5.000      9.000     11.000
+             706.000      28.325      -0.862      20.000    2.12%      12.000     15.000
+     PTGI_SP               1.210       1.956       0.000   64.02%       0.000      0.000      0.000
+             706.000       4.429       3.359      10.000    0.71%       0.000      2.000
+     PTGI_RO              13.979       0.132       0.000    8.50%       4.000     11.000     14.000
+             706.000      85.817      -1.032      35.000    0.85%      17.000     23.000
+     IESR_A                6.414       0.957       0.000   13.60%       1.000      4.000      5.000
+             706.000      29.716       0.483      27.000    0.14%       7.000     11.000
+     IESR_I                8.477       0.901       0.000    9.21%       2.000      5.000      7.000
+             706.000      51.334       0.079      32.000    0.28%       9.000     14.000
+     IESR_H                3.285       1.750       0.000   37.82%       0.000      1.000      1.000
+             706.000      19.702       2.838      24.000    0.14%       2.000      6.000
+
+
+     NO CONVERGENCE.  NUMBER OF ITERATIONS EXCEEDED.
+
+     THE CHI-SQUARE STATISTIC IS NEGATIVE.
+     THE LOGLIKELIHOOD VALUES MAY NOT BE RELIABLE.
+
+
+
+MODEL RESULTS
+
+                    Estimate
+
+Group CNTR
+
+ SK       BY
+    SCSK5             -0.422
+    SCSK12            -0.333
+    SCSK19            -0.510
+    SCSK23            -0.704
+    SCSK26            -0.551
+    SCSJ1              0.877
+    SCSJ8              0.975
+    SCSJ11             0.993
+    SCSJ16             1.099
+    SCSJ21             0.614
+    SCCH3             -0.120
+    SCCH7             -0.027
+    SCCH10            -0.085
+    SCCH15            -0.447
+    SCIS4              0.884
+    SCIS13             0.686
+    SCIS18             0.924
+    SCIS25             1.005
+    SCMI9             -0.069
+    SCMI14            -0.211
+    SCMI17            -0.411
+    SCMI22            -0.275
+    SCOI2              0.971
+    SCOI6              0.947
+    SCOI20             0.572
+    SCOI24             0.583
+
+ SJ       BY
+    SCSK5             -0.146
+    SCSK12            -0.246
+    SCSK19            -0.119
+    SCSK23             0.025
+    SCSK26             0.015
+    SCSJ1              0.000
+    SCSJ8              0.083
+    SCSJ11             0.047
+    SCSJ16            -0.024
+    SCSJ21            -0.030
+    SCCH3             -0.317
+    SCCH7             -0.052
+    SCCH10            -0.179
+    SCCH15            -0.090
+    SCIS4              0.302
+    SCIS13             0.449
+    SCIS18             0.341
+    SCIS25             0.373
+    SCMI9             -0.481
+    SCMI14            -0.448
+    SCMI17            -0.305
+    SCMI22            -0.282
+    SCOI2              0.310
+    SCOI6              0.187
+    SCOI20             0.581
+    SCOI24             0.485
+
+ CH       BY
+    SCSK5              0.690
+    SCSK12             0.743
+    SCSK19             0.659
+    SCSK23             0.620
+    SCSK26             0.629
+    SCSJ1              0.000
+    SCSJ8             -0.086
+    SCSJ11            -0.092
+    SCSJ16            -0.212
+    SCSJ21            -0.142
+    SCCH3              0.556
+    SCCH7              0.741
+    SCCH10             0.796
+    SCCH15             0.701
+    SCIS4             -0.048
+    SCIS13             0.012
+    SCIS18            -0.004
+    SCIS25             0.030
+    SCMI9              0.342
+    SCMI14             0.501
+    SCMI17             0.518
+    SCMI22             0.723
+    SCOI2              0.000
+    SCOI6              0.034
+    SCOI20             0.103
+    SCOI24             0.033
+
+ IS       BY
+    SCSK5              0.470
+    SCSK12             0.419
+    SCSK19             0.510
+    SCSK23            -0.012
+    SCSK26             0.186
+    SCSJ1              0.000
+    SCSJ8             -0.220
+    SCSJ11            -0.051
+    SCSJ16             0.032
+    SCSJ21            -0.146
+    SCCH3              0.000
+    SCCH7             -0.218
+    SCCH10            -0.284
+    SCCH15             0.035
+    SCIS4              0.130
+    SCIS13             0.408
+    SCIS18             0.347
+    SCIS25             0.170
+    SCMI9              0.284
+    SCMI14             0.327
+    SCMI17             0.069
+    SCMI22             0.110
+    SCOI2              0.000
+    SCOI6              0.121
+    SCOI20             0.065
+    SCOI24             0.059
+
+ MI       BY
+    SCSK5              0.324
+    SCSK12             0.480
+    SCSK19             0.318
+    SCSK23            -0.180
+    SCSK26             0.048
+    SCSJ1              0.000
+    SCSJ8             -0.032
+    SCSJ11             0.000
+    SCSJ16             0.063
+    SCSJ21            -0.318
+    SCCH3              0.000
+    SCCH7              0.304
+    SCCH10             0.123
+    SCCH15            -0.163
+    SCIS4              0.000
+    SCIS13            -0.159
+    SCIS18            -0.036
+    SCIS25            -0.017
+    SCMI9             -0.393
+    SCMI14            -0.304
+    SCMI17            -0.162
+    SCMI22             0.236
+    SCOI2              0.000
+    SCOI6             -0.001
+    SCOI20             0.178
+    SCOI24             0.160
+
+ OI       BY
+    SCSK5              0.000
+    SCSK12            -0.034
+    SCSK19             0.026
+    SCSK23             0.224
+    SCSK26             0.012
+    SCSJ1              0.000
+    SCSJ8              0.088
+    SCSJ11            -0.043
+    SCSJ16            -0.037
+    SCSJ21             0.117
+    SCCH3              0.000
+    SCCH7             -0.603
+    SCCH10            -0.472
+    SCCH15            -0.117
+    SCIS4              0.000
+    SCIS13            -0.415
+    SCIS18            -0.295
+    SCIS25             0.050
+    SCMI9             -0.077
+    SCMI14            -0.131
+    SCMI17            -0.067
+    SCMI22             0.151
+    SCOI2              0.000
+    SCOI6              0.072
+    SCOI20             0.272
+    SCOI24             0.115
+
+ PTGI     BY
+    PTGI_AL            1.620
+    PTGI_NP            2.900
+    PTGI_PS            2.318
+    PTGI_SP            0.439
+    PTGI_RO            3.580
+
+ IESR     BY
+    IESR_A             2.189
+    IESR_I             3.024
+    IESR_H             2.007
+
+ PTGI     ON
+    SK                 0.157
+    SJ                 0.010
+    CH                 0.295
+    IS                -0.001
+    MI                 0.116
+    OI                 0.018
+
+ IESR     ON
+    SK                 0.197
+    SJ                 0.195
+    CH                 0.267
+    IS                 0.233
+    MI                 0.370
+    OI                -0.159
+
+ SJ       WITH
+    SK                 0.000
+
+ CH       WITH
+    SK                 0.000
+    SJ                 0.000
+
+ IS       WITH
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+
+ MI       WITH
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+    IS                 0.000
+
+ OI       WITH
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+    IS                 0.000
+    MI                 0.000
+
+ IESR     WITH
+    PTGI               0.525
+
+ Means
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+    IS                 0.000
+    MI                 0.000
+    OI                 0.000
+
+ Intercepts
+    SCSJ1              3.933
+    SCOI2              3.428
+    SCCH3              3.319
+    SCIS4              3.178
+    SCSK5              2.964
+    SCOI6              3.584
+    SCCH7              2.747
+    SCSJ8              3.353
+    SCMI9              3.273
+    SCCH10             2.618
+    SCSJ11             3.212
+    SCSK12             2.706
+    SCIS13             3.406
+    SCMI14             3.097
+    SCCH15             2.972
+    SCSJ16             3.362
+    SCMI17             2.968
+    SCIS18             3.578
+    SCSK19             2.732
+    SCOI20             3.220
+    SCSJ21             3.127
+    SCMI22             2.793
+    SCSK23             2.596
+    SCOI24             2.756
+    SCIS25             3.408
+    SCSK26             2.711
+    PTGI_AL            8.821
+    PTGI_NP           12.442
+    PTGI_PS           11.917
+    PTGI_SP            1.866
+    PTGI_RO           18.786
+    IESR_A             8.380
+    IESR_I            10.967
+    IESR_H             5.568
+    PTGI               0.000
+    IESR               0.000
+
+ Variances
+    SK                 1.000
+    SJ                 1.000
+    CH                 1.000
+    IS                 1.000
+    MI                 1.000
+    OI                 1.000
+
+ Residual Variances
+    SCSJ1              0.665
+    SCOI2              0.684
+    SCCH3              0.779
+    SCIS4              0.823
+    SCSK5              0.544
+    SCOI6              0.641
+    SCCH7              0.386
+    SCSJ8              0.618
+    SCMI9              0.524
+    SCCH10             0.386
+    SCSJ11             0.657
+    SCSK12             0.355
+    SCIS13             0.544
+    SCMI14             0.509
+    SCCH15             0.690
+    SCSJ16             0.619
+    SCMI17             0.638
+    SCIS18             0.501
+    SCSK19             0.361
+    SCOI20             0.725
+    SCSJ21             0.858
+    SCMI22             0.673
+    SCSK23             0.535
+    SCOI24             1.063
+    SCIS25             0.675
+    SCSK26             0.456
+    PTGI_AL            5.036
+    PTGI_NP            7.809
+    PTGI_PS            8.715
+    PTGI_SP            3.955
+    PTGI_RO           30.739
+    IESR_A             7.635
+    IESR_I             8.483
+    IESR_H             7.765
+    PTGI               3.659
+    IESR               2.770
+
+Group RW
+
+ SK       BY
+    SCSK5             -0.048
+    SCSK12            -0.142
+    SCSK19            -0.232
+    SCSK23            -0.483
+    SCSK26            -0.347
+    SCSJ1              0.648
+    SCSJ8              0.923
+    SCSJ11             0.890
+    SCSJ16             0.862
+    SCSJ21             0.677
+    SCCH3              0.225
+    SCCH7              0.174
+    SCCH10             0.156
+    SCCH15            -0.070
+    SCIS4              0.712
+    SCIS13             0.464
+    SCIS18             0.529
+    SCIS25             0.732
+    SCMI9              0.157
+    SCMI14            -0.015
+    SCMI17            -0.097
+    SCMI22            -0.043
+    SCOI2              0.831
+    SCOI6              0.798
+    SCOI20             0.484
+    SCOI24             0.474
+
+ SJ       BY
+    SCSK5             -0.063
+    SCSK12            -0.242
+    SCSK19            -0.213
+    SCSK23            -0.103
+    SCSK26            -0.051
+    SCSJ1              0.000
+    SCSJ8              0.218
+    SCSJ11             0.181
+    SCSJ16             0.261
+    SCSJ21             0.150
+    SCCH3             -0.147
+    SCCH7              0.024
+    SCCH10            -0.197
+    SCCH15            -0.305
+    SCIS4              0.714
+    SCIS13             0.866
+    SCIS18             0.771
+    SCIS25             0.674
+    SCMI9             -0.406
+    SCMI14            -0.576
+    SCMI17            -0.502
+    SCMI22            -0.328
+    SCOI2              0.703
+    SCOI6              0.666
+    SCOI20             0.673
+    SCOI24             0.617
+
+ CH       BY
+    SCSK5              0.475
+    SCSK12             0.389
+    SCSK19             0.453
+    SCSK23             0.543
+    SCSK26             0.585
+    SCSJ1              0.000
+    SCSJ8              0.070
+    SCSJ11             0.049
+    SCSJ16             0.010
+    SCSJ21             0.092
+    SCCH3              0.430
+    SCCH7              0.774
+    SCCH10             0.761
+    SCCH15             0.654
+    SCIS4              0.072
+    SCIS13             0.221
+    SCIS18             0.276
+    SCIS25             0.020
+    SCMI9              0.361
+    SCMI14             0.300
+    SCMI17             0.393
+    SCMI22             0.486
+    SCOI2              0.000
+    SCOI6              0.056
+    SCOI20             0.079
+    SCOI24             0.031
+
+ IS       BY
+    SCSK5             -0.504
+    SCSK12            -0.611
+    SCSK19            -0.455
+    SCSK23            -0.168
+    SCSK26            -0.216
+    SCSJ1              0.000
+    SCSJ8              0.144
+    SCSJ11             0.084
+    SCSJ16             0.145
+    SCSJ21             0.130
+    SCCH3              0.000
+    SCCH7             -0.258
+    SCCH10            -0.250
+    SCCH15            -0.116
+    SCIS4              0.173
+    SCIS13             0.384
+    SCIS18             0.346
+    SCIS25             0.200
+    SCMI9              0.139
+    SCMI14             0.199
+    SCMI17             0.018
+    SCMI22            -0.353
+    SCOI2              0.000
+    SCOI6              0.110
+    SCOI20            -0.201
+    SCOI24            -0.105
+
+ MI       BY
+    SCSK5              0.424
+    SCSK12             0.525
+    SCSK19             0.557
+    SCSK23             0.082
+    SCSK26             0.127
+    SCSJ1              0.000
+    SCSJ8             -0.084
+    SCSJ11             0.032
+    SCSJ16             0.018
+    SCSJ21            -0.105
+    SCCH3              0.000
+    SCCH7             -0.134
+    SCCH10            -0.138
+    SCCH15             0.097
+    SCIS4              0.000
+    SCIS13             0.233
+    SCIS18             0.206
+    SCIS25             0.100
+    SCMI9              0.279
+    SCMI14             0.335
+    SCMI17             0.237
+    SCMI22             0.122
+    SCOI2              0.000
+    SCOI6              0.057
+    SCOI20             0.041
+    SCOI24            -0.030
+
+ OI       BY
+    SCSK5              0.000
+    SCSK12            -0.059
+    SCSK19            -0.122
+    SCSK23            -0.511
+    SCSK26            -0.372
+    SCSJ1              0.000
+    SCSJ8             -0.006
+    SCSJ11             0.188
+    SCSJ16             0.123
+    SCSJ21            -0.059
+    SCCH3              0.000
+    SCCH7              0.358
+    SCCH10             0.264
+    SCCH15            -0.203
+    SCIS4              0.000
+    SCIS13             0.263
+    SCIS18             0.220
+    SCIS25             0.011
+    SCMI9             -0.124
+    SCMI14            -0.257
+    SCMI17            -0.248
+    SCMI22            -0.325
+    SCOI2              0.000
+    SCOI6              0.033
+    SCOI20            -0.016
+    SCOI24             0.007
+
+ PTGI     BY
+    PTGI_AL            1.667
+    PTGI_NP            2.893
+    PTGI_PS            1.854
+    PTGI_SP            0.520
+    PTGI_RO            3.798
+
+ IESR     BY
+    IESR_A             2.100
+    IESR_I             2.952
+    IESR_H             2.023
+
+ PTGI     ON
+    SK                 0.036
+    SJ                 0.140
+    CH                 0.477
+    IS                -0.520
+    MI                 0.069
+    OI                 0.113
+
+ IESR     ON
+    SK                 0.720
+    SJ                 0.794
+    CH                 0.212
+    IS                -0.315
+    MI                -0.151
+    OI                 0.044
+
+ SJ       WITH
+    SK                 0.000
+
+ CH       WITH
+    SK                 0.000
+    SJ                 0.000
+
+ IS       WITH
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+
+ MI       WITH
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+    IS                 0.000
+
+ OI       WITH
+    SK                 0.000
+    SJ                 0.000
+    CH                 0.000
+    IS                 0.000
+    MI                 0.000
+
+ IESR     WITH
+    PTGI               0.778
+
+ Means
+    SK                -0.400
+    SJ                -0.816
+    CH                -0.042
+    IS                 0.353
+    MI                -0.101
+    OI                 0.050
+
+ Intercepts
+    SCSJ1              3.933
+    SCOI2              3.428
+    SCCH3              3.319
+    SCIS4              3.178
+    SCSK5              2.964
+    SCOI6              3.584
+    SCCH7              2.747
+    SCSJ8              3.353
+    SCMI9              3.273
+    SCCH10             2.618
+    SCSJ11             3.212
+    SCSK12             2.706
+    SCIS13             3.406
+    SCMI14             3.097
+    SCCH15             2.972
+    SCSJ16             3.362
+    SCMI17             2.968
+    SCIS18             3.578
+    SCSK19             2.732
+    SCOI20             3.220
+    SCSJ21             3.127
+    SCMI22             2.793
+    SCSK23             2.596
+    SCOI24             2.756
+    SCIS25             3.408
+    SCSK26             2.711
+    PTGI_AL            8.821
+    PTGI_NP           12.442
+    PTGI_PS           11.917
+    PTGI_SP            1.866
+    PTGI_RO           18.786
+    IESR_A             8.380
+    IESR_I            10.967
+    IESR_H             5.568
+    PTGI              -0.987
+    IESR               0.042
+
+ Variances
+    SK                 1.000
+    SJ                 1.000
+    CH                 1.000
+    IS                 1.000
+    MI                 1.000
+    OI                 1.000
+
+ Residual Variances
+    SCSJ1              0.689
+    SCOI2              0.538
+    SCCH3              0.861
+    SCIS4              0.610
+    SCSK5              0.631
+    SCOI6              0.616
+    SCCH7              0.686
+    SCSJ8              0.695
+    SCMI9              0.615
+    SCCH10             0.537
+    SCSJ11             0.662
+    SCSK12             0.375
+    SCIS13             0.485
+    SCMI14             0.369
+    SCCH15             0.637
+    SCSJ16             0.739
+    SCMI17             0.425
+    SCIS18             0.453
+    SCSK19             0.407
+    SCOI20             0.706
+    SCSJ21             0.821
+    SCMI22             0.660
+    SCSK23             0.378
+    SCOI24             0.681
+    SCIS25             0.727
+    SCSK26             0.435
+    PTGI_AL            5.751
+    PTGI_NP            3.956
+    PTGI_PS           10.571
+    PTGI_SP            3.186
+    PTGI_RO           19.444
+    IESR_A            11.097
+    IESR_I            13.154
+    IESR_H             4.041
+    PTGI               3.915
+    IESR               2.794
+
+
+CFA MODEL COMMAND WITH FINAL ROTATED ESTIMATES USED AS STARTING VALUES
+
+     sk BY scsk5;
+     sk BY scsk12;
+     sk BY scsk19;
+     sk BY scsk23;
+     sk BY scsk26;
+     sk BY scsj1;
+     sk BY scsj8;
+     sk BY scsj11;
+     sk BY scsj16;
+     sk BY scsj21;
+     sk BY scch3;
+     sk BY scch7;
+     sk BY scch10;
+     sk BY scch15;
+     sk BY scis4;
+     sk BY scis13;
+     sk BY scis18;
+     sk BY scis25;
+     sk BY scmi9;
+     sk BY scmi14;
+     sk BY scmi17;
+     sk BY scmi22;
+     sk BY scoi2;
+     sk BY scoi6;
+     sk BY scoi20;
+     sk BY scoi24;
+     sj BY scsk5;
+     sj BY scsk12;
+     sj BY scsk19;
+     sj BY scsk23;
+     sj BY scsk26;
+     sj BY scsj1;
+     sj BY scsj8;
+     sj BY scsj11;
+     sj BY scsj16;
+     sj BY scsj21;
+     sj BY scch3;
+     sj BY scch7;
+     sj BY scch10;
+     sj BY scch15;
+     sj BY scis4;
+     sj BY scis13;
+     sj BY scis18;
+     sj BY scis25;
+     sj BY scmi9;
+     sj BY scmi14;
+     sj BY scmi17;
+     sj BY scmi22;
+     sj BY scoi2;
+     sj BY scoi6;
+     sj BY scoi20;
+     sj BY scoi24;
+     ch BY scsk5;
+     ch BY scsk12;
+     ch BY scsk19;
+     ch BY scsk23;
+     ch BY scsk26;
+     ch BY scsj1;
+     ch BY scsj8;
+     ch BY scsj11;
+     ch BY scsj16;
+     ch BY scsj21;
+     ch BY scch3;
+     ch BY scch7;
+     ch BY scch10;
+     ch BY scch15;
+     ch BY scis4;
+     ch BY scis13;
+     ch BY scis18;
+     ch BY scis25;
+     ch BY scmi9;
+     ch BY scmi14;
+     ch BY scmi17;
+     ch BY scmi22;
+     ch BY scoi2;
+     ch BY scoi6;
+     ch BY scoi20;
+     ch BY scoi24;
+     is BY scsk5;
+     is BY scsk12;
+     is BY scsk19;
+     is BY scsk23;
+     is BY scsk26;
+     is BY scsj1;
+     is BY scsj8;
+     is BY scsj11;
+     is BY scsj16;
+     is BY scsj21;
+     is BY scch3;
+     is BY scch7;
+     is BY scch10;
+     is BY scch15;
+     is BY scis4;
+     is BY scis13;
+     is BY scis18;
+     is BY scis25;
+     is BY scmi9;
+     is BY scmi14;
+     is BY scmi17;
+     is BY scmi22;
+     is BY scoi2;
+     is BY scoi6;
+     is BY scoi20;
+     is BY scoi24;
+     mi BY scsk5;
+     mi BY scsk12;
+     mi BY scsk19;
+     mi BY scsk23;
+     mi BY scsk26;
+     mi BY scsj1;
+     mi BY scsj8;
+     mi BY scsj11;
+     mi BY scsj16;
+     mi BY scsj21;
+     mi BY scch3;
+     mi BY scch7;
+     mi BY scch10;
+     mi BY scch15;
+     mi BY scis4;
+     mi BY scis13;
+     mi BY scis18;
+     mi BY scis25;
+     mi BY scmi9;
+     mi BY scmi14;
+     mi BY scmi17;
+     mi BY scmi22;
+     mi BY scoi2;
+     mi BY scoi6;
+     mi BY scoi20;
+     mi BY scoi24;
+     oi BY scsk5;
+     oi BY scsk12;
+     oi BY scsk19;
+     oi BY scsk23;
+     oi BY scsk26;
+     oi BY scsj1;
+     oi BY scsj8;
+     oi BY scsj11;
+     oi BY scsj16;
+     oi BY scsj21;
+     oi BY scch3;
+     oi BY scch7;
+     oi BY scch10;
+     oi BY scch15;
+     oi BY scis4;
+     oi BY scis13;
+     oi BY scis18;
+     oi BY scis25;
+     oi BY scmi9;
+     oi BY scmi14;
+     oi BY scmi17;
+     oi BY scmi22;
+     oi BY scoi2;
+     oi BY scoi6;
+     oi BY scoi20;
+     oi BY scoi24;
+     ptgi BY ptgi_al;
+     ptgi BY ptgi_np;
+     ptgi BY ptgi_ps;
+     ptgi BY ptgi_sp;
+     ptgi BY ptgi_ro;
+     iesr BY iesr_a;
+     iesr BY iesr_i;
+     iesr BY iesr_h;
+
+     ptgi ON sk;
+     ptgi ON sj;
+     ptgi ON ch;
+     ptgi ON is;
+     ptgi ON mi;
+     ptgi ON oi;
+     iesr ON sk;
+     iesr ON sj;
+     iesr ON ch;
+     iesr ON is;
+     iesr ON mi;
+     iesr ON oi;
+
+  MODEL CNTR:
+
+     sk BY scsk5*-0.42184;
+     sk BY scsk12*-0.33295;
+     sk BY scsk19*-0.51012;
+     sk BY scsk23*-0.70390;
+     sk BY scsk26*-0.55103;
+     sk BY scsj1*0.87724;
+     sk BY scsj8*0.97526;
+     sk BY scsj11*0.99272;
+     sk BY scsj16*1.09885;
+     sk BY scsj21*0.61379;
+     sk BY scch3*-0.11997;
+     sk BY scch7*-0.02675;
+     sk BY scch10*-0.08504;
+     sk BY scch15*-0.44723;
+     sk BY scis4*0.88370;
+     sk BY scis13*0.68562;
+     sk BY scis18*0.92408;
+     sk BY scis25*1.00546;
+     sk BY scmi9*-0.06891;
+     sk BY scmi14*-0.21067;
+     sk BY scmi17*-0.41119;
+     sk BY scmi22*-0.27455;
+     sk BY scoi2*0.97121;
+     sk BY scoi6*0.94702;
+     sk BY scoi20*0.57248;
+     sk BY scoi24*0.58309;
+     sj BY scsk5*-0.14558;
+     sj BY scsk12*-0.24564;
+     sj BY scsk19*-0.11920;
+     sj BY scsk23*0.02531;
+     sj BY scsk26*0.01457;
+     sj BY scsj1*0;
+     sj BY scsj8*0.08272;
+     sj BY scsj11*0.04735;
+     sj BY scsj16*-0.02439;
+     sj BY scsj21*-0.03029;
+     sj BY scch3*-0.31741;
+     sj BY scch7*-0.05178;
+     sj BY scch10*-0.17894;
+     sj BY scch15*-0.09002;
+     sj BY scis4*0.30188;
+     sj BY scis13*0.44944;
+     sj BY scis18*0.34110;
+     sj BY scis25*0.37269;
+     sj BY scmi9*-0.48132;
+     sj BY scmi14*-0.44791;
+     sj BY scmi17*-0.30517;
+     sj BY scmi22*-0.28167;
+     sj BY scoi2*0.31028;
+     sj BY scoi6*0.18686;
+     sj BY scoi20*0.58122;
+     sj BY scoi24*0.48496;
+     ch BY scsk5*0.69016;
+     ch BY scsk12*0.74307;
+     ch BY scsk19*0.65898;
+     ch BY scsk23*0.62003;
+     ch BY scsk26*0.62871;
+     ch BY scsj1*0;
+     ch BY scsj8*-0.08634;
+     ch BY scsj11*-0.09173;
+     ch BY scsj16*-0.21229;
+     ch BY scsj21*-0.14242;
+     ch BY scch3*0.55587;
+     ch BY scch7*0.74068;
+     ch BY scch10*0.79614;
+     ch BY scch15*0.70111;
+     ch BY scis4*-0.04839;
+     ch BY scis13*0.01214;
+     ch BY scis18*-0.00366;
+     ch BY scis25*0.03032;
+     ch BY scmi9*0.34166;
+     ch BY scmi14*0.50078;
+     ch BY scmi17*0.51839;
+     ch BY scmi22*0.72348;
+     ch BY scoi2*0;
+     ch BY scoi6*0.03445;
+     ch BY scoi20*0.10253;
+     ch BY scoi24*0.03282;
+     is BY scsk5*0.46964;
+     is BY scsk12*0.41894;
+     is BY scsk19*0.50959;
+     is BY scsk23*-0.01230;
+     is BY scsk26*0.18561;
+     is BY scsj1*0;
+     is BY scsj8*-0.22039;
+     is BY scsj11*-0.05130;
+     is BY scsj16*0.03191;
+     is BY scsj21*-0.14637;
+     is BY scch3*0;
+     is BY scch7*-0.21766;
+     is BY scch10*-0.28369;
+     is BY scch15*0.03480;
+     is BY scis4*0.12982;
+     is BY scis13*0.40778;
+     is BY scis18*0.34745;
+     is BY scis25*0.16993;
+     is BY scmi9*0.28358;
+     is BY scmi14*0.32654;
+     is BY scmi17*0.06930;
+     is BY scmi22*0.10982;
+     is BY scoi2*0;
+     is BY scoi6*0.12063;
+     is BY scoi20*0.06544;
+     is BY scoi24*0.05949;
+     mi BY scsk5*0.32377;
+     mi BY scsk12*0.47980;
+     mi BY scsk19*0.31818;
+     mi BY scsk23*-0.18010;
+     mi BY scsk26*0.04766;
+     mi BY scsj1*0;
+     mi BY scsj8*-0.03180;
+     mi BY scsj11*-0.00048;
+     mi BY scsj16*0.06287;
+     mi BY scsj21*-0.31770;
+     mi BY scch3*0;
+     mi BY scch7*0.30355;
+     mi BY scch10*0.12284;
+     mi BY scch15*-0.16303;
+     mi BY scis4*0;
+     mi BY scis13*-0.15897;
+     mi BY scis18*-0.03606;
+     mi BY scis25*-0.01670;
+     mi BY scmi9*-0.39255;
+     mi BY scmi14*-0.30436;
+     mi BY scmi17*-0.16184;
+     mi BY scmi22*0.23562;
+     mi BY scoi2*0;
+     mi BY scoi6*-0.00090;
+     mi BY scoi20*0.17785;
+     mi BY scoi24*0.15996;
+     oi BY scsk5*0;
+     oi BY scsk12*-0.03418;
+     oi BY scsk19*0.02576;
+     oi BY scsk23*0.22373;
+     oi BY scsk26*0.01238;
+     oi BY scsj1*0;
+     oi BY scsj8*0.08826;
+     oi BY scsj11*-0.04288;
+     oi BY scsj16*-0.03680;
+     oi BY scsj21*0.11697;
+     oi BY scch3*0;
+     oi BY scch7*-0.60300;
+     oi BY scch10*-0.47158;
+     oi BY scch15*-0.11663;
+     oi BY scis4*0;
+     oi BY scis13*-0.41462;
+     oi BY scis18*-0.29479;
+     oi BY scis25*0.04993;
+     oi BY scmi9*-0.07717;
+     oi BY scmi14*-0.13106;
+     oi BY scmi17*-0.06737;
+     oi BY scmi22*0.15140;
+     oi BY scoi2*0;
+     oi BY scoi6*0.07200;
+     oi BY scoi20*0.27218;
+     oi BY scoi24*0.11526;
+     ptgi BY ptgi_al*1.62042;
+     ptgi BY ptgi_np*2.89971;
+     ptgi BY ptgi_ps*2.31820;
+     ptgi BY ptgi_sp*0.43893;
+     ptgi BY ptgi_ro*3.58033;
+     iesr BY iesr_a*2.18937;
+     iesr BY iesr_i*3.02431;
+     iesr BY iesr_h*2.00663;
+
+     ptgi ON sk*0.15676;
+     ptgi ON sj*0.00968;
+     ptgi ON ch*0.29467;
+     ptgi ON is*-0.00099;
+     ptgi ON mi*0.11563;
+     ptgi ON oi*0.01797;
+     iesr ON sk*0.19661;
+     iesr ON sj*0.19463;
+     iesr ON ch*0.26725;
+     iesr ON is*0.23329;
+     iesr ON mi*0.37042;
+     iesr ON oi*-0.15868;
+
+     sj WITH sk*0;
+     ch WITH sk*0;
+     ch WITH sj*0;
+     is WITH sk*0;
+     is WITH sj*0;
+     is WITH ch*0;
+     mi WITH sk*0;
+     mi WITH sj*0;
+     mi WITH ch*0;
+     mi WITH is*0;
+     oi WITH sk*0;
+     oi WITH sj*0;
+     oi WITH ch*0;
+     oi WITH is*0;
+     oi WITH mi*0;
+     iesr WITH ptgi*0.52471;
+
+     [ scsj1*3.93260 ] (1);
+     [ scoi2*3.42802 ] (2);
+     [ scch3*3.31923 ] (3);
+     [ scis4*3.17843 ] (4);
+     [ scsk5*2.96400 ] (5);
+     [ scoi6*3.58384 ] (6);
+     [ scch7*2.74703 ] (7);
+     [ scsj8*3.35277 ] (8);
+     [ scmi9*3.27344 ] (9);
+     [ scch10*2.61766 ] (10);
+     [ scsj11*3.21160 ] (11);
+     [ scsk12*2.70575 ] (12);
+     [ scis13*3.40555 ] (13);
+     [ scmi14*3.09693 ] (14);
+     [ scch15*2.97186 ] (15);
+     [ scsj16*3.36231 ] (16);
+     [ scmi17*2.96827 ] (17);
+     [ scis18*3.57813 ] (18);
+     [ scsk19*2.73184 ] (19);
+     [ scoi20*3.21992 ] (20);
+     [ scsj21*3.12654 ] (21);
+     [ scmi22*2.79312 ] (22);
+     [ scsk23*2.59561 ] (23);
+     [ scoi24*2.75642 ] (24);
+     [ scis25*3.40824 ] (25);
+     [ scsk26*2.71142 ] (26);
+     [ ptgi_al*8.82114 ] (27);
+     [ ptgi_np*12.44184 ] (28);
+     [ ptgi_ps*11.91714 ] (29);
+     [ ptgi_sp*1.86619 ] (30);
+     [ ptgi_ro*18.78584 ] (31);
+     [ iesr_a*8.37986 ] (32);
+     [ iesr_i*10.96722 ] (33);
+     [ iesr_h*5.56759 ] (34);
+     [ sk@0 ];
+     [ sj@0 ];
+     [ ch@0 ];
+     [ is@0 ];
+     [ mi@0 ];
+     [ oi@0 ];
+     [ ptgi@0 ];
+     [ iesr@0 ];
+
+     scsj1*0.66550;
+     scoi2*0.68358;
+     scch3*0.77946;
+     scis4*0.82318;
+     scsk5*0.54395;
+     scoi6*0.64070;
+     scch7*0.38646;
+     scsj8*0.61819;
+     scmi9*0.52418;
+     scch10*0.38640;
+     scsj11*0.65693;
+     scsk12*0.35513;
+     scis13*0.54357;
+     scmi14*0.50883;
+     scch15*0.69021;
+     scsj16*0.61925;
+     scmi17*0.63801;
+     scis18*0.50068;
+     scsk19*0.36143;
+     scoi20*0.72505;
+     scsj21*0.85830;
+     scmi22*0.67338;
+     scsk23*0.53468;
+     scoi24*1.06284;
+     scis25*0.67462;
+     scsk26*0.45617;
+     ptgi_al*5.03626;
+     ptgi_np*7.80945;
+     ptgi_ps*8.71505;
+     ptgi_sp*3.95526;
+     ptgi_ro*30.73857;
+     iesr_a*7.63511;
+     iesr_i*8.48317;
+     iesr_h*7.76481;
+     sk@1;
+     sj@1;
+     ch@1;
+     is@1;
+     mi@1;
+     oi@1;
+     ptgi*3.65891;
+     iesr*2.76968;
+
+  MODEL RW:
+
+     sk BY scsk5*-0.04798;
+     sk BY scsk12*-0.14162;
+     sk BY scsk19*-0.23237;
+     sk BY scsk23*-0.48346;
+     sk BY scsk26*-0.34654;
+     sk BY scsj1*0.64778;
+     sk BY scsj8*0.92290;
+     sk BY scsj11*0.88960;
+     sk BY scsj16*0.86226;
+     sk BY scsj21*0.67746;
+     sk BY scch3*0.22518;
+     sk BY scch7*0.17401;
+     sk BY scch10*0.15635;
+     sk BY scch15*-0.06973;
+     sk BY scis4*0.71184;
+     sk BY scis13*0.46362;
+     sk BY scis18*0.52854;
+     sk BY scis25*0.73177;
+     sk BY scmi9*0.15703;
+     sk BY scmi14*-0.01527;
+     sk BY scmi17*-0.09681;
+     sk BY scmi22*-0.04320;
+     sk BY scoi2*0.83137;
+     sk BY scoi6*0.79810;
+     sk BY scoi20*0.48424;
+     sk BY scoi24*0.47442;
+     sj BY scsk5*-0.06329;
+     sj BY scsk12*-0.24237;
+     sj BY scsk19*-0.21327;
+     sj BY scsk23*-0.10275;
+     sj BY scsk26*-0.05063;
+     sj BY scsj1*0;
+     sj BY scsj8*0.21812;
+     sj BY scsj11*0.18134;
+     sj BY scsj16*0.26116;
+     sj BY scsj21*0.14957;
+     sj BY scch3*-0.14728;
+     sj BY scch7*0.02429;
+     sj BY scch10*-0.19745;
+     sj BY scch15*-0.30458;
+     sj BY scis4*0.71390;
+     sj BY scis13*0.86627;
+     sj BY scis18*0.77087;
+     sj BY scis25*0.67432;
+     sj BY scmi9*-0.40630;
+     sj BY scmi14*-0.57568;
+     sj BY scmi17*-0.50243;
+     sj BY scmi22*-0.32777;
+     sj BY scoi2*0.70298;
+     sj BY scoi6*0.66568;
+     sj BY scoi20*0.67339;
+     sj BY scoi24*0.61726;
+     ch BY scsk5*0.47459;
+     ch BY scsk12*0.38916;
+     ch BY scsk19*0.45343;
+     ch BY scsk23*0.54290;
+     ch BY scsk26*0.58523;
+     ch BY scsj1*0;
+     ch BY scsj8*0.06987;
+     ch BY scsj11*0.04902;
+     ch BY scsj16*0.01043;
+     ch BY scsj21*0.09163;
+     ch BY scch3*0.42991;
+     ch BY scch7*0.77388;
+     ch BY scch10*0.76065;
+     ch BY scch15*0.65403;
+     ch BY scis4*0.07233;
+     ch BY scis13*0.22070;
+     ch BY scis18*0.27565;
+     ch BY scis25*0.02019;
+     ch BY scmi9*0.36122;
+     ch BY scmi14*0.29996;
+     ch BY scmi17*0.39338;
+     ch BY scmi22*0.48558;
+     ch BY scoi2*0;
+     ch BY scoi6*0.05552;
+     ch BY scoi20*0.07928;
+     ch BY scoi24*0.03092;
+     is BY scsk5*-0.50404;
+     is BY scsk12*-0.61082;
+     is BY scsk19*-0.45495;
+     is BY scsk23*-0.16827;
+     is BY scsk26*-0.21593;
+     is BY scsj1*0;
+     is BY scsj8*0.14425;
+     is BY scsj11*0.08442;
+     is BY scsj16*0.14477;
+     is BY scsj21*0.12981;
+     is BY scch3*0;
+     is BY scch7*-0.25784;
+     is BY scch10*-0.25043;
+     is BY scch15*-0.11593;
+     is BY scis4*0.17310;
+     is BY scis13*0.38433;
+     is BY scis18*0.34600;
+     is BY scis25*0.19998;
+     is BY scmi9*0.13914;
+     is BY scmi14*0.19871;
+     is BY scmi17*0.01795;
+     is BY scmi22*-0.35298;
+     is BY scoi2*0;
+     is BY scoi6*0.10999;
+     is BY scoi20*-0.20083;
+     is BY scoi24*-0.10501;
+     mi BY scsk5*0.42386;
+     mi BY scsk12*0.52538;
+     mi BY scsk19*0.55723;
+     mi BY scsk23*0.08216;
+     mi BY scsk26*0.12735;
+     mi BY scsj1*0;
+     mi BY scsj8*-0.08357;
+     mi BY scsj11*0.03202;
+     mi BY scsj16*0.01839;
+     mi BY scsj21*-0.10501;
+     mi BY scch3*0;
+     mi BY scch7*-0.13377;
+     mi BY scch10*-0.13849;
+     mi BY scch15*0.09706;
+     mi BY scis4*0;
+     mi BY scis13*0.23272;
+     mi BY scis18*0.20565;
+     mi BY scis25*0.09992;
+     mi BY scmi9*0.27904;
+     mi BY scmi14*0.33532;
+     mi BY scmi17*0.23695;
+     mi BY scmi22*0.12219;
+     mi BY scoi2*0;
+     mi BY scoi6*0.05684;
+     mi BY scoi20*0.04132;
+     mi BY scoi24*-0.02953;
+     oi BY scsk5*0;
+     oi BY scsk12*-0.05892;
+     oi BY scsk19*-0.12163;
+     oi BY scsk23*-0.51068;
+     oi BY scsk26*-0.37211;
+     oi BY scsj1*0;
+     oi BY scsj8*-0.00580;
+     oi BY scsj11*0.18809;
+     oi BY scsj16*0.12336;
+     oi BY scsj21*-0.05855;
+     oi BY scch3*0;
+     oi BY scch7*0.35787;
+     oi BY scch10*0.26431;
+     oi BY scch15*-0.20259;
+     oi BY scis4*0;
+     oi BY scis13*0.26347;
+     oi BY scis18*0.21998;
+     oi BY scis25*0.01117;
+     oi BY scmi9*-0.12422;
+     oi BY scmi14*-0.25744;
+     oi BY scmi17*-0.24816;
+     oi BY scmi22*-0.32459;
+     oi BY scoi2*0;
+     oi BY scoi6*0.03274;
+     oi BY scoi20*-0.01559;
+     oi BY scoi24*0.00727;
+     ptgi BY ptgi_al*1.66725;
+     ptgi BY ptgi_np*2.89261;
+     ptgi BY ptgi_ps*1.85369;
+     ptgi BY ptgi_sp*0.52002;
+     ptgi BY ptgi_ro*3.79792;
+     iesr BY iesr_a*2.09984;
+     iesr BY iesr_i*2.95195;
+     iesr BY iesr_h*2.02337;
+
+     ptgi ON sk*0.03581;
+     ptgi ON sj*0.14016;
+     ptgi ON ch*0.47718;
+     ptgi ON is*-0.51956;
+     ptgi ON mi*0.06894;
+     ptgi ON oi*0.11289;
+     iesr ON sk*0.71955;
+     iesr ON sj*0.79395;
+     iesr ON ch*0.21152;
+     iesr ON is*-0.31524;
+     iesr ON mi*-0.15131;
+     iesr ON oi*0.04410;
+
+     sj WITH sk*0;
+     ch WITH sk*0;
+     ch WITH sj*0;
+     is WITH sk*0;
+     is WITH sj*0;
+     is WITH ch*0;
+     mi WITH sk*0;
+     mi WITH sj*0;
+     mi WITH ch*0;
+     mi WITH is*0;
+     oi WITH sk*0;
+     oi WITH sj*0;
+     oi WITH ch*0;
+     oi WITH is*0;
+     oi WITH mi*0;
+     iesr WITH ptgi*0.77792;
+
+     [ scsj1*3.93260 ] (1);
+     [ scoi2*3.42802 ] (2);
+     [ scch3*3.31923 ] (3);
+     [ scis4*3.17843 ] (4);
+     [ scsk5*2.96400 ] (5);
+     [ scoi6*3.58384 ] (6);
+     [ scch7*2.74703 ] (7);
+     [ scsj8*3.35277 ] (8);
+     [ scmi9*3.27344 ] (9);
+     [ scch10*2.61766 ] (10);
+     [ scsj11*3.21160 ] (11);
+     [ scsk12*2.70575 ] (12);
+     [ scis13*3.40555 ] (13);
+     [ scmi14*3.09693 ] (14);
+     [ scch15*2.97186 ] (15);
+     [ scsj16*3.36231 ] (16);
+     [ scmi17*2.96827 ] (17);
+     [ scis18*3.57813 ] (18);
+     [ scsk19*2.73184 ] (19);
+     [ scoi20*3.21992 ] (20);
+     [ scsj21*3.12654 ] (21);
+     [ scmi22*2.79312 ] (22);
+     [ scsk23*2.59561 ] (23);
+     [ scoi24*2.75642 ] (24);
+     [ scis25*3.40824 ] (25);
+     [ scsk26*2.71142 ] (26);
+     [ ptgi_al*8.82114 ] (27);
+     [ ptgi_np*12.44184 ] (28);
+     [ ptgi_ps*11.91714 ] (29);
+     [ ptgi_sp*1.86619 ] (30);
+     [ ptgi_ro*18.78584 ] (31);
+     [ iesr_a*8.37986 ] (32);
+     [ iesr_i*10.96722 ] (33);
+     [ iesr_h*5.56759 ] (34);
+     [ sk*-0.40041 ];
+     [ sj*-0.81643 ];
+     [ ch*-0.04224 ];
+     [ is*0.35273 ];
+     [ mi*-0.10121 ];
+     [ oi*0.04965 ];
+     [ ptgi*-0.98733 ];
+     [ iesr*0.04199 ];
+
+     scsj1*0.68906;
+     scoi2*0.53842;
+     scch3*0.86052;
+     scis4*0.60972;
+     scsk5*0.63128;
+     scoi6*0.61650;
+     scch7*0.68623;
+     scsj8*0.69482;
+     scmi9*0.61506;
+     scch10*0.53700;
+     scsj11*0.66226;
+     scsk12*0.37456;
+     scis13*0.48478;
+     scmi14*0.36896;
+     scch15*0.63743;
+     scsj16*0.73910;
+     scmi17*0.42451;
+     scis18*0.45306;
+     scsk19*0.40658;
+     scoi20*0.70630;
+     scsj21*0.82121;
+     scmi22*0.66028;
+     scsk23*0.37763;
+     scoi24*0.68121;
+     scis25*0.72668;
+     scsk26*0.43491;
+     ptgi_al*5.75085;
+     ptgi_np*3.95618;
+     ptgi_ps*10.57094;
+     ptgi_sp*3.18628;
+     ptgi_ro*19.44358;
+     iesr_a*11.09716;
+     iesr_i*13.15383;
+     iesr_h*4.04141;
+     sk@1;
+     sj@1;
+     ch@1;
+     is@1;
+     mi@1;
+     oi@1;
+     ptgi*3.91511;
+     iesr*2.79429;
+
+
+
+     Beginning Time:  15:26:43
+        Ending Time:  15:26:51
+       Elapsed Time:  00:00:08
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

@@ -1,0 +1,42 @@
+TITLE: Mediation model for the CS and RUS components of the SCS.
+
+DATA:
+  FILE IS sem_mplus.dat;
+
+VARIABLE:
+  NAMES ARE
+    sj is oi sk co mi
+    ptg_la ptg_np ptg_ps ptg_sc ptg_ir pts_av
+    pts_in pts_hy
+    neu_na neu_sr
+    cop_pa cop_po cop_ss cop_as cop_to 
+    soc_fa soc_fr soc_so;
+
+  MISSING ARE ALL(-9);
+
+  USEVARIABLES ARE sj is oi sk co mi ptg_la ptg_np
+    ptg_ps ptg_sc ptg_ir pts_av pts_in pts_hy neu_na neu_sr
+    cop_pa cop_po soc_fa soc_fr soc_so;
+
+ANALYSIS:
+  ESTIMATOR = ML;
+  ROTATION = TARGET;
+
+MODEL:
+  rus BY sj is oi sk~0 co~0 mi~0 (*t);
+  csr BY sj~0 is~0 oi~0 sk co mi (*t);
+  pts BY pts_av pts_in pts_hy;
+  ptg BY ptg_la ptg_np ptg_ps ptg_sc ptg_ir;
+  neu BY neu_na neu_sr;
+  cop BY cop_pa cop_po;
+  soc BY soc_fa soc_fr soc_so;
+
+  neu ON csr rus;
+  cop ON csr rus;
+  soc ON csr rus;
+
+  rus ON pts ptg;
+  csr ON pts ptg;
+
+OUTPUT:
+  STDYX;

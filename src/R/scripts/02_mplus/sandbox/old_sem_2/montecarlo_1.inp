@@ -1,0 +1,26 @@
+TITLE:      cfa1.inp normal, no missing
+MONTECARLO: NAMES ARE y1-y10;
+            NOBSERVATIONS = 150;
+            NREPS = 100;
+            SEED = 53487;
+            ! NCLASSES = 1;
+            GCLASSES = 1;
+            SAVE = cfa1.sav;
+ANALYSIS:   TYPE = MIXTURE;
+            ESTIMATOR = ML;
+MODEL MONTECARLO:
+            %OVERALL%
+            f1 BY y1-y5*.8;
+            f2 BY y6-y10*.8;
+            f1@1 f2@1;
+            y1-y10*.36;
+            f1 WITH f2*.25;
+MODEL:
+            %OVERALL%
+            f1 BY y1-y5*.8;
+            f2 BY y6-y10*.8;
+            f1@1 f2@1;
+            y1-y10*.36;
+            f1 WITH f2*.25;
+OUTPUT:
+            TECH9;

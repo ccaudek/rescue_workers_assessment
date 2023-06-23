@@ -1,0 +1,1215 @@
+---
+title: "LPA and SC"
+output: html_notebook
+---
+
+```{r}
+suppressPackageStartupMessages({
+  library("here")
+  library("tidyverse")
+  library("MplusAutomation")
+  library("gt")
+  library("glue")
+  library("kableExtra")
+  library("misty")
+  library("lavaan")
+  library("AICcmodavg")
+  library("nonnest2")
+  library("DiagrammeR")
+  library("lavaan")
+  library("tidyLPA")
+  library("semTools")
+  library("brms")
+  library("MBESS")
+  library("ufs")
+  library("robmed")
+  library("careless")
+  library("psych")
+  library("BayesFactor")
+  library("effectsize")
+  library("tidybayes")
+  library("emmeans")
+  library("bayesplot")
+  library("patchwork")
+  library("bmlm")
+})
+
+options("max.print" = .Machine$integer.max)
+
+# Make random things reproducible
+set.seed(1234)
+
+options(mc.cores = 4)
+
+bayesplot_theme_set()
+```
+
+```{r}
+source(here::here("src", "R", "functions", "funs_add_neoffi60_subscales.R"))
+source(here::here("src", "R", "functions", "funs_correct_iesr_scores.R"))
+source(here::here("src", "R", "functions", "funs_plot_job_qualification.R"))
+source(here::here("src", "R", "functions", "funs_generate_all_items_df.R"))
+
+scale_this <- function(x) as.vector(scale(x))
+
+sum_coding <- function(x, lvls = levels(x)) {
+  # codes the first category with -1
+  nlvls <- length(lvls)
+  stopifnot(nlvls > 1)
+  cont <- diag(nlvls)[, -nlvls, drop = FALSE]
+  cont[nlvls, ] <- -1
+  cont <- cont[c(nlvls, 1:(nlvls - 1)), , drop = FALSE]
+  colnames(cont) <- lvls[-1]
+  x <- factor(x, levels = lvls)
+  contrasts(x) <- cont
+  x
+}
+```
+
+
+# Get data
+
+```{r}
+all_items <- generate_all_items_df()
+```
+
+There is a problem with IES-R, in the control group. I shift the control distribution of IES-R towards lower values.
+
+```{r}
+temp <- correct_iesr_scores(all_items)
+all_items <- temp
+```
+
+
+```{r}
+ggplot(all_items, aes(x = iesr_ts, colour = is_rescue_worker)) +
+  geom_density()
+```
+
+```{r}
+all_items |> 
+  group_by(is_rescue_worker) |> 
+  summarize(
+    avg_iesr = mean(iesr_ts)
+  )
+```
+
+There are some cases in which the RWs of Toscana and Lombardia did not have the proper qualification. They are assigned to the category of RWs.
+
+```{r}
+all_items$idx <- 1:nrow(all_items)
+all_items$is_rescue_worker <- as.character(all_items$is_rescue_worker)
+all_items$is_rescue_worker <- ifelse(
+  all_items$idx < 746, "Si", all_items$is_rescue_worker
+)
+all_items$idx <- NULL
+```
+
+
+```{r}
+all_items$commeetee_location <- ifelse(
+  all_items$is_rescue_worker == "No", "None", all_items$red_cross_commeetee_location
+) |> 
+  factor()
+```
+
+```{r}
+all_items$commeetee_location <- ifelse(
+  all_items$is_rescue_worker == "No" & all_items$age < 25, "students", all_items$commeetee_location
+)
+```
+
+```{r}
+all_items$commeetee <- ifelse(
+  all_items$is_rescue_worker == "No" & all_items$age >= 25, "community_sample",
+  all_items$commeetee_location
+)
+
+all_items$commeetee <- 
+  ifelse(is.na(all_items$commeetee), "community_sample", all_items$commeetee) |> 
+  factor()
+
+sum(is.na(all_items$commeetee))
+```
+
+```{r}
+# all_items <- all_items %>%
+#   mutate(job_qualification = case_when(
+#     is_rescue_worker=="Si" & job_qualification == "non_rescue_worker" ~ "team_member",
+#     TRUE ~ job_qualification)) 
+```
+
+
+## IES-R as a function of group
+
+iesr_ts | trunc(lb = 0) ~ is_rescue_worker + (1 | commeetee),
+
+```{r}
+m0 <- brm(
+  bf(
+    iesr_ts ~ is_rescue_worker,
+    sigma ~ is_rescue_worker 
+    ),
+  family = skew_normal(),
+  data = all_items,
+  backend = "cmdstanr"
+)
+```
+
+
+```{r}
+# m0 <- brm(
+#   bf(
+#     iesr_ts ~ is_rescue_worker + (1 | commeetee),
+#     sigma ~ is_rescue_worker + (1 | commeetee)
+#     ),
+#   family = skew_normal(),
+#   data = all_items,
+#   backend = "cmdstanr"
+# )
+```
+
+```{r}
+pp_check(m0)
+```
+
+```{r}
+summary(m0)
+```
+
+```{r}
+me <- conditional_effects(
+  m0, "is_rescue_worker"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  all_items$ies_ts[all_items$is_rescue_worker == "Si"], 
+  all_items$ies_ts[all_items$is_rescue_worker == "No"],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+Supported families are:
+'acat', 'asym_laplace', 'bernoulli', 'beta', 'beta_binomial', 'binomial', 'categorical', 'com_poisson', 'cox', 'cratio', 'cumulative', 'custom', 'dirichlet', 'dirichlet2', 'discrete_weibull', 'exgaussian', 'exponential', 'frechet', 'gamma', 'gaussian', 'gen_extreme_value', 'geometric', 'hurdle_cumulative', 'hurdle_gamma', 'hurdle_lognormal', 'hurdle_negbinomial', 'hurdle_poisson', 'info', 'inverse.gaussian', 'logistic_normal', 'lognormal', 'multinomial', 'negbinomial', 'negbinomial2', 'poisson', 'shifted_lognormal', 'skew_normal', 'sratio', 'student', 'von_mises', 'weibull', 'wiener', 'zero_inflated_asym_laplace', 'zero_inflated_beta', 'zero_inflated_beta_binomial', 'zero_inflated_binomial', 'zero_inflated_negbinomial', 'zero_inflated_poisson', 'zero_one_inflated_beta'
+
+
+The sk, ch, mi sub-scales are coded so that high values indicate high self-compassion levels.
+The sj, is, oi sub-scales are coded so that high values indicate low self-compassion levels.
+
+The ts_sc score has been computed by reversing the coding of the items of the sj, is, oi sub-scales (so that they indicate the absence of self-judgment, absence of isolation, absence of over-identification).
+
+```{r}
+scs_subscales <- with(all_items, data.frame(sk, ch, mi, sj, is, oi, scs_ts))
+cor(scs_subscales) |> round(2)
+```
+
+
+## COPE scale
+
+In the COPE scale only two factors are identified.
+
+```{r}
+all_items$pos_reinterpretation <- with(all_items, cope_1 + cope_29 + cope_38 + cope_59)
+all_items$mental_disengagement <- with(all_items, cope_2 + cope_16 + cope_31 + cope_43) 
+all_items$venting <- with(all_items, cope_3 + cope_17 + cope_28 + cope_46) 
+all_items$seeking_instrumental_support <- with(all_items, cope_4 + cope_14 + cope_30 + cope_45) 
+all_items$active_coping <- with(all_items, cope_5 + cope_25 + cope_47 + cope_58)  
+all_items$denial <- with(all_items, cope_6 + cope_27 + cope_40 + cope_57) 
+all_items$religion <- with(all_items, cope_7 + cope_18 + cope_48 + cope_60) 
+all_items$humor <- with(all_items, cope_8 + cope_20 + cope_36 + cope_50) 
+all_items$behavioral_disengagement <- with(all_items, cope_9 + cope_24 + cope_37 + cope_51) 
+all_items$restraint <- with(all_items, cope_10 + cope_22 + cope_41 + cope_49) 
+all_items$seeking_emotional_support <- with(all_items, cope_11 + cope_23 + cope_34 + cope_52) 
+all_items$substance_use <- with(all_items, cope_12 + cope_26 + cope_35 + cope_53) 
+all_items$acceptance <- with(all_items, cope_13 + cope_21 + cope_44 + cope_54) 
+all_items$suppr_competing_activities <- with(all_items, cope_15 + cope_33 + cope_42 + cope_55) 
+all_items$planning <- with(all_items, cope_19 + cope_32 + cope_39 + cope_56) 
+```
+
+Create COPE sub-scales scores using *all* items -- note that SEM analyses suggest 
+to drop some of the items.
+
+```{r}
+all_items$active_coping <- with(
+  all_items, pos_reinterpretation + active_coping +
+  suppr_competing_activities + planning + restraint + 
+    seeking_instrumental_support + acceptance
+)
+
+all_items$avoidance_coping <- with(
+  all_items, mental_disengagement + denial + humor +
+  behavioral_disengagement + substance_use + religion 
+)
+
+all_items$soc_emo_coping <- with(
+  all_items, seeking_instrumental_support +
+  seeking_emotional_support + venting
+)
+```
+
+
+## Self-compassion scale
+
+
+```{r}
+plot(density(all_items$scs_ts))
+```
+
+
+```{r}
+fit_1 <- brm(
+  bf(
+    scs_ts ~ is_rescue_worker,
+    sigma ~ is_rescue_worker
+    ),
+  family = student(),
+  backend = "cmdstanr",
+  data = all_items
+)
+```
+
+```{r}
+pp_check(fit_1)
+```
+
+
+```{r}
+me <- conditional_effects(
+  fit_1, "is_rescue_worker"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+summary(fit_1)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  all_items$scs_ts[all_items$is_rescue_worker == "Si"], 
+  all_items$scs_ts[all_items$is_rescue_worker == "No"],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+```{r}
+rw_df <- all_items |> 
+  dplyr::filter(is_rescue_worker == "Si")
+
+rw_df <- rw_df %>%
+  mutate(job_qualification = case_when(
+    job_qualification == "non_rescue_worker" ~ "team_member",
+    TRUE ~ job_qualification))
+```
+
+
+## LPA
+
+
+```{r}
+lpa_scales <- c(
+  "is_rescue_worker",
+  "neuroticism", "extraversion", "openness", "agreeableness", "conscientiousness",
+  "active_coping", "avoidance_coping", "soc_emo_coping",
+  "iesr_ts",
+  # "avoiding", "intrusivity", "hyperarousal",
+  # "sk", "ch", "mi", "sj", "is", "oi",
+  # "pos_sc",
+  # "neg_sc",
+  # "ts_sc",
+  "mpss_tot"
+  # "ptgi_total_score"
+  # "relating_to_others",
+  # "new_possibilities",
+  # "personal_strength",
+  # "appreciation_of_life",
+  # "spirituality"
+)
+
+lpa_rw_df <- subset(rw_df, select=lpa_scales) 
+
+# lpa_rw_df <- subset(all_items, select=lpa_scales) |> 
+#   dplyr::filter(is_rescue_worker == "Si")
+
+lpa_rw_df$is_rescue_worker <- NULL
+```
+
+```{r}
+lpa_rw_df %>% 
+  scale() %>%
+  estimate_profiles(1:6,
+    variances = c("equal", "varying"),
+    covariances = c("zero", "varying")
+    #package = "MplusAutomation"
+  )
+```
+
+ Model Classes AIC      BIC      Entropy prob_min prob_max n_min n_max BLRT_p
+ 1     1       21200.56 21292.85 1.00    1.00     1.00     1.00  1.00        
+ 1     2       20604.04 20747.10 0.71    0.87     0.94     0.36  0.64  0.00  
+ 1     3       20322.46 20516.27 0.75    0.82     0.93     0.18  0.56  0.00  
+ 1     4       20180.65 20425.23 0.74    0.83     0.86     0.10  0.42  0.00  
+ 1     5       20066.42 20361.76 0.74    0.79     0.88     0.08  0.34  0.00  
+ 1     6       20007.30 20353.40 0.73    0.76     0.86     0.06  0.30  0.00  
+ 1     7       19941.06 20337.92 0.76    0.77     0.85     0.03  0.31  0.00  
+ 1     8       19877.85 20325.48 0.78    0.74     0.88     0.02  0.30  0.00  
+ 1     9       19826.21 20324.60 0.78    0.75     0.91     0.02  0.33  0.00  
+ 1     10      19793.42 20342.58 0.78    0.75     0.92     0.01  0.33  0.00  
+ 6     1       19747.98 20047.94 1.00    1.00     1.00     1.00  1.00        
+ 6     2       19380.08 19984.61 0.70    0.89     0.94     0.45  0.55  0.00  
+ 6     3       19286.96 20196.06 0.74    0.88     0.89     0.23  0.39  0.00  
+ 6     4       19262.78 20476.45 0.78    0.83     0.93     0.11  0.43  1.00  
+ 6     5       19282.17 20800.41 0.78    0.81     0.92     0.07  0.43  0.43  
+ 6     6       19257.62 21080.44 0.86    0.83     1.00     0.03  0.51  0.00  
+ 6     7       19211.10 21338.49 0.84    0.78     1.00     0.01  0.47        
+ 6     8       19629.33 22061.29 0.86    0.00     0.95     0.00  0.53        
+ 6     9                                                                     
+ 6     10      19648.29 22675.55 0.87    0.00     1.00     0.00  0.42     
+
+```{r}
+lpa_rw_df %>% 
+  scale() %>%
+  estimate_profiles(1:6,
+    variances = c("equal", "varying"),
+    covariances = c("zero", "varying")
+    # package = "MplusAutomation"
+  ) %>% 
+  compare_solutions(statistics = c("AIC", "BIC"))
+```
+
+Compare tidyLPA solutions:
+
+ Model Classes AIC       BIC      
+ 1     1       21342.450 21434.878
+ 1     2       20746.522 20889.786
+ 1     3       20464.673 20658.772
+ 1     4       20341.265 20586.199
+ 1     5       20245.437 20541.207
+ 1     6       20175.056 20521.661
+ 6     1       19889.997 20190.388
+ 6     2       19515.286 20120.691
+ 6     3       19437.181 20347.598
+ 6     4       19389.596 20605.025
+ 6     5       19400.107 20920.550
+ 6     6       19404.469 21229.925
+
+Best model according to AIC is Model 6 with 4 classes.
+Best model according to BIC is Model 6 with 2 classes.
+
+An analytic hierarchy process, based on the fit indices AIC, AWE, BIC, CLC, and KIC (Akogul & Erisoglu, 2017), suggests the best solution is Model 6 with 2 classes.
+
+
+```{r}
+m2 <- lpa_rw_df %>%
+  scale() %>%
+  estimate_profiles(2,
+    variances = "varying",
+    covariances = "varying"
+    # package = "MplusAutomation"
+  )
+```
+
+
+```{r}
+m2_plot <- lpa_rw_df %>%
+  scale() %>%
+  estimate_profiles(2,
+    variances = "varying",
+    covariances = "varying"
+    #package = "MplusAutomation"
+    ) %>%
+    plot_profiles(add_line = TRUE, rawdata= FALSE, bw = FALSE)
+```
+
+Profile 1: dysfunctional
+Profile 2: adaptive
+
+
+```{r}
+get_estimates(m2)
+```
+
+```{r}
+out <- get_data(m2)
+lpa_rw_df$lpa_class <- out$Class
+```
+
+```{r}
+table(
+  lpa_rw_df$lpa_class
+)
+```
+
+
+```{r}
+table(
+  lpa_rw_df$lpa_class, rw_df$job_qualification
+)
+```
+
+
+```{r}
+lpa_rw_df$class <- factor(lpa_rw_df$lpa_class)
+summary(lpa_rw_df$class)
+```
+
+```{r}
+rw_df$class <- lpa_rw_df$class
+```
+
+```{r}
+m1 <- brm(
+  bf(scs_ts ~ class),
+  family = student(),
+  data = rw_df,
+  init = 0.1,
+  backend = "cmdstanr",
+  adapt_delta = 0.9
+)
+```
+
+```{r}
+pp_check(m1)
+```
+
+
+```{r}
+summary(m1)
+```
+
+```{r}
+me <- conditional_effects(
+  m1, "class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$scs_ts[rw_df$class == 1], 
+  rw_df$scs_ts[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt, type = "d")
+```
+
+```{r}
+m1 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  labs(x = "LPA Class", y = "SCS Score", title = "Rescue Workers") +
+  papaja::theme_apa() + 
+  annotate("text", x = 1, y = 78.5, label = "Bayesian Cohen's d = 0.89\n 95% CI [0.73, 1.04]")
+```
+
+
+
+
+```{r}
+names(all_items)
+```
+
+### Self-judgment
+
+```{r}
+m2 <- brm(
+  bf(sj ~ class),
+  data = rw_df,
+  family = student,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m2)
+```
+
+```{r}
+summary(m2)
+```
+
+
+```{r}
+me <- conditional_effects(
+  m2, "class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+emmeans(m2, specs = pairwise ~ class)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$sj[rw_df$class == 1], 
+  rw_df$sj[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+
+```{r}
+p2 <- m2 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('Low Resilience', 'High Resilience')) +
+  labs(x = "LPA Class", y = "SCS Self-Judgment", title = "A") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1, y = 16, label = "Bayesian Cohen's d = 0.82\n 95% CI [0.67, 0.97]")
+p2
+```
+
+### Isolation
+
+```{r}
+m3 <- brm(
+  bf(is ~ class),
+  family = skew_normal(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m3)
+```
+
+```{r}
+summary(m3)
+```
+
+
+```{r}
+me <- conditional_effects(
+  m3, "class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+emmeans(m3, specs = pairwise ~ class)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$is[rw_df$class == 1], 
+  rw_df$is[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+```{r}
+p3 <- m3 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('Low Resilience', 'High Resilience')) +
+  labs(x = "LPA Class", y = "SCS Isolation", title = "B") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1, y = 11, label = "Bayesian Cohen's d = 0.94\n 95% CI [0.79, 1.10]")
+p3
+```
+
+### Over-identification
+
+
+```{r}
+m4 <- brm(
+  bf(oi ~ class),
+  family = skew_normal(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m4)
+```
+
+```{r}
+summary(m4)
+```
+
+
+```{r}
+me <- conditional_effects(
+  m4, "class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+emmeans(m4, specs = pairwise ~ class)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$oi[rw_df$class == 1], 
+  rw_df$oi[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+```{r}
+p4 <- m4 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('High Resilience', 'Low Resilience')) +
+  labs(x = "LPA Class", y = "SCS Over-Identification", title = "C") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1, y = 9.4, label = "Bayesian Cohen's d = 0.97\n 95% CI [0.82, 1.12]")
+p4
+```
+
+
+### Self-kindness
+
+```{r}
+m5 <- brm(
+  bf(sk ~ class),
+  family = student(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m5)
+```
+
+```{r}
+summary(m5)
+```
+
+
+```{r}
+me <- conditional_effects(
+  m5, "class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+emmeans(m5, specs = pairwise ~ class)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$sk[rw_df$class == 1], 
+  rw_df$sk[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+```{r}
+p5 <- m5 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('High Resilience', 'Low Resilience')) +
+  labs(x = "LPA Class", y = "SCS Self-Kindness", title = "D") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1, y = 14.5, label = "Bayesian Cohen's d = 0.28\n 95% CI [0.14, 0.43]")
+p5
+```
+
+### Common humanity
+
+```{r}
+m6 <- brm(
+  bf(ch ~ class),
+  family = student(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m6)
+```
+
+```{r}
+summary(m6)
+```
+
+
+```{r}
+me <- conditional_effects(
+  m6, "class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$ch[rw_df$class == 1], 
+  rw_df$ch[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+
+```{r}
+p6 <- m6 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('High Resilience', 'Low Resilience')) +
+  labs(x = "LPA Class", y = "SCS Common-Humanity", title = "E") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1.5, y = 12.3, label = "Bayesian Cohen's d = 0.00\n 95% CI [-0.14, 0.14]")
+p6
+```
+
+### Mindfulness
+
+```{r}
+m7 <- brm(
+  bf(mi ~ class),
+  family = student(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m7)
+```
+
+```{r}
+summary(m7)
+```
+
+```{r}
+emmeans(m7, specs = pairwise ~ class)
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$mi[rw_df$class == 1], 
+  rw_df$mi[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+```{r}
+me <- conditional_effects(
+  m7, "class"
+)
+plot(me, points = FALSE)
+```
+
+
+```{r}
+p7 <- m7 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('Low Resilience', 'High Resilience')) +
+  labs(x = "LPA Class", y = "SCS Mindfulness", title = "F") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1, y = 13.8, label = "Bayesian Cohen's d = 0.32\n 95% CI [0.17, 0.46]")
+p7
+```
+
+```{r}
+fig_scs <- (p2 | p3 | p4) /
+(p5 | p6 | p7)
+
+out <- fig_scs + plot_annotation(
+  title = 'SCS Subscales as a Function of LPA Class',
+  subtitle = 'Rescue Workers group'
+  # caption = 'Disclaimer: None of these plots are insightful'
+)
+ggsave("scs_subscales_lpa.pdf", width = 35, height = 20, units = "cm")
+```
+
+## IES-R
+
+```{r}
+m10 <- brm(
+  bf(ies_ts ~ class),
+  family = skew_normal(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m10)
+```
+
+```{r}
+summary(m10)
+```
+
+```{r}
+p10 <- m10 %>%
+  emmeans( ~ class) %>%
+  gather_emmeans_draws() %>%
+  ggplot(aes(x = class, y = .value)) +
+  geom_eye() +
+  stat_summary(aes(group = NA), fun.y = mean, geom = "line") +
+  # facet_grid(~ wool) +
+  # theme_light()
+  scale_x_discrete(labels=c('Low Resilience', 'High Resilience')) +
+  labs(x = "LPA Class", y = "Impact of Event Scale - Revised (IES-R)") +
+  # papaja::theme_apa() + 
+  annotate("text", x = 1, y = 17, label = "Bayesian Cohen's d = 1.34\n 95% CI [1.18, 1.50]")
+p10
+```
+
+```{r}
+BFt <- BayesFactor::ttestBF(
+  rw_df$ies_ts[rw_df$class == 1], 
+  rw_df$ies_ts[rw_df$class == 2],
+  paired = FALSE
+)
+effectsize(BFt)
+```
+
+```{r}
+emmeans(m10 , specs = pairwise ~ class)
+```
+
+
+```{r}
+m11 <- brm(
+  bf(ptgi_total_score | trunc(lb = 0) ~ class),
+  family = student(),
+  data = rw_df,
+  backend = "cmdstanr"
+)
+```
+
+```{r}
+pp_check(m11)
+```
+
+```{r}
+summary(m11)
+```
+
+### Job qualification
+
+```{r}
+rw_df$job_qualification <- ifelse(
+  rw_df$job_qualification == "non_rescue_worker", "team_member", 
+  rw_df$job_qualification
+) 
+```
+
+
+```{r}
+m12 <- brm(
+  bf(ies_ts ~ job_qualification),
+  family = skew_normal(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m12)
+```
+
+```{r}
+summary(m12)
+```
+
+```{r}
+me <- conditional_effects(
+  m12, "job_qualification"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+emmeans(m12 , specs = pairwise ~ job_qualification)
+```
+
+```{r}
+m13 <- brm(
+  bf(scs_ts ~ job_qualification * class),
+  family = gaussian(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m13)
+```
+
+```{r}
+me <- conditional_effects(
+  m13, "job_qualification:class"
+)
+plot(me, points = FALSE)
+```
+
+```{r}
+summary(m13)
+```
+
+```{r}
+emmeans(m13 , specs = pairwise ~ job_qualification*class)
+```
+
+```{r}
+m14 <- brm(
+  bf(ptgi_total_score ~ ies_total_score | (1 | comme\)),
+  family = gaussian(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+summary(m14)
+```
+```{r}
+bayes_R2(m14)
+```
+```{r}
+conditional_effects(m14, "is:class")
+```
+
+
+## SEM
+
+```{r}
+mydf <- data.frame(
+  scs = scale(rw_df$scs_ts),
+  class = ifelse(rw_df$class == 1, 0.0, 1.0),
+  ptgi = scale(rw_df$ptgi_total_score),
+  psc = scale(rw_df$sk + rw_df$ch + rw_df$mi),
+  nsc = scale(rw_df$sj + rw_df$oi + rw_df$is),
+  commettee = rw_df$red_cross_commeetee_location,
+  id = 1:nrow(rw_df)
+)
+
+mydf <- mydf[complete.cases(mydf), ]
+```
+
+```{r}
+# Impute NAs with the mode.
+# mydf$commettee[is.na(mydf$commettee)] <- "Comitato di Groane"
+# summary(factor(mydf$commettee))
+```
+
+
+```{r}
+f1 <- bf(scs ~ class, family = skew_normal())
+f2 <- bf(ptgi ~ scs + class, family = skew_normal())
+mod <- brm(
+  f1 + f2 + set_rescor(FALSE), 
+  data = mydf, 
+  cores = 4, 
+  refresh = 0,
+  init = 0.1,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+bayestestR::mediation(mod, mediator = "scs", ci = 0.95, method = "SPI")
+```
+
+```{r}
+pp_check(mod, resp = "ptgi")
+```
+
+```{r}
+pp_check(mod, resp = "scs")
+```
+
+```{r}
+summary(mod)
+```
+
+```{r}
+fit <- mlm(d = mydf, 
+           id = "commettee",
+           x = "class",
+           m = "scs",
+           y = "ptgi",
+           iter = 2000, 
+           cores = 4)
+```
+
+```{r}
+mlm_path_plot(fit, level = .95, text = T,
+              xlab = "Resilience\nProfile",
+              mlab = "Self\nCompassion",
+              ylab = "PTG", digits = 2)
+```
+
+# Causal Mediation Analysis for Stan Model
+
+  Treatment: class
+  Mediator : scs
+  Response : ptgi
+
+Effect                 | Estimate |          95% SPI
+----------------------------------------------------
+Direct Effect (ADE)    |   -0.300 | [-0.464, -0.140]
+Indirect Effect (ACME) |    0.121 | [ 0.053,  0.187]
+Mediator Effect        |    0.154 | [ 0.069,  0.230]
+Total Effect           |   -0.178 | [-0.325, -0.027]
+
+
+
+
+```{r}
+m16 <- brm(
+  bf(ptgi_total_score ~ class),
+  family = skew_normal(),
+  data = rw_df,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+pp_check(m16)
+```
+
+
+```{r}
+summary(m16)
+```
+
+```{r}
+bayes_R2(m16)
+```
+
+```{r}
+m17 <- brm(
+  bf(ptgi_total_score ~ is_rescue_worker),
+  family = skew_normal(),
+  data = all_items,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+
+```{r}
+summary(m17)
+```
+
+```{r}
+rw_df$rate_of_activity_num <- as.integer(rw_df$rate_of_activity_num)
+```
+
+
+```{r}
+temp <- rw_df[1:746, ]
+
+temp$activity <- cut(
+  temp$rate_of_activity_num,
+  breaks = c(-1, 0, 1, 2),    
+  labels = c("Low", "Medium", "High"),   
+  include.lowest = TRUE,    
+  ordered_result = TRUE
+)   
+```
+
+```{r}
+m19 <- brm(
+  bf(activity ~ class),
+  family=cumulative("logit"),
+  data = temp,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+
+```{r}
+pp_check(m19)
+```
+
+
+```{r}
+summary(m19)
+```
+
+```{r}
+m20 <- brm(
+  bf(class ~ last_training_num * scs_ts),
+  family=bernoulli(),
+  data = temp,
+  backend = "cmdstanr",
+  adapt_delta = 0.99
+)
+```
+
+```{r}
+summary(m20)
+```
+
+```{r}
+conditional_effects(m20, "scs_ts:last_training_num")
+```
+
+
+```{r}
+table(rw_df$class, rw_df$last_training_num)
+```
+

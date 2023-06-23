@@ -1,0 +1,556 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/25/2022   8:26 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Nomological network with SCS-P and SCS-N.
+  DATA:
+  FILE = "semdata.dat";
+
+  VARIABLE:
+  NAMES =
+    pos_sc neg_sc ts_scs
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    group
+    ;
+
+
+  MISSING = .;
+
+  USEVARIABLES ARE
+    pos_sc neg_sc
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    ;
+
+  ANALYSIS:
+    ESTIMATOR = MLR;
+    PROCESSORS = 6;
+    ! ROTATION = TARGET (ORTHOGONAL);
+
+  MODEL:
+
+  ! Measurement model
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  COPE BY
+    cope_pa cope_po;
+
+  NEURO BY
+    neuro_na neuro_sr;
+
+  EXTRA BY
+    extra_pa extra_so extra_ac;
+
+  ! Structural model
+
+  PTGI ON neg_sc pos_sc COPE NEURO EXTRA;
+  IESR ON neg_sc pos_sc COPE NEURO EXTRA;
+
+
+  ! Requesting standardized parameter estimates and modification indices
+  OUTPUT:
+  stdyx;
+  !MODINDICES (ALL);
+
+  ! savedata:
+  !   file is m6b_scores.txt;
+  !   save = fscores;
+
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Nomological network with SCS-P and SCS-N.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         746
+
+Number of dependent variables                                   15
+Number of independent variables                                  2
+Number of continuous latent variables                            5
+
+Observed dependent variables
+
+  Continuous
+   PTGI_AL     PTGI_NP     PTGI_PS     PTGI_SP     PTGI_RO     IESR_A
+   IESR_I      IESR_H      COPE_PA     COPE_PO     NEURO_NA    NEURO_SR
+   EXTRA_PA    EXTRA_SO    EXTRA_AC
+
+Observed independent variables
+   POS_SC      NEG_SC
+
+Continuous latent variables
+   PTGI        IESR        COPE        NEURO       EXTRA
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  semdata.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              PTGI_AL       PTGI_NP       PTGI_PS       PTGI_SP       PTGI_RO
+              ________      ________      ________      ________      ________
+ PTGI_AL        1.000
+ PTGI_NP        1.000         1.000
+ PTGI_PS        1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+ POS_SC         1.000         1.000         1.000         1.000         1.000
+ NEG_SC         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              IESR_A        IESR_I        IESR_H        COPE_PA       COPE_PO
+              ________      ________      ________      ________      ________
+ IESR_A         1.000
+ IESR_I         1.000         1.000
+ IESR_H         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+ POS_SC         1.000         1.000         1.000         1.000         1.000
+ NEG_SC         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              NEURO_NA      NEURO_SR      EXTRA_PA      EXTRA_SO      EXTRA_AC
+              ________      ________      ________      ________      ________
+ NEURO_NA       1.000
+ NEURO_SR       1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+ POS_SC         1.000         1.000         1.000         1.000         1.000
+ NEG_SC         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              POS_SC        NEG_SC
+              ________      ________
+ POS_SC         1.000
+ NEG_SC         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     PTGI_AL               6.631       0.007       0.000   11.53%       2.000      5.000      7.000
+             746.000      17.753      -0.985      15.000    2.55%       8.000     11.000
+     PTGI_NP               8.615       0.424       0.000   12.33%       2.000      6.000      8.000
+             746.000      40.435      -0.703      25.000    0.40%      10.000     15.000
+     PTGI_PS              10.172      -0.265       0.000    5.50%       5.000      9.000     11.000
+             746.000      28.188      -0.843      20.000    2.55%      12.000     15.000
+     PTGI_SP               1.240       1.943       0.000   63.67%       0.000      0.000      0.000
+             746.000       4.611       3.260      10.000    0.80%       0.000      2.000
+     PTGI_RO              14.072       0.139       0.000    8.31%       4.000     11.000     14.000
+             746.000      85.123      -1.006      35.000    0.94%      17.000     23.000
+     IESR_A                6.517       0.951       0.000   13.27%       2.000      4.000      5.000
+             746.000      30.290       0.446      27.000    0.13%       7.000     11.000
+     IESR_I                8.572       0.884       0.000    8.98%       2.000      5.000      7.000
+             746.000      52.087       0.012      32.000    0.27%       9.000     15.000
+     IESR_H                3.366       1.723       0.000   36.86%       0.000      1.000      2.000
+             746.000      20.227       2.719      24.000    0.13%       3.000      6.000
+     COPE_PA              33.993      -0.132      18.000    0.13%      30.000     33.000     34.000
+             746.000      23.626      -0.030      47.000    0.40%      35.000     38.000
+     COPE_PO              33.878      -0.181      17.000    0.13%      29.000     33.000     34.000
+             746.000      30.944      -0.077      48.000    0.13%      35.000     38.000
+     NEURO_NA              9.221       0.073       0.000    0.94%       6.000      8.000      9.000
+             746.000      15.727      -0.295      20.000    0.40%      10.000     13.000
+     NEURO_SR              9.882       0.490       0.000    2.55%       5.000      8.000      9.000
+             746.000      33.600      -0.259      28.000    0.27%      11.000     15.000
+     EXTRA_PA             10.402      -0.238       1.000    0.13%       8.000     10.000     11.000
+             746.000       8.852      -0.388      16.000    3.49%      11.000     13.000
+     EXTRA_SO             10.984      -0.571       0.000    0.27%       9.000     11.000     11.000
+             746.000       8.072       0.264      16.000    3.75%      12.000     13.000
+     EXTRA_AC             11.769      -0.631       2.000    0.40%       9.000     11.000     12.000
+             746.000       7.703       0.245      16.000    6.43%      13.000     14.000
+     POS_SC               38.617      -0.086      13.000    0.13%      31.000     37.000     39.000
+             746.000      78.413      -0.142      61.000    0.27%      41.000     46.000
+     NEG_SC               35.204       0.245      13.000    0.27%      24.000     31.000     34.000
+             746.000     135.363      -0.760      65.000    0.27%      38.000     46.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+     WARNING:  THE RESIDUAL COVARIANCE MATRIX (THETA) IS NOT POSITIVE DEFINITE.
+     THIS COULD INDICATE A NEGATIVE VARIANCE/RESIDUAL VARIANCE FOR AN OBSERVED
+     VARIABLE, A CORRELATION GREATER OR EQUAL TO ONE BETWEEN TWO OBSERVED
+     VARIABLES, OR A LINEAR DEPENDENCY AMONG MORE THAN TWO OBSERVED VARIABLES.
+     CHECK THE RESULTS SECTION FOR MORE INFORMATION.
+     PROBLEM INVOLVING VARIABLE COPE_PO.
+
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       59
+
+Loglikelihood
+
+          H0 Value                      -30130.461
+          H0 Scaling Correction Factor      1.1387
+            for MLR
+          H1 Value                      -29625.306
+          H1 Scaling Correction Factor      1.1033
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   60378.923
+          Bayesian (BIC)                 60651.192
+          Sample-Size Adjusted BIC       60463.844
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                            932.345*
+          Degrees of Freedom                   106
+          P-Value                           0.0000
+          Scaling Correction Factor         1.0836
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.102
+          90 Percent C.I.                    0.096  0.108
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.852
+          TLI                                0.812
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           5725.562
+          Degrees of Freedom                   135
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.116
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTGI     BY
+    PTGI_AL            1.000      0.000    999.000    999.000
+    PTGI_NP            1.744      0.051     34.239      0.000
+    PTGI_PS            1.235      0.044     28.306      0.000
+    PTGI_SP            0.328      0.025     12.869      0.000
+    PTGI_RO            2.329      0.076     30.484      0.000
+
+ IESR     BY
+    IESR_A             1.000      0.000    999.000    999.000
+    IESR_I             1.455      0.063     23.159      0.000
+    IESR_H             0.911      0.041     22.447      0.000
+
+ COPE     BY
+    COPE_PA            1.000      0.000    999.000    999.000
+    COPE_PO            2.750      0.765      3.596      0.000
+
+ NEURO    BY
+    NEURO_NA           1.000      0.000    999.000    999.000
+    NEURO_SR           1.673      0.105     15.861      0.000
+
+ EXTRA    BY
+    EXTRA_PA           1.000      0.000    999.000    999.000
+    EXTRA_SO           0.990      0.072     13.762      0.000
+    EXTRA_AC           0.885      0.079     11.200      0.000
+
+ PTGI     ON
+    COPE               0.090      0.063      1.420      0.156
+    NEURO              0.345      0.101      3.399      0.001
+    EXTRA              0.757      0.131      5.787      0.000
+
+ IESR     ON
+    COPE               0.061      0.073      0.830      0.407
+    NEURO              0.605      0.115      5.269      0.000
+    EXTRA              0.747      0.151      4.942      0.000
+
+ PTGI     ON
+    NEG_SC             0.029      0.015      1.926      0.054
+    POS_SC             0.075      0.016      4.577      0.000
+
+ IESR     ON
+    NEG_SC             0.147      0.020      7.255      0.000
+    POS_SC             0.024      0.018      1.307      0.191
+
+ IESR     WITH
+    PTGI               2.391      0.577      4.148      0.000
+
+ NEURO    WITH
+    COPE              -1.931      0.630     -3.063      0.002
+
+ EXTRA    WITH
+    COPE               1.302      0.405      3.210      0.001
+    NEURO             -3.966      0.409     -9.707      0.000
+
+ Intercepts
+    PTGI_AL            2.738      0.864      3.169      0.002
+    PTGI_NP            1.824      1.495      1.220      0.223
+    PTGI_PS            5.363      1.093      4.907      0.000
+    PTGI_SP           -0.037      0.287     -0.130      0.897
+    PTGI_RO            5.006      2.014      2.485      0.013
+    IESR_A             0.430      0.981      0.439      0.661
+    IESR_I            -0.287      1.383     -0.207      0.836
+    IESR_H            -2.180      0.863     -2.526      0.012
+    COPE_PA           33.993      0.178    191.015      0.000
+    COPE_PO           33.878      0.204    166.342      0.000
+    NEURO_NA           9.221      0.145     63.508      0.000
+    NEURO_SR           9.882      0.212     46.564      0.000
+    EXTRA_PA          10.402      0.109     95.495      0.000
+    EXTRA_SO          10.984      0.104    105.592      0.000
+    EXTRA_AC          11.769      0.102    115.824      0.000
+
+ Variances
+    COPE               4.916      1.524      3.226      0.001
+    NEURO              8.729      0.882      9.900      0.000
+    EXTRA              3.989      0.462      8.629      0.000
+
+ Residual Variances
+    PTGI_AL            5.849      0.410     14.260      0.000
+    PTGI_NP            4.218      0.569      7.419      0.000
+    PTGI_PS           10.029      0.649     15.453      0.000
+    PTGI_SP            3.330      0.250     13.331      0.000
+    PTGI_RO           20.570      2.062      9.974      0.000
+    IESR_A            11.357      0.843     13.469      0.000
+    IESR_I            11.988      1.409      8.508      0.000
+    IESR_H             4.514      0.458      9.861      0.000
+    COPE_PA           18.710      1.529     12.237      0.000
+    COPE_PO           -6.224      9.802     -0.635      0.525
+    NEURO_NA           6.998      0.619     11.312      0.000
+    NEURO_SR           9.168      1.520      6.034      0.000
+    EXTRA_PA           4.863      0.374     13.005      0.000
+    EXTRA_SO           4.162      0.340     12.229      0.000
+    EXTRA_AC           4.575      0.351     13.050      0.000
+    PTGI               9.946      0.689     14.428      0.000
+    IESR              12.905      1.140     11.317      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.566E-06
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTGI     BY
+    PTGI_AL            0.817      0.015     54.809      0.000
+    PTGI_NP            0.946      0.008    124.739      0.000
+    PTGI_PS            0.801      0.015     52.853      0.000
+    PTGI_SP            0.525      0.024     21.516      0.000
+    PTGI_RO            0.869      0.015     59.389      0.000
+
+ IESR     BY
+    IESR_A             0.779      0.019     40.050      0.000
+    IESR_I             0.869      0.017     50.977      0.000
+    IESR_H             0.874      0.015     59.007      0.000
+
+ COPE     BY
+    COPE_PA            0.456      0.067      6.813      0.000
+    COPE_PO            1.096      0.144      7.589      0.000
+
+ NEURO    BY
+    NEURO_NA           0.745      0.028     26.981      0.000
+    NEURO_SR           0.853      0.027     32.129      0.000
+
+ EXTRA    BY
+    EXTRA_PA           0.671      0.031     21.439      0.000
+    EXTRA_SO           0.696      0.031     22.152      0.000
+    EXTRA_AC           0.637      0.034     18.615      0.000
+
+ PTGI     ON
+    COPE               0.058      0.044      1.319      0.187
+    NEURO              0.297      0.087      3.400      0.001
+    EXTRA              0.441      0.069      6.387      0.000
+
+ IESR     ON
+    COPE               0.032      0.038      0.846      0.398
+    NEURO              0.427      0.083      5.159      0.000
+    EXTRA              0.357      0.066      5.385      0.000
+
+ PTGI     ON
+    NEG_SC             0.098      0.051      1.936      0.053
+    POS_SC             0.192      0.042      4.583      0.000
+
+ IESR     ON
+    NEG_SC             0.407      0.048      8.470      0.000
+    POS_SC             0.051      0.039      1.313      0.189
+
+ IESR     WITH
+    PTGI               0.211      0.048      4.390      0.000
+
+ NEURO    WITH
+    COPE              -0.295      0.056     -5.266      0.000
+
+ EXTRA    WITH
+    COPE               0.294      0.056      5.292      0.000
+    NEURO             -0.672      0.039    -17.347      0.000
+
+ Intercepts
+    PTGI_AL            0.653      0.208      3.138      0.002
+    PTGI_NP            0.289      0.238      1.215      0.225
+    PTGI_PS            1.014      0.213      4.772      0.000
+    PTGI_SP           -0.017      0.134     -0.130      0.897
+    PTGI_RO            0.545      0.222      2.462      0.014
+    IESR_A             0.080      0.183      0.437      0.662
+    IESR_I            -0.041      0.197     -0.208      0.835
+    IESR_H            -0.499      0.192     -2.604      0.009
+    COPE_PA            6.994      0.187     37.443      0.000
+    COPE_PO            6.090      0.163     37.257      0.000
+    NEURO_NA           2.325      0.065     35.864      0.000
+    NEURO_SR           1.705      0.044     38.953      0.000
+    EXTRA_PA           3.496      0.095     36.727      0.000
+    EXTRA_SO           3.866      0.125     30.910      0.000
+    EXTRA_AC           4.241      0.136     31.215      0.000
+
+ Variances
+    COPE               1.000      0.000    999.000    999.000
+    NEURO              1.000      0.000    999.000    999.000
+    EXTRA              1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTGI_AL            0.332      0.024     13.645      0.000
+    PTGI_NP            0.106      0.014      7.361      0.000
+    PTGI_PS            0.359      0.024     14.790      0.000
+    PTGI_SP            0.725      0.026     28.343      0.000
+    PTGI_RO            0.244      0.025      9.589      0.000
+    IESR_A             0.393      0.030     12.976      0.000
+    IESR_I             0.244      0.030      8.231      0.000
+    IESR_H             0.237      0.026      9.155      0.000
+    COPE_PA            0.792      0.061     12.966      0.000
+    COPE_PO           -0.201    999.000    999.000    999.000
+    NEURO_NA           0.445      0.041     10.815      0.000
+    NEURO_SR           0.273      0.045      6.028      0.000
+    EXTRA_PA           0.549      0.042     13.069      0.000
+    EXTRA_SO           0.516      0.044     11.788      0.000
+    EXTRA_AC           0.594      0.044     13.616      0.000
+    PTGI               0.847      0.034     25.004      0.000
+    IESR               0.736      0.038     19.559      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    PTGI_AL            0.668      0.024     27.405      0.000
+    PTGI_NP            0.894      0.014     62.370      0.000
+    PTGI_PS            0.641      0.024     26.426      0.000
+    PTGI_SP            0.275      0.026     10.758      0.000
+    PTGI_RO            0.756      0.025     29.694      0.000
+    IESR_A             0.607      0.030     20.025      0.000
+    IESR_I             0.756      0.030     25.489      0.000
+    IESR_H             0.763      0.026     29.503      0.000
+    COPE_PA            0.208      0.061      3.406      0.001
+    COPE_PO         Undefined   0.12011E+01
+    NEURO_NA           0.555      0.041     13.490      0.000
+    NEURO_SR           0.727      0.045     16.065      0.000
+    EXTRA_PA           0.451      0.042     10.719      0.000
+    EXTRA_SO           0.484      0.044     11.076      0.000
+    EXTRA_AC           0.406      0.044      9.308      0.000
+
+     Latent                                         Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    PTGI               0.153      0.034      4.525      0.000
+    IESR               0.264      0.038      7.006      0.000
+
+
+     Beginning Time:  08:26:28
+        Ending Time:  08:26:28
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

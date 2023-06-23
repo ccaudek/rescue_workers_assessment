@@ -1,0 +1,34 @@
+TITLE: Monte Carlo simulation for testing factor covariance
+MONTECARLO: 
+   NAMES = 
+           ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+           
+           ;
+NOBSERVATIONS = 100;
+NREPS = 10000;
+SEED = 12345;
+MODEL POPULATION:
+  [
+  
+  ptgi_al@0 ptgi_np@0 ptgi_ps@0 ptgi_sp@0 ptgi_ro@0
+  
+  ];
+
+PTGI BY ptgi_al@.7 ptgi_np@.7 ptgi_ps@.7 ptgi_sp@.7 ptgi_ro@.7;
+PTGI@1;
+ptgi_al@.49 ptgi_np@.49 ptgi_ps@.49 ptgi_sp@.49 ptgi_ro@.49;
+
+
+MODEL:
+  [
+ 
+  ptgi_al*0 ptgi_np*0 ptgi_ps*0 ptgi_sp*0 ptgi_ro*0
+
+  ];
+
+PTGI BY ptgi_al*.7 ptgi_np*.7 ptgi_ps*.7 ptgi_sp*.7 ptgi_ro*.7;
+PTGI@1;
+ptgi_al*.49 ptgi_np*.49 ptgi_ps*.49 ptgi_sp*.49 ptgi_ro*.49;
+
+
+OUTPUT: TECH9;

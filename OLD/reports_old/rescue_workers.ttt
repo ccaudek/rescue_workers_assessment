@@ -1,0 +1,183 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:coefs-scsmvmodel}Posterior mean, standard error, 95\% credible interval and $\hat{R}$ statistic for the parameters of the bmod1 model based on the normal distribution. Dummy coding was applied to code the independent variable group (rescue-workers vs. community sample), with the RW group as the reference level. Therefore, positive values of the $\beta$ coefficients in the regression models indicate larger mean values of the dependent variable in the community sample as compared to the RW group; negative $\beta$ coefficients values indicate the opposite.}
+
+\small{
+
+\begin{tabular}{lrrrrr}
+\toprule
+parameter & \multicolumn{1}{c}{mean} & \multicolumn{1}{c}{SE} & \multicolumn{1}{c}{lower bound} & \multicolumn{1}{c}{upper bound} & \multicolumn{1}{c}{Rhat}\\
+\midrule
+Intercept Self Kindness & 13.730 & 0.162 & 13.412 & 14.046 & 1.004\\
+Intercept Self Judgment & 14.948 & 0.172 & 14.609 & 15.289 & 1.000\\
+Intercept Common Humanity & 11.594 & 0.123 & 11.355 & 11.832 & 1.001\\
+Intercept Isolation & 13.499 & 0.156 & 13.191 & 13.798 & 1.002\\
+Intercept Mindfulness & 13.261 & 0.114 & 13.034 & 13.483 & 1.001\\
+Intercept Overidentification & 14.354 & 0.148 & 14.069 & 14.639 & 1.001\\
+$\beta$ Self Kindness & 0.306 & 0.290 & -0.269 & 0.866 & 1.001\\
+$\beta$ Self Judgment & -1.225 & 0.312 & -1.821 & -0.622 & 1.001\\
+$\beta$ Common Humanity & 0.353 & 0.225 & -0.078 & 0.791 & 1.000\\
+$\beta$ Isolation & -2.590 & 0.289 & -3.151 & -2.022 & 1.001\\
+$\beta$ Mindfulness & -0.619 & 0.209 & -1.029 & -0.210 & 1.001\\
+$\beta$ Overidentification & -3.260 & 0.274 & -3.788 & -2.747 & 1.001\\
+$\sigma$ Self Kindness & 4.464 & 0.094 & 4.286 & 4.658 & 1.001\\
+$\sigma$ Self Judgment & 4.745 & 0.103 & 4.549 & 4.947 & 1.001\\
+$\sigma$ Common Humanity & 3.402 & 0.073 & 3.263 & 3.550 & 1.002\\
+$\sigma$ Isolation & 4.343 & 0.090 & 4.166 & 4.520 & 1.002\\
+$\sigma$ Mindfulness & 3.180 & 0.071 & 3.045 & 3.322 & 1.000\\
+$\sigma$ Overidentification & 3.929 & 0.085 & 3.765 & 4.101 & 1.000\\
+\bottomrule
+\end{tabular}
+
+}
+
+\end{threeparttable}
+\end{center}
+
+\end{table*}
+\efloatseparator
+ 
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2889}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1333}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2444}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3333}}@{}}
+\caption{Note. The Table shows the posterior estimates of the mean difference (\(\beta_{\text{diff}}\)) of the Team Leader (TL) or the Team Member (TM) with respect to the Driver group. The dependent variable corresponds to each of the six SCS subscales: Self Judgment (SJ), Isolation (IS), Over Identification (OI), Self Kindness (SK), Common Humanity (CH), and Mindfulness (MI). The table also shows the Cohen's \emph{d} statistics computed from the posterior distributions. The 95\% credibility intervals are provided in square brackets.}\tabularnewline
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+SCS subscale
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Qualification
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\beta_{\text{diff}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cohen's \emph{d}
+\end{minipage} \\
+\midrule()
+\endfirsthead
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+SCS subscale
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Qualification
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\beta_{\text{diff}}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cohen's \emph{d}
+\end{minipage} \\
+\midrule()
+\endhead
+SJ & TL & 1.548 {[}0.646, 2.455{]} & 0.33 {[}0.14, 0.52{]} \\
+& TM & 1.625 {[}0.698, 2.55{]} & 0.34 {[}0.16, 0.55{]} \\
+IS & TL & 1.05 {[}0.231, 1.886{]} & 0.24 {[}0.05, 0.43{]} \\
+& TM & 2.271 {[}1.438, 3.118{]} & 0.53 {[}0.34, 0.73{]} \\
+OI & TL & 0.725 {[}0.047, 1.439{]} & 0.18 {[}0.02, 0.37{]} \\
+& TM & 1.671 {[}0.945, 2.382{]} & 0.42 {[}0.23, 0.61{]} \\
+SK & TL & -0.222 {[}-1.108, 0.663{]} & -0.05 {[}-0.25, 0.14{]} \\
+& TM & -0.287 {[}-1.171, 0.592{]} & -0.06 {[}-0.27, 0.12{]} \\
+CH & TL & 0.559 {[}-0.106, 1.208{]} & 0.16 {[}-0.01, 0.37{]} \\
+& TM & 0.486 {[}-0.198, 1.142{]} & 0.14 {[}-0.06, 0.33{]} \\
+MI & TL & -0.462 {[}-1.067, 1.208{]} & -0.15 {[}-0.33, 0.05{]} \\
+& TM & -0.6 {[}-1.193, 0.007{]} & -0.19 {[}-0.38, -0.01{]} \\
+\bottomrule()
+\end{longtable}
+\efloatseparator
+ 
+\begin{longtable}[]{@{}lllllll@{}}
+\caption{Note. CFA = confirmatory factor analysis; ESEM = exploratory structural equation modeling; CFI = comparative fit index; TLI = Tucker-Lewis Index; RMSEA = root mean square error of approximation; SRMR = standardized root mean square residual; Model \texttt{m1a} = One-factor CFA; Model \texttt{m1b} = One-factor ESEM; Model \texttt{m2a} = Two-factor CFA; Model \texttt{m2b} = Two-factor ESEM; Model \texttt{m3a} = Six-factor CFA; Model \texttt{m3b} = Six-factor ESEM; Model \texttt{m4a} = Bifactor-CFA (1 G- and 6 S-factors); Model \texttt{m4b} = Bifactor-ESEM (1 G- and 6 S-factors); Model \texttt{m5a} = Two-bifactor (two-tier) CFA model (2 G- and 6 S-factors); Model \texttt{m5b} = Two-bifactor (two-tier) ESEM model (2 G- and 6 S-factors).}\tabularnewline
+\toprule()
+& CFI & TLI & RMSEA & 90\% CI & SRMR & \(\omega\) \\
+\midrule()
+\endfirsthead
+\toprule()
+& CFI & TLI & RMSEA & 90\% CI & SRMR & \(\omega\) \\
+\midrule()
+\endhead
+Model m1a & 0.649 & 0.618 & 0.180 & 0.178 0.183 & 0.149 & 0.454 \\
+Model m1b & 0.649 & 0.618 & 0.180 & 0.178 0.183 & 0.149 & 0.454 \\
+Model m2a & 0.846 & 0.832 & 0.120 & 0.117 0.123 & 0.088 & 0.962 \\
+Model m2b & 0.847 & 0.818 & 0.125 & 0.121 0.128 & 0.059 & 0.959 \\
+Model m3a & 0.903 & 0.889 & 0.098 & 0.094 0.101 & 0.067 & 0.962 \\
+Model m3b & 0.983 & 0.970 & 0.051 & 0.047 0.055 & 0.016 & 0.964 \\
+Model m4a & 0.789 & 0.749 & 0.146 & 0.143 0.149 & 0.111 & 0.779 \\
+Model m4b & 0.987 & 0.975 & 0.046 & 0.042 0.051 & 0.014 & 0.972 \\
+Model m5a & 0.917 & 0.901 & 0.092 & 0.089 0.095 & 0.070 & 0.977 \\
+Model m5b & 0.990 & 0.978 & 0.043 & 0.038 0.047 & 0.013 & 0.965 \\
+\bottomrule()
+\end{longtable}
+\efloatseparator
+ 
+\begin{longtable}{lrrrrrrr}
+\toprule
+Items & SC & SK & MI & CH & SJ & IS & OI \\
+\midrule
+\multicolumn{8}{l}{Self-kindness} \\
+\midrule
+SCSK05 & -0.21 & 0.69 & 0.10 & 0.24 & -0.07 & 0.02 & 0.00 \\
+SCSK12 & -0.34 & 0.76 & 0.09 & 0.21 & 0.03 & -0.08 & -0.08 \\
+SCSK19 & -0.41 & 0.75 & 0.16 & 0.12 & -0.05 & 0.04 & -0.03 \\
+SCSK23 & -0.64 & 0.30 & 0.10 & 0.16 & 0.00 & 0.19 & 0.42 \\
+SCSK26 & -0.49 & 0.44 & 0.15 & 0.25 & -0.09 & 0.17 & 0.31 \\
+\midrule
+\multicolumn{8}{l}{Mindfulness} \\
+\midrule
+SCMI09 & -0.18 & 0.13 & 0.62 & 0.16 & 0.13 & 0.06 & -0.10 \\
+SCMI14 & -0.40 & 0.13 & 0.71 & 0.09 & 0.07 & 0.01 & -0.10 \\
+SCMI17 & -0.53 & 0.21 & 0.45 & 0.20 & 0.17 & 0.02 & 0.00 \\
+SCMI22 & -0.39 & 0.43 & 0.21 & 0.28 & 0.20 & -0.08 & 0.17 \\
+\midrule
+\multicolumn{8}{l}{Common Humanity} \\
+\midrule
+SCCH03 & -0.02 & 0.15 & 0.36 & 0.47 & -0.08 & -0.12 & 0.10 \\
+SCCH07 & 0.01 & 0.28 & -0.04 & 0.74 & 0.08 & 0.12 & -0.04 \\
+SCCH10 & -0.13 & 0.24 & 0.05 & 0.76 & 0.18 & 0.07 & -0.06 \\
+SCCH15 & -0.41 & 0.25 & 0.31 & 0.44 & 0.01 & 0.04 & 0.19 \\
+\midrule
+\multicolumn{8}{l}{Self-judgment} \\
+\midrule
+SCSJ01 & 0.58 & -0.02 & 0.23 & 0.11 & 0.26 & -0.15 & 0.00 \\
+SCSJ08 & 0.68 & -0.10 & 0.13 & 0.11 & 0.47 & 0.00 & 0.12 \\
+SCSJ11 & 0.71 & -0.02 & 0.12 & 0.14 & 0.32 & 0.00 & -0.04 \\
+SCSJ16 & 0.71 & -0.01 & 0.09 & 0.02 & 0.40 & 0.07 & -0.06 \\
+SCSJ21 & 0.51 & -0.15 & 0.19 & 0.09 & 0.29 & 0.01 & 0.17 \\
+\midrule
+\multicolumn{8}{l}{Isolation} \\
+\midrule
+SCIS04 & 0.79 & 0.04 & 0.04 & 0.10 & -0.01 & 0.13 & 0.21 \\
+SCIS13 & 0.69 & 0.08 & 0.01 & 0.09 & -0.07 & 0.53 & 0.05 \\
+SCIS18 & 0.73 & 0.11 & 0.04 & 0.10 & 0.04 & 0.49 & 0.03 \\
+SCIS25 & 0.77 & 0.10 & 0.04 & 0.01 & 0.06 & 0.17 & 0.19 \\
+\midrule
+\multicolumn{8}{l}{Over-identification} \\
+\midrule
+SCOI02 & 0.81 & 0.07 & 0.00 & 0.10 & 0.03 & 0.03 & 0.26 \\
+SCOI06 & 0.81 & 0.10 & 0.08 & 0.06 & 0.03 & 0.09 & 0.17 \\
+SCOI20 & 0.58 & 0.30 & -0.21 & 0.00 & 0.14 & 0.16 & 0.31 \\
+SCOI24 & 0.63 & 0.18 & -0.16 & 0.05 & 0.03 & 0.10 & 0.28 \\
+\bottomrule
+\end{longtable}
+\efloatseparator
+ 
+\begin{longtable}[]{@{}lll@{}}
+\caption{Total effects for the three endogeneous variables (Coping, Neuroticism, and Extraversion) on post-traumatic growth (PTGI) and post traumatic stress (IESR). The table reports the standardized effects. In parentheses are shown the \emph{p}-values.}\tabularnewline
+\toprule()
+& Rescue workers & Community sample \\
+\midrule()
+\endfirsthead
+\toprule()
+& Rescue workers & Community sample \\
+\midrule()
+\endhead
+Coping \(\rightarrow\) PTGI & .192 (.000) & .403 (.000) \\
+Neuroticism \(\rightarrow\) PTGI & .317 (.000) & .065 (.388) \\
+Extraversion \(\rightarrow\) PTGI & .411 (.000) & .172 (.046) \\
+Coping \(\rightarrow\) IESR & .103 (.040) & .213 (.004) \\
+Neuroticism \(\rightarrow\) IESR & .678 (.000) & .527 (.000) \\
+Extraversion \(\rightarrow\) IESR & .306 (.000) & .201 (.016) \\
+\bottomrule()
+\end{longtable}

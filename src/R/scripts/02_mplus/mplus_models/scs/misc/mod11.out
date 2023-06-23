@@ -1,0 +1,840 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/04/2022   9:13 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Bi-factor ESEM code by ESEM code generator for Mplus
+
+  DATA:
+  FILE IS selfcompassionitems.dat;
+
+  VARIABLE:
+  NAMES ARE scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8
+            scmi9 scch10 scsj11 scsk12 scis13 scmi14 scch15
+            scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22
+            scsk23 scoi24 scis25 scsk26;
+
+  MISSING ARE ALL (-999); !Change the indicator of your missing values if not -999
+
+  !Tip: If Mplus gives an error that it is unable to expand a certain set of variables
+  !when running the ESEM code then identify that range of variables in the
+  !usevariables list and move them to another position in the usevariables list (e.g. top).
+
+  USEVARIABLES ARE
+  SCSK5
+  SCSK12
+  SCSK19
+  SCSK23
+  SCSK26
+  SCCH3
+  SCCH7
+  SCCH10
+  SCCH15
+  SCMI9
+  SCMI14
+  SCMI17
+  SCMI22
+  SCSJ1
+  SCSJ8
+  SCSJ11
+  SCSJ16
+  SCSJ21
+  SCIS4
+  SCIS13
+  SCIS18
+  SCIS25
+  SCOI2
+  SCOI6
+  SCOI20
+  SCOI24
+  ;
+
+  ANALYSIS:
+  ESTIMATOR=ML; !Other estimators are also possible, such as MLR.
+  !PROCESSORS=8; !Replace 8 with the number of logical processors of your CPU and remove !
+  !STARTS=20; !Convergence problems? Attempt different starting values. Remove ! to enable.
+  !STITERATION=50000; !Use with STARTS function when your model fails to converge.
+  ROTATION=TARGET (orthogonal); !Use if factors are theoretically and
+
+  MODEL:
+
+  ! (*1) indicates that an exploratory model involving your variables will be requested.
+  ! (~0) indicates that the non-intended cross-loadings are constrained to be as close
+  ! as possible to zero.
+
+  !Global factor - other factors automatically uncorrelated with G by default.
+  G by
+  SCSK5-SCOI24 (*1); !Global factor added -remaining factors automatically uncorrelated with
+
+  POS BY
+  SCSK5-SCMI22
+  SCSJ1-SCOI24~0 (*1);
+
+  NEG BY
+  SCSJ1-SCOI24
+  SCSK5-SCMI22~0 (*1);
+
+  OUTPUT:
+  stdyx;
+  tech4;
+  !mod(10); !Remove the ! infront of mod to request modification indices.
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Bi-factor ESEM code by ESEM code generator for Mplus
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         783
+
+Number of dependent variables                                   26
+Number of independent variables                                  0
+Number of continuous latent variables                            3
+
+Observed dependent variables
+
+  Continuous
+   SCSK5       SCSK12      SCSK19      SCSK23      SCSK26      SCCH3
+   SCCH7       SCCH10      SCCH15      SCMI9       SCMI14      SCMI17
+   SCMI22      SCSJ1       SCSJ8       SCSJ11      SCSJ16      SCSJ21
+   SCIS4       SCIS13      SCIS18      SCIS25      SCOI2       SCOI6
+   SCOI20      SCOI24
+
+Continuous latent variables
+
+  EFA factors
+  *1:   G           POS         NEG
+
+
+Estimator                                                       ML
+Rotation                                                    TARGET
+Row standardization                                    CORRELATION
+Type of rotation                                        ORTHOGONAL
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization Specifications for the Exploratory Factor Analysis
+Rotation Algorithm
+  Number of random starts                                       30
+  Maximum number of iterations                             1000000
+  Derivative convergence criterion                       0.100D-04
+
+Input data file(s)
+  selfcompassionitems.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SCSK5         SCSK12        SCSK19        SCSK23        SCSK26
+              ________      ________      ________      ________      ________
+ SCSK5          1.000
+ SCSK12         1.000         1.000
+ SCSK19         1.000         1.000         1.000
+ SCSK23         1.000         1.000         1.000         1.000
+ SCSK26         1.000         1.000         1.000         1.000         1.000
+ SCCH3          1.000         1.000         1.000         1.000         1.000
+ SCCH7          1.000         1.000         1.000         1.000         1.000
+ SCCH10         1.000         1.000         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSJ1          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCCH3         SCCH7         SCCH10        SCCH15        SCMI9
+              ________      ________      ________      ________      ________
+ SCCH3          1.000
+ SCCH7          1.000         1.000
+ SCCH10         1.000         1.000         1.000
+ SCCH15         1.000         1.000         1.000         1.000
+ SCMI9          1.000         1.000         1.000         1.000         1.000
+ SCMI14         1.000         1.000         1.000         1.000         1.000
+ SCMI17         1.000         1.000         1.000         1.000         1.000
+ SCMI22         1.000         1.000         1.000         1.000         1.000
+ SCSJ1          1.000         1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCMI14        SCMI17        SCMI22        SCSJ1         SCSJ8
+              ________      ________      ________      ________      ________
+ SCMI14         1.000
+ SCMI17         1.000         1.000
+ SCMI22         1.000         1.000         1.000
+ SCSJ1          1.000         1.000         1.000         1.000
+ SCSJ8          1.000         1.000         1.000         1.000         1.000
+ SCSJ11         1.000         1.000         1.000         1.000         1.000
+ SCSJ16         1.000         1.000         1.000         1.000         1.000
+ SCSJ21         1.000         1.000         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCSJ11        SCSJ16        SCSJ21        SCIS4         SCIS13
+              ________      ________      ________      ________      ________
+ SCSJ11         1.000
+ SCSJ16         1.000         1.000
+ SCSJ21         1.000         1.000         1.000
+ SCIS4          1.000         1.000         1.000         1.000
+ SCIS13         1.000         1.000         1.000         1.000         1.000
+ SCIS18         1.000         1.000         1.000         1.000         1.000
+ SCIS25         1.000         1.000         1.000         1.000         1.000
+ SCOI2          1.000         1.000         1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCIS18        SCIS25        SCOI2         SCOI6         SCOI20
+              ________      ________      ________      ________      ________
+ SCIS18         1.000
+ SCIS25         1.000         1.000
+ SCOI2          1.000         1.000         1.000
+ SCOI6          1.000         1.000         1.000         1.000
+ SCOI20         1.000         1.000         1.000         1.000         1.000
+ SCOI24         1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCOI24
+              ________
+ SCOI24         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SCSK5                 2.779       0.189       1.000   14.94%       2.000      2.000      3.000
+             783.000       1.360      -0.795       5.000    8.43%       3.000      4.000
+     SCSK12                2.655       0.289       1.000   16.86%       2.000      2.000      3.000
+             783.000       1.314      -0.750       5.000    6.51%       3.000      4.000
+     SCSK19                2.733       0.208       1.000   15.33%       2.000      2.000      3.000
+             783.000       1.294      -0.703       5.000    7.28%       3.000      4.000
+     SCSK23                2.750       0.202       1.000   14.05%       2.000      2.000      3.000
+             783.000       1.250      -0.664       5.000    7.02%       3.000      4.000
+     SCSK26                2.789       0.141       1.000   11.49%       2.000      2.000      3.000
+             783.000       1.134      -0.601       5.000    5.75%       3.000      4.000
+     SCCH3                 3.266      -0.367       1.000    7.79%       2.000      3.000      3.000
+             783.000       1.173      -0.420       5.000   11.49%       4.000      4.000
+     SCCH7                 2.524       0.361       1.000   26.69%       1.000      2.000      2.000
+             783.000       1.550      -0.897       5.000    7.54%       3.000      4.000
+     SCCH10                2.576       0.223       1.000   22.35%       1.000      2.000      3.000
+             783.000       1.358      -0.858       5.000    5.24%       3.000      4.000
+     SCCH15                3.125      -0.151       1.000    8.94%       2.000      3.000      3.000
+             783.000       1.269      -0.706       5.000   11.24%       3.000      4.000
+     SCMI9                 3.499      -0.413       1.000    4.21%       3.000      3.000      4.000
+             783.000       1.083      -0.309       5.000   17.24%       4.000      4.000
+     SCMI14                3.567      -0.434       1.000    3.45%       3.000      3.000      4.000
+             783.000       1.050      -0.281       5.000   19.03%       4.000      4.000
+     SCMI17                3.344      -0.265       1.000    3.96%       3.000      3.000      3.000
+             783.000       1.007      -0.387       5.000   11.75%       4.000      4.000
+     SCMI22                2.848       0.039       1.000   13.41%       2.000      3.000      3.000
+             783.000       1.273      -0.766       5.000    7.15%       3.000      4.000
+     SCSJ1                 3.693      -0.545       1.000    3.58%       3.000      4.000      4.000
+             783.000       1.153      -0.341       5.000   26.31%       4.000      5.000
+     SCSJ8                 2.853       0.045       1.000   19.80%       2.000      2.000      3.000
+             783.000       1.681      -1.125       5.000   11.49%       3.000      4.000
+     SCSJ11                2.722       0.204       1.000   20.05%       1.000      2.000      3.000
+             783.000       1.567      -1.019       5.000    9.20%       3.000      4.000
+     SCSJ16                2.865       0.068       1.000   17.88%       2.000      2.000      3.000
+             783.000       1.645      -1.126       5.000   11.37%       3.000      4.000
+     SCSJ21                2.784       0.122       1.000   15.96%       2.000      2.000      3.000
+             783.000       1.362      -0.812       5.000    7.92%       3.000      4.000
+     SCIS4                 2.368       0.583       1.000   33.84%       1.000      2.000      2.000
+             783.000       1.683      -0.831       5.000    8.17%       3.000      4.000
+     SCIS13                2.605       0.302       1.000   27.59%       1.000      2.000      2.000
+             783.000       1.779      -1.141       5.000    9.96%       3.000      4.000
+     SCIS18                2.814       0.083       1.000   19.67%       2.000      2.000      3.000
+             783.000       1.631      -1.099       5.000   10.34%       3.000      4.000
+     SCIS25                2.598       0.240       1.000   29.89%       1.000      2.000      3.000
+             783.000       1.801      -1.218       5.000    8.94%       3.000      4.000
+     SCOI2                 2.494       0.439       1.000   30.27%       1.000      2.000      2.000
+             783.000       1.729      -0.976       5.000    9.45%       3.000      4.000
+     SCOI6                 2.705       0.247       1.000   22.35%       1.000      2.000      3.000
+             783.000       1.687      -1.059       5.000   10.98%       3.000      4.000
+     SCOI20                2.342       0.547       1.000   30.14%       1.000      2.000      2.000
+             783.000       1.395      -0.603       5.000    5.49%       3.000      3.000
+     SCOI24                2.003       1.004       1.000   43.30%       1.000      1.000      2.000
+             783.000       1.272       0.154       5.000    3.96%       2.000      3.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                      127
+
+Loglikelihood
+
+          H0 Value                      -27741.946
+          H1 Value                      -27066.126
+
+Information Criteria
+
+          Akaike (AIC)                   55737.893
+          Bayesian (BIC)                 56330.110
+          Sample-Size Adjusted BIC       55926.822
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                           1351.640
+          Degrees of Freedom                   250
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.075
+          90 Percent C.I.                    0.071  0.079
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.889
+          TLI                                0.856
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                          10251.427
+          Degrees of Freedom                   325
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.038
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    SCSK5              0.018      0.057      0.322      0.747
+    SCSK12            -0.107      0.065     -1.642      0.101
+    SCSK19            -0.120      0.067     -1.786      0.074
+    SCSK23            -0.118      0.076     -1.561      0.119
+    SCSK26            -0.039      0.064     -0.615      0.538
+    SCCH3             -0.209      0.052     -3.999      0.000
+    SCCH7              0.052      0.059      0.890      0.374
+    SCCH10            -0.146      0.054     -2.716      0.007
+    SCCH15            -0.356      0.052     -6.882      0.000
+    SCMI9             -0.454      0.046     -9.953      0.000
+    SCMI14            -0.618      0.043    -14.527      0.000
+    SCMI17            -0.551      0.047    -11.850      0.000
+    SCMI22            -0.351      0.055     -6.448      0.000
+    SCSJ1             -0.096      0.073     -1.321      0.187
+    SCSJ8              0.053      0.107      0.494      0.622
+    SCSJ11             0.060      0.101      0.600      0.549
+    SCSJ16             0.127      0.102      1.251      0.211
+    SCSJ21             0.025      0.083      0.304      0.761
+    SCIS4              0.576      0.095      6.053      0.000
+    SCIS13             0.654      0.088      7.433      0.000
+    SCIS18             0.580      0.088      6.596      0.000
+    SCIS25             0.547      0.096      5.714      0.000
+    SCOI2              0.551      0.097      5.666      0.000
+    SCOI6              0.496      0.098      5.072      0.000
+    SCOI20             0.567      0.064      8.860      0.000
+    SCOI24             0.539      0.063      8.506      0.000
+
+ POS      BY
+    SCSK5              0.770      0.040     19.230      0.000
+    SCSK12             0.804      0.038     21.035      0.000
+    SCSK19             0.817      0.037     22.021      0.000
+    SCSK23             0.671      0.037     18.043      0.000
+    SCSK26             0.717      0.036     20.140      0.000
+    SCCH3              0.351      0.042      8.310      0.000
+    SCCH7              0.574      0.045     12.798      0.000
+    SCCH10             0.563      0.043     13.090      0.000
+    SCCH15             0.660      0.041     16.238      0.000
+    SCMI9              0.361      0.042      8.549      0.000
+    SCMI14             0.358      0.041      8.768      0.000
+    SCMI17             0.485      0.037     13.035      0.000
+    SCMI22             0.660      0.040     16.674      0.000
+    SCSJ1             -0.053      0.034     -1.543      0.123
+    SCSJ8             -0.122      0.034     -3.529      0.000
+    SCSJ11            -0.100      0.035     -2.884      0.004
+    SCSJ16            -0.120      0.035     -3.440      0.001
+    SCSJ21            -0.077      0.036     -2.141      0.032
+    SCIS4             -0.078      0.031     -2.529      0.011
+    SCIS13            -0.006      0.034     -0.181      0.857
+    SCIS18             0.062      0.032      1.964      0.050
+    SCIS25            -0.050      0.033     -1.491      0.136
+    SCOI2             -0.069      0.031     -2.211      0.027
+    SCOI6             -0.054      0.031     -1.721      0.085
+    SCOI20             0.137      0.033      4.144      0.000
+    SCOI24             0.042      0.032      1.338      0.181
+
+ NEG      BY
+    SCSJ1              0.627      0.038     16.493      0.000
+    SCSJ8              0.995      0.041     24.435      0.000
+    SCSJ11             0.920      0.040     22.897      0.000
+    SCSJ16             0.932      0.042     22.392      0.000
+    SCSJ21             0.720      0.040     18.210      0.000
+    SCIS4              0.857      0.060     14.216      0.000
+    SCIS13             0.753      0.068     10.994      0.000
+    SCIS18             0.794      0.063     12.559      0.000
+    SCIS25             0.859      0.061     14.139      0.000
+    SCOI2              0.889      0.059     15.067      0.000
+    SCOI6              0.898      0.056     15.998      0.000
+    SCOI20             0.548      0.062      8.870      0.000
+    SCOI24             0.524      0.058      9.056      0.000
+    SCSK5             -0.017      0.036     -0.484      0.629
+    SCSK12            -0.169      0.032     -5.349      0.000
+    SCSK19            -0.201      0.031     -6.604      0.000
+    SCSK23            -0.364      0.033    -11.050      0.000
+    SCSK26            -0.211      0.031     -6.735      0.000
+    SCCH3              0.265      0.037      7.091      0.000
+    SCCH7              0.285      0.044      6.533      0.000
+    SCCH10             0.232      0.038      6.142      0.000
+    SCCH15             0.019      0.034      0.573      0.567
+    SCMI9              0.190      0.038      4.965      0.000
+    SCMI14            -0.006      0.044     -0.144      0.886
+    SCMI17            -0.094      0.039     -2.397      0.017
+    SCMI22            -0.066      0.034     -1.919      0.055
+
+ POS      WITH
+    G                  0.000      0.000    999.000    999.000
+
+ NEG      WITH
+    G                  0.000      0.000    999.000    999.000
+    POS                0.000      0.000    999.000    999.000
+
+ Intercepts
+    SCSK5              2.779      0.042     66.685      0.000
+    SCSK12             2.655      0.041     64.814      0.000
+    SCSK19             2.733      0.041     67.230      0.000
+    SCSK23             2.750      0.040     68.813      0.000
+    SCSK26             2.789      0.038     73.281      0.000
+    SCCH3              3.266      0.039     84.359      0.000
+    SCCH7              2.524      0.044     56.728      0.000
+    SCCH10             2.576      0.042     61.858      0.000
+    SCCH15             3.125      0.040     77.625      0.000
+    SCMI9              3.499      0.037     94.106      0.000
+    SCMI14             3.567      0.037     97.403      0.000
+    SCMI17             3.344      0.036     93.228      0.000
+    SCMI22             2.848      0.040     70.628      0.000
+    SCSJ1              3.693      0.038     96.269      0.000
+    SCSJ8              2.853      0.046     61.579      0.000
+    SCSJ11             2.722      0.045     60.828      0.000
+    SCSJ16             2.865      0.046     62.507      0.000
+    SCSJ21             2.784      0.042     66.753      0.000
+    SCIS4              2.368      0.046     51.066      0.000
+    SCIS13             2.605      0.048     54.656      0.000
+    SCIS18             2.814      0.046     61.652      0.000
+    SCIS25             2.598      0.048     54.162      0.000
+    SCOI2              2.494      0.047     53.080      0.000
+    SCOI6              2.705      0.046     58.276      0.000
+    SCOI20             2.342      0.042     55.492      0.000
+    SCOI24             2.003      0.040     49.684      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+    POS                1.000      0.000    999.000    999.000
+    NEG                1.000      0.000    999.000    999.000
+
+ Residual Variances
+    SCSK5              0.766      0.046     16.692      0.000
+    SCSK12             0.627      0.040     15.768      0.000
+    SCSK19             0.571      0.037     15.511      0.000
+    SCSK23             0.654      0.039     16.717      0.000
+    SCSK26             0.575      0.036     16.038      0.000
+    SCCH3              0.936      0.050     18.850      0.000
+    SCCH7              1.136      0.061     18.649      0.000
+    SCCH10             0.966      0.052     18.549      0.000
+    SCCH15             0.706      0.040     17.645      0.000
+    SCMI9              0.711      0.042     17.123      0.000
+    SCMI14             0.540      0.036     15.002      0.000
+    SCMI17             0.460      0.029     16.061      0.000
+    SCMI22             0.710      0.040     17.876      0.000
+    SCSJ1              0.747      0.042     17.778      0.000
+    SCSJ8              0.673      0.042     15.912      0.000
+    SCSJ11             0.707      0.042     16.724      0.000
+    SCSJ16             0.746      0.043     17.170      0.000
+    SCSJ21             0.837      0.046     18.167      0.000
+    SCIS4              0.612      0.035     17.325      0.000
+    SCIS13             0.784      0.046     17.098      0.000
+    SCIS18             0.659      0.039     17.005      0.000
+    SCIS25             0.762      0.043     17.912      0.000
+    SCOI2              0.632      0.036     17.409      0.000
+    SCOI6              0.632      0.036     17.565      0.000
+    SCOI20             0.755      0.043     17.623      0.000
+    SCOI24             0.705      0.039     17.988      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.452E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ G        BY
+    SCSK5              0.016      0.049      0.322      0.747
+    SCSK12            -0.094      0.057     -1.651      0.099
+    SCSK19            -0.106      0.059     -1.799      0.072
+    SCSK23            -0.105      0.067     -1.574      0.116
+    SCSK26            -0.037      0.060     -0.616      0.538
+    SCCH3             -0.193      0.047     -4.062      0.000
+    SCCH7              0.042      0.047      0.891      0.373
+    SCCH10            -0.125      0.046     -2.729      0.006
+    SCCH15            -0.316      0.044     -7.169      0.000
+    SCMI9             -0.436      0.040    -10.861      0.000
+    SCMI14            -0.603      0.035    -17.459      0.000
+    SCMI17            -0.549      0.040    -13.646      0.000
+    SCMI22            -0.311      0.046     -6.731      0.000
+    SCSJ1             -0.090      0.068     -1.323      0.186
+    SCSJ8              0.041      0.082      0.494      0.621
+    SCSJ11             0.048      0.080      0.601      0.548
+    SCSJ16             0.099      0.079      1.256      0.209
+    SCSJ21             0.022      0.071      0.305      0.761
+    SCIS4              0.444      0.070      6.366      0.000
+    SCIS13             0.490      0.062      7.912      0.000
+    SCIS18             0.454      0.066      6.912      0.000
+    SCIS25             0.408      0.068      5.963      0.000
+    SCOI2              0.419      0.071      5.925      0.000
+    SCOI6              0.382      0.073      5.257      0.000
+    SCOI20             0.480      0.050      9.522      0.000
+    SCOI24             0.478      0.052      9.149      0.000
+
+ POS      BY
+    SCSK5              0.660      0.024     27.236      0.000
+    SCSK12             0.701      0.023     30.688      0.000
+    SCSK19             0.718      0.022     32.838      0.000
+    SCSK23             0.600      0.026     23.049      0.000
+    SCSK26             0.673      0.023     28.757      0.000
+    SCCH3              0.324      0.037      8.868      0.000
+    SCCH7              0.461      0.031     14.839      0.000
+    SCCH10             0.483      0.031     15.395      0.000
+    SCCH15             0.586      0.030     19.861      0.000
+    SCMI9              0.347      0.038      9.064      0.000
+    SCMI14             0.349      0.039      9.058      0.000
+    SCMI17             0.483      0.035     13.853      0.000
+    SCMI22             0.585      0.029     20.373      0.000
+    SCSJ1             -0.049      0.032     -1.547      0.122
+    SCSJ8             -0.094      0.026     -3.556      0.000
+    SCSJ11            -0.080      0.028     -2.900      0.004
+    SCSJ16            -0.094      0.027     -3.462      0.001
+    SCSJ21            -0.066      0.031     -2.148      0.032
+    SCIS4             -0.060      0.024     -2.517      0.012
+    SCIS13            -0.005      0.026     -0.180      0.857
+    SCIS18             0.049      0.025      1.972      0.049
+    SCIS25            -0.037      0.025     -1.488      0.137
+    SCOI2             -0.053      0.024     -2.203      0.028
+    SCOI6             -0.041      0.024     -1.717      0.086
+    SCOI20             0.116      0.028      4.181      0.000
+    SCOI24             0.038      0.028      1.341      0.180
+
+ NEG      BY
+    SCSJ1              0.584      0.028     21.196      0.000
+    SCSJ8              0.768      0.018     42.937      0.000
+    SCSJ11             0.735      0.020     37.491      0.000
+    SCSJ16             0.727      0.021     34.648      0.000
+    SCSJ21             0.617      0.025     25.009      0.000
+    SCIS4              0.660      0.044     14.891      0.000
+    SCIS13             0.564      0.050     11.348      0.000
+    SCIS18             0.622      0.047     13.279      0.000
+    SCIS25             0.640      0.042     15.158      0.000
+    SCOI2              0.676      0.042     16.053      0.000
+    SCOI6              0.691      0.039     17.519      0.000
+    SCOI20             0.464      0.050      9.217      0.000
+    SCOI24             0.464      0.050      9.360      0.000
+    SCSK5             -0.015      0.031     -0.484      0.628
+    SCSK12            -0.148      0.027     -5.446      0.000
+    SCSK19            -0.177      0.026     -6.774      0.000
+    SCSK23            -0.326      0.027    -11.894      0.000
+    SCSK26            -0.198      0.029     -6.951      0.000
+    SCCH3              0.245      0.033      7.337      0.000
+    SCCH7              0.229      0.034      6.760      0.000
+    SCCH10             0.199      0.032      6.292      0.000
+    SCCH15             0.017      0.030      0.573      0.567
+    SCMI9              0.183      0.037      4.999      0.000
+    SCMI14            -0.006      0.043     -0.144      0.886
+    SCMI17            -0.094      0.039     -2.380      0.017
+    SCMI22            -0.059      0.031     -1.918      0.055
+
+ POS      WITH
+    G                  0.000      0.000    999.000    999.000
+
+ NEG      WITH
+    G                  0.000      0.000    999.000    999.000
+    POS                0.000      0.000    999.000    999.000
+
+ Intercepts
+    SCSK5              2.383      0.070     34.032      0.000
+    SCSK12             2.316      0.069     33.776      0.000
+    SCSK19             2.403      0.070     34.104      0.000
+    SCSK23             2.459      0.072     34.305      0.000
+    SCSK26             2.619      0.075     34.820      0.000
+    SCCH3              3.015      0.084     35.827      0.000
+    SCCH7              2.027      0.062     32.456      0.000
+    SCCH10             2.211      0.066     33.335      0.000
+    SCCH15             2.774      0.079     35.256      0.000
+    SCMI9              3.363      0.092     36.479      0.000
+    SCMI14             3.481      0.095     36.663      0.000
+    SCMI17             3.332      0.091     36.427      0.000
+    SCMI22             2.524      0.073     34.523      0.000
+    SCSJ1              3.440      0.094     36.601      0.000
+    SCSJ8              2.201      0.066     33.290      0.000
+    SCSJ11             2.174      0.066     33.170      0.000
+    SCSJ16             2.234      0.067     33.435      0.000
+    SCSJ21             2.386      0.070     34.040      0.000
+    SCIS4              1.825      0.058     31.279      0.000
+    SCIS13             1.953      0.061     32.053      0.000
+    SCIS18             2.203      0.066     33.302      0.000
+    SCIS25             1.936      0.061     31.952      0.000
+    SCOI2              1.897      0.060     31.726      0.000
+    SCOI6              2.083      0.064     32.738      0.000
+    SCOI20             1.983      0.062     32.219      0.000
+    SCOI24             1.776      0.057     30.954      0.000
+
+ Variances
+    G                  1.000      0.000    999.000    999.000
+    POS                1.000      0.000    999.000    999.000
+    NEG                1.000      0.000    999.000    999.000
+
+ Residual Variances
+    SCSK5              0.563      0.032     17.502      0.000
+    SCSK12             0.477      0.031     15.546      0.000
+    SCSK19             0.442      0.029     14.982      0.000
+    SCSK23             0.523      0.031     16.995      0.000
+    SCSK26             0.507      0.031     16.107      0.000
+    SCCH3              0.798      0.029     27.822      0.000
+    SCCH7              0.733      0.030     24.363      0.000
+    SCCH10             0.711      0.030     23.392      0.000
+    SCCH15             0.556      0.030     18.489      0.000
+    SCMI9              0.657      0.034     19.571      0.000
+    SCMI14             0.514      0.034     15.127      0.000
+    SCMI17             0.456      0.029     15.618      0.000
+    SCMI22             0.558      0.030     18.779      0.000
+    SCSJ1              0.648      0.032     20.386      0.000
+    SCSJ8              0.400      0.027     14.975      0.000
+    SCSJ11             0.451      0.028     16.167      0.000
+    SCSJ16             0.453      0.027     16.597      0.000
+    SCSJ21             0.614      0.030     20.218      0.000
+    SCIS4              0.363      0.023     15.753      0.000
+    SCIS13             0.441      0.027     16.388      0.000
+    SCIS18             0.404      0.025     15.916      0.000
+    SCIS25             0.423      0.025     16.878      0.000
+    SCOI2              0.365      0.023     15.836      0.000
+    SCOI6              0.375      0.023     16.054      0.000
+    SCOI20             0.541      0.030     18.224      0.000
+    SCOI24             0.554      0.029     18.853      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    SCSK5              0.437      0.032     13.561      0.000
+    SCSK12             0.523      0.031     17.019      0.000
+    SCSK19             0.558      0.029     18.951      0.000
+    SCSK23             0.477      0.031     15.516      0.000
+    SCSK26             0.493      0.031     15.693      0.000
+    SCCH3              0.202      0.029      7.041      0.000
+    SCCH7              0.267      0.030      8.872      0.000
+    SCCH10             0.289      0.030      9.499      0.000
+    SCCH15             0.444      0.030     14.759      0.000
+    SCMI9              0.343      0.034     10.236      0.000
+    SCMI14             0.486      0.034     14.291      0.000
+    SCMI17             0.544      0.029     18.609      0.000
+    SCMI22             0.442      0.030     14.905      0.000
+    SCSJ1              0.352      0.032     11.058      0.000
+    SCSJ8              0.600      0.027     22.444      0.000
+    SCSJ11             0.549      0.028     19.683      0.000
+    SCSJ16             0.547      0.027     20.009      0.000
+    SCSJ21             0.386      0.030     12.698      0.000
+    SCIS4              0.637      0.023     27.598      0.000
+    SCIS13             0.559      0.027     20.791      0.000
+    SCIS18             0.596      0.025     23.460      0.000
+    SCIS25             0.577      0.025     23.026      0.000
+    SCOI2              0.635      0.023     27.516      0.000
+    SCOI6              0.625      0.023     26.767      0.000
+    SCOI20             0.459      0.030     15.465      0.000
+    SCOI24             0.446      0.029     15.161      0.000
+
+
+TECHNICAL 4 OUTPUT
+
+
+     ESTIMATES DERIVED FROM THE MODEL
+
+
+           ESTIMATED MEANS FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+                0.000         0.000         0.000
+
+
+           S.E. FOR ESTIMATED MEANS FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+                0.000         0.000         0.000
+
+
+           EST./S.E. FOR ESTIMATED MEANS FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+                0.000         0.000         0.000
+
+
+           TWO-TAILED P-VALUE FOR ESTIMATED MEANS FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+                1.000         1.000         1.000
+
+
+           ESTIMATED COVARIANCE MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G              1.000
+ POS            0.000         1.000
+ NEG            0.000         0.000         1.000
+
+
+           S.E. FOR ESTIMATED COVARIANCE MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G              0.000
+ POS            0.000         0.000
+ NEG            0.000         0.000         0.000
+
+
+           EST./S.E. FOR ESTIMATED COVARIANCE MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G        ***********
+ POS            0.000   ***********
+ NEG            0.000         0.000   ***********
+
+
+           TWO-TAILED P-VALUE FOR ESTIMATED COVARIANCE MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G              0.000
+ POS            1.000         0.000
+ NEG            1.000         1.000         0.000
+
+
+           ESTIMATED CORRELATION MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G              1.000
+ POS            0.000         1.000
+ NEG            0.000         0.000         1.000
+
+
+           S.E. FOR ESTIMATED CORRELATION MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G              0.000
+ POS            0.000         0.000
+ NEG            0.000         0.000         0.000
+
+
+           EST./S.E. FOR ESTIMATED CORRELATION MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G            999.000
+ POS            0.000       999.000
+ NEG            0.000         0.000       999.000
+
+
+           TWO-TAILED P-VALUE FOR ESTIMATED CORRELATION MATRIX FOR THE LATENT VARIABLES
+              G             POS           NEG
+              ________      ________      ________
+ G              0.000
+ POS            1.000         0.000
+ NEG            1.000         1.000         0.000
+
+
+     Beginning Time:  21:13:26
+        Ending Time:  21:13:27
+       Elapsed Time:  00:00:01
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

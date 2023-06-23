@@ -1,0 +1,387 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/08/2022   4:22 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: 1 factor CFA.
+  DATA:
+  FILE = "semdata.dat";
+
+  VARIABLE:
+  NAMES =
+    scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+    scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+    scoi24 scis25 scsk26
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac;
+
+  MISSING = .;
+
+  USEVARIABLES ARE
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  ! Specifying that we’re treating the variables as categorical.
+  ! CATEGORICAL ARE all;
+
+  ANALYSIS:
+  ! Requesting the weighted least squares mean- and variance-adjusted estimator
+  ESTIMATOR = MLR;
+  PROCESSORS = 6;
+  STARTS = 20;
+
+  MODEL:
+
+  PTGI BY
+    ptgi_al* ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  PTGI@1;
+
+  ! Requesting standardized parameter estimates and modification indices
+  OUTPUT:
+  stdyx;
+  !tech4;
+  MODINDICES (ALL);
+
+  savedata:
+  file is example1_scores.txt;
+  save = fscores;
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+1 factor CFA.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                        1068
+
+Number of dependent variables                                    5
+Number of independent variables                                  0
+Number of continuous latent variables                            1
+
+Observed dependent variables
+
+  Continuous
+   PTGI_AL     PTGI_NP     PTGI_PS     PTGI_SP     PTGI_RO
+
+Continuous latent variables
+   PTGI
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Random Starts Specifications
+  Number of random starts                                       20
+  Random starts scale                                    0.500D+01
+
+Input data file(s)
+  semdata.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              PTGI_AL       PTGI_NP       PTGI_PS       PTGI_SP       PTGI_RO
+              ________      ________      ________      ________      ________
+ PTGI_AL        1.000
+ PTGI_NP        1.000         1.000
+ PTGI_PS        1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     PTGI_AL               7.226      -0.114       0.000    8.99%       3.000      6.000      8.000
+            1068.000      17.821      -0.960      15.000    3.37%       9.000     11.000
+     PTGI_NP               9.835       0.250       0.000    9.46%       3.000      8.000     10.000
+            1068.000      43.505      -0.843      25.000    1.12%      12.000     16.000
+     PTGI_PS              10.206      -0.234       0.000    5.06%       5.000      9.000     11.000
+            1068.000      27.774      -0.835      20.000    2.90%      12.000     15.000
+     PTGI_SP               1.390       1.722       0.000   58.71%       0.000      0.000      0.000
+            1068.000       4.755       2.448      10.000    0.75%       1.000      3.000
+     PTGI_RO              14.959       0.047       0.000    6.65%       5.000     12.000     15.000
+            1068.000      84.202      -1.005      35.000    0.94%      18.000     24.000
+
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST FIT FUNCTION VALUES
+
+Fit function values at local maxima and random start numbers:
+
+             25.2926         13
+             25.2926         15
+             25.2926         20
+             25.2926         18
+             25.2926         9
+             25.2926         3
+             25.2926         5
+             25.2926         7
+             25.2926         16
+             25.2926         14
+             25.2926         6
+             25.2926         1
+             25.2926         10
+             25.2926         2
+             25.2926         11
+             25.2926         17
+             25.2926         19
+             25.2926         8
+             25.2926         12
+             25.2926         unperturbed
+             25.2926         4
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       15
+
+Loglikelihood
+
+          H0 Value                      -14441.058
+          H0 Scaling Correction Factor      1.1180
+            for MLR
+          H1 Value                      -14428.412
+          H1 Scaling Correction Factor      1.0968
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   28912.116
+          Bayesian (BIC)                 28986.719
+          Sample-Size Adjusted BIC       28939.076
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                             24.472*
+          Degrees of Freedom                     5
+          P-Value                           0.0002
+          Scaling Correction Factor         1.0335
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.060
+          90 Percent C.I.                    0.038  0.085
+          Probability RMSEA <= .05           0.206
+
+CFI/TLI
+
+          CFI                                0.993
+          TLI                                0.985
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           2675.217
+          Degrees of Freedom                    10
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.015
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTGI     BY
+    PTGI_AL            3.489      0.087     40.140      0.000
+    PTGI_NP            6.164      0.124     49.536      0.000
+    PTGI_PS            4.188      0.119     35.186      0.000
+    PTGI_SP            1.089      0.067     16.255      0.000
+    PTGI_RO            7.842      0.195     40.215      0.000
+
+ Intercepts
+    PTGI_AL            7.226      0.129     55.937      0.000
+    PTGI_NP            9.835      0.202     48.731      0.000
+    PTGI_PS           10.206      0.161     63.288      0.000
+    PTGI_SP            1.390      0.067     20.839      0.000
+    PTGI_RO           14.959      0.281     53.275      0.000
+
+ Variances
+    PTGI               1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTGI_AL            5.647      0.331     17.064      0.000
+    PTGI_NP            5.513      0.584      9.433      0.000
+    PTGI_PS           10.233      0.572     17.899      0.000
+    PTGI_SP            3.569      0.213     16.728      0.000
+    PTGI_RO           22.712      1.772     12.819      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.743E-02
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTGI     BY
+    PTGI_AL            0.827      0.012     69.019      0.000
+    PTGI_NP            0.934      0.007    125.006      0.000
+    PTGI_PS            0.795      0.014     57.147      0.000
+    PTGI_SP            0.499      0.021     24.074      0.000
+    PTGI_RO            0.855      0.013     65.612      0.000
+
+ Intercepts
+    PTGI_AL            1.712      0.043     39.981      0.000
+    PTGI_NP            1.491      0.034     43.243      0.000
+    PTGI_PS            1.937      0.049     39.665      0.000
+    PTGI_SP            0.638      0.018     35.027      0.000
+    PTGI_RO            1.630      0.039     42.321      0.000
+
+ Variances
+    PTGI               1.000      0.000    999.000    999.000
+
+ Residual Variances
+    PTGI_AL            0.317      0.020     16.007      0.000
+    PTGI_NP            0.127      0.014      9.070      0.000
+    PTGI_PS            0.368      0.022     16.670      0.000
+    PTGI_SP            0.751      0.021     36.239      0.000
+    PTGI_RO            0.270      0.022     12.117      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    PTGI_AL            0.683      0.020     34.510      0.000
+    PTGI_NP            0.873      0.014     62.503      0.000
+    PTGI_PS            0.632      0.022     28.573      0.000
+    PTGI_SP            0.249      0.021     12.037      0.000
+    PTGI_RO            0.730      0.022     32.806      0.000
+
+
+MODEL MODIFICATION INDICES
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+ON Statements
+
+PTGI_PS  ON PTGI_SP               13.300    -0.210     -0.210       -0.087
+PTGI_SP  ON PTGI_PS               13.301    -0.073     -0.073       -0.177
+
+WITH Statements
+
+PTGI_SP  WITH PTGI_PS             13.300    -0.749     -0.749       -0.124
+
+
+SAMPLE STATISTICS FOR ESTIMATED FACTOR SCORES
+
+
+     SAMPLE STATISTICS
+
+
+           Means
+              PTGI          PTGI_SE
+              ________      ________
+                0.000         0.260
+
+
+           Covariances
+              PTGI          PTGI_SE
+              ________      ________
+ PTGI           0.932
+ PTGI_SE        0.000         0.000
+
+
+           Correlations
+              PTGI          PTGI_SE
+              ________      ________
+ PTGI           1.000
+ PTGI_SE      999.000         1.000
+
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    example1_scores.txt
+
+  Order and format of variables
+
+    PTGI_AL        F10.3
+    PTGI_NP        F10.3
+    PTGI_PS        F10.3
+    PTGI_SP        F10.3
+    PTGI_RO        F10.3
+    PTGI           F10.3
+    PTGI_SE        F10.3
+
+  Save file format
+    7F10.3
+
+  Save file record length    10000
+
+  Save missing symbol        *
+
+
+     Beginning Time:  16:22:19
+        Ending Time:  16:22:19
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

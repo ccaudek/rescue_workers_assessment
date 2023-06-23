@@ -1,0 +1,1012 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+11/09/2022   4:36 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Model 7, RW.
+  DATA:
+  FILE = "semdatass.dat";
+
+  VARIABLE:
+  NAMES =
+    scsj1 scoi2 scch3 scis4 scsk5 scoi6 scch7 scsj8 scmi9 scch10 scsj11 scsk12
+    scis13 scmi14 scch15 scsj16 scmi17 scis18 scsk19 scoi20 scsj21 scmi22 scsk23
+    scoi24 scis25 scsk26
+    pos_sc neg_sc ts_sc
+    sk ch mi sj is oi
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    group
+    ;
+
+  MISSING = .;
+
+  USEVARIABLES ARE
+    sk ch mi sj is oi
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    ;
+  USEOBS = GROUP == 0;
+
+  ANALYSIS:
+    ESTIMATOR = MLR;
+    PROCESSORS = 6;
+    ! ROTATION = TARGET (ORTHOGONAL);
+    STARTS = 20;
+
+  MODEL:
+
+  SC BY
+    sk ch mi sj is oi;
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  COPE BY
+    cope_pa cope_po;
+
+  NEURO BY
+    neuro_na neuro_sr;
+
+  EXTRA BY
+    extra_pa extra_so extra_ac;
+
+  SC ON COPE NEURO EXTRA;
+
+  PTGI ON SC COPE NEURO EXTRA;
+  IESR ON SC COPE NEURO EXTRA;
+
+  model indirect:
+    PTGI ind COPE;
+    PTGI ind NEURO;
+    PTGI ind EXTRA;
+
+    IESR ind COPE;
+    IESR ind NEURO;
+    IESR ind EXTRA;
+
+  ! Requesting standardized parameter estimates and modification indices
+  OUTPUT:
+    stdyx;
+    MODINDICES (ALL);
+
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Model 7, RW.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         746
+
+Number of dependent variables                                   21
+Number of independent variables                                  0
+Number of continuous latent variables                            6
+
+Observed dependent variables
+
+  Continuous
+   SK          CH          MI          SJ          IS          OI
+   PTGI_AL     PTGI_NP     PTGI_PS     PTGI_SP     PTGI_RO     IESR_A
+   IESR_I      IESR_H      COPE_PA     COPE_PO     NEURO_NA    NEURO_SR
+   EXTRA_PA    EXTRA_SO    EXTRA_AC
+
+Continuous latent variables
+   SC          PTGI        IESR        COPE        NEURO       EXTRA
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Random Starts Specifications
+  Number of random starts                                       20
+  Random starts scale                                    0.500D+01
+
+Input data file(s)
+  semdatass.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              SK            CH            MI            SJ            IS
+              ________      ________      ________      ________      ________
+ SK             1.000
+ CH             1.000         1.000
+ MI             1.000         1.000         1.000
+ SJ             1.000         1.000         1.000         1.000
+ IS             1.000         1.000         1.000         1.000         1.000
+ OI             1.000         1.000         1.000         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              OI            PTGI_AL       PTGI_NP       PTGI_PS       PTGI_SP
+              ________      ________      ________      ________      ________
+ OI             1.000
+ PTGI_AL        1.000         1.000
+ PTGI_NP        1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PTGI_RO       IESR_A        IESR_I        IESR_H        COPE_PA
+              ________      ________      ________      ________      ________
+ PTGI_RO        1.000
+ IESR_A         1.000         1.000
+ IESR_I         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              COPE_PO       NEURO_NA      NEURO_SR      EXTRA_PA      EXTRA_SO
+              ________      ________      ________      ________      ________
+ COPE_PO        1.000
+ NEURO_NA       1.000         1.000
+ NEURO_SR       1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              EXTRA_AC
+              ________
+ EXTRA_AC       1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     SK                   13.741       0.153       5.000    2.55%      10.000     13.000     14.000
+             746.000      18.637      -0.322      25.000    0.94%      15.000     17.000
+     CH                   11.598       0.124       4.000    0.94%       9.000     11.000     12.000
+             746.000      11.155      -0.373      20.000    0.80%      12.000     14.000
+     MI                   13.277      -0.169       4.000    0.54%      11.000     12.000     13.000
+             746.000       9.879      -0.117      20.000    2.95%      14.000     16.000
+     SJ                   15.063       0.084       5.000    0.40%      11.000     14.000     15.000
+             746.000      21.780      -0.730      25.000    1.74%      16.000     19.000
+     IS                   10.500       0.274       4.000    8.98%       6.000      9.000     10.000
+             746.000      19.419      -0.898      20.000    2.14%      12.000     15.000
+     OI                    9.641       0.496       4.000    7.91%       6.000      8.000      9.000
+             746.000      15.458      -0.533      20.000    1.34%      10.000     13.000
+     PTGI_AL               6.631       0.007       0.000   11.53%       2.000      5.000      7.000
+             746.000      17.753      -0.985      15.000    2.55%       8.000     11.000
+     PTGI_NP               8.615       0.424       0.000   12.33%       2.000      6.000      8.000
+             746.000      40.435      -0.703      25.000    0.40%      10.000     15.000
+     PTGI_PS              10.172      -0.265       0.000    5.50%       5.000      9.000     11.000
+             746.000      28.188      -0.843      20.000    2.55%      12.000     15.000
+     PTGI_SP               1.240       1.943       0.000   63.67%       0.000      0.000      0.000
+             746.000       4.611       3.260      10.000    0.80%       0.000      2.000
+     PTGI_RO              14.072       0.139       0.000    8.31%       4.000     11.000     14.000
+             746.000      85.123      -1.006      35.000    0.94%      17.000     23.000
+     IESR_A                6.517       0.951       0.000   13.27%       2.000      4.000      5.000
+             746.000      30.290       0.446      27.000    0.13%       7.000     11.000
+     IESR_I                8.572       0.884       0.000    8.98%       2.000      5.000      7.000
+             746.000      52.087       0.012      32.000    0.27%       9.000     15.000
+     IESR_H                3.366       1.723       0.000   36.86%       0.000      1.000      2.000
+             746.000      20.227       2.719      24.000    0.13%       3.000      6.000
+     COPE_PA              33.993      -0.132      18.000    0.13%      30.000     33.000     34.000
+             746.000      23.626      -0.030      47.000    0.40%      35.000     38.000
+     COPE_PO              33.878      -0.181      17.000    0.13%      29.000     33.000     34.000
+             746.000      30.944      -0.077      48.000    0.13%      35.000     38.000
+     NEURO_NA              9.221       0.073       0.000    0.94%       6.000      8.000      9.000
+             746.000      15.727      -0.295      20.000    0.40%      10.000     13.000
+     NEURO_SR              9.882       0.490       0.000    2.55%       5.000      8.000      9.000
+             746.000      33.600      -0.259      28.000    0.27%      11.000     15.000
+     EXTRA_PA             10.402      -0.238       1.000    0.13%       8.000     10.000     11.000
+             746.000       8.852      -0.388      16.000    3.49%      11.000     13.000
+     EXTRA_SO             10.984      -0.571       0.000    0.27%       9.000     11.000     11.000
+             746.000       8.072       0.264      16.000    3.75%      12.000     13.000
+     EXTRA_AC             11.769      -0.631       2.000    0.40%       9.000     11.000     12.000
+             746.000       7.703       0.245      16.000    6.43%      13.000     14.000
+
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST FIT FUNCTION VALUES
+
+Fit function values at local maxima and random start numbers:
+
+           1375.7243         4
+           1375.7243         14
+           1375.7243         7
+           1375.7243         12
+           1375.7243         13
+
+Unperturbed starting value run did not converge.
+
+15 starting value run(s) did not converge.
+
+     WARNING:  THE LATENT VARIABLE COVARIANCE MATRIX (PSI) IS NOT POSITIVE
+     DEFINITE.  THIS COULD INDICATE A NEGATIVE VARIANCE/RESIDUAL VARIANCE FOR A
+     LATENT VARIABLE, A CORRELATION GREATER OR EQUAL TO ONE BETWEEN TWO LATENT
+     VARIABLES, OR A LINEAR DEPENDENCY AMONG MORE THAN TWO LATENT VARIABLES.
+     CHECK THE TECH4 OUTPUT FOR MORE INFORMATION.
+     PROBLEM INVOLVING VARIABLE COPE_PO.
+
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       78
+
+Loglikelihood
+
+          H0 Value                      -41620.878
+          H0 Scaling Correction Factor      1.1315
+            for MLR
+          H1 Value                      -40933.016
+          H1 Scaling Correction Factor      1.0914
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   83397.756
+          Bayesian (BIC)                 83757.705
+          Sample-Size Adjusted BIC       83510.025
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                           1281.570*
+          Degrees of Freedom                   174
+          P-Value                           0.0000
+          Scaling Correction Factor         1.0735
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.092
+          90 Percent C.I.                    0.088  0.097
+          Probability RMSEA <= .05           0.000
+
+CFI/TLI
+
+          CFI                                0.855
+          TLI                                0.825
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           7856.202
+          Degrees of Freedom                   210
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.090
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SC       BY
+    SK                 1.000      0.000    999.000    999.000
+    CH                 0.024      0.115      0.208      0.836
+    MI                 0.871      0.095      9.172      0.000
+    SJ                -2.459      0.337     -7.287      0.000
+    IS                -2.869      0.393     -7.293      0.000
+    OI                -2.614      0.373     -7.000      0.000
+
+ PTGI     BY
+    PTGI_AL            1.000      0.000    999.000    999.000
+    PTGI_NP            1.745      0.051     34.078      0.000
+    PTGI_PS            1.234      0.044     28.318      0.000
+    PTGI_SP            0.327      0.025     12.867      0.000
+    PTGI_RO            2.325      0.076     30.485      0.000
+
+ IESR     BY
+    IESR_A             1.000      0.000    999.000    999.000
+    IESR_I             1.459      0.063     23.165      0.000
+    IESR_H             0.911      0.040     22.543      0.000
+
+ COPE     BY
+    COPE_PA            1.000      0.000    999.000    999.000
+    COPE_PO            2.303      0.505      4.560      0.000
+
+ NEURO    BY
+    NEURO_NA           1.000      0.000    999.000    999.000
+    NEURO_SR           1.853      0.089     20.748      0.000
+
+ EXTRA    BY
+    EXTRA_PA           1.000      0.000    999.000    999.000
+    EXTRA_SO           0.996      0.072     13.865      0.000
+    EXTRA_AC           0.870      0.076     11.402      0.000
+
+ SC       ON
+    COPE              -0.064      0.019     -3.389      0.001
+    NEURO             -0.433      0.063     -6.915      0.000
+    EXTRA             -0.019      0.038     -0.496      0.620
+
+ PTGI     ON
+    SC                -0.134      0.265     -0.506      0.613
+    COPE               0.176      0.074      2.392      0.017
+    NEURO              0.314      0.166      1.894      0.058
+    EXTRA              0.725      0.125      5.824      0.000
+
+ IESR     ON
+    SC                -1.460      0.393     -3.717      0.000
+    COPE               0.086      0.076      1.137      0.256
+    NEURO              0.416      0.183      2.278      0.023
+    EXTRA              0.656      0.142      4.618      0.000
+
+ IESR     WITH
+    PTGI               2.636      0.577      4.571      0.000
+
+ NEURO    WITH
+    COPE              -2.111      0.508     -4.152      0.000
+
+ EXTRA    WITH
+    COPE               1.542      0.361      4.272      0.000
+    NEURO             -3.688      0.389     -9.481      0.000
+
+ Intercepts
+    SK                13.741      0.158     86.938      0.000
+    CH                11.598      0.122     94.846      0.000
+    MI                13.277      0.115    115.381      0.000
+    SJ                15.063      0.171     88.156      0.000
+    IS                10.500      0.161     65.080      0.000
+    OI                 9.641      0.144     66.973      0.000
+    PTGI_AL            6.631      0.154     42.987      0.000
+    PTGI_NP            8.615      0.233     37.005      0.000
+    PTGI_PS           10.172      0.194     52.327      0.000
+    PTGI_SP            1.240      0.079     15.771      0.000
+    PTGI_RO           14.072      0.338     41.659      0.000
+    IESR_A             6.517      0.202     32.344      0.000
+    IESR_I             8.572      0.264     32.442      0.000
+    IESR_H             3.366      0.165     20.442      0.000
+    COPE_PA           33.993      0.178    191.015      0.000
+    COPE_PO           33.878      0.204    166.342      0.000
+    NEURO_NA           9.221      0.145     63.508      0.000
+    NEURO_SR           9.882      0.212     46.564      0.000
+    EXTRA_PA          10.402      0.109     95.495      0.000
+    EXTRA_SO          10.984      0.104    105.592      0.000
+    EXTRA_AC          11.769      0.102    115.824      0.000
+
+ Variances
+    COPE               5.868      1.490      3.937      0.000
+    NEURO              7.881      0.762     10.349      0.000
+    EXTRA              4.016      0.457      8.796      0.000
+
+ Residual Variances
+    SK                16.783      0.853     19.684      0.000
+    CH                11.154      0.521     21.419      0.000
+    MI                 8.472      0.482     17.559      0.000
+    SJ                10.573      0.684     15.452      0.000
+    IS                 4.165      0.369     11.291      0.000
+    OI                 2.797      0.310      9.031      0.000
+    PTGI_AL            5.837      0.412     14.164      0.000
+    PTGI_NP            4.148      0.573      7.244      0.000
+    PTGI_PS           10.055      0.649     15.487      0.000
+    PTGI_SP            3.335      0.250     13.324      0.000
+    PTGI_RO           20.715      2.074      9.988      0.000
+    IESR_A            11.400      0.840     13.567      0.000
+    IESR_I            11.877      1.411      8.416      0.000
+    IESR_H             4.535      0.459      9.882      0.000
+    COPE_PA           17.758      1.475     12.039      0.000
+    COPE_PO           -0.190      6.394     -0.030      0.976
+    NEURO_NA           7.846      0.477     16.440      0.000
+    NEURO_SR           6.538      1.091      5.992      0.000
+    EXTRA_PA           4.835      0.369     13.106      0.000
+    EXTRA_SO           4.088      0.335     12.200      0.000
+    EXTRA_AC           4.663      0.350     13.325      0.000
+    SC                 0.522      0.151      3.469      0.001
+    PTGI              10.361      0.697     14.858      0.000
+    IESR              12.754      1.121     11.375      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.198E-05
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ SC       BY
+    SK                 0.315      0.042      7.571      0.000
+    CH                 0.010      0.048      0.204      0.839
+    MI                 0.377      0.042      8.910      0.000
+    SJ                -0.717      0.022    -32.978      0.000
+    IS                -0.886      0.011    -77.941      0.000
+    OI                -0.905      0.012    -77.928      0.000
+
+ PTGI     BY
+    PTGI_AL            0.819      0.015     55.143      0.000
+    PTGI_NP            0.947      0.008    126.172      0.000
+    PTGI_PS            0.802      0.015     52.895      0.000
+    PTGI_SP            0.526      0.024     21.490      0.000
+    PTGI_RO            0.870      0.015     59.340      0.000
+
+ IESR     BY
+    IESR_A             0.790      0.019     42.134      0.000
+    IESR_I             0.879      0.016     55.240      0.000
+    IESR_H             0.881      0.014     61.897      0.000
+
+ COPE     BY
+    COPE_PA            0.498      0.059      8.438      0.000
+    COPE_PO            1.003      0.103      9.739      0.000
+
+ NEURO    BY
+    NEURO_NA           0.708      0.023     30.786      0.000
+    NEURO_SR           0.897      0.018     49.196      0.000
+
+ EXTRA    BY
+    EXTRA_PA           0.674      0.031     21.970      0.000
+    EXTRA_SO           0.703      0.031     22.775      0.000
+    EXTRA_AC           0.628      0.034     18.361      0.000
+
+ SC       ON
+    COPE              -0.114      0.039     -2.963      0.003
+    NEURO             -0.893      0.049    -18.134      0.000
+    EXTRA             -0.028      0.056     -0.494      0.622
+
+ PTGI     ON
+    SC                -0.053      0.103     -0.513      0.608
+    COPE               0.124      0.059      2.080      0.038
+    NEURO              0.255      0.135      1.892      0.058
+    EXTRA              0.421      0.066      6.354      0.000
+
+ IESR     ON
+    SC                -0.457      0.098     -4.656      0.000
+    COPE               0.048      0.042      1.149      0.251
+    NEURO              0.269      0.118      2.277      0.023
+    EXTRA              0.303      0.061      4.929      0.000
+
+ IESR     WITH
+    PTGI               0.229      0.047      4.860      0.000
+
+ NEURO    WITH
+    COPE              -0.310      0.046     -6.779      0.000
+
+ EXTRA    WITH
+    COPE               0.318      0.048      6.575      0.000
+    NEURO             -0.656      0.038    -17.036      0.000
+
+ Intercepts
+    SK                 3.183      0.080     39.831      0.000
+    CH                 3.473      0.086     40.532      0.000
+    MI                 4.224      0.116     36.278      0.000
+    SJ                 3.228      0.074     43.886      0.000
+    IS                 2.383      0.051     47.087      0.000
+    OI                 2.452      0.052     47.494      0.000
+    PTGI_AL            1.574      0.047     33.796      0.000
+    PTGI_NP            1.355      0.037     36.617      0.000
+    PTGI_PS            1.916      0.059     32.648      0.000
+    PTGI_SP            0.577      0.021     28.035      0.000
+    PTGI_RO            1.525      0.043     35.651      0.000
+    IESR_A             1.184      0.031     37.830      0.000
+    IESR_I             1.188      0.030     39.958      0.000
+    IESR_H             0.748      0.022     33.533      0.000
+    COPE_PA            6.994      0.187     37.449      0.000
+    COPE_PO            6.090      0.163     37.258      0.000
+    NEURO_NA           2.325      0.065     35.863      0.000
+    NEURO_SR           1.705      0.044     38.952      0.000
+    EXTRA_PA           3.496      0.095     36.727      0.000
+    EXTRA_SO           3.866      0.125     30.910      0.000
+    EXTRA_AC           4.241      0.136     31.215      0.000
+
+ Variances
+    COPE               1.000      0.000    999.000    999.000
+    NEURO              1.000      0.000    999.000    999.000
+    EXTRA              1.000      0.000    999.000    999.000
+
+ Residual Variances
+    SK                 0.901      0.026     34.279      0.000
+    CH                 1.000      0.001   1074.661      0.000
+    MI                 0.858      0.032     26.836      0.000
+    SJ                 0.485      0.031     15.557      0.000
+    IS                 0.214      0.020     10.640      0.000
+    OI                 0.181      0.021      8.609      0.000
+    PTGI_AL            0.329      0.024     13.505      0.000
+    PTGI_NP            0.103      0.014      7.212      0.000
+    PTGI_PS            0.357      0.024     14.666      0.000
+    PTGI_SP            0.723      0.026     28.063      0.000
+    PTGI_RO            0.243      0.026      9.543      0.000
+    IESR_A             0.376      0.030     12.713      0.000
+    IESR_I             0.228      0.028      8.158      0.000
+    IESR_H             0.224      0.025      8.943      0.000
+    COPE_PA            0.752      0.059     12.767      0.000
+    COPE_PO           -0.006    999.000    999.000    999.000
+    NEURO_NA           0.499      0.033     15.325      0.000
+    NEURO_SR           0.195      0.033      5.943      0.000
+    EXTRA_PA           0.546      0.041     13.225      0.000
+    EXTRA_SO           0.506      0.043     11.683      0.000
+    EXTRA_AC           0.605      0.043     14.080      0.000
+    SC                 0.282      0.037      7.555      0.000
+    PTGI               0.870      0.033     26.360      0.000
+    IESR               0.675      0.040     17.024      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    SK                 0.099      0.026      3.786      0.000
+    CH                 0.000      0.001      0.102      0.919
+    MI                 0.142      0.032      4.455      0.000
+    SJ                 0.515      0.031     16.489      0.000
+    IS                 0.786      0.020     38.971      0.000
+    OI                 0.819      0.021     38.964      0.000
+    PTGI_AL            0.671      0.024     27.572      0.000
+    PTGI_NP            0.897      0.014     63.086      0.000
+    PTGI_PS            0.643      0.024     26.448      0.000
+    PTGI_SP            0.277      0.026     10.745      0.000
+    PTGI_RO            0.757      0.026     29.670      0.000
+    IESR_A             0.624      0.030     21.067      0.000
+    IESR_I             0.772      0.028     27.620      0.000
+    IESR_H             0.776      0.025     30.948      0.000
+    COPE_PA            0.248      0.059      4.219      0.000
+    COPE_PO         Undefined   0.10062E+01
+    NEURO_NA           0.501      0.033     15.393      0.000
+    NEURO_SR           0.805      0.033     24.598      0.000
+    EXTRA_PA           0.454      0.041     10.985      0.000
+    EXTRA_SO           0.494      0.043     11.387      0.000
+    EXTRA_AC           0.395      0.043      9.181      0.000
+
+     Latent                                         Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    SC                 0.718      0.037     19.256      0.000
+    PTGI               0.130      0.033      3.955      0.000
+    IESR               0.325      0.040      8.191      0.000
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from COPE to PTGI
+
+  Total                0.185      0.069      2.668      0.008
+  Total indirect       0.009      0.017      0.510      0.610
+
+  Specific indirect 1
+    PTGI
+    SC
+    COPE               0.009      0.017      0.510      0.610
+
+  Direct
+    PTGI
+    COPE               0.176      0.074      2.392      0.017
+
+
+Effects from NEURO to PTGI
+
+  Total                0.372      0.089      4.180      0.000
+  Total indirect       0.058      0.113      0.515      0.606
+
+  Specific indirect 1
+    PTGI
+    SC
+    NEURO              0.058      0.113      0.515      0.606
+
+  Direct
+    PTGI
+    NEURO              0.314      0.166      1.894      0.058
+
+
+Effects from EXTRA to PTGI
+
+  Total                0.728      0.124      5.860      0.000
+  Total indirect       0.003      0.006      0.409      0.683
+
+  Specific indirect 1
+    PTGI
+    SC
+    EXTRA              0.003      0.006      0.409      0.683
+
+  Direct
+    PTGI
+    EXTRA              0.725      0.125      5.824      0.000
+
+
+Effects from COPE to IESR
+
+  Total                0.180      0.072      2.507      0.012
+  Total indirect       0.094      0.034      2.741      0.006
+
+  Specific indirect 1
+    IESR
+    SC
+    COPE               0.094      0.034      2.741      0.006
+
+  Direct
+    IESR
+    COPE               0.086      0.076      1.137      0.256
+
+
+Effects from NEURO to IESR
+
+  Total                1.048      0.118      8.876      0.000
+  Total indirect       0.632      0.142      4.459      0.000
+
+  Specific indirect 1
+    IESR
+    SC
+    NEURO              0.632      0.142      4.459      0.000
+
+  Direct
+    IESR
+    NEURO              0.416      0.183      2.278      0.023
+
+
+Effects from EXTRA to IESR
+
+  Total                0.684      0.153      4.455      0.000
+  Total indirect       0.027      0.054      0.503      0.615
+
+  Specific indirect 1
+    IESR
+    SC
+    EXTRA              0.027      0.054      0.503      0.615
+
+  Direct
+    IESR
+    EXTRA              0.656      0.142      4.618      0.000
+
+
+
+STANDARDIZED TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from COPE to PTGI
+
+  Total                0.130      0.057      2.289      0.022
+  Total indirect       0.006      0.012      0.515      0.607
+
+  Specific indirect 1
+    PTGI
+    SC
+    COPE               0.006      0.012      0.515      0.607
+
+  Direct
+    PTGI
+    COPE               0.124      0.059      2.080      0.038
+
+
+Effects from NEURO to PTGI
+
+  Total                0.302      0.071      4.267      0.000
+  Total indirect       0.047      0.092      0.517      0.605
+
+  Specific indirect 1
+    PTGI
+    SC
+    NEURO              0.047      0.092      0.517      0.605
+
+  Direct
+    PTGI
+    NEURO              0.255      0.135      1.892      0.058
+
+
+Effects from EXTRA to PTGI
+
+  Total                0.422      0.066      6.398      0.000
+  Total indirect       0.001      0.004      0.409      0.683
+
+  Specific indirect 1
+    PTGI
+    SC
+    EXTRA              0.001      0.004      0.409      0.683
+
+  Direct
+    PTGI
+    EXTRA              0.421      0.066      6.354      0.000
+
+
+Effects from COPE to IESR
+
+  Total                0.100      0.040      2.500      0.012
+  Total indirect       0.052      0.020      2.588      0.010
+
+  Specific indirect 1
+    IESR
+    SC
+    COPE               0.052      0.020      2.588      0.010
+
+  Direct
+    IESR
+    COPE               0.048      0.042      1.149      0.251
+
+
+Effects from NEURO to IESR
+
+  Total                0.677      0.063     10.743      0.000
+  Total indirect       0.408      0.085      4.791      0.000
+
+  Specific indirect 1
+    IESR
+    SC
+    NEURO              0.408      0.085      4.791      0.000
+
+  Direct
+    IESR
+    NEURO              0.269      0.118      2.277      0.023
+
+
+Effects from EXTRA to IESR
+
+  Total                0.315      0.067      4.732      0.000
+  Total indirect       0.013      0.025      0.503      0.615
+
+  Specific indirect 1
+    IESR
+    SC
+    EXTRA              0.013      0.025      0.503      0.615
+
+  Direct
+    IESR
+    EXTRA              0.303      0.061      4.929      0.000
+
+
+
+
+MODEL MODIFICATION INDICES
+
+Minimum M.I. value for printing the modification index    10.000
+
+                                   M.I.     E.P.C.  Std E.P.C.  StdYX E.P.C.
+
+ON/BY Statements
+
+SK       ON PTGI     /
+PTGI     BY SK                    48.561     0.325      1.123        0.260
+SK       ON IESR     /
+IESR     BY SK                    13.417     0.168      0.730        0.169
+SK       ON COPE     /
+COPE     BY SK                    42.334     0.424      1.027        0.238
+SK       ON NEURO    /
+NEURO    BY SK                    27.753    -0.723     -2.028       -0.470
+SK       ON EXTRA    /
+EXTRA    BY SK                    45.498     0.758      1.520        0.352
+CH       ON PTGI     /
+PTGI     BY CH                    22.408     0.179      0.618        0.185
+CH       ON COPE     /
+COPE     BY CH                    26.228     0.271      0.655        0.196
+CH       ON NEURO    /
+NEURO    BY CH                    12.416    -0.391     -1.097       -0.328
+CH       ON EXTRA    /
+EXTRA    BY CH                    10.548     0.296      0.593        0.178
+MI       ON COPE     /
+COPE     BY MI                   108.784     0.484      1.173        0.373
+MI       ON NEURO    /
+NEURO    BY MI                    48.529    -0.682     -1.914       -0.609
+SJ       ON COPE     /
+COPE     BY SJ                    35.799     0.327      0.791        0.169
+SJ       ON NEURO    /
+NEURO    BY SJ                    16.681    -0.481     -1.351       -0.289
+OI       ON IESR     /
+IESR     BY OI                    13.576     0.098      0.426        0.108
+OI       ON EXTRA    /
+EXTRA    BY OI                    10.444     0.211      0.424        0.108
+EXTRA_AC ON COPE     /
+COPE     BY EXTRA_AC              32.186     0.243      0.588        0.212
+
+ON Statements
+
+SC       ON SK                    10.653    -0.036     -0.027       -0.116
+SC       ON MI                    16.194    -0.064     -0.047       -0.147
+PTGI     ON SK                    22.751     0.147      0.043        0.184
+PTGI     ON CH                    11.321     0.127      0.037        0.123
+IESR     ON IS                    10.183    -0.303     -0.070       -0.308
+COPE     ON SK                    30.456     0.118      0.049        0.211
+COPE     ON CH                    22.092     0.123      0.051        0.169
+COPE     ON MI                   102.889     0.307      0.127        0.398
+COPE     ON SJ                    34.546     0.167      0.069        0.322
+COPE     ON EXTRA_AC              33.194     0.272      0.112        0.312
+NEURO    ON SK                    14.872     0.146      0.052        0.224
+NEURO    ON PTGI_RO               12.378     0.084      0.030        0.277
+EXTRA    ON SK                    20.056     0.082      0.041        0.176
+SK       ON CH                   176.476     0.621      0.621        0.481
+SK       ON MI                   178.808     0.723      0.723        0.526
+SK       ON SJ                    11.445    -0.171     -0.171       -0.185
+SK       ON OI                    31.125     0.682      0.682        0.621
+SK       ON PTGI_AL               24.337     0.183      0.183        0.179
+SK       ON PTGI_NP               40.026     0.156      0.156        0.229
+SK       ON PTGI_PS               36.343     0.177      0.177        0.218
+SK       ON PTGI_SP               33.085     0.418      0.418        0.208
+SK       ON PTGI_RO               49.963     0.120      0.120        0.256
+SK       ON IESR_A                11.704     0.107      0.107        0.137
+SK       ON IESR_I                11.072     0.082      0.082        0.137
+SK       ON COPE_PA               77.147     0.283      0.283        0.319
+SK       ON COPE_PO               42.788     0.186      0.186        0.240
+SK       ON NEURO_NA              11.983    -0.174     -0.174       -0.160
+SK       ON NEURO_SR              10.913    -0.144     -0.144       -0.194
+SK       ON EXTRA_PA              20.610     0.256      0.256        0.177
+SK       ON EXTRA_SO              11.813     0.205      0.205        0.135
+SK       ON EXTRA_AC              15.884     0.239      0.239        0.153
+CH       ON SK                   176.476     0.413      0.413        0.534
+CH       ON MI                   174.816     0.580      0.580        0.546
+CH       ON SJ                    17.556     0.171      0.171        0.240
+CH       ON PTGI_NP               18.248     0.085      0.085        0.162
+CH       ON PTGI_PS               21.500     0.111      0.111        0.176
+CH       ON PTGI_SP               10.252     0.189      0.189        0.121
+CH       ON PTGI_RO               23.847     0.067      0.067        0.185
+CH       ON IESR_A                15.124     0.099      0.099        0.163
+CH       ON COPE_PA               74.737     0.226      0.226        0.329
+CH       ON COPE_PO               26.553     0.119      0.119        0.198
+MI       ON SK                   178.809     0.365      0.365        0.501
+MI       ON CH                   174.815     0.440      0.440        0.468
+MI       ON SJ                    53.964     0.265      0.265        0.393
+MI       ON PTGI_PS               16.978     0.086      0.086        0.146
+MI       ON COPE_PA              132.571     0.264      0.264        0.409
+MI       ON COPE_PO              109.403     0.212      0.212        0.376
+MI       ON NEURO_NA              25.430    -0.181     -0.181       -0.228
+MI       ON NEURO_SR              23.025    -0.150     -0.150       -0.276
+SJ       ON SK                    11.446    -0.108     -0.108       -0.100
+SJ       ON CH                    17.556     0.163      0.163        0.116
+SJ       ON MI                    53.963     0.330      0.330        0.223
+SJ       ON COPE_PA               18.146     0.114      0.114        0.119
+SJ       ON COPE_PO               35.879     0.143      0.143        0.170
+IS       ON IESR_H                12.424    -0.089     -0.089       -0.091
+OI       ON SK                    31.121     0.114      0.114        0.125
+OI       ON IESR_I                13.083     0.050      0.050        0.093
+PTGI_NP  ON PTGI_RO               10.161    -0.157     -0.157       -0.228
+PTGI_NP  ON EXTRA_SO              10.886    -0.134     -0.134       -0.060
+PTGI_PS  ON MI                    20.623     0.184      0.184        0.109
+PTGI_PS  ON PTGI_SP               17.114    -0.295     -0.295       -0.120
+PTGI_SP  ON PTGI_PS               17.114    -0.098     -0.098       -0.242
+PTGI_RO  ON PTGI_NP               10.160    -0.784     -0.784       -0.541
+PTGI_RO  ON EXTRA_SO              11.614     0.235      0.235        0.072
+COPE_PA  ON SK                    32.686     0.213      0.213        0.190
+COPE_PA  ON CH                    49.080     0.335      0.335        0.230
+COPE_PA  ON MI                    40.354     0.327      0.327        0.212
+COPE_PO  ON MI                    24.569     0.293      0.293        0.165
+COPE_PO  ON EXTRA_PA              11.703    -0.308     -0.308       -0.165
+COPE_PO  ON EXTRA_AC              30.986     0.495      0.495        0.247
+EXTRA_SO ON PTGI_RO               11.458     0.037      0.037        0.120
+EXTRA_SO ON COPE_PA               10.443    -0.061     -0.061       -0.105
+EXTRA_AC ON SJ                    13.101     0.080      0.080        0.135
+EXTRA_AC ON COPE_PO               32.122     0.106      0.106        0.212
+
+WITH Statements
+
+SK       WITH SC                  10.653    -0.612     -0.846       -0.207
+SK       WITH PTGI                22.751     2.472      0.768        0.187
+SK       WITH COPE                30.456     1.983      0.819        0.200
+SK       WITH NEURO               14.872     2.444      0.870        0.212
+SK       WITH EXTRA               20.056     1.371      0.684        0.167
+CH       WITH PTGI                11.321     1.413      0.439        0.131
+CH       WITH COPE                22.092     1.369      0.565        0.169
+CH       WITH SK                 176.476     6.928      6.928        0.506
+MI       WITH SC                  16.194    -0.538     -0.745       -0.256
+MI       WITH COPE               102.889     2.597      1.072        0.368
+MI       WITH SK                 178.810     6.125      6.125        0.514
+MI       WITH CH                 174.816     4.912      4.912        0.505
+SJ       WITH COPE                34.546     1.768      0.730        0.224
+SJ       WITH SK                  11.446    -1.808     -1.808       -0.136
+SJ       WITH CH                  17.556     1.813      1.813        0.167
+SJ       WITH MI                  53.963     2.799      2.799        0.296
+IS       WITH IESR                10.182    -1.263     -0.354       -0.173
+OI       WITH SK                  31.121     1.907      1.907        0.278
+PTGI_PS  WITH MI                  16.917     1.532      1.532        0.166
+PTGI_SP  WITH PTGI_PS             17.114    -0.985     -0.985       -0.170
+PTGI_RO  WITH NEURO               12.378     1.746      0.622        0.137
+PTGI_RO  WITH PTGI_NP             10.160    -3.254     -3.254       -0.351
+IESR_I   WITH PTGI_NP             10.588    -1.526     -1.526       -0.217
+COPE_PA  WITH SK                  40.837     4.200      4.200        0.243
+COPE_PA  WITH CH                  49.245     3.743      3.743        0.266
+COPE_PA  WITH MI                  53.284     3.416      3.416        0.279
+COPE_PA  WITH IS                  11.665     1.331      1.331        0.155
+COPE_PO  WITH MI                  23.140     2.448      2.448      999.000
+COPE_PO  WITH SJ                  16.933     2.455      2.455      999.000
+EXTRA_PA WITH COPE_PA             10.476     1.278      1.278        0.138
+EXTRA_PA WITH COPE_PO             15.859    -1.839     -1.839      999.000
+EXTRA_SO WITH MI                  10.975    -0.847     -0.847       -0.144
+EXTRA_SO WITH PTGI_NP             17.331    -1.065     -1.065       -0.259
+EXTRA_SO WITH PTGI_RO             27.337     2.298      2.298        0.250
+EXTRA_AC WITH COPE                33.194     1.270      0.524        0.243
+EXTRA_AC WITH COPE_PO             30.366     2.384      2.384      999.000
+EXTRA_AC WITH NEURO_NA            10.641    -0.880     -0.880       -0.145
+
+
+     Beginning Time:  16:36:19
+        Ending Time:  16:36:30
+       Elapsed Time:  00:00:11
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

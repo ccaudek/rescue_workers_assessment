@@ -1,0 +1,1287 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+04/08/2023   1:26 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE:
+  model 1 with 6 classes
+  DATA:
+  FILE = "data_81c78c0cb6869e75ae6a0f08ff71917f.dat";
+
+  VARIABLE:
+  NAMES = neuroticism extraversion openness agreeableness conscientiousness
+       active_coping avoidance_coping soc_emo_coping iesr_ts mpss_tot;
+   MISSING=.;
+   CLASSES = c1(6);
+
+  ANALYSIS:
+  TYPE = mixture;
+
+  MODEL:
+  %c1#1%
+  neuroticism (vneuroticism);
+  extraversion (vextraversion);
+  openness (vopenness);
+  agreeableness (vagreeableness);
+  conscientiousness (vconscientiousness);
+  active_coping (vactive_coping);
+  avoidance_coping (vavoidance_coping);
+  soc_emo_coping (vsoc_emo_coping);
+  iesr_ts (viesr_ts);
+  mpss_tot (vmpss_tot);
+
+  neuroticism WITH extraversion@0;
+  neuroticism WITH openness@0;
+  neuroticism WITH agreeableness@0;
+  neuroticism WITH conscientiousness@0;
+  neuroticism WITH active_coping@0;
+  neuroticism WITH avoidance_coping@0;
+  neuroticism WITH soc_emo_coping@0;
+  neuroticism WITH iesr_ts@0;
+  neuroticism WITH mpss_tot@0;
+  extraversion WITH openness@0;
+  extraversion WITH agreeableness@0;
+  extraversion WITH conscientiousness@0;
+  extraversion WITH active_coping@0;
+  extraversion WITH avoidance_coping@0;
+  extraversion WITH soc_emo_coping@0;
+  extraversion WITH iesr_ts@0;
+  extraversion WITH mpss_tot@0;
+  openness WITH agreeableness@0;
+  openness WITH conscientiousness@0;
+  openness WITH active_coping@0;
+  openness WITH avoidance_coping@0;
+  openness WITH soc_emo_coping@0;
+  openness WITH iesr_ts@0;
+  openness WITH mpss_tot@0;
+  agreeableness WITH conscientiousness@0;
+  agreeableness WITH active_coping@0;
+  agreeableness WITH avoidance_coping@0;
+  agreeableness WITH soc_emo_coping@0;
+  agreeableness WITH iesr_ts@0;
+  agreeableness WITH mpss_tot@0;
+  conscientiousness WITH active_coping@0;
+  conscientiousness WITH avoidance_coping@0;
+  conscientiousness WITH soc_emo_coping@0;
+  conscientiousness WITH iesr_ts@0;
+  conscientiousness WITH mpss_tot@0;
+  active_coping WITH avoidance_coping@0;
+  active_coping WITH soc_emo_coping@0;
+  active_coping WITH iesr_ts@0;
+  active_coping WITH mpss_tot@0;
+  avoidance_coping WITH soc_emo_coping@0;
+  avoidance_coping WITH iesr_ts@0;
+  avoidance_coping WITH mpss_tot@0;
+  soc_emo_coping WITH iesr_ts@0;
+  soc_emo_coping WITH mpss_tot@0;
+  iesr_ts WITH mpss_tot@0;
+
+  %c1#2%
+  neuroticism (vneuroticism);
+  extraversion (vextraversion);
+  openness (vopenness);
+  agreeableness (vagreeableness);
+  conscientiousness (vconscientiousness);
+  active_coping (vactive_coping);
+  avoidance_coping (vavoidance_coping);
+  soc_emo_coping (vsoc_emo_coping);
+  iesr_ts (viesr_ts);
+  mpss_tot (vmpss_tot);
+
+  neuroticism WITH extraversion@0;
+  neuroticism WITH openness@0;
+  neuroticism WITH agreeableness@0;
+  neuroticism WITH conscientiousness@0;
+  neuroticism WITH active_coping@0;
+  neuroticism WITH avoidance_coping@0;
+  neuroticism WITH soc_emo_coping@0;
+  neuroticism WITH iesr_ts@0;
+  neuroticism WITH mpss_tot@0;
+  extraversion WITH openness@0;
+  extraversion WITH agreeableness@0;
+  extraversion WITH conscientiousness@0;
+  extraversion WITH active_coping@0;
+  extraversion WITH avoidance_coping@0;
+  extraversion WITH soc_emo_coping@0;
+  extraversion WITH iesr_ts@0;
+  extraversion WITH mpss_tot@0;
+  openness WITH agreeableness@0;
+  openness WITH conscientiousness@0;
+  openness WITH active_coping@0;
+  openness WITH avoidance_coping@0;
+  openness WITH soc_emo_coping@0;
+  openness WITH iesr_ts@0;
+  openness WITH mpss_tot@0;
+  agreeableness WITH conscientiousness@0;
+  agreeableness WITH active_coping@0;
+  agreeableness WITH avoidance_coping@0;
+  agreeableness WITH soc_emo_coping@0;
+  agreeableness WITH iesr_ts@0;
+  agreeableness WITH mpss_tot@0;
+  conscientiousness WITH active_coping@0;
+  conscientiousness WITH avoidance_coping@0;
+  conscientiousness WITH soc_emo_coping@0;
+  conscientiousness WITH iesr_ts@0;
+  conscientiousness WITH mpss_tot@0;
+  active_coping WITH avoidance_coping@0;
+  active_coping WITH soc_emo_coping@0;
+  active_coping WITH iesr_ts@0;
+  active_coping WITH mpss_tot@0;
+  avoidance_coping WITH soc_emo_coping@0;
+  avoidance_coping WITH iesr_ts@0;
+  avoidance_coping WITH mpss_tot@0;
+  soc_emo_coping WITH iesr_ts@0;
+  soc_emo_coping WITH mpss_tot@0;
+  iesr_ts WITH mpss_tot@0;
+
+  %c1#3%
+  neuroticism (vneuroticism);
+  extraversion (vextraversion);
+  openness (vopenness);
+  agreeableness (vagreeableness);
+  conscientiousness (vconscientiousness);
+  active_coping (vactive_coping);
+  avoidance_coping (vavoidance_coping);
+  soc_emo_coping (vsoc_emo_coping);
+  iesr_ts (viesr_ts);
+  mpss_tot (vmpss_tot);
+
+  neuroticism WITH extraversion@0;
+  neuroticism WITH openness@0;
+  neuroticism WITH agreeableness@0;
+  neuroticism WITH conscientiousness@0;
+  neuroticism WITH active_coping@0;
+  neuroticism WITH avoidance_coping@0;
+  neuroticism WITH soc_emo_coping@0;
+  neuroticism WITH iesr_ts@0;
+  neuroticism WITH mpss_tot@0;
+  extraversion WITH openness@0;
+  extraversion WITH agreeableness@0;
+  extraversion WITH conscientiousness@0;
+  extraversion WITH active_coping@0;
+  extraversion WITH avoidance_coping@0;
+  extraversion WITH soc_emo_coping@0;
+  extraversion WITH iesr_ts@0;
+  extraversion WITH mpss_tot@0;
+  openness WITH agreeableness@0;
+  openness WITH conscientiousness@0;
+  openness WITH active_coping@0;
+  openness WITH avoidance_coping@0;
+  openness WITH soc_emo_coping@0;
+  openness WITH iesr_ts@0;
+  openness WITH mpss_tot@0;
+  agreeableness WITH conscientiousness@0;
+  agreeableness WITH active_coping@0;
+  agreeableness WITH avoidance_coping@0;
+  agreeableness WITH soc_emo_coping@0;
+  agreeableness WITH iesr_ts@0;
+  agreeableness WITH mpss_tot@0;
+  conscientiousness WITH active_coping@0;
+  conscientiousness WITH avoidance_coping@0;
+  conscientiousness WITH soc_emo_coping@0;
+  conscientiousness WITH iesr_ts@0;
+  conscientiousness WITH mpss_tot@0;
+  active_coping WITH avoidance_coping@0;
+  active_coping WITH soc_emo_coping@0;
+  active_coping WITH iesr_ts@0;
+  active_coping WITH mpss_tot@0;
+  avoidance_coping WITH soc_emo_coping@0;
+  avoidance_coping WITH iesr_ts@0;
+  avoidance_coping WITH mpss_tot@0;
+  soc_emo_coping WITH iesr_ts@0;
+  soc_emo_coping WITH mpss_tot@0;
+  iesr_ts WITH mpss_tot@0;
+
+  %c1#4%
+  neuroticism (vneuroticism);
+  extraversion (vextraversion);
+  openness (vopenness);
+  agreeableness (vagreeableness);
+  conscientiousness (vconscientiousness);
+  active_coping (vactive_coping);
+  avoidance_coping (vavoidance_coping);
+  soc_emo_coping (vsoc_emo_coping);
+  iesr_ts (viesr_ts);
+  mpss_tot (vmpss_tot);
+
+  neuroticism WITH extraversion@0;
+  neuroticism WITH openness@0;
+  neuroticism WITH agreeableness@0;
+  neuroticism WITH conscientiousness@0;
+  neuroticism WITH active_coping@0;
+  neuroticism WITH avoidance_coping@0;
+  neuroticism WITH soc_emo_coping@0;
+  neuroticism WITH iesr_ts@0;
+  neuroticism WITH mpss_tot@0;
+  extraversion WITH openness@0;
+  extraversion WITH agreeableness@0;
+  extraversion WITH conscientiousness@0;
+  extraversion WITH active_coping@0;
+  extraversion WITH avoidance_coping@0;
+  extraversion WITH soc_emo_coping@0;
+  extraversion WITH iesr_ts@0;
+  extraversion WITH mpss_tot@0;
+  openness WITH agreeableness@0;
+  openness WITH conscientiousness@0;
+  openness WITH active_coping@0;
+  openness WITH avoidance_coping@0;
+  openness WITH soc_emo_coping@0;
+  openness WITH iesr_ts@0;
+  openness WITH mpss_tot@0;
+  agreeableness WITH conscientiousness@0;
+  agreeableness WITH active_coping@0;
+  agreeableness WITH avoidance_coping@0;
+  agreeableness WITH soc_emo_coping@0;
+  agreeableness WITH iesr_ts@0;
+  agreeableness WITH mpss_tot@0;
+  conscientiousness WITH active_coping@0;
+  conscientiousness WITH avoidance_coping@0;
+  conscientiousness WITH soc_emo_coping@0;
+  conscientiousness WITH iesr_ts@0;
+  conscientiousness WITH mpss_tot@0;
+  active_coping WITH avoidance_coping@0;
+  active_coping WITH soc_emo_coping@0;
+  active_coping WITH iesr_ts@0;
+  active_coping WITH mpss_tot@0;
+  avoidance_coping WITH soc_emo_coping@0;
+  avoidance_coping WITH iesr_ts@0;
+  avoidance_coping WITH mpss_tot@0;
+  soc_emo_coping WITH iesr_ts@0;
+  soc_emo_coping WITH mpss_tot@0;
+  iesr_ts WITH mpss_tot@0;
+
+  %c1#5%
+  neuroticism (vneuroticism);
+  extraversion (vextraversion);
+  openness (vopenness);
+  agreeableness (vagreeableness);
+  conscientiousness (vconscientiousness);
+  active_coping (vactive_coping);
+  avoidance_coping (vavoidance_coping);
+  soc_emo_coping (vsoc_emo_coping);
+  iesr_ts (viesr_ts);
+  mpss_tot (vmpss_tot);
+
+  neuroticism WITH extraversion@0;
+  neuroticism WITH openness@0;
+  neuroticism WITH agreeableness@0;
+  neuroticism WITH conscientiousness@0;
+  neuroticism WITH active_coping@0;
+  neuroticism WITH avoidance_coping@0;
+  neuroticism WITH soc_emo_coping@0;
+  neuroticism WITH iesr_ts@0;
+  neuroticism WITH mpss_tot@0;
+  extraversion WITH openness@0;
+  extraversion WITH agreeableness@0;
+  extraversion WITH conscientiousness@0;
+  extraversion WITH active_coping@0;
+  extraversion WITH avoidance_coping@0;
+  extraversion WITH soc_emo_coping@0;
+  extraversion WITH iesr_ts@0;
+  extraversion WITH mpss_tot@0;
+  openness WITH agreeableness@0;
+  openness WITH conscientiousness@0;
+  openness WITH active_coping@0;
+  openness WITH avoidance_coping@0;
+  openness WITH soc_emo_coping@0;
+  openness WITH iesr_ts@0;
+  openness WITH mpss_tot@0;
+  agreeableness WITH conscientiousness@0;
+  agreeableness WITH active_coping@0;
+  agreeableness WITH avoidance_coping@0;
+  agreeableness WITH soc_emo_coping@0;
+  agreeableness WITH iesr_ts@0;
+  agreeableness WITH mpss_tot@0;
+  conscientiousness WITH active_coping@0;
+  conscientiousness WITH avoidance_coping@0;
+  conscientiousness WITH soc_emo_coping@0;
+  conscientiousness WITH iesr_ts@0;
+  conscientiousness WITH mpss_tot@0;
+  active_coping WITH avoidance_coping@0;
+  active_coping WITH soc_emo_coping@0;
+  active_coping WITH iesr_ts@0;
+  active_coping WITH mpss_tot@0;
+  avoidance_coping WITH soc_emo_coping@0;
+  avoidance_coping WITH iesr_ts@0;
+  avoidance_coping WITH mpss_tot@0;
+  soc_emo_coping WITH iesr_ts@0;
+  soc_emo_coping WITH mpss_tot@0;
+  iesr_ts WITH mpss_tot@0;
+
+  %c1#6%
+  neuroticism (vneuroticism);
+  extraversion (vextraversion);
+  openness (vopenness);
+  agreeableness (vagreeableness);
+  conscientiousness (vconscientiousness);
+  active_coping (vactive_coping);
+  avoidance_coping (vavoidance_coping);
+  soc_emo_coping (vsoc_emo_coping);
+  iesr_ts (viesr_ts);
+  mpss_tot (vmpss_tot);
+
+  neuroticism WITH extraversion@0;
+  neuroticism WITH openness@0;
+  neuroticism WITH agreeableness@0;
+  neuroticism WITH conscientiousness@0;
+  neuroticism WITH active_coping@0;
+  neuroticism WITH avoidance_coping@0;
+  neuroticism WITH soc_emo_coping@0;
+  neuroticism WITH iesr_ts@0;
+  neuroticism WITH mpss_tot@0;
+  extraversion WITH openness@0;
+  extraversion WITH agreeableness@0;
+  extraversion WITH conscientiousness@0;
+  extraversion WITH active_coping@0;
+  extraversion WITH avoidance_coping@0;
+  extraversion WITH soc_emo_coping@0;
+  extraversion WITH iesr_ts@0;
+  extraversion WITH mpss_tot@0;
+  openness WITH agreeableness@0;
+  openness WITH conscientiousness@0;
+  openness WITH active_coping@0;
+  openness WITH avoidance_coping@0;
+  openness WITH soc_emo_coping@0;
+  openness WITH iesr_ts@0;
+  openness WITH mpss_tot@0;
+  agreeableness WITH conscientiousness@0;
+  agreeableness WITH active_coping@0;
+  agreeableness WITH avoidance_coping@0;
+  agreeableness WITH soc_emo_coping@0;
+  agreeableness WITH iesr_ts@0;
+  agreeableness WITH mpss_tot@0;
+  conscientiousness WITH active_coping@0;
+  conscientiousness WITH avoidance_coping@0;
+  conscientiousness WITH soc_emo_coping@0;
+  conscientiousness WITH iesr_ts@0;
+  conscientiousness WITH mpss_tot@0;
+  active_coping WITH avoidance_coping@0;
+  active_coping WITH soc_emo_coping@0;
+  active_coping WITH iesr_ts@0;
+  active_coping WITH mpss_tot@0;
+  avoidance_coping WITH soc_emo_coping@0;
+  avoidance_coping WITH iesr_ts@0;
+  avoidance_coping WITH mpss_tot@0;
+  soc_emo_coping WITH iesr_ts@0;
+  soc_emo_coping WITH mpss_tot@0;
+  iesr_ts WITH mpss_tot@0;
+
+
+  OUTPUT:
+  TECH14;
+
+  SAVEDATA:
+  FILE IS model_1_class_6.dat;
+  SAVE = cprobabilities;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING in MODEL command
+  All variables are uncorrelated with all other variables within class.
+  Check that this is what is intended.
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+
+model 1 with 6 classes
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         746
+
+Number of dependent variables                                   10
+Number of independent variables                                  0
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Continuous
+   NEUROTICIS  EXTRAVERSI  OPENNESS    AGREEABLEN  CONSCIENTI  ACTIVE_COP
+   AVOIDANCE_  SOC_EMO_CO  IESR_TS     MPSS_TOT
+
+Categorical latent variables
+   C1
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+Random Starts Specifications
+  Number of initial stage random starts                         20
+  Number of final stage optimizations                            4
+  Number of initial stage iterations                            10
+  Initial stage convergence criterion                    0.100D+01
+  Random starts scale                                    0.500D+01
+  Random seed for generating random starts                       0
+
+Input data file(s)
+  data_81c78c0cb6869e75ae6a0f08ff71917f.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+     Number of y missing data patterns           1
+     Number of u missing data patterns           0
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              NEUROTIC      EXTRAVER      OPENNESS      AGREEABL      CONSCIEN
+              ________      ________      ________      ________      ________
+ NEUROTIC       1.000
+ EXTRAVER       1.000         1.000
+ OPENNESS       1.000         1.000         1.000
+ AGREEABL       1.000         1.000         1.000         1.000
+ CONSCIEN       1.000         1.000         1.000         1.000         1.000
+ ACTIVE_C       1.000         1.000         1.000         1.000         1.000
+ AVOIDANC       1.000         1.000         1.000         1.000         1.000
+ SOC_EMO_       1.000         1.000         1.000         1.000         1.000
+ IESR_TS        1.000         1.000         1.000         1.000         1.000
+ MPSS_TOT       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              ACTIVE_C      AVOIDANC      SOC_EMO_      IESR_TS       MPSS_TOT
+              ________      ________      ________      ________      ________
+ ACTIVE_C       1.000
+ AVOIDANC       1.000         1.000
+ SOC_EMO_       1.000         1.000         1.000
+ IESR_TS        1.000         1.000         1.000         1.000
+ MPSS_TOT       1.000         1.000         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     NEUROTICISM           0.000       0.344      -2.153    0.13%      -0.914     -0.351     -0.013
+             746.000       0.999      -0.133       3.141    0.13%       0.212      0.776
+     EXTRAVERSION          0.000      -0.567      -3.510    0.40%      -0.889     -0.161      0.130
+             746.000       0.999       0.367       2.169    0.13%       0.276      0.858
+     OPENNESS              0.000      -0.053      -2.961    0.13%      -0.787     -0.321     -0.010
+             746.000       0.999      -0.208       2.630    0.54%       0.301      0.767
+     AGREEABLENESS         0.000      -0.495      -4.910    0.13%      -0.773     -0.255      0.089
+             746.000       0.999       0.738       2.331    0.13%       0.262      0.779
+     CONSCIENTIOUSNE       0.000      -0.517      -3.782    0.13%      -0.722     -0.263      0.043
+             746.000       0.999       0.347       1.880    0.94%       0.196      0.962
+     ACTIVE_COPING         0.000      -0.164      -3.070    0.13%      -0.793     -0.276     -0.017
+             746.000       0.999       0.060       2.726    0.13%       0.242      0.811
+     AVOIDANCE_COPIN       0.000       1.136      -1.529    2.14%      -0.837     -0.421     -0.144
+             746.000       0.999       1.959       4.843    0.13%      -0.005      0.687
+     SOC_EMO_COPING        0.000       0.116      -2.529    0.40%      -0.840     -0.277      0.004
+             746.000       0.999      -0.224       2.536    0.54%       0.285      0.848
+     IESR_TS               0.000       1.113      -1.187    4.29%      -0.862     -0.538     -0.279
+             746.000       0.999       0.732       3.938    0.13%      -0.019      0.759
+     MPSS_TOT              0.000      -0.943      -3.410    0.27%      -0.762     -0.061      0.172
+             746.000       0.999       0.588       1.263    8.31%       0.406      0.873
+
+RANDOM STARTS RESULTS RANKED FROM THE BEST TO THE WORST LOGLIKELIHOOD VALUES
+
+Final stage loglikelihood values at local maxima, seeds, and initial stage start numbers:
+
+           -9931.029  93468            3
+           -9935.459  533738           11
+           -9941.085  637345           19
+           -9941.085  253358           2
+
+
+
+     WARNING:  THE BEST LOGLIKELIHOOD VALUE WAS NOT REPLICATED.  THE
+     SOLUTION MAY NOT BE TRUSTWORTHY DUE TO LOCAL MAXIMA.  INCREASE THE
+     NUMBER OF RANDOM STARTS.
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       75
+
+Loglikelihood
+
+          H0 Value                       -9931.029
+          H0 Scaling Correction Factor      1.6997
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   20012.057
+          Bayesian (BIC)                 20358.162
+          Sample-Size Adjusted BIC       20120.009
+            (n* = (n + 2) / 24)
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1         49.36702          0.06618
+       2        160.29289          0.21487
+       3         75.40371          0.10108
+       4        221.86959          0.29741
+       5        182.07027          0.24406
+       6         56.99652          0.07640
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1         49.36702          0.06618
+       2        160.29289          0.21487
+       3         75.40371          0.10108
+       4        221.86959          0.29741
+       5        182.07027          0.24406
+       6         56.99652          0.07640
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1               47          0.06300
+       2              163          0.21850
+       3               72          0.09651
+       4              222          0.29759
+       5              184          0.24665
+       6               58          0.07775
+
+
+CLASSIFICATION QUALITY
+
+     Entropy                         0.726
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2        3        4        5        6
+
+    1   0.828    0.085    0.021    0.007    0.000    0.058
+    2   0.043    0.761    0.001    0.129    0.056    0.010
+    3   0.000    0.004    0.894    0.081    0.006    0.014
+    4   0.001    0.088    0.033    0.767    0.084    0.027
+    5   0.000    0.058    0.000    0.106    0.836    0.000
+    6   0.054    0.029    0.043    0.086    0.000    0.789
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2        3        4        5        6
+
+    1   0.788    0.143    0.001    0.004    0.000    0.063
+    2   0.025    0.774    0.002    0.122    0.067    0.010
+    3   0.013    0.002    0.854    0.097    0.001    0.033
+    4   0.001    0.094    0.026    0.768    0.088    0.023
+    5   0.000    0.050    0.002    0.103    0.845    0.000
+    6   0.048    0.028    0.018    0.104    0.000    0.803
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2        3        4        5        6
+
+    1      2.528    0.824   -4.496   -2.638   -8.347    0.000
+    2      0.874    4.307   -1.805    2.460    1.860    0.000
+    3     -0.899   -2.814    3.262    1.085   -3.294    0.000
+    4     -2.728    1.433    0.150    3.528    1.356    0.000
+    5     -0.880    8.802    5.786    9.511   11.620    0.000
+    6     -2.815   -3.371   -3.793   -2.048  -12.243    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ NEUROTIC WITH
+    EXTRAVERSI         0.000      0.000    999.000    999.000
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ EXTRAVER WITH
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ OPENNESS WITH
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AGREEABL WITH
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ CONSCIEN WITH
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ ACTIVE_C WITH
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AVOIDANC WITH
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ SOC_EMO_ WITH
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ IESR_TS  WITH
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ Means
+    NEUROTICIS         0.877      0.248      3.532      0.000
+    EXTRAVERSI        -1.411      1.050     -1.344      0.179
+    OPENNESS          -0.456      0.226     -2.015      0.044
+    AGREEABLEN        -1.013      0.797     -1.272      0.203
+    CONSCIENTI        -0.759      0.612     -1.240      0.215
+    ACTIVE_COP        -1.018      0.592     -1.718      0.086
+    AVOIDANCE_         0.071      0.242      0.292      0.771
+    SOC_EMO_CO        -1.122      1.063     -1.056      0.291
+    IESR_TS            0.139      0.503      0.276      0.783
+    MPSS_TOT          -1.710      0.733     -2.332      0.020
+
+ Variances
+    NEUROTICIS         0.473      0.083      5.717      0.000
+    EXTRAVERSI         0.568      0.103      5.499      0.000
+    OPENNESS           0.913      0.046     19.686      0.000
+    AGREEABLEN         0.843      0.051     16.612      0.000
+    CONSCIENTI         0.628      0.148      4.244      0.000
+    ACTIVE_COP         0.737      0.045     16.351      0.000
+    AVOIDANCE_         0.827      0.091      9.096      0.000
+    SOC_EMO_CO         0.589      0.075      7.810      0.000
+    IESR_TS            0.552      0.068      8.160      0.000
+    MPSS_TOT           0.672      0.134      5.013      0.000
+
+Latent Class 2
+
+ NEUROTIC WITH
+    EXTRAVERSI         0.000      0.000    999.000    999.000
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ EXTRAVER WITH
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ OPENNESS WITH
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AGREEABL WITH
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ CONSCIEN WITH
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ ACTIVE_C WITH
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AVOIDANC WITH
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ SOC_EMO_ WITH
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ IESR_TS  WITH
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ Means
+    NEUROTICIS        -0.240      0.562     -0.427      0.669
+    EXTRAVERSI        -0.224      0.403     -0.555      0.579
+    OPENNESS          -0.251      0.172     -1.453      0.146
+    AGREEABLEN        -0.147      0.224     -0.655      0.512
+    CONSCIENTI        -0.094      0.427     -0.220      0.826
+    ACTIVE_COP        -0.651      0.163     -3.990      0.000
+    AVOIDANCE_        -0.380      0.275     -1.383      0.167
+    SOC_EMO_CO        -0.788      0.175     -4.515      0.000
+    IESR_TS           -0.442      0.250     -1.768      0.077
+    MPSS_TOT          -0.444      0.335     -1.325      0.185
+
+ Variances
+    NEUROTICIS         0.473      0.083      5.717      0.000
+    EXTRAVERSI         0.568      0.103      5.499      0.000
+    OPENNESS           0.913      0.046     19.686      0.000
+    AGREEABLEN         0.843      0.051     16.612      0.000
+    CONSCIENTI         0.628      0.148      4.244      0.000
+    ACTIVE_COP         0.737      0.045     16.351      0.000
+    AVOIDANCE_         0.827      0.091      9.096      0.000
+    SOC_EMO_CO         0.589      0.075      7.810      0.000
+    IESR_TS            0.552      0.068      8.160      0.000
+    MPSS_TOT           0.672      0.134      5.013      0.000
+
+Latent Class 3
+
+ NEUROTIC WITH
+    EXTRAVERSI         0.000      0.000    999.000    999.000
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ EXTRAVER WITH
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ OPENNESS WITH
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AGREEABL WITH
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ CONSCIEN WITH
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ ACTIVE_C WITH
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AVOIDANC WITH
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ SOC_EMO_ WITH
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ IESR_TS  WITH
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ Means
+    NEUROTICIS         1.006      0.203      4.966      0.000
+    EXTRAVERSI        -0.109      0.196     -0.558      0.577
+    OPENNESS           0.116      0.149      0.781      0.435
+    AGREEABLEN        -0.096      0.162     -0.593      0.554
+    CONSCIENTI         0.245      0.134      1.820      0.069
+    ACTIVE_COP         0.283      0.171      1.650      0.099
+    AVOIDANCE_         0.392      0.181      2.168      0.030
+    SOC_EMO_CO         1.123      0.258      4.356      0.000
+    IESR_TS            1.891      0.211      8.981      0.000
+    MPSS_TOT           0.090      0.196      0.461      0.645
+
+ Variances
+    NEUROTICIS         0.473      0.083      5.717      0.000
+    EXTRAVERSI         0.568      0.103      5.499      0.000
+    OPENNESS           0.913      0.046     19.686      0.000
+    AGREEABLEN         0.843      0.051     16.612      0.000
+    CONSCIENTI         0.628      0.148      4.244      0.000
+    ACTIVE_COP         0.737      0.045     16.351      0.000
+    AVOIDANCE_         0.827      0.091      9.096      0.000
+    SOC_EMO_CO         0.589      0.075      7.810      0.000
+    IESR_TS            0.552      0.068      8.160      0.000
+    MPSS_TOT           0.672      0.134      5.013      0.000
+
+Latent Class 4
+
+ NEUROTIC WITH
+    EXTRAVERSI         0.000      0.000    999.000    999.000
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ EXTRAVER WITH
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ OPENNESS WITH
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AGREEABL WITH
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ CONSCIEN WITH
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ ACTIVE_C WITH
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AVOIDANC WITH
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ SOC_EMO_ WITH
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ IESR_TS  WITH
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ Means
+    NEUROTICIS         0.084      0.225      0.372      0.710
+    EXTRAVERSI         0.140      0.335      0.418      0.676
+    OPENNESS          -0.089      0.153     -0.581      0.561
+    AGREEABLEN        -0.002      0.145     -0.011      0.991
+    CONSCIENTI        -0.138      0.275     -0.502      0.616
+    ACTIVE_COP         0.234      0.279      0.840      0.401
+    AVOIDANCE_         0.153      0.131      1.172      0.241
+    SOC_EMO_CO         0.441      0.251      1.755      0.079
+    IESR_TS           -0.113      0.114     -0.987      0.324
+    MPSS_TOT           0.338      0.160      2.120      0.034
+
+ Variances
+    NEUROTICIS         0.473      0.083      5.717      0.000
+    EXTRAVERSI         0.568      0.103      5.499      0.000
+    OPENNESS           0.913      0.046     19.686      0.000
+    AGREEABLEN         0.843      0.051     16.612      0.000
+    CONSCIENTI         0.628      0.148      4.244      0.000
+    ACTIVE_COP         0.737      0.045     16.351      0.000
+    AVOIDANCE_         0.827      0.091      9.096      0.000
+    SOC_EMO_CO         0.589      0.075      7.810      0.000
+    IESR_TS            0.552      0.068      8.160      0.000
+    MPSS_TOT           0.672      0.134      5.013      0.000
+
+Latent Class 5
+
+ NEUROTIC WITH
+    EXTRAVERSI         0.000      0.000    999.000    999.000
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ EXTRAVER WITH
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ OPENNESS WITH
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AGREEABL WITH
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ CONSCIEN WITH
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ ACTIVE_C WITH
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AVOIDANC WITH
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ SOC_EMO_ WITH
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ IESR_TS  WITH
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ Means
+    NEUROTICIS        -0.959      0.134     -7.153      0.000
+    EXTRAVERSI         0.833      0.102      8.192      0.000
+    OPENNESS           0.464      0.117      3.947      0.000
+    AGREEABLEN         0.549      0.099      5.526      0.000
+    CONSCIENTI         0.808      0.118      6.818      0.000
+    ACTIVE_COP         0.540      0.227      2.376      0.018
+    AVOIDANCE_        -0.365      0.125     -2.909      0.004
+    SOC_EMO_CO        -0.089      0.281     -0.317      0.751
+    IESR_TS           -0.372      0.106     -3.512      0.000
+    MPSS_TOT           0.467      0.178      2.632      0.008
+
+ Variances
+    NEUROTICIS         0.473      0.083      5.717      0.000
+    EXTRAVERSI         0.568      0.103      5.499      0.000
+    OPENNESS           0.913      0.046     19.686      0.000
+    AGREEABLEN         0.843      0.051     16.612      0.000
+    CONSCIENTI         0.628      0.148      4.244      0.000
+    ACTIVE_COP         0.737      0.045     16.351      0.000
+    AVOIDANCE_         0.827      0.091      9.096      0.000
+    SOC_EMO_CO         0.589      0.075      7.810      0.000
+    IESR_TS            0.552      0.068      8.160      0.000
+    MPSS_TOT           0.672      0.134      5.013      0.000
+
+Latent Class 6
+
+ NEUROTIC WITH
+    EXTRAVERSI         0.000      0.000    999.000    999.000
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ EXTRAVER WITH
+    OPENNESS           0.000      0.000    999.000    999.000
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ OPENNESS WITH
+    AGREEABLEN         0.000      0.000    999.000    999.000
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AGREEABL WITH
+    CONSCIENTI         0.000      0.000    999.000    999.000
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ CONSCIEN WITH
+    ACTIVE_COP         0.000      0.000    999.000    999.000
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ ACTIVE_C WITH
+    AVOIDANCE_         0.000      0.000    999.000    999.000
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ AVOIDANC WITH
+    SOC_EMO_CO         0.000      0.000    999.000    999.000
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ SOC_EMO_ WITH
+    IESR_TS            0.000      0.000    999.000    999.000
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ IESR_TS  WITH
+    MPSS_TOT           0.000      0.000    999.000    999.000
+
+ Means
+    NEUROTICIS         1.322      0.261      5.069      0.000
+    EXTRAVERSI        -1.209      0.275     -4.395      0.000
+    OPENNESS          -0.189      0.188     -1.003      0.316
+    AGREEABLEN        -0.330      0.336     -0.983      0.325
+    CONSCIENTI        -1.445      1.309     -1.105      0.269
+    ACTIVE_COP        -0.301      0.183     -1.641      0.101
+    AVOIDANCE_         1.056      0.961      1.098      0.272
+    SOC_EMO_CO         0.271      0.346      0.783      0.434
+    IESR_TS            0.250      0.321      0.779      0.436
+    MPSS_TOT          -0.201      0.503     -0.400      0.689
+
+ Variances
+    NEUROTICIS         0.473      0.083      5.717      0.000
+    EXTRAVERSI         0.568      0.103      5.499      0.000
+    OPENNESS           0.913      0.046     19.686      0.000
+    AGREEABLEN         0.843      0.051     16.612      0.000
+    CONSCIENTI         0.628      0.148      4.244      0.000
+    ACTIVE_COP         0.737      0.045     16.351      0.000
+    AVOIDANCE_         0.827      0.091      9.096      0.000
+    SOC_EMO_CO         0.589      0.075      7.810      0.000
+    IESR_TS            0.552      0.068      8.160      0.000
+    MPSS_TOT           0.672      0.134      5.013      0.000
+
+Categorical Latent Variables
+
+ Means
+    C1#1              -0.144      2.775     -0.052      0.959
+    C1#2               1.034      0.798      1.296      0.195
+    C1#3               0.280      1.246      0.225      0.822
+    C1#4               1.359      1.310      1.038      0.299
+    C1#5               1.161      1.104      1.052      0.293
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.201E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+TECHNICAL 14 OUTPUT
+
+     Random Starts Specifications for the k-1 Class Analysis Model
+        Number of initial stage random starts                  20
+        Number of final stage optimizations                     4
+
+     Random Starts Specification for the k-1 Class Model for Generated Data
+        Number of initial stage random starts                   0
+        Number of final stage optimizations for the
+           initial stage random starts                          0
+     Random Starts Specification for the k Class Model for Generated Data
+        Number of initial stage random starts                  40
+        Number of final stage optimizations                     8
+     Number of bootstrap draws requested                   Varies
+
+
+     PARAMETRIC BOOTSTRAPPED LIKELIHOOD RATIO TEST FOR 5 (H0) VERSUS 6 CLASSES
+
+          H0 Loglikelihood Value                        -9972.208
+          2 Times the Loglikelihood Difference             82.359
+          Difference in the Number of Parameters               11
+          Approximate P-Value                              0.0000
+          Successful Bootstrap Draws                           10
+
+     WARNING:  OF THE 10 BOOTSTRAP DRAWS, 6 DRAWS HAD BOTH A SMALLER LRT VALUE THAN THE
+     OBSERVED LRT VALUE AND NOT A REPLICATED BEST LOGLIKELIHOOD VALUE FOR THE 6-CLASS MODEL.
+     THIS MEANS THAT THE P-VALUE MAY NOT BE TRUSTWORTHY DUE TO LOCAL MAXIMA.
+     INCREASE THE NUMBER OF RANDOM STARTS USING THE LRTSTARTS OPTION.
+
+
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    model_1_class_6.dat
+
+  Order and format of variables
+
+    NEUROTIC       F10.3
+    EXTRAVER       F10.3
+    OPENNESS       F10.3
+    AGREEABL       F10.3
+    CONSCIEN       F10.3
+    ACTIVE_C       F10.3
+    AVOIDANC       F10.3
+    SOC_EMO_       F10.3
+    IESR_TS        F10.3
+    MPSS_TOT       F10.3
+    CPROB1         F10.3
+    CPROB2         F10.3
+    CPROB3         F10.3
+    CPROB4         F10.3
+    CPROB5         F10.3
+    CPROB6         F10.3
+    C1             F10.3
+
+  Save file format
+    17F10.3
+
+  Save file record length    10000
+
+  Save missing symbol        *
+
+
+     Beginning Time:  13:26:57
+        Ending Time:  13:27:12
+       Elapsed Time:  00:00:15
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

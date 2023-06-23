@@ -1,0 +1,998 @@
+Mplus VERSION 8.6 (Mac)
+MUTHEN & MUTHEN
+10/25/2022   8:31 AM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Nomological network with SCS-P and SCS-N.
+  DATA:
+  FILE = "semdata.dat";
+
+  VARIABLE:
+  NAMES =
+    pos_sc neg_sc ts_scs
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    group
+    ;
+
+
+  MISSING = .;
+
+  USEVARIABLES ARE
+    pos_sc neg_sc
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro
+    iesr_a iesr_i iesr_h
+    cope_pa cope_po
+    mspss_fa mspss_fr mspss_so
+    neuro_na neuro_sr
+    extra_pa extra_so extra_ac
+    ;
+
+  ANALYSIS:
+    ESTIMATOR = MLR;
+    PROCESSORS = 6;
+    ! ROTATION = TARGET (ORTHOGONAL);
+
+  MODEL:
+
+  ! Measurement model
+
+  PTGI BY
+    ptgi_al ptgi_np ptgi_ps ptgi_sp ptgi_ro;
+
+  IESR BY
+    iesr_a iesr_i iesr_h;
+
+  COPE BY
+    cope_pa cope_po;
+
+  MSPSS BY
+    mspss_fa mspss_fr mspss_so;
+
+  NEURO BY
+    neuro_na neuro_sr;
+
+  EXTRA BY
+    extra_pa extra_so extra_ac;
+
+  ! Structural model
+
+  pos_sc ON COPE MSPSS NEURO EXTRA;
+  neg_sc ON COPE MSPSS NEURO EXTRA;
+
+  PTGI ON neg_sc pos_sc COPE MSPSS NEURO EXTRA;
+  IESR ON neg_sc pos_sc COPE MSPSS NEURO EXTRA;
+
+  model indirect:
+    PTGI ind COPE;
+    PTGI ind MSPSS;
+    PTGI ind NEURO;
+    PTGI ind EXTRA;
+
+    IESR ind COPE;
+    IESR ind MSPSS;
+    IESR ind NEURO;
+    IESR ind EXTRA;
+
+  ! Requesting standardized parameter estimates and modification indices
+  OUTPUT:
+  stdyx;
+  !MODINDICES (ALL);
+
+  ! savedata:
+  !   file is m6b_scores.txt;
+  !   save = fscores;
+
+
+
+
+INPUT READING TERMINATED NORMALLY
+
+
+
+Nomological network with SCS-P and SCS-N.
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         746
+
+Number of dependent variables                                   20
+Number of independent variables                                  0
+Number of continuous latent variables                            6
+
+Observed dependent variables
+
+  Continuous
+   POS_SC      NEG_SC      PTGI_AL     PTGI_NP     PTGI_PS     PTGI_SP
+   PTGI_RO     IESR_A      IESR_I      IESR_H      COPE_PA     COPE_PO
+   MSPSS_FA    MSPSS_FR    MSPSS_SO    NEURO_NA    NEURO_SR    EXTRA_PA
+   EXTRA_SO    EXTRA_AC
+
+Continuous latent variables
+   PTGI        IESR        COPE        MSPSS       NEURO       EXTRA
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+
+Input data file(s)
+  semdata.dat
+
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT
+
+
+           Covariance Coverage
+              POS_SC        NEG_SC        PTGI_AL       PTGI_NP       PTGI_PS
+              ________      ________      ________      ________      ________
+ POS_SC         1.000
+ NEG_SC         1.000         1.000
+ PTGI_AL        1.000         1.000         1.000
+ PTGI_NP        1.000         1.000         1.000         1.000
+ PTGI_PS        1.000         1.000         1.000         1.000         1.000
+ PTGI_SP        1.000         1.000         1.000         1.000         1.000
+ PTGI_RO        1.000         1.000         1.000         1.000         1.000
+ IESR_A         1.000         1.000         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              PTGI_SP       PTGI_RO       IESR_A        IESR_I        IESR_H
+              ________      ________      ________      ________      ________
+ PTGI_SP        1.000
+ PTGI_RO        1.000         1.000
+ IESR_A         1.000         1.000         1.000
+ IESR_I         1.000         1.000         1.000         1.000
+ IESR_H         1.000         1.000         1.000         1.000         1.000
+ COPE_PA        1.000         1.000         1.000         1.000         1.000
+ COPE_PO        1.000         1.000         1.000         1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              COPE_PA       COPE_PO       MSPSS_FA      MSPSS_FR      MSPSS_SO
+              ________      ________      ________      ________      ________
+ COPE_PA        1.000
+ COPE_PO        1.000         1.000
+ MSPSS_FA       1.000         1.000         1.000
+ MSPSS_FR       1.000         1.000         1.000         1.000
+ MSPSS_SO       1.000         1.000         1.000         1.000         1.000
+ NEURO_NA       1.000         1.000         1.000         1.000         1.000
+ NEURO_SR       1.000         1.000         1.000         1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              NEURO_NA      NEURO_SR      EXTRA_PA      EXTRA_SO      EXTRA_AC
+              ________      ________      ________      ________      ________
+ NEURO_NA       1.000
+ NEURO_SR       1.000         1.000
+ EXTRA_PA       1.000         1.000         1.000
+ EXTRA_SO       1.000         1.000         1.000         1.000
+ EXTRA_AC       1.000         1.000         1.000         1.000         1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     POS_SC               38.617      -0.086      13.000    0.13%      31.000     37.000     39.000
+             746.000      78.413      -0.142      61.000    0.27%      41.000     46.000
+     NEG_SC               35.204       0.245      13.000    0.27%      24.000     31.000     34.000
+             746.000     135.363      -0.760      65.000    0.27%      38.000     46.000
+     PTGI_AL               6.631       0.007       0.000   11.53%       2.000      5.000      7.000
+             746.000      17.753      -0.985      15.000    2.55%       8.000     11.000
+     PTGI_NP               8.615       0.424       0.000   12.33%       2.000      6.000      8.000
+             746.000      40.435      -0.703      25.000    0.40%      10.000     15.000
+     PTGI_PS              10.172      -0.265       0.000    5.50%       5.000      9.000     11.000
+             746.000      28.188      -0.843      20.000    2.55%      12.000     15.000
+     PTGI_SP               1.240       1.943       0.000   63.67%       0.000      0.000      0.000
+             746.000       4.611       3.260      10.000    0.80%       0.000      2.000
+     PTGI_RO              14.072       0.139       0.000    8.31%       4.000     11.000     14.000
+             746.000      85.123      -1.006      35.000    0.94%      17.000     23.000
+     IESR_A                6.517       0.951       0.000   13.27%       2.000      4.000      5.000
+             746.000      30.290       0.446      27.000    0.13%       7.000     11.000
+     IESR_I                8.572       0.884       0.000    8.98%       2.000      5.000      7.000
+             746.000      52.087       0.012      32.000    0.27%       9.000     15.000
+     IESR_H                3.366       1.723       0.000   36.86%       0.000      1.000      2.000
+             746.000      20.227       2.719      24.000    0.13%       3.000      6.000
+     COPE_PA              33.993      -0.132      18.000    0.13%      30.000     33.000     34.000
+             746.000      23.626      -0.030      47.000    0.40%      35.000     38.000
+     COPE_PO              33.878      -0.181      17.000    0.13%      29.000     33.000     34.000
+             746.000      30.944      -0.077      48.000    0.13%      35.000     38.000
+     MSPSS_FA             18.342      -0.857       4.000    1.21%      14.000     18.000     20.000
+             746.000      29.048      -0.211      24.000   22.25%      21.000     24.000
+     MSPSS_FR             18.070      -0.794       4.000    1.88%      14.000     17.000     19.000
+             746.000      26.279      -0.046      24.000   19.17%      20.000     23.000
+     MSPSS_SO             19.347      -1.116       4.000    1.34%      16.000     19.000     20.000
+             746.000      25.985       0.508      24.000   33.38%      22.000     24.000
+     NEURO_NA              9.221       0.073       0.000    0.94%       6.000      8.000      9.000
+             746.000      15.727      -0.295      20.000    0.40%      10.000     13.000
+     NEURO_SR              9.882       0.490       0.000    2.55%       5.000      8.000      9.000
+             746.000      33.600      -0.259      28.000    0.27%      11.000     15.000
+     EXTRA_PA             10.402      -0.238       1.000    0.13%       8.000     10.000     11.000
+             746.000       8.852      -0.388      16.000    3.49%      11.000     13.000
+     EXTRA_SO             10.984      -0.571       0.000    0.27%       9.000     11.000     11.000
+             746.000       8.072       0.264      16.000    3.75%      12.000     13.000
+     EXTRA_AC             11.769      -0.631       2.000    0.40%       9.000     11.000     12.000
+             746.000       7.703       0.245      16.000    6.43%      13.000     14.000
+
+
+     THIS ANALYSIS MAY HAVE MULTIPLE SOLUTIONS.  EXPLORE THIS USING RANDOM STARTS,
+     FOR EXAMPLE, STARTS = 20.  USE A LARGE ENOUGH NUMBER OF STARTS SO THAT THE
+     BEST FIT FUNCTION VALUE IS REPLICATED SEVERAL TIMES.
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       85
+
+Loglikelihood
+
+          H0 Value                      -41870.907
+          H0 Scaling Correction Factor      1.1491
+            for MLR
+          H1 Value                      -41637.549
+          H1 Scaling Correction Factor      1.1102
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   83911.814
+          Bayesian (BIC)                 84304.066
+          Sample-Size Adjusted BIC       84034.159
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                            429.188*
+          Degrees of Freedom                   145
+          P-Value                           0.0000
+          Scaling Correction Factor         1.0874
+            for MLR
+
+*   The chi-square value for MLM, MLMV, MLR, ULSMV, WLSM and WLSMV cannot be used
+    for chi-square difference testing in the regular way.  MLM, MLR and WLSM
+    chi-square difference testing is described on the Mplus website.  MLMV, WLSMV,
+    and ULSMV difference testing is done using the DIFFTEST option.
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.051
+          90 Percent C.I.                    0.046  0.057
+          Probability RMSEA <= .05           0.347
+
+CFI/TLI
+
+          CFI                                0.954
+          TLI                                0.940
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           6427.783
+          Degrees of Freedom                   190
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.037
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTGI     BY
+    PTGI_AL            1.000      0.000    999.000    999.000
+    PTGI_NP            1.740      0.051     34.057      0.000
+    PTGI_PS            1.234      0.044     28.261      0.000
+    PTGI_SP            0.328      0.025     12.866      0.000
+    PTGI_RO            2.331      0.076     30.480      0.000
+
+ IESR     BY
+    IESR_A             1.000      0.000    999.000    999.000
+    IESR_I             1.455      0.063     23.224      0.000
+    IESR_H             0.911      0.041     22.451      0.000
+
+ COPE     BY
+    COPE_PA            1.000      0.000    999.000    999.000
+    COPE_PO            1.123      0.147      7.616      0.000
+
+ MSPSS    BY
+    MSPSS_FA           1.000      0.000    999.000    999.000
+    MSPSS_FR           1.019      0.071     14.350      0.000
+    MSPSS_SO           1.013      0.064     15.704      0.000
+
+ NEURO    BY
+    NEURO_NA           1.000      0.000    999.000    999.000
+    NEURO_SR           1.825      0.086     21.171      0.000
+
+ EXTRA    BY
+    EXTRA_PA           1.000      0.000    999.000    999.000
+    EXTRA_SO           0.990      0.071     14.007      0.000
+    EXTRA_AC           0.831      0.068     12.299      0.000
+
+ PTGI     ON
+    COPE               0.102      0.070      1.460      0.144
+    MSPSS              0.034      0.052      0.645      0.519
+    NEURO              0.405      0.142      2.857      0.004
+    EXTRA              0.680      0.140      4.851      0.000
+
+ IESR     ON
+    COPE              -0.027      0.083     -0.323      0.746
+    MSPSS             -0.051      0.061     -0.844      0.399
+    NEURO              0.700      0.164      4.266      0.000
+    EXTRA              0.753      0.163      4.611      0.000
+
+ PTGI     ON
+    NEG_SC             0.008      0.023      0.333      0.739
+    POS_SC             0.064      0.021      3.072      0.002
+
+ IESR     ON
+    NEG_SC             0.117      0.029      3.962      0.000
+    POS_SC             0.046      0.025      1.834      0.067
+
+ POS_SC   ON
+    COPE               1.202      0.120     10.041      0.000
+    MSPSS              0.175      0.127      1.383      0.167
+    NEURO             -0.785      0.192     -4.095      0.000
+    EXTRA             -0.243      0.308     -0.787      0.431
+
+ NEG_SC   ON
+    COPE               0.708      0.162      4.361      0.000
+    MSPSS             -0.173      0.134     -1.296      0.195
+    NEURO              3.455      0.257     13.430      0.000
+    EXTRA              0.193      0.357      0.540      0.589
+
+ IESR     WITH
+    PTGI               2.536      0.578      4.385      0.000
+
+ MSPSS    WITH
+    COPE               3.179      0.732      4.345      0.000
+
+ NEURO    WITH
+    COPE              -3.002      0.551     -5.446      0.000
+    MSPSS             -2.619      0.532     -4.921      0.000
+
+ EXTRA    WITH
+    COPE               2.165      0.392      5.524      0.000
+    MSPSS              3.455      0.440      7.846      0.000
+    NEURO             -3.791      0.385     -9.841      0.000
+
+ Intercepts
+    POS_SC            38.617      0.324    119.110      0.000
+    NEG_SC            35.204      0.426     82.643      0.000
+    PTGI_AL            3.901      1.214      3.215      0.001
+    PTGI_NP            3.866      2.112      1.831      0.067
+    PTGI_PS            6.802      1.517      4.485      0.000
+    PTGI_SP            0.345      0.399      0.866      0.386
+    PTGI_RO            7.710      2.831      2.724      0.006
+    IESR_A             0.639      1.434      0.445      0.656
+    IESR_I             0.020      2.069      0.010      0.992
+    IESR_H            -1.989      1.296     -1.536      0.125
+    COPE_PA           33.993      0.178    191.015      0.000
+    COPE_PO           33.878      0.204    166.342      0.000
+    MSPSS_FA          18.342      0.197     92.951      0.000
+    MSPSS_FR          18.070      0.188     96.275      0.000
+    MSPSS_SO          19.347      0.187    103.663      0.000
+    NEURO_NA           9.221      0.145     63.508      0.000
+    NEURO_SR           9.882      0.212     46.564      0.000
+    EXTRA_PA          10.402      0.109     95.495      0.000
+    EXTRA_SO          10.984      0.104    105.592      0.000
+    EXTRA_AC          11.769      0.102    115.824      0.000
+
+ Variances
+    COPE              12.131      1.838      6.598      0.000
+    MSPSS             13.816      1.483      9.318      0.000
+    NEURO              7.965      0.762     10.447      0.000
+    EXTRA              4.140      0.440      9.419      0.000
+
+ Residual Variances
+    POS_SC            50.588      3.615     13.995      0.000
+    NEG_SC            50.646      4.677     10.830      0.000
+    PTGI_AL            5.826      0.410     14.218      0.000
+    PTGI_NP            4.343      0.576      7.535      0.000
+    PTGI_PS           10.018      0.650     15.404      0.000
+    PTGI_SP            3.331      0.250     13.334      0.000
+    PTGI_RO           20.344      2.067      9.844      0.000
+    IESR_A            11.350      0.842     13.474      0.000
+    IESR_I            12.006      1.412      8.505      0.000
+    IESR_H             4.510      0.456      9.897      0.000
+    COPE_PA           11.495      1.548      7.424      0.000
+    COPE_PO           15.641      2.057      7.603      0.000
+    MSPSS_FA          15.232      1.377     11.060      0.000
+    MSPSS_FR          11.932      1.455      8.201      0.000
+    MSPSS_SO          11.818      1.162     10.167      0.000
+    NEURO_NA           7.762      0.474     16.383      0.000
+    NEURO_SR           7.060      1.090      6.479      0.000
+    EXTRA_PA           4.712      0.348     13.526      0.000
+    EXTRA_SO           4.012      0.329     12.182      0.000
+    EXTRA_AC           4.843      0.341     14.205      0.000
+    PTGI               9.942      0.685     14.520      0.000
+    IESR              13.018      1.136     11.463      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.620E-06
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ PTGI     BY
+    PTGI_AL            0.820      0.015     55.415      0.000
+    PTGI_NP            0.945      0.008    124.270      0.000
+    PTGI_PS            0.803      0.015     52.911      0.000
+    PTGI_SP            0.527      0.024     21.532      0.000
+    PTGI_RO            0.872      0.015     59.826      0.000
+
+ IESR     BY
+    IESR_A             0.791      0.019     42.182      0.000
+    IESR_I             0.877      0.016     55.196      0.000
+    IESR_H             0.882      0.014     62.299      0.000
+
+ COPE     BY
+    COPE_PA            0.717      0.047     15.322      0.000
+    COPE_PO            0.703      0.048     14.650      0.000
+
+ MSPSS    BY
+    MSPSS_FA           0.690      0.031     22.193      0.000
+    MSPSS_FR           0.739      0.034     21.589      0.000
+    MSPSS_SO           0.738      0.032     23.288      0.000
+
+ NEURO    BY
+    NEURO_NA           0.712      0.023     31.285      0.000
+    NEURO_SR           0.889      0.018     48.385      0.000
+
+ EXTRA    BY
+    EXTRA_PA           0.684      0.028     24.162      0.000
+    EXTRA_SO           0.709      0.030     23.333      0.000
+    EXTRA_AC           0.609      0.033     18.204      0.000
+
+ PTGI     ON
+    COPE               0.103      0.070      1.479      0.139
+    MSPSS              0.036      0.056      0.644      0.519
+    NEURO              0.331      0.115      2.868      0.004
+    EXTRA              0.400      0.078      5.130      0.000
+
+ IESR     ON
+    COPE              -0.022      0.067     -0.322      0.748
+    MSPSS             -0.044      0.051     -0.855      0.392
+    NEURO              0.454      0.104      4.369      0.000
+    EXTRA              0.352      0.071      4.958      0.000
+
+ PTGI     ON
+    NEG_SC             0.026      0.078      0.333      0.739
+    POS_SC             0.163      0.053      3.091      0.002
+
+ IESR     ON
+    NEG_SC             0.312      0.076      4.085      0.000
+    POS_SC             0.093      0.050      1.863      0.062
+
+ POS_SC   ON
+    COPE               0.473      0.041     11.552      0.000
+    MSPSS              0.074      0.053      1.380      0.168
+    NEURO             -0.250      0.061     -4.091      0.000
+    EXTRA             -0.056      0.070     -0.792      0.428
+
+ NEG_SC   ON
+    COPE               0.212      0.040      5.257      0.000
+    MSPSS             -0.055      0.043     -1.290      0.197
+    NEURO              0.838      0.050     16.771      0.000
+    EXTRA              0.034      0.062      0.540      0.589
+
+ IESR     WITH
+    PTGI               0.223      0.048      4.689      0.000
+
+ MSPSS    WITH
+    COPE               0.246      0.056      4.420      0.000
+
+ NEURO    WITH
+    COPE              -0.305      0.061     -5.021      0.000
+    MSPSS             -0.250      0.046     -5.389      0.000
+
+ EXTRA    WITH
+    COPE               0.306      0.062      4.889      0.000
+    MSPSS              0.457      0.047      9.732      0.000
+    NEURO             -0.660      0.039    -17.076      0.000
+
+ Intercepts
+    POS_SC             4.361      0.117     37.280      0.000
+    NEG_SC             3.026      0.064     46.973      0.000
+    PTGI_AL            0.926      0.289      3.202      0.001
+    PTGI_NP            0.608      0.333      1.824      0.068
+    PTGI_PS            1.281      0.290      4.413      0.000
+    PTGI_SP            0.161      0.186      0.866      0.387
+    PTGI_RO            0.836      0.308      2.709      0.007
+    IESR_A             0.116      0.261      0.444      0.657
+    IESR_I             0.003      0.287      0.010      0.992
+    IESR_H            -0.442      0.284     -1.556      0.120
+    COPE_PA            6.994      0.187     37.453      0.000
+    COPE_PO            6.090      0.163     37.258      0.000
+    MSPSS_FA           3.403      0.110     30.819      0.000
+    MSPSS_FR           3.525      0.115     30.650      0.000
+    MSPSS_SO           3.795      0.138     27.443      0.000
+    NEURO_NA           2.325      0.065     35.863      0.000
+    NEURO_SR           1.705      0.044     38.952      0.000
+    EXTRA_PA           3.496      0.095     36.727      0.000
+    EXTRA_SO           3.866      0.125     30.911      0.000
+    EXTRA_AC           4.241      0.136     31.215      0.000
+
+ Variances
+    COPE               1.000      0.000    999.000    999.000
+    MSPSS              1.000      0.000    999.000    999.000
+    NEURO              1.000      0.000    999.000    999.000
+    EXTRA              1.000      0.000    999.000    999.000
+
+ Residual Variances
+    POS_SC             0.645      0.039     16.393      0.000
+    NEG_SC             0.374      0.035     10.574      0.000
+    PTGI_AL            0.328      0.024     13.532      0.000
+    PTGI_NP            0.107      0.014      7.475      0.000
+    PTGI_PS            0.355      0.024     14.584      0.000
+    PTGI_SP            0.722      0.026     27.996      0.000
+    PTGI_RO            0.239      0.025      9.393      0.000
+    IESR_A             0.374      0.030     12.625      0.000
+    IESR_I             0.230      0.028      8.257      0.000
+    IESR_H             0.223      0.025      8.929      0.000
+    COPE_PA            0.487      0.067      7.260      0.000
+    COPE_PO            0.505      0.068      7.487      0.000
+    MSPSS_FA           0.524      0.043     12.233      0.000
+    MSPSS_FR           0.454      0.051      8.977      0.000
+    MSPSS_SO           0.455      0.047      9.713      0.000
+    NEURO_NA           0.494      0.032     15.245      0.000
+    NEURO_SR           0.210      0.033      6.436      0.000
+    EXTRA_PA           0.532      0.039     13.750      0.000
+    EXTRA_SO           0.497      0.043     11.526      0.000
+    EXTRA_AC           0.629      0.041     15.415      0.000
+    PTGI               0.833      0.035     23.715      0.000
+    IESR               0.687      0.040     16.958      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    POS_SC             0.355      0.039      9.017      0.000
+    NEG_SC             0.626      0.035     17.688      0.000
+    PTGI_AL            0.672      0.024     27.707      0.000
+    PTGI_NP            0.893      0.014     62.135      0.000
+    PTGI_PS            0.645      0.024     26.455      0.000
+    PTGI_SP            0.278      0.026     10.766      0.000
+    PTGI_RO            0.761      0.025     29.913      0.000
+    IESR_A             0.626      0.030     21.091      0.000
+    IESR_I             0.770      0.028     27.598      0.000
+    IESR_H             0.777      0.025     31.149      0.000
+    COPE_PA            0.513      0.067      7.661      0.000
+    COPE_PO            0.495      0.068      7.325      0.000
+    MSPSS_FA           0.476      0.043     11.096      0.000
+    MSPSS_FR           0.546      0.051     10.794      0.000
+    MSPSS_SO           0.545      0.047     11.644      0.000
+    NEURO_NA           0.506      0.032     15.643      0.000
+    NEURO_SR           0.790      0.033     24.192      0.000
+    EXTRA_PA           0.468      0.039     12.081      0.000
+    EXTRA_SO           0.503      0.043     11.667      0.000
+    EXTRA_AC           0.371      0.041      9.102      0.000
+
+     Latent                                         Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    PTGI               0.167      0.035      4.740      0.000
+    IESR               0.313      0.040      7.741      0.000
+
+
+TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from COPE to PTGI
+
+  Total                0.184      0.055      3.342      0.001
+  Total indirect       0.082      0.031      2.616      0.009
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    COPE               0.076      0.025      3.053      0.002
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    COPE               0.005      0.016      0.335      0.738
+
+  Direct
+    PTGI
+    COPE               0.102      0.070      1.460      0.144
+
+
+Effects from MSPSS to PTGI
+
+  Total                0.044      0.050      0.865      0.387
+  Total indirect       0.010      0.010      0.989      0.323
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    MSPSS              0.011      0.009      1.194      0.232
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    MSPSS             -0.001      0.004     -0.322      0.747
+
+  Direct
+    PTGI
+    MSPSS              0.034      0.052      0.645      0.519
+
+
+Effects from NEURO to PTGI
+
+  Total                0.382      0.092      4.151      0.000
+  Total indirect      -0.023      0.081     -0.286      0.775
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    NEURO             -0.050      0.023     -2.172      0.030
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    NEURO              0.027      0.080      0.335      0.738
+
+  Direct
+    PTGI
+    NEURO              0.405      0.142      2.857      0.004
+
+
+Effects from EXTRA to PTGI
+
+  Total                0.666      0.137      4.864      0.000
+  Total indirect      -0.014      0.021     -0.660      0.509
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    EXTRA             -0.015      0.021     -0.734      0.463
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    EXTRA              0.001      0.005      0.324      0.746
+
+  Direct
+    PTGI
+    EXTRA              0.680      0.140      4.851      0.000
+
+
+Effects from COPE to IESR
+
+  Total                0.111      0.069      1.608      0.108
+  Total indirect       0.138      0.039      3.500      0.000
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    COPE               0.055      0.030      1.849      0.064
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    COPE               0.083      0.025      3.242      0.001
+
+  Direct
+    IESR
+    COPE              -0.027      0.083     -0.323      0.746
+
+
+Effects from MSPSS to IESR
+
+  Total               -0.064      0.064     -1.001      0.317
+  Total indirect      -0.012      0.017     -0.726      0.468
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    MSPSS              0.008      0.008      1.007      0.314
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    MSPSS             -0.020      0.016     -1.252      0.211
+
+  Direct
+    IESR
+    MSPSS             -0.051      0.061     -0.844      0.399
+
+
+Effects from NEURO to IESR
+
+  Total                1.068      0.123      8.650      0.000
+  Total indirect       0.367      0.099      3.697      0.000
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    NEURO             -0.036      0.023     -1.569      0.117
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    NEURO              0.403      0.098      4.114      0.000
+
+  Direct
+    IESR
+    NEURO              0.700      0.164      4.266      0.000
+
+
+Effects from EXTRA to IESR
+
+  Total                0.765      0.172      4.448      0.000
+  Total indirect       0.011      0.040      0.281      0.778
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    EXTRA             -0.011      0.017     -0.669      0.503
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    EXTRA              0.023      0.041      0.555      0.579
+
+  Direct
+    IESR
+    EXTRA              0.753      0.163      4.611      0.000
+
+
+
+STANDARDIZED TOTAL, TOTAL INDIRECT, SPECIFIC INDIRECT, AND DIRECT EFFECTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Effects from COPE to PTGI
+
+  Total                0.186      0.053      3.491      0.000
+  Total indirect       0.083      0.031      2.631      0.009
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    COPE               0.077      0.025      3.077      0.002
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    COPE               0.006      0.016      0.335      0.738
+
+  Direct
+    PTGI
+    COPE               0.103      0.070      1.479      0.139
+
+
+Effects from MSPSS to PTGI
+
+  Total                0.047      0.054      0.863      0.388
+  Total indirect       0.011      0.011      0.990      0.322
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    MSPSS              0.012      0.010      1.196      0.232
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    MSPSS             -0.001      0.004     -0.322      0.747
+
+  Direct
+    PTGI
+    MSPSS              0.036      0.056      0.644      0.519
+
+
+Effects from NEURO to PTGI
+
+  Total                0.312      0.074      4.240      0.000
+  Total indirect      -0.019      0.066     -0.286      0.775
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    NEURO             -0.041      0.019     -2.156      0.031
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    NEURO              0.022      0.065      0.335      0.738
+
+  Direct
+    PTGI
+    NEURO              0.331      0.115      2.868      0.004
+
+
+Effects from EXTRA to PTGI
+
+  Total                0.392      0.077      5.124      0.000
+  Total indirect      -0.008      0.012     -0.663      0.507
+
+  Specific indirect 1
+    PTGI
+    POS_SC
+    EXTRA             -0.009      0.012     -0.737      0.461
+
+  Specific indirect 2
+    PTGI
+    NEG_SC
+    EXTRA              0.001      0.003      0.324      0.746
+
+  Direct
+    PTGI
+    EXTRA              0.400      0.078      5.130      0.000
+
+
+Effects from COPE to IESR
+
+  Total                0.089      0.053      1.680      0.093
+  Total indirect       0.110      0.030      3.641      0.000
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    COPE               0.044      0.024      1.828      0.067
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    COPE               0.066      0.019      3.526      0.000
+
+  Direct
+    IESR
+    COPE              -0.022      0.067     -0.322      0.748
+
+
+Effects from MSPSS to IESR
+
+  Total               -0.054      0.053     -1.016      0.310
+  Total indirect      -0.010      0.014     -0.724      0.469
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    MSPSS              0.007      0.007      1.010      0.313
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    MSPSS             -0.017      0.014     -1.250      0.211
+
+  Direct
+    IESR
+    MSPSS             -0.044      0.051     -0.855      0.392
+
+
+Effects from NEURO to IESR
+
+  Total                0.692      0.067     10.401      0.000
+  Total indirect       0.238      0.061      3.891      0.000
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    NEURO             -0.023      0.015     -1.580      0.114
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    NEURO              0.261      0.060      4.380      0.000
+
+  Direct
+    IESR
+    NEURO              0.454      0.104      4.369      0.000
+
+
+Effects from EXTRA to IESR
+
+  Total                0.357      0.076      4.731      0.000
+  Total indirect       0.005      0.019      0.281      0.779
+
+  Specific indirect 1
+    IESR
+    POS_SC
+    EXTRA             -0.005      0.008     -0.672      0.501
+
+  Specific indirect 2
+    IESR
+    NEG_SC
+    EXTRA              0.011      0.019      0.555      0.579
+
+  Direct
+    IESR
+    EXTRA              0.352      0.071      4.958      0.000
+
+
+
+
+     Beginning Time:  08:31:55
+        Ending Time:  08:31:55
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen
