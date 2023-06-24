@@ -308,6 +308,48 @@ rw_df <- rw_df %>%
 ```
 
 
+## Preliminary EFA
+
+```{r}
+model <- '
+    efa("efa")*f1 +
+    efa("efa")*f2 +
+    efa("efa")*f3 +
+    efa("efa")*f4 =~ 
+        neuroticism + extraversion + openness + agreeableness +
+            conscientiousness + 
+        active_coping + avoidance_coping + soc_emo_coping +
+        family + friends + significant_other +
+        avoiding + intrusivity + hyperarousal
+'
+```
+
+
+```{r}
+fit <- sem(
+  model = model, 
+  data = rw_df, 
+  rotation = "geomin",
+  # mimic Mplus
+  information = "observed",
+  rotation.args = list(
+    rstarts = 30, 
+    row.weights = "none",
+    algorithm = "gpa", 
+    std.ov = TRUE,
+    geomin.epsilon = 0.001
+  )
+)
+```
+
+
+```{r}
+summary(fit, fit.measures = TRUE, standardized = TRUE)
+```
+
+
+
+
 ## LPA
 
 
