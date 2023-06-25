@@ -36,6 +36,16 @@
   \KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
 \usepackage{graphicx}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -299,15 +309,78 @@ Latent Profile Analysis (LPA) is a person-centered latent modeling approach that
 
 The purpose of the LPA was to detect distinct subgroups of RWs who have different profiles on personality dimensions, protective factors, and outcome variables. Standardized scores for five personality measures (neuroticism, extraversion, openness, agreeableness, conscientiousness), three dimensions of coping (COPE-active coping, COPE-avoidance coping, COPE-social emotional coping), perceived social support (MSPSS), and post-traumatic stress (measured using the IES-R) from the RWs were used as observed indicators for the LPA.
 
-We fitted a series of LPA models, ranging from 1 to 10 profiles, using 1000 sets of starting values. To determine the optimal number of profiles, we used information criteria, including Bayesian information criterion (BIC), Akaike information criterion (AIC), and adjusted BIC. We selected the model with the lowest value of these criteria, indicating a better fit. Additionally, we evaluated the accuracy of the classification of individuals into the appropriate profile using entropy, with values closer to 1 indicating higher separation among classes (\textgreater{} 0.80 represents high separation). We also employed the Lo-Mendell-Rubin likelihood ratio test (LMR-LRT), a test statistic to compare the fit of a model with a lower versus higher number of profiles. We used MPLUS 8.6 and the \texttt{R} software for all statistical analyses.
+LPA was perfomed following the approach described by Ferguson, G. Moore, and Hull (2020). We fitted a series of LPA models, ranging from 1 to 10 profiles, using 1000 sets of starting values. To determine the optimal number of profiles, we used information criteria, including Bayesian information criterion (BIC), Akaike information criterion (AIC), and adjusted BIC. We selected the model with the lowest value of these criteria, indicating a better fit. Additionally, we evaluated the accuracy of the classification of individuals into the appropriate profile using entropy, with values closer to 1 indicating higher separation among classes (\textgreater{} 0.80 represents high separation). We also employed the Lo-Mendell-Rubin likelihood ratio test (LMR-LRT), a test statistic to compare the fit of a model with a lower versus higher number of profiles. We used MPLUS 8.6 and the \texttt{R} software for all statistical analyses. An analytic hierarchy process, based on the fit indices AIC, AWE, BIC, CLC, and KIC (Akogul \& Erisoglu, 2017), suggests the best solution is Model 6 with 2 classes.
+
+The BCH approach is a three-step approach (Asparouhov \& Muthen, 2014b; Masyn, 2013; McLarnon \& O'Neill, 2018). The first step is determining the number of latent profiles without including the covariates in the model (Clark \& Muthen, 2009; Marsh et al., 2009). In the second step, the participants' individual class probabilities are used to specify their probability of membership into each latent profile. This method includes individual uncertainty in profile classification. Using the BCH approach means that indicators for the profiles are present in the model with the covariates during analysis as shown in Figure 1.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
 The use of psychometrically reliable scales allowed for the emergence of the conceptually expected factor structure among the variables that were used used in the study to form the latent profiles (ESEM model with 4 factors, \(\chi^2_{41}\) = 207.52, CFI = 0.95, TLI = 0.89, RMSEA = 0.074, SRMR = 0.034 -- see SI).
 
-\hypertarget{discussion}{%
-\section{Discussion}\label{discussion}}
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+Latent Class 1 & & & & \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+& Estimate & S.E. & Est./S.E. & P-Value \\
+Means & & & & \\
+NEURO & 27.703 & 0.513 & 54.048 & 0.000 \\
+EXTRA & 26.050 & 0.411 & 63.371 & 0.000 \\
+OPEN & 28.024 & 0.425 & 65.898 & 0.000 \\
+AGREE & 29.673 & 0.388 & 76.445 & 0.000 \\
+CONSC & 30.391 & 0.429 & 70.780 & 0.000 \\
+ACTCOP & 73.164 & 0.704 & 103.954 & 0.000 \\
+AVOIDCOP & 37.795 & 0.503 & 75.109 & 0.000 \\
+SOCCOP & 28.658 & 0.536 & 53.428 & 0.000 \\
+IES & 23.412 & 1.207 & 19.395 & 0.000 \\
+MSPSS & 48.229 & 0.917 & 52.575 & 0.000 \\
+Variances & & & & \\
+NEURO & 32.334 & 2.565 & 12.606 & 0.000 \\
+EXTRA & 15.645 & 1.520 & 10.295 & 0.000 \\
+OPEN & 38.666 & 1.955 & 19.781 & 0.000 \\
+AGREE & 27.163 & 1.564 & 17.363 & 0.000 \\
+CONSC & 24.644 & 1.742 & 14.151 & 0.000 \\
+ACTCOP & 81.103 & 5.030 & 16.125 & 0.000 \\
+AVOIDCOP & 42.970 & 2.899 & 14.820 & 0.000 \\
+SOCCOP & 48.671 & 2.481 & 19.617 & 0.000 \\
+IES & 226.353 & 14.346 & 15.778 & 0.000 \\
+MSPSS & 128.414 & 9.270 & 13.852 & 0.000 \\
+\end{longtable}
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+Latent Class 2 & & & & \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+& Estimate & S.E. & Est./S.E. & P-Value \\
+Means & & & & \\
+NEURO & 13.872 & 0.353 & 39.254 & 0.000 \\
+EXTRA & 37.401 & 0.249 & 150.136 & 0.000 \\
+OPEN & 31.290 & 0.323 & 96.774 & 0.000 \\
+AGREE & 34.165 & 0.267 & 127.897 & 0.000 \\
+CONSC & 39.022 & 0.269 & 145.079 & 0.000 \\
+ACTCOP & 83.111 & 0.463 & 179.429 & 0.000 \\
+AVOIDCOP & 33.169 & 0.323 & 102.636 & 0.000 \\
+SOCCOP & 30.871 & 0.333 & 92.845 & 0.000 \\
+IES & 15.433 & 0.703 & 21.941 & 0.000 \\
+MSPSS & 60.440 & 0.566 & 106.859 & 0.000 \\
+Variances & & & & \\
+NEURO & 32.334 & 2.565 & 12.606 & 0.000 \\
+EXTRA & 15.645 & 1.520 & 10.295 & 0.000 \\
+OPEN & 38.666 & 1.955 & 19.781 & 0.000 \\
+AGREE & 27.163 & 1.564 & 17.363 & 0.000 \\
+CONSC & 24.644 & 1.742 & 14.151 & 0.000 \\
+ACTCOP & 81.103 & 5.030 & 16.125 & 0.000 \\
+AVOIDCOP & 42.970 & 2.899 & 14.820 & 0.000 \\
+SOCCOP & 48.671 & 2.481 & 19.617 & 0.000 \\
+IES & 226.353 & 14.346 & 15.778 & 0.000 \\
+MSPSS & 128.414 & 9.270 & 13.852 & 0.000 \\
+\end{longtable}
 
 Identifying different profiles of personality factors and coping strategies among rescue workers (RWs) and examining their relationship with self-compassion can provide valuable information for planning treatments aimed at increasing the well-being of RWs. Here's the rationale behind this approach:
 
@@ -406,6 +479,9 @@ Costa, P. T., \& McCrae, R. R. (1992). Normal personality assessment in clinical
 
 \leavevmode\vadjust pre{\hypertarget{ref-craparo2013impact}{}}%
 Craparo, G., Faraci, P., Rotondo, G., \& Gori, A. (2013). The impact of event scale--revised: Psychometric properties of the italian version in a sample of flood victims. \emph{Neuropsychiatric Disease and Treatment}, \emph{9}, 1427--1432.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ferguson2020finding}{}}%
+Ferguson, S. L., G. Moore, E. W., \& Hull, D. M. (2020). Finding latent groups in observed data: A primer on latent profile analysis in mplus for applied researchers. \emph{International Journal of Behavioral Development}, \emph{44}(5), 458--468.
 
 \leavevmode\vadjust pre{\hypertarget{ref-figley1995compassion}{}}%
 Figley, C. R. (1995). \emph{Compassion fatigue: Coping with secondary traumatic stress disorder in those who treat the traumatized}. Psychology Press.

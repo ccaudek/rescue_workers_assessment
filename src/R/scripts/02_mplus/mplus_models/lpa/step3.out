@@ -1,0 +1,876 @@
+Mplus VERSION 8.7 (Mac)
+MUTHEN & MUTHEN
+06/25/2023   1:34 PM
+
+INPUT INSTRUCTIONS
+
+  TITLE: Latent Profile Analysis, 2 Profile, Rescue Workers, Step 3
+
+  DATA:
+  FILE IS LPA_2_FINAL_Cov.dat;
+  !Note: the file name changed to the file outputted from the model run above in Step 2.
+
+  VARIABLE:
+  NAMES ARE NEURO EXTRA OPEN AGREE CONSC ACTCOP AVOIDCOP SOCCOP IES MSPSS SCS W1-W2;
+  !The BCH weights (W1-W2) are included at the end of the datafile.
+  USEVARIABLES NEURO EXTRA OPEN AGREE CONSC ACTCOP AVOIDCOP SOCCOP IES MSPSS SCS W1-W2;
+  ! Now, covariates are included in the USEVARIABLES statement. The BCH weights (W1-W2)
+  !are also included. Because the BCH weights are included, the original indicators do not n
+  !be included in the usevariables. The BCH weights are unique to the individual, therefore
+  !retaining the classification uncertainty present in the enumeration step in this model.
+
+  CLASSES=c(2);
+  ! Two latent profiles specified, based on results of original iterative modeling process
+  TRAINING = W1-W2 (bch);
+  MISSING ARE .;
+  ANALYSIS:
+  TYPE=MIXTURE;
+  STARTS=0;
+  ! Note. Starts now 0 because the BCH weights are specifying the classes based upon the pri
+  !model run.
+  MODEL:
+  %OVERALL%
+  C ON SCS;
+  !Latent profiles regressed on the covariate variables. These are uniquely estimated for ea
+
+  !If there are additional relationships (e.g., PersProf ON Sex) that should be estimated un
+  !one or more of the classes (i.e., not constrained across classes), then the class-specifi
+  !can be added below.
+  OUTPUT:
+  TECH1 TECH8 TECH11 TECH14;
+
+  SAVEDATA:
+  FILE IS LPA_2_RawData_ClassMembership.csv;
+
+
+
+*** WARNING
+  Input line exceeded 90 characters. Some input may be truncated.
+  !are also included. Because the BCH weights are included, the original indicators do not ne
+*** WARNING
+  Input line exceeded 90 characters. Some input may be truncated.
+  ! Note. Starts now 0 because the BCH weights are specifying the classes based upon the prio
+*** WARNING
+  Input line exceeded 90 characters. Some input may be truncated.
+  !Latent profiles regressed on the covariate variables. These are uniquely estimated for eac
+*** WARNING
+  Input line exceeded 90 characters. Some input may be truncated.
+  !If there are additional relationships (e.g., PersProf ON Sex) that should be estimated uni
+*** WARNING
+  Input line exceeded 90 characters. Some input may be truncated.
+  !one or more of the classes (i.e., not constrained across classes), then the class-specific
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  NEURO
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  EXTRA
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  OPEN
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  AGREE
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  CONSC
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  ACTCOP
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  AVOIDCOP
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  SOCCOP
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  IES
+*** WARNING in MODEL command
+  Variable is uncorrelated with all other variables within class:  MSPSS
+*** WARNING in MODEL command
+  At least one variable is uncorrelated with all other variables within class.
+  Check that this is what is intended.
+*** WARNING in OUTPUT command
+  TECH11 option is not available for TYPE=MIXTURE with the TRAINING option.
+  Request for TECH11 is ignored.
+*** WARNING in OUTPUT command
+  TECH14 option is not available for TYPE=MIXTURE with the TRAINING option.
+  Request for TECH14 is ignored.
+  18 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+Latent Profile Analysis, 2 Profile, Rescue Workers, Step 3
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         743
+
+Number of dependent variables                                   10
+Number of independent variables                                  1
+Number of continuous latent variables                            0
+Number of categorical latent variables                           1
+
+Observed dependent variables
+
+  Continuous
+   NEURO       EXTRA       OPEN        AGREE       CONSC       ACTCOP
+   AVOIDCOP    SOCCOP      IES         MSPSS
+
+Observed independent variables
+   SCS
+
+Categorical latent variables
+   C
+
+Variables with special functions
+
+  Training variables (BCH)
+   W1          W2
+
+
+Estimator                                                      MLR
+Information matrix                                        OBSERVED
+Optimization Specifications for the Quasi-Newton Algorithm for
+Continuous Outcomes
+  Maximum number of iterations                                 100
+  Convergence criterion                                  0.100D-05
+Optimization Specifications for the EM Algorithm
+  Maximum number of iterations                                 500
+  Convergence criteria
+    Loglikelihood change                                 0.100D-06
+    Relative loglikelihood change                        0.100D-06
+    Derivative                                           0.100D-05
+Optimization Specifications for the M step of the EM Algorithm for
+Categorical Latent variables
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+Optimization Specifications for the M step of the EM Algorithm for
+Censored, Binary or Ordered Categorical (Ordinal), Unordered
+Categorical (Nominal) and Count Outcomes
+  Number of M step iterations                                    1
+  M step convergence criterion                           0.100D-05
+  Basis for M step termination                           ITERATION
+  Maximum value for logit thresholds                            15
+  Minimum value for logit thresholds                           -15
+  Minimum expected cell size for chi-square              0.100D-01
+Maximum number of iterations for H1                           2000
+Convergence criterion for H1                             0.100D-03
+Optimization algorithm                                         EMA
+
+Input data file(s)
+  LPA_2_FINAL_Cov.dat
+Input data format  FREE
+
+
+SUMMARY OF DATA
+
+     Number of missing data patterns             1
+     Number of y missing data patterns           1
+     Number of u missing data patterns           0
+
+
+COVARIANCE COVERAGE OF DATA
+
+Minimum covariance coverage value   0.100
+
+
+     PROPORTION OF DATA PRESENT FOR Y
+
+
+           Covariance Coverage
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+ NEURO          1.000
+ EXTRA          1.000         1.000
+ OPEN           1.000         1.000         1.000
+ AGREE          1.000         1.000         1.000         1.000
+ CONSC          1.000         1.000         1.000         1.000         1.000
+ ACTCOP         1.000         1.000         1.000         1.000         1.000
+ AVOIDCOP       1.000         1.000         1.000         1.000         1.000
+ SOCCOP         1.000         1.000         1.000         1.000         1.000
+ IES            1.000         1.000         1.000         1.000         1.000
+ MSPSS          1.000         1.000         1.000         1.000         1.000
+ SCS            1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+ ACTCOP         1.000
+ AVOIDCOP       1.000         1.000
+ SOCCOP         1.000         1.000         1.000
+ IES            1.000         1.000         1.000         1.000
+ MSPSS          1.000         1.000         1.000         1.000         1.000
+ SCS            1.000         1.000         1.000         1.000         1.000
+
+
+           Covariance Coverage
+              SCS
+              ________
+ SCS            1.000
+
+
+
+UNIVARIATE SAMPLE STATISTICS
+
+
+     UNIVARIATE HIGHER-ORDER MOMENT DESCRIPTIVE STATISTICS
+
+         Variable/         Mean/     Skewness/   Minimum/ % with                Percentiles
+        Sample Size      Variance    Kurtosis    Maximum  Min/Max      20%/60%    40%/80%    Median
+
+     NEURO                19.022       0.319       0.000    0.13%      11.000     16.000     19.000
+             743.000      77.041      -0.161      47.000    0.13%      21.000     26.000
+     EXTRA                33.175      -0.522       9.000    0.27%      28.000     32.000     34.000
+             743.000      45.751       0.269      48.000    0.13%      35.000     39.000
+     OPEN                 30.074      -0.045      11.000    0.13%      25.000     28.000     30.000
+             743.000      41.159      -0.199      47.000    0.54%      32.000     35.000
+     AGREE                32.493      -0.319      12.000    0.13%      28.000     31.000     33.000
+             743.000      31.878       0.016      46.000    0.13%      34.000     37.000
+     CONSC                35.809      -0.523      11.000    0.13%      31.000     34.000     36.000
+             743.000      42.052       0.399      48.000    0.94%      37.000     42.000
+     ACTCOP               79.408      -0.192      48.000    0.27%      72.000     77.000     79.000
+             743.000     104.223       0.077     107.000    0.27%      82.000     88.000
+     AVOIDCOP             34.891       0.940      24.000    2.15%      29.000     32.000     34.000
+             743.000      47.973       1.084      64.000    0.13%      35.000     40.000
+     SOCCOP               30.047       0.108      12.000    0.40%      24.000     28.000     30.000
+             743.000      49.816      -0.185      48.000    0.54%      32.000     36.000
+     IES                  18.404       1.142       0.000    4.44%       5.000     10.000     14.000
+             743.000     241.231       0.905      81.000    0.13%      18.000     30.000
+     MSPSS                55.894      -0.950      12.000    0.27%      46.000     55.000     58.000
+             743.000     163.258       0.626      72.000    8.48%      61.000     67.000
+     SCS                  81.590      -0.341      30.000    0.13%      69.000     79.000     83.000
+             743.000     258.465       0.027     124.000    0.13%      87.000     94.000
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       32
+
+Loglikelihood
+
+          H0 Value                      -25257.005
+          H0 Scaling Correction Factor      1.6833
+            for MLR
+
+Information Criteria
+
+          Akaike (AIC)                   50578.009
+          Bayesian (BIC)                 50725.552
+          Sample-Size Adjusted BIC       50623.940
+            (n* = (n + 2) / 24)
+
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THE ESTIMATED MODEL
+
+    Latent
+   Classes
+
+       1        276.61800          0.37230
+       2        466.38200          0.62770
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON ESTIMATED POSTERIOR PROBABILITIES
+
+    Latent
+   Classes
+
+       1        276.61800          0.37230
+       2        466.38200          0.62770
+
+
+FINAL CLASS COUNTS AND PROPORTIONS FOR THE LATENT CLASSES
+BASED ON THEIR MOST LIKELY LATENT CLASS MEMBERSHIP
+
+Class Counts and Proportions
+
+    Latent
+   Classes
+
+       1              269          0.36205
+       2              474          0.63795
+
+
+Average Latent Class Probabilities for Most Likely Latent Class Membership (Row)
+by Latent Class (Column)
+
+           1        2
+
+    1   1.164    -.164
+    2   -.077    1.077
+
+
+Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+           1        2
+
+    1   1.132    -.132
+    2   -.095    1.095
+
+
+Logits for the Classification Probabilities for the Most Likely Latent Class Membership (Column)
+by Latent Class (Row)
+
+              1        2
+
+    1     13.939    0.000
+    2    -13.906    0.000
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Latent Class 1
+
+ Means
+    NEURO             27.703      0.513     54.048      0.000
+    EXTRA             26.050      0.411     63.371      0.000
+    OPEN              28.024      0.425     65.898      0.000
+    AGREE             29.673      0.388     76.445      0.000
+    CONSC             30.391      0.429     70.780      0.000
+    ACTCOP            73.164      0.704    103.954      0.000
+    AVOIDCOP          37.795      0.503     75.109      0.000
+    SOCCOP            28.658      0.536     53.428      0.000
+    IES               23.412      1.207     19.395      0.000
+    MSPSS             48.229      0.917     52.575      0.000
+
+ Variances
+    NEURO             32.334      2.565     12.606      0.000
+    EXTRA             15.645      1.520     10.295      0.000
+    OPEN              38.666      1.955     19.781      0.000
+    AGREE             27.163      1.564     17.363      0.000
+    CONSC             24.644      1.742     14.151      0.000
+    ACTCOP            81.103      5.030     16.125      0.000
+    AVOIDCOP          42.970      2.899     14.820      0.000
+    SOCCOP            48.671      2.481     19.617      0.000
+    IES              226.353     14.346     15.778      0.000
+    MSPSS            128.414      9.270     13.852      0.000
+
+Latent Class 2
+
+ Means
+    NEURO             13.872      0.353     39.254      0.000
+    EXTRA             37.401      0.249    150.136      0.000
+    OPEN              31.290      0.323     96.774      0.000
+    AGREE             34.165      0.267    127.897      0.000
+    CONSC             39.022      0.269    145.079      0.000
+    ACTCOP            83.111      0.463    179.429      0.000
+    AVOIDCOP          33.169      0.323    102.636      0.000
+    SOCCOP            30.871      0.333     92.845      0.000
+    IES               15.433      0.703     21.941      0.000
+    MSPSS             60.440      0.566    106.859      0.000
+
+ Variances
+    NEURO             32.334      2.565     12.606      0.000
+    EXTRA             15.645      1.520     10.295      0.000
+    OPEN              38.666      1.955     19.781      0.000
+    AGREE             27.163      1.564     17.363      0.000
+    CONSC             24.644      1.742     14.151      0.000
+    ACTCOP            81.103      5.030     16.125      0.000
+    AVOIDCOP          42.970      2.899     14.820      0.000
+    SOCCOP            48.671      2.481     19.617      0.000
+    IES              226.353     14.346     15.778      0.000
+    MSPSS            128.414      9.270     13.852      0.000
+
+Categorical Latent Variables
+
+ C#1        ON
+    SCS               -0.115      0.015     -7.787      0.000
+
+ Intercepts
+    C#1                8.660      1.181      7.335      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.306E-04
+       (ratio of smallest to largest eigenvalue)
+
+
+LOGISTIC REGRESSION ODDS RATIO RESULTS
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+Categorical Latent Variables
+
+ C#1      ON
+    SCS                0.891      0.013      0.866      0.917
+
+
+ALTERNATIVE PARAMETERIZATIONS FOR THE CATEGORICAL LATENT VARIABLE REGRESSION
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+Parameterization using Reference Class 1
+
+ C#2      ON
+    SCS                0.115      0.015      7.787      0.000
+
+ Intercepts
+    C#2               -8.660      1.181     -7.335      0.000
+
+
+ODDS RATIO FOR THE ALTERNATIVE PARAMETERIZATIONS FOR THE CATEGORICAL LATENT VARIABLE REGRESSION
+
+                                                95% C.I.
+                    Estimate       S.E.  Lower 2.5% Upper 2.5%
+
+Parameterization using Reference Class 1
+
+ C#2      ON
+    SCS                1.122      0.017      1.090      1.155
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS 1
+
+
+           NU
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+                    1             2             3             4             5
+
+
+           NU
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+                    6             7             8             9            10
+
+
+           NU
+              SCS
+              ________
+                    0
+
+
+           LAMBDA
+              SCS
+              ________
+ NEURO              0
+ EXTRA              0
+ OPEN               0
+ AGREE              0
+ CONSC              0
+ ACTCOP             0
+ AVOIDCOP           0
+ SOCCOP             0
+ IES                0
+ MSPSS              0
+ SCS                0
+
+
+           THETA
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+ NEURO             11
+ EXTRA              0            12
+ OPEN               0             0            13
+ AGREE              0             0             0            14
+ CONSC              0             0             0             0            15
+ ACTCOP             0             0             0             0             0
+ AVOIDCOP           0             0             0             0             0
+ SOCCOP             0             0             0             0             0
+ IES                0             0             0             0             0
+ MSPSS              0             0             0             0             0
+ SCS                0             0             0             0             0
+
+
+           THETA
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+ ACTCOP            16
+ AVOIDCOP           0            17
+ SOCCOP             0             0            18
+ IES                0             0             0            19
+ MSPSS              0             0             0             0            20
+ SCS                0             0             0             0             0
+
+
+           THETA
+              SCS
+              ________
+ SCS                0
+
+
+           ALPHA
+              SCS
+              ________
+                    0
+
+
+           BETA
+              SCS
+              ________
+ SCS                0
+
+
+           PSI
+              SCS
+              ________
+ SCS                0
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS 2
+
+
+           NU
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+                   21            22            23            24            25
+
+
+           NU
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+                   26            27            28            29            30
+
+
+           NU
+              SCS
+              ________
+                    0
+
+
+           LAMBDA
+              SCS
+              ________
+ NEURO              0
+ EXTRA              0
+ OPEN               0
+ AGREE              0
+ CONSC              0
+ ACTCOP             0
+ AVOIDCOP           0
+ SOCCOP             0
+ IES                0
+ MSPSS              0
+ SCS                0
+
+
+           THETA
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+ NEURO             11
+ EXTRA              0            12
+ OPEN               0             0            13
+ AGREE              0             0             0            14
+ CONSC              0             0             0             0            15
+ ACTCOP             0             0             0             0             0
+ AVOIDCOP           0             0             0             0             0
+ SOCCOP             0             0             0             0             0
+ IES                0             0             0             0             0
+ MSPSS              0             0             0             0             0
+ SCS                0             0             0             0             0
+
+
+           THETA
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+ ACTCOP            16
+ AVOIDCOP           0            17
+ SOCCOP             0             0            18
+ IES                0             0             0            19
+ MSPSS              0             0             0             0            20
+ SCS                0             0             0             0             0
+
+
+           THETA
+              SCS
+              ________
+ SCS                0
+
+
+           ALPHA
+              SCS
+              ________
+                    0
+
+
+           BETA
+              SCS
+              ________
+ SCS                0
+
+
+           PSI
+              SCS
+              ________
+ SCS                0
+
+
+     PARAMETER SPECIFICATION FOR LATENT CLASS REGRESSION MODEL PART
+
+
+           ALPHA(C)
+              C#1           C#2
+              ________      ________
+                   31             0
+
+
+           GAMMA(C)
+              SCS
+              ________
+ C#1               32
+ C#2                0
+
+
+     STARTING VALUES FOR LATENT CLASS 1
+
+
+           NU
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+               10.244        26.411        23.659        26.846        29.324
+
+
+           NU
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+               69.199        27.965        22.989         2.872        43.116
+
+
+           NU
+              SCS
+              ________
+                0.000
+
+
+           LAMBDA
+              SCS
+              ________
+ NEURO          0.000
+ EXTRA          0.000
+ OPEN           0.000
+ AGREE          0.000
+ CONSC          0.000
+ ACTCOP         0.000
+ AVOIDCOP       0.000
+ SOCCOP         0.000
+ IES            0.000
+ MSPSS          0.000
+ SCS            1.000
+
+
+           THETA
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+ NEURO         38.521
+ EXTRA          0.000        22.876
+ OPEN           0.000         0.000        20.579
+ AGREE          0.000         0.000         0.000        15.939
+ CONSC          0.000         0.000         0.000         0.000        21.026
+ ACTCOP         0.000         0.000         0.000         0.000         0.000
+ AVOIDCOP       0.000         0.000         0.000         0.000         0.000
+ SOCCOP         0.000         0.000         0.000         0.000         0.000
+ IES            0.000         0.000         0.000         0.000         0.000
+ MSPSS          0.000         0.000         0.000         0.000         0.000
+ SCS            0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+ ACTCOP        52.111
+ AVOIDCOP       0.000        23.987
+ SOCCOP         0.000         0.000        24.908
+ IES            0.000         0.000         0.000       120.616
+ MSPSS          0.000         0.000         0.000         0.000        81.629
+ SCS            0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCS
+              ________
+ SCS            0.000
+
+
+           ALPHA
+              SCS
+              ________
+                0.000
+
+
+           BETA
+              SCS
+              ________
+ SCS            0.000
+
+
+           PSI
+              SCS
+              ________
+ SCS          129.233
+
+
+     STARTING VALUES FOR LATENT CLASS 2
+
+
+           NU
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+               27.799        39.939        36.490        38.139        42.294
+
+
+           NU
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+               89.617        41.817        37.105        33.935        68.671
+
+
+           NU
+              SCS
+              ________
+                0.000
+
+
+           LAMBDA
+              SCS
+              ________
+ NEURO          0.000
+ EXTRA          0.000
+ OPEN           0.000
+ AGREE          0.000
+ CONSC          0.000
+ ACTCOP         0.000
+ AVOIDCOP       0.000
+ SOCCOP         0.000
+ IES            0.000
+ MSPSS          0.000
+ SCS            1.000
+
+
+           THETA
+              NEURO         EXTRA         OPEN          AGREE         CONSC
+              ________      ________      ________      ________      ________
+ NEURO         38.521
+ EXTRA          0.000        22.876
+ OPEN           0.000         0.000        20.579
+ AGREE          0.000         0.000         0.000        15.939
+ CONSC          0.000         0.000         0.000         0.000        21.026
+ ACTCOP         0.000         0.000         0.000         0.000         0.000
+ AVOIDCOP       0.000         0.000         0.000         0.000         0.000
+ SOCCOP         0.000         0.000         0.000         0.000         0.000
+ IES            0.000         0.000         0.000         0.000         0.000
+ MSPSS          0.000         0.000         0.000         0.000         0.000
+ SCS            0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              ACTCOP        AVOIDCOP      SOCCOP        IES           MSPSS
+              ________      ________      ________      ________      ________
+ ACTCOP        52.111
+ AVOIDCOP       0.000        23.987
+ SOCCOP         0.000         0.000        24.908
+ IES            0.000         0.000         0.000       120.616
+ MSPSS          0.000         0.000         0.000         0.000        81.629
+ SCS            0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SCS
+              ________
+ SCS            0.000
+
+
+           ALPHA
+              SCS
+              ________
+                0.000
+
+
+           BETA
+              SCS
+              ________
+ SCS            0.000
+
+
+           PSI
+              SCS
+              ________
+ SCS          129.233
+
+
+     STARTING VALUES FOR LATENT CLASS REGRESSION MODEL PART
+
+
+           ALPHA(C)
+              C#1           C#2
+              ________      ________
+                0.000         0.000
+
+
+           GAMMA(C)
+              SCS
+              ________
+ C#1            0.000
+ C#2            0.000
+
+
+TECHNICAL 8 OUTPUT
+
+
+   E STEP  ITER  LOGLIKELIHOOD    ABS CHANGE   REL CHANGE  ALGORITHM
+              1 -0.32626029D+05    0.0000000    0.0000000  EM
+              2 -0.25273820D+05 7352.2088638    0.2253480  EM
+              3 -0.25258009D+05   15.8114348    0.0006256  EM
+              4 -0.25257011D+05    0.9979671    0.0000395  EM
+              5 -0.25257005D+05    0.0063643    0.0000003  EM
+              6 -0.25257005D+05    0.0000003    0.0000000  EM
+              7 -0.25257005D+05    0.0000000    0.0000000  EM
+
+
+SAVEDATA INFORMATION
+
+
+  Save file
+    LPA_2_RawData_ClassMembership.csv
+
+  Order and format of variables
+
+    NEURO          F10.3
+    EXTRA          F10.3
+    OPEN           F10.3
+    AGREE          F10.3
+    CONSC          F10.3
+    ACTCOP         F10.3
+    AVOIDCOP       F10.3
+    SOCCOP         F10.3
+    IES            F10.3
+    MSPSS          F10.3
+    SCS            F10.3
+    W1             F10.3
+    W2             F10.3
+
+  Save file format
+    13F10.3
+
+  Save file record length    10000
+
+  Save missing symbol        *
+
+
+     Beginning Time:  13:34:00
+        Ending Time:  13:34:00
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

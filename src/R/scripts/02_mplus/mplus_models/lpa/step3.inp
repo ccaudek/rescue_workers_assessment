@@ -1,0 +1,37 @@
+TITLE: Latent Profile Analysis, 2 Profile, Rescue Workers, Step 3
+
+DATA:
+FILE IS LPA_2_FINAL_Cov.dat;
+!Note: the file name changed to the file outputted from the model run above in Step 2.
+
+VARIABLE:
+NAMES ARE NEURO EXTRA OPEN AGREE CONSC ACTCOP AVOIDCOP SOCCOP IES MSPSS SCS W1-W2;
+!The BCH weights (W1-W2) are included at the end of the datafile.
+USEVARIABLES NEURO EXTRA OPEN AGREE CONSC ACTCOP AVOIDCOP SOCCOP IES MSPSS SCS W1-W2;
+! Now, covariates are included in the USEVARIABLES statement. The BCH weights (W1-W2) 
+!are also included. Because the BCH weights are included, the original indicators do not need to 
+!be included in the usevariables. The BCH weights are unique to the individual, therefore 
+!retaining the classification uncertainty present in the enumeration step in this model.
+
+CLASSES=c(2);
+! Two latent profiles specified, based on results of original iterative modeling process
+TRAINING = W1-W2 (bch); 
+MISSING ARE .;
+ANALYSIS:
+TYPE=MIXTURE;
+STARTS=0;
+! Note. Starts now 0 because the BCH weights are specifying the classes based upon the prior 
+!model run.
+MODEL:
+%OVERALL%
+C ON SCS;
+!Latent profiles regressed on the covariate variables. These are uniquely estimated for each class.
+
+!If there are additional relationships (e.g., PersProf ON Sex) that should be estimated uniquely in 
+!one or more of the classes (i.e., not constrained across classes), then the class-specific syntax 
+!can be added below.
+OUTPUT:
+TECH1 TECH8 TECH11 TECH14;
+
+! SAVEDATA:
+! FILE IS LPA_2_RawData_ClassMembership.csv;

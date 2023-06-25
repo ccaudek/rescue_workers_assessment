@@ -32,6 +32,7 @@ suppressPackageStartupMessages({
   library("bayesplot")
   library("patchwork")
   library("bmlm")
+  library("performance")
 })
 
 options("max.print" = .Machine$integer.max)
@@ -70,7 +71,8 @@ sum_coding <- function(x, lvls = levels(x)) {
 # Get data
 
 ```{r}
-all_items <- generate_all_items_df()
+all_items <- generate_all_items_df() |> 
+  ungroup()
 ```
 
 There is a problem with IES-R, in the control group. I shift the control distribution of IES-R towards lower values.
@@ -213,21 +215,36 @@ cor(scs_subscales) |> round(2)
 In the COPE scale only two factors are identified.
 
 ```{r}
-all_items$pos_reinterpretation <- with(all_items, cope_1 + cope_29 + cope_38 + cope_59)
-all_items$mental_disengagement <- with(all_items, cope_2 + cope_16 + cope_31 + cope_43) 
-all_items$venting <- with(all_items, cope_3 + cope_17 + cope_28 + cope_46) 
-all_items$seeking_instrumental_support <- with(all_items, cope_4 + cope_14 + cope_30 + cope_45) 
-all_items$active_coping <- with(all_items, cope_5 + cope_25 + cope_47 + cope_58)  
-all_items$denial <- with(all_items, cope_6 + cope_27 + cope_40 + cope_57) 
-all_items$religion <- with(all_items, cope_7 + cope_18 + cope_48 + cope_60) 
-all_items$humor <- with(all_items, cope_8 + cope_20 + cope_36 + cope_50) 
-all_items$behavioral_disengagement <- with(all_items, cope_9 + cope_24 + cope_37 + cope_51) 
-all_items$restraint <- with(all_items, cope_10 + cope_22 + cope_41 + cope_49) 
-all_items$seeking_emotional_support <- with(all_items, cope_11 + cope_23 + cope_34 + cope_52) 
-all_items$substance_use <- with(all_items, cope_12 + cope_26 + cope_35 + cope_53) 
-all_items$acceptance <- with(all_items, cope_13 + cope_21 + cope_44 + cope_54) 
-all_items$suppr_competing_activities <- with(all_items, cope_15 + cope_33 + cope_42 + cope_55) 
-all_items$planning <- with(all_items, cope_19 + cope_32 + cope_39 + cope_56) 
+all_items$pos_reinterpretation <- 
+  with(all_items, cope_1 + cope_29 + cope_38 + cope_59)
+all_items$mental_disengagement <- 
+  with(all_items, cope_2 + cope_16 + cope_31 + cope_43) 
+all_items$venting <- 
+  with(all_items, cope_3 + cope_17 + cope_28 + cope_46) 
+all_items$seeking_instrumental_support <- 
+  with(all_items, cope_4 + cope_14 + cope_30 + cope_45) 
+all_items$active_coping <- 
+  with(all_items, cope_5 + cope_25 + cope_47 + cope_58)  
+all_items$denial <- 
+  with(all_items, cope_6 + cope_27 + cope_40 + cope_57) 
+all_items$religion <- 
+  with(all_items, cope_7 + cope_18 + cope_48 + cope_60) 
+all_items$humor <- 
+  with(all_items, cope_8 + cope_20 + cope_36 + cope_50) 
+all_items$behavioral_disengagement <- 
+  with(all_items, cope_9 + cope_24 + cope_37 + cope_51) 
+all_items$restraint <- 
+  with(all_items, cope_10 + cope_22 + cope_41 + cope_49) 
+all_items$seeking_emotional_support <- 
+  with(all_items, cope_11 + cope_23 + cope_34 + cope_52) 
+all_items$substance_use <- 
+  with(all_items, cope_12 + cope_26 + cope_35 + cope_53) 
+all_items$acceptance <- 
+  with(all_items, cope_13 + cope_21 + cope_44 + cope_54) 
+all_items$suppr_competing_activities <- 
+  with(all_items, cope_15 + cope_33 + cope_42 + cope_55) 
+all_items$planning <- 
+  with(all_items, cope_19 + cope_32 + cope_39 + cope_56) 
 ```
 
 Create COPE sub-scales scores using *all* items -- note that SEM analyses suggest 
@@ -310,48 +327,10 @@ rw_df <- rw_df %>%
 
 ## Preliminary EFA
 
-```{r}
-model <- '
-    efa("efa")*f1 +
-    efa("efa")*f2 +
-    efa("efa")*f3 +
-    efa("efa")*f4 =~ 
-        neuroticism + extraversion + openness + agreeableness +
-            conscientiousness + 
-        active_coping + avoidance_coping + soc_emo_coping +
-        family + friends + significant_other +
-        avoiding + intrusivity + hyperarousal
-'
-```
-
-
-```{r}
-fit <- sem(
-  model = model, 
-  data = rw_df, 
-  rotation = "geomin",
-  # mimic Mplus
-  information = "observed",
-  rotation.args = list(
-    rstarts = 30, 
-    row.weights = "none",
-    algorithm = "gpa", 
-    std.ov = TRUE,
-    geomin.epsilon = 0.001
-  )
-)
-```
-
-
-```{r}
-summary(fit, fit.measures = TRUE, standardized = TRUE)
-```
-
-
+Preliminary ESEM analysis is performed in script 04_esem_within_cfa.R.
 
 
 ## LPA
-
 
 ```{r}
 lpa_scales <- c(
@@ -372,22 +351,38 @@ lpa_scales <- c(
   # "appreciation_of_life",
   # "spirituality"
 )
+```
 
-lpa_rw_df <- subset(rw_df, select=lpa_scales) 
+Select only the relevant variables
 
-# lpa_rw_df <- subset(all_items, select=lpa_scales) |> 
-#   dplyr::filter(is_rescue_worker == "Si")
+```{r}
+lpa_rw_df <- rw_df |> 
+  dplyr::select(all_of(lpa_scales)) 
 
 lpa_rw_df$is_rescue_worker <- NULL
 ```
 
+
 ```{r}
-lpa_rw_df %>% 
+check_outliers(lpa_rw_df) 
+```
+
+```{r}
+lpa_rw_clean_df <- lpa_rw_df[-c(132, 309, 431, 454, 455, 612, 750, 751), ]
+rw_clean_df <- rw_df[-c(132, 309, 431, 454, 455, 612, 750, 751), ]
+```
+
+```{r}
+psych::describe(lpa_rw_clean_df)
+```
+
+```{r}
+lpa_rw_clean_df %>% 
   scale() %>%
   estimate_profiles(1:6,
     variances = c("equal", "varying"),
-    covariances = c("zero", "varying")
-    #package = "MplusAutomation"
+    covariances = c("zero", "varying"),
+    package = "MplusAutomation"
   )
 ```
 
@@ -414,12 +409,12 @@ lpa_rw_df %>%
  6     10      19648.29 22675.55 0.87    0.00     1.00     0.00  0.42     
 
 ```{r}
-lpa_rw_df %>% 
+lpa_rw_clean_df %>% 
   scale() %>%
-  estimate_profiles(1:6,
+  estimate_profiles(1:3,
     variances = c("equal", "varying"),
-    covariances = c("zero", "varying")
-    # package = "MplusAutomation"
+    covariances = c("zero", "varying"),
+    package = "MplusAutomation"
   ) %>% 
   compare_solutions(statistics = c("AIC", "BIC"))
 ```
@@ -447,29 +442,29 @@ An analytic hierarchy process, based on the fit indices AIC, AWE, BIC, CLC, and 
 
 
 ```{r}
-m2 <- lpa_rw_df %>%
+m2 <- lpa_rw_clean_df %>%
   scale() %>%
   estimate_profiles(2,
     variances = "varying",
-    covariances = "varying"
-    # package = "MplusAutomation"
+    covariances = "varying",
+    package = "MplusAutomation"
   )
 ```
 
 
 ```{r}
-m2_plot <- lpa_rw_df %>%
+m2_plot <- lpa_rw_clean_df %>%
   scale() %>%
   estimate_profiles(2,
     variances = "varying",
-    covariances = "varying"
-    #package = "MplusAutomation"
+    covariances = "varying",
+    package = "MplusAutomation"
     ) %>%
     plot_profiles(add_line = TRUE, rawdata= FALSE, bw = FALSE)
 ```
 
-Profile 1: dysfunctional
-Profile 2: adaptive
+Profile 2: dysfunctional
+Profile 1: adaptive
 
 
 ```{r}
@@ -478,37 +473,49 @@ get_estimates(m2)
 
 ```{r}
 out <- get_data(m2)
-lpa_rw_df$lpa_class <- out$Class
+rw_clean_df$class_num <- out$Class
 ```
 
 ```{r}
 table(
-  lpa_rw_df$lpa_class
+  rw_clean_df$class_num
 )
 ```
 
 
 ```{r}
 table(
-  lpa_rw_df$lpa_class, rw_df$job_qualification
+  rw_clean_df$class_num, rw_clean_df$job_qualification
 )
 ```
 
 
 ```{r}
-lpa_rw_df$class <- factor(lpa_rw_df$lpa_class)
-summary(lpa_rw_df$class)
+rw_clean_df$class <- factor(rw_clean_df$lpa_class)
+summary(rw_clean_df$class)
 ```
 
 ```{r}
-rw_df$class <- lpa_rw_df$class
+# Select relevant variables for LPA covariate analysis.
+temp <- lpa_rw_clean_df
+# temp$class_num <- out$Class
+temp$scs <- rw_clean_df$scs_ts
+
+rio::export(
+  temp,
+  here::here("data", "processed", "lpa", "lpa_final.csv")
+)
+
+rm(temp)
 ```
+
+
 
 ```{r}
 m1 <- brm(
   bf(scs_ts ~ class),
   family = student(),
-  data = rw_df,
+  data = rw_clean_df,
   init = 0.1,
   backend = "cmdstanr",
   adapt_delta = 0.9

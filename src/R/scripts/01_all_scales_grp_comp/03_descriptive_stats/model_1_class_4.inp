@@ -1,7 +1,7 @@
 TITLE:
 model 1 with 4 classes
 DATA:
-FILE = "data_81c78c0cb6869e75ae6a0f08ff71917f.dat";
+FILE = "data_0fbe7f0b9902323a2c39b160aa1d660b.dat";
  
 VARIABLE:
 NAMES = neuroticism extraversion openness agreeableness conscientiousness

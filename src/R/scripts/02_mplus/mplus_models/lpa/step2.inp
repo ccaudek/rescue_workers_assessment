@@ -1,0 +1,39 @@
+TITLE: Latent Profile Analysis, 2 Profile, Rescue Workers, Step 2
+
+DATA:
+FILE IS Mplus_LPA_Final.dat;
+
+VARIABLE:
+NAMES ARE NEURO EXTRA OPEN AGREE CONSC ACTCOP AVOIDCOP SOCCOP IES MSPSS SCS;
+USEVARIABLES NEURO EXTRA OPEN AGREE CONSC ACTCOP AVOIDCOP SOCCOP IES MSPSS;
+CLASSES = c(2);
+! Two latent profiles specified, based on results of original iterative modeling process.
+AUXILIARY = SCS;
+! Now, covariates are included in the AUXILIARY statement so that they will be included in the 
+! datafile outputted by the SAVEDATA command at the bottom of the syntax file.
+MISSING ARE .;
+ANALYSIS:
+TYPE=MIXTURE;
+! STARTS=10000 500;
+! Added increased number of starts for each step of the ML estimation in response to message 
+! about possible convergence issue noted in output
+
+MODEL:
+%OVERALL%
+! Want to run the model that was decided upon through the enumeration phase.
+! For a default Mplus model the LPA model does not need to be specified. However, it can be. 
+! The model can also be modified from the Mplus default of estimating the indicator means 
+! (uniquely across profiles) and variances (constrained across profiles), as well as the latent 
+! profile mean. The syntax below specifies the Mplus defaults.
+
+OUTPUT:
+TECH1 TECH8 TECH11 TECH14;
+
+SAVEDATA:
+SAVE = cprob;
+FILE IS LPA_2_RawData_ClassMembership.csv;
+
+!This statement makes sure that the weights of the indicators for each of the profiles. The bch 
+!weights are based upon the “Classification Probabilities for the Most Likely Latent Class 
+!Membership (Column) by Latent Class (Row)”. These are used in the next modeling step to 
+!specify the profiles so that they are not affected by the inclusion of the covariates in the model.
